@@ -1,4 +1,5 @@
 import { FC, useMemo, useState } from 'react';
+import { Link as LinkRRD } from 'react-router-dom';
 import { Grid, Card, CardActionArea, CardMedia, Box, Typography, Link } from '@mui/material'
 
 import { IProduct } from '../../interfaces'
@@ -26,6 +27,8 @@ export const ProductCard: FC<Props> = ({ product }) => {
             onMouseLeave={ () => setIsHovered(false) } 
       >
           <Card>
+          <LinkRRD to={"/product/slug"}>
+
               {/* <NextLink href="/product/slug" passHref prefetch={ false }> */}
                 <Link>
                     <CardActionArea>
@@ -39,6 +42,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
                     </CardActionArea>
                 </Link>
               {/* </NextLink> */}
+              </LinkRRD>
               
           </Card>
 

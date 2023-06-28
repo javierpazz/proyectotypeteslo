@@ -4,6 +4,7 @@ import { Navbar, SideMenu } from '../ui';
 
 
 interface Props {
+    children: any;
     title: string;
     pageDescription: string;
     imageFullUrl?: string;

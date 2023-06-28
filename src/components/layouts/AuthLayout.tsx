@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Box } from '@mui/material';
 
 interface Props {
+    children: any
     title: string;
 }
 
