@@ -11,7 +11,6 @@ import { ProductList } from '../components/products';
 
 export const App = () => {
   return (
-
     <ThemeProvider theme={ lightTheme}>
         <CssBaseline />
         <ShopLayout title={'Teslo-Shop - Home'} pageDescription={'Encuentra los mejores productos de Teslo aquí'}>
@@ -20,10 +19,12 @@ export const App = () => {
 
         <ProductList 
           products={ initialData.products as any }
-          />
+      />
     
 
     </ShopLayout>
+
+
     </ThemeProvider>
   )
 }

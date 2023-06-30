@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { ShopLayout } from "../components/layouts";
 
-const Custom404 = () => {
+export const Custom404 = () => {
   return (
     <ShopLayout title='Page not found' pageDescription='No hay nada que mostrar aquí'>
         <Box 
@@ -18,4 +18,3 @@ const Custom404 = () => {
   )
 }
 
-export default Custom404;

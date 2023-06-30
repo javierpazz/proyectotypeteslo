@@ -1,7 +1,7 @@
-import NextLink from 'next/link';
+import { NavLink } from "react-router-dom";
 
 import { Typography, Grid, Chip, Link } from '@mui/material';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 
@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
         headerName: 'Pagada',
         description: 'Muestra información si está pagada la orden o no',
         width: 200,
-        renderCell: (params: GridValueGetterParams) => {
+        renderCell: (params: GridRenderCellParams) => {
             return (
                 params.row.paid
                     ? <Chip color="success" label="Pagada" variant='outlined' />
@@ -29,20 +29,18 @@ const columns: GridColDef[] = [
         headerName: 'Ver orden',
         width: 200,
         sortable: false,
-        renderCell: (params: GridValueGetterParams) => {
+        renderCell: (params: GridRenderCellParams) => {
             return (
-               <NextLink href={`/orders/${ params.row.id }`} passHref>
-                    <Link underline='always'>
+               <NavLink to={`/orders/${ params.row.id }`} >
                         Ver orden
-                    </Link>
-               </NextLink>
+               </NavLink>
             )
         }
     }
 ];
 
 
-const rows = [
+const rows: GridRowsProp = [
     { id: 1, paid: true, fullname: 'Fernando Herrera' },
     { id: 2, paid: false, fullname: 'Melissa Flores' },
     { id: 3, paid: true, fullname: 'Hernando Vallejo' },
@@ -52,7 +50,7 @@ const rows = [
 ]
 
 
-const HistoryPage = () => {
+export const History = () => {
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
         <Typography variant='h1' component='h1'>Historial de ordenes</Typography>
@@ -63,9 +61,12 @@ const HistoryPage = () => {
                 <DataGrid 
                     rows={ rows }
                     columns={ columns }
-                    pageSize={ 10 }
-                    rowsPerPageOptions={ [10] }
-                />
+                    initialState={{
+                        pagination: { 
+                          paginationModel: { pageSize: 5 } 
+                        },
+                      }}
+                      pageSizeOptions={[5, 10, 25]}                />
 
             </Grid>
         </Grid>
@@ -74,4 +75,3 @@ const HistoryPage = () => {
   )
 }
 
-export default HistoryPage

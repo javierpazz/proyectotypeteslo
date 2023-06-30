@@ -1,7 +1,8 @@
+import { NavLink } from 'react-router-dom';
 import { Box, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../../components/layouts'
 
-const LoginPage = () => {
+export const Login = () => {
   return (
     <AuthLayout title={'Ingresar'}>
         <Box sx={{ width: 350, padding:'10px 20px' }}>
@@ -24,11 +25,9 @@ const LoginPage = () => {
                 </Grid>
 
                 <Grid item xs={12} display='flex' justifyContent='end'>
-                    {/* <NextLink href="/auth/register" passHref>
-                        <Link underline='always'>
+                    <NavLink to="/auth/register" >
                             ¿No tienes cuenta?
-                        </Link>
-                    </NextLink> */}
+                    </NavLink>
                 </Grid>
             </Grid>
         </Box>
@@ -36,4 +35,3 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage

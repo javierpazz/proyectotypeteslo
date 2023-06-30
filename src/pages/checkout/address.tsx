@@ -2,7 +2,7 @@ import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField
 import { ShopLayout } from "../../components/layouts"
 
 
-const AddressPage = () => {
+export const Address = () => {
   return (
     <ShopLayout title="Dirección" pageDescription="Confirmar dirección del destino">
         <Typography variant="h1" component='h1'>Dirección</Typography>
@@ -61,4 +61,3 @@ const AddressPage = () => {
   )
 }
 
-export default AddressPage

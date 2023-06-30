@@ -5,7 +5,7 @@ import { Box, Link, Typography } from "@mui/material"
 import { ShopLayout } from "../../components/layouts"
 
 
-const EmptyPage = () => {
+export const EmptyPage = () => {
   return (
     <ShopLayout title="Carrito vació" pageDescription="No hay artículos en el carrito de compras">
          <Box 
@@ -31,4 +31,3 @@ const EmptyPage = () => {
   )
 }
 
-export default EmptyPage

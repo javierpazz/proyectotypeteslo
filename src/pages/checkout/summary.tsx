@@ -1,4 +1,4 @@
-import NextLink from 'next/link';
+import { NavLink } from "react-router-dom";
 
 import { Link, Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 
@@ -6,7 +6,7 @@ import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
 
 
-const SummaryPage = () => {
+export const Summary = () => {
   return (
     <ShopLayout title='Resumen de orden' pageDescription={'Resumen de la orden'}>
         <Typography variant='h1' component='h1'>Resumen de la orden</Typography>
@@ -23,11 +23,9 @@ const SummaryPage = () => {
 
                         <Box display='flex' justifyContent='space-between'>
                             <Typography variant='subtitle1'>Dirección de entrega</Typography>
-                            <NextLink href='/checkout/address' passHref>
-                                <Link underline='always'>
+                            <NavLink to='/checkout/address'>
                                     Editar
-                                </Link>
-                            </NextLink>
+                            </NavLink>
                         </Box>
 
                         
@@ -40,11 +38,9 @@ const SummaryPage = () => {
                         <Divider sx={{ my:1 }} />
 
                         <Box display='flex' justifyContent='end'>
-                            <NextLink href='/cart' passHref>
-                                <Link underline='always'>
+                            <NavLink to='/cart' >
                                     Editar
-                                </Link>
-                            </NextLink>
+                            </NavLink>
                         </Box>
 
                         <OrderSummary />
@@ -64,5 +60,3 @@ const SummaryPage = () => {
     </ShopLayout>
   )
 }
-
-export default SummaryPage;

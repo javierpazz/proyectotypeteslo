@@ -1,5 +1,5 @@
-import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
+import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductSlideshow, SizeSelector } from '../../components/products';
 import { initialData } from '../../database/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
@@ -7,7 +7,7 @@ import { ItemCounter } from '../../components/ui/ItemCounter';
 const product = initialData.products[0];
 
 
-const ProductPage = () => {
+export const Slug = () => {
   return (
     <ShopLayout title={ product.title } pageDescription={ product.description }>
     
@@ -59,5 +59,3 @@ const ProductPage = () => {
     </ShopLayout>
   )
 }
-
-export default ProductPage

@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import NextLink from 'next/link';
+import { NavLink } from "react-router-dom";
+
 import { Box, Button, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
 
 import { initialData } from '../../database/products';
@@ -24,8 +25,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                 <Grid container spacing={2} key={ product.slug } sx={{ mb:1 }}>
                     <Grid item xs={3}>
                         {/* TODO: llevar a la página del producto */}
-                        <NextLink href="/product/slug" passHref>
-                            <Link>
+                        <NavLink to="/product/slug">
                                 <CardActionArea>
                                     <CardMedia 
                                         image={ `/products/${ product.images[0] }` }
@@ -33,8 +33,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                         sx={{ borderRadius: '5px' }}
                                     />
                                 </CardActionArea>
-                            </Link>
-                        </NextLink>
+                        </NavLink>
                     </Grid>
                     <Grid item xs={7}>
                         <Box display='flex' flexDirection='column'>

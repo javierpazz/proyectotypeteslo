@@ -1,14 +1,20 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 import { Navbar, SideMenu } from '../ui';
 
 
+
+
+
 interface Props {
-    children: any;
+    children?: ReactNode;
     title: string;
     pageDescription: string;
     imageFullUrl?: string;
 }
+
+
+
 
 export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFullUrl }) => {
   return (

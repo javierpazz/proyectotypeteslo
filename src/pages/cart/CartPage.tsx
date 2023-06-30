@@ -3,7 +3,7 @@ import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
 
-const CartPage = () => {
+export const CartPage = () => {
   return (
     <ShopLayout title='Carrito - 3' pageDescription={'Carrito de compras de la tienda'}>
         <Typography variant='h1' component='h1'>Carrito</Typography>
@@ -36,4 +36,3 @@ const CartPage = () => {
   )
 }
 
-export default CartPage;
