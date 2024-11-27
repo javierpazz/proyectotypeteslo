@@ -1,28 +1,39 @@
-// import NextLink from 'next/link';
+import { useContext, useState } from 'react';
 import { NavLink } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import { CartContext, UiContext } from '../../../context';
 
 export const Navbar = () => {
+
+
+    const  {pathname} = useLocation();
+  
+    const { toggleSideMenu } = useContext( UiContext );
+    const { numberOfItems } = useContext( CartContext );
+
+
   return (
-    <AppBar>
+
+<AppBar>
         <Toolbar>
             <NavLink to="/" >
                     <Typography variant='h6'>Teslo |</Typography>
-                    {/* <Typography sx={{ ml: 0.5 }}>Shop</Typography> */}
+                    <Typography sx={{ ml: 0.5 }}>Shop</Typography>
             </NavLink>
 
             <Box flex={ 1 } />
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 <NavLink to='/category/men' >
-                        <Button>Hombres</Button>
+                <Button color={ pathname === '/category/men' ? 'primary':'info'}>Hombres</Button>
                 </NavLink>
                 <NavLink to='/category/women' >
-                        <Button>Mujeres</Button>
+                <Button color={ pathname === '/category/women' ? 'primary':'info'}>Mujeres</Button>
                 </NavLink>
                 <NavLink to='/category/kid' >
-                        <Button>Niños</Button>
+                <Button color={ pathname === '/category/kid' ? 'primary':'info'}>Niños</Button>
                 </NavLink>
             </Box>
 
@@ -35,14 +46,14 @@ export const Navbar = () => {
 
             <NavLink to="/cart" >
                     <IconButton>
-                        <Badge badgeContent={ 2 } color="secondary">
+                        <Badge badgeContent={ numberOfItems } color="secondary">
                             <ShoppingCartOutlined />
                         </Badge>
                     </IconButton>
             </NavLink>
 
 
-            <Button>
+            <Button onClick={ toggleSideMenu }>
                 Menú
             </Button>
 

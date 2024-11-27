@@ -1,57 +1,61 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import {Login} from '../pages/auth/Login';
 import { App } from '../pages/app';
-// import Register from '../pages/auth/register';
+import {Register} from '../pages/auth/Register';
 import {Slug} from '../pages/product/Slug';
-import { Custom404 } from '../pages/Custom404';
+import {Query} from '../pages/search/Query';
+import { EmptyPage } from '../pages/cart/EmptyPage';
 import { Address } from '../pages/checkout/Address';
 import { Summary} from '../pages/checkout/Summary';
 import { History} from '../pages/orders/History';
 import { CartPage } from '../pages/cart/CartPage';
-//import { useAuthStore } from '../hooks';
+import {Men} from './../pages/category/Men';
+import {Women} from './../pages/category/Women';
+import {Kid} from './../pages/category/Kid';
+import { Stutz } from '../pages/Stutz';
+import { AuthContext } from '../../context';
+import {OrderPage} from '../pages/orders/OrderPage';
+import { Dashboard } from '../pages/admin/Dashboard';
+import { Users } from '../pages/admin/Users';
+import { Orders } from '../pages/admin/Orders';
+import { Order } from '../pages/admin/orders/Order';
 
 
 export const AppRouter = () => {
 
-//    const { status, checkAuthToken } = useAuthStore();
-      const status = 'authenticated' ;
+    const { isLoggedIn } = useContext( AuthContext );
+      
 
-// const authStatus = 'not-authenticated'; // 'authenticated'; // 'not-authenticated';
-
-    // useEffect(() => {
-    //     checkAuthToken();
-    // }, [])
-    
-
-
-    // if ( status === 'checking' ) {
-    //     return (
-    //         <h3>Cargando...</h3>
-    //     )
-    // }
-
-    
     return (
         <Routes>
             {
-                ( status === 'not-authenticated')  
-                    ? (
-                        <>
+                ( !isLoggedIn )  
+                ? (
+                    <>
                             <Route path="/auth/*" element={ <Login /> } />
-                            {/* <Route path="/auth/register" element={ <Register /> } /> */}
+                            <Route path="/auth/register" element={ <Register /> } />
                             <Route path="/*" element={ <Navigate to="/auth/login" /> } />
                         </>
                     )
                     : (
                         <>
-                            <Route path="/" element={ <App /> } />
+                            <Route path="/" element={ <Stutz /> } />
+                            <Route path="/category/men" element={ <Men /> } />
+                            <Route path="/category/women" element={ <Women /> } />
+                            <Route path="/category/kid" element={ <Kid /> } />
                             <Route path="/checkout/address" element={ <Address /> } />
                             <Route path="/checkout/summary" element={ <Summary /> } />
+                            <Route path="/admin" element={ <Dashboard /> } />
+                            <Route path="/admin/users" element={ <Users /> } />
+                            <Route path="/admin/orders/order/:id" element={ <Order /> } />
+                            <Route path="/admin/orders" element={ <Orders /> } />
                             <Route path="/orders/history" element={ <History /> } />
-                            <Route path="/slug" element={ <Slug /> } />
-                            <Route path="/cart/empty" element={ <Custom404 /> } />
+                            <Route path="/orders/:id" element={ <OrderPage /> } />
+                            <Route path="product/:slug" element={<Slug />} />
+                            <Route path="search/:query" element={<Query />} />
+                            <Route path="/cart/empty" element={ <EmptyPage /> } />
                             <Route path="/cart" element={ <CartPage /> } />
                             <Route path="/*" element={ <Navigate to="/" /> } />
                         </>

@@ -1,5 +1,4 @@
-import NextLink from 'next/link';
-
+import { NavLink } from 'react-router-dom';
 import { RemoveShoppingCartOutlined } from "@mui/icons-material"
 import { Box, Link, Typography } from "@mui/material"
 import { ShopLayout } from "../../components/layouts"
@@ -18,11 +17,11 @@ export const EmptyPage = () => {
             <RemoveShoppingCartOutlined sx={{ fontSize: 100 }} />
             <Box display='flex' flexDirection='column' alignItems='center'>
                 <Typography>Su carrito está vació</Typography>
-                <NextLink href='/' passHref>
+                <NavLink  to={"/"}>
                     <Link typography="h4" color='secondary'>
                         Regresar
                     </Link>
-                </NextLink>
+                </NavLink>
             </Box>
 
 

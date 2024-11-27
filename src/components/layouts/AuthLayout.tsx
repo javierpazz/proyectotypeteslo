@@ -13,12 +13,12 @@ export const AuthLayout: FC<Props> = ({ children, title  }) => {
             <title>{ title }</title>
         </head> */}
 
-        <main>
-            <Box display='flex' justifyContent='center' alignItems='center' height="calc(100vh - 200px)">   
+
+          <Box display='flex' justifyContent='center' alignItems='center' height="calc(100vh - 200px)">   
                 { children }
-            </Box>
-        </main>
-    
+          </Box>
+
+
     </>
   )
 }

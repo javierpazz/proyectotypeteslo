@@ -1,10 +1,41 @@
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
+import { CartContext } from '../../../context';
 
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
 
 export const CartPage = () => {
+
+    const navigate = useNavigate()
+    const {isLoaded, cart} = useContext(CartContext)
+
+
+    useEffect(() => {
+    if ( isLoaded && cart.length === 0) {
+        navigate ("/cart/empty");
+    }
+    }, [isLoaded, cart, navigate])
+
+    if(!isLoaded || cart.length === 0){
+        return (<></>);
+    }
+
+
+    const onCheckAddress = () => {
+
+        // if (true) {return;}
+
+
+        // console.log(tempCartProduct);
+        // addProductToCart(tempCartProduct);
+        navigate ("/checkout/address");
+      }
+
   return (
+
+
     <ShopLayout title='Carrito - 3' pageDescription={'Carrito de compras de la tienda'}>
         <Typography variant='h1' component='h1'>Carrito</Typography>
 
@@ -21,7 +52,9 @@ export const CartPage = () => {
                         <OrderSummary />
 
                         <Box sx={{ mt: 3 }}>
-                            <Button color="secondary" className='circular-btn' fullWidth>
+                            <Button color="secondary" className='circular-btn' fullWidth
+                            onClick={onCheckAddress}
+                            >
                                 Checkout
                             </Button>
                         </Box>
@@ -35,4 +68,3 @@ export const CartPage = () => {
     </ShopLayout>
   )
 }
-

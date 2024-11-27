@@ -1,4 +1,3 @@
-import type { NextPage } from 'next';
 import { Typography } from '@mui/material';
 
 import { ShopLayout } from '../components/layouts';
@@ -6,7 +5,7 @@ import { initialData } from '../database/products';
 import { ProductList } from '../components/products';
 
 
-const Home: NextPage = () => {
+const Home = () => {
   return (
     <ShopLayout title={'Teslo-Shop - Home'} pageDescription={'Encuentra los mejores productos de Teslo aquí'}>
         <Typography variant='h1' component='h1'>Tienda</Typography>
