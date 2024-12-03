@@ -9,6 +9,7 @@ import { ProductList } from '../components/products';
 import { FullScreenLoading } from '../components/ui';
 import { IProduct } from '../interfaces';
 import stutzApi from '../../api/stutzApi';
+import MultipleImageUploader from '../components/MultipleImageUploader';
 
 
 
@@ -43,6 +44,9 @@ useEffect(() => {
           !products
             ? <FullScreenLoading />
             : <ProductList products={ products } />
+
+            // :    <MultipleImageUploader/>
+
         }
 
 

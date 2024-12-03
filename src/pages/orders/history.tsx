@@ -1,9 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { Typography, Grid, Chip, Link } from '@mui/material';
 import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
+import { useEffect, useState, useContext } from "react";
+import { IOrder } from "../../interfaces";
+import { stutzApi } from "../../../api";
+import { AuthContext } from "../../../context";
 
 
 
@@ -31,7 +35,7 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-               <NavLink to={`/orders/${ params.row.id }`} >
+               <NavLink to={`/orders/${ params.row.orderId }`} >
                         Ver orden
                </NavLink>
             )
@@ -40,17 +44,52 @@ const columns: GridColDef[] = [
 ];
 
 
-const rows: GridRowsProp = [
-    { id: 1, paid: true, fullname: 'Fernando Herrera' },
-    { id: 2, paid: false, fullname: 'Melissa Flores' },
-    { id: 3, paid: true, fullname: 'Hernando Vallejo' },
-    { id: 4, paid: false, fullname: 'Emin Reyes' },
-    { id: 5, paid: false, fullname: 'Eduardo Rios' },
-    { id: 6, paid: true, fullname: 'Natalia Herrera' },
-]
 
 
 export const History = () => {
+
+  
+////////////////////FGFGFGFG
+const navigate = useNavigate()
+const { user} = useContext(  AuthContext );      
+useEffect(() => {
+    if (!user) {
+      navigate('/auth/login?redirect=/orders/history');
+    }
+  }, [user, navigate]);
+
+////////////////////FGFGFGFG
+    const [ orders, setOrders ] = useState<IOrder[]>([]);
+
+    // const { data, error } = useSWR<IOrder[]>('/api/admin/orders');
+
+    const loadData = async() => {
+        try {
+          const resp = await stutzApi.get(`/ordersbyus?id=${user!._id}`);
+          setOrders(resp.data);
+          console.log(resp.data);
+        } catch (error) {
+          console.log({error})
+        }
+    
+      }
+
+    useEffect(() => {
+        loadData();
+    }, [])
+
+
+
+    if ( !orders ) return (<></>);
+    const rows = orders.map( (order, idx) => ({
+        id: idx + 1,
+        paid: order.isPaid,
+        fullname: `${ order.shippingAddress.firstName } ${ order.shippingAddress.lastName }`,
+        orderId: order._id
+    }))
+
+
+
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
         <Typography variant='h1' component='h1'>Historial de ordenes</Typography>

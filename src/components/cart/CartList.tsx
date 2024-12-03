@@ -31,7 +31,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                 <Grid container spacing={2} key={ product.slug + product.size} sx={{ mb:1 }}>
                     <Grid item xs={3}>
                         {/* TODO: llevar a la página del producto */}
-                        <NavLink to="/product/slug">
+                        <NavLink to={`/product/${ product.slug }`}>
                                 <CardActionArea>
                                     <CardMedia 
                                         image={ `/products/${ product.image }` }
@@ -56,7 +56,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                                     />
                                 )
 
-                                : <Typography variant='h5'>3 items</Typography>
+                                : <Typography variant='h5'>{ product.quantity }</Typography>
                             }
                             
                         </Box>

@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
@@ -14,6 +14,16 @@ type FormData = {
   };
 
 export const Login = () => {
+
+
+//////////////////ghghgh
+
+    const { search } = useLocation();
+    const redirectInUrl = new URLSearchParams(search).get('redirect');
+    const redirect = redirectInUrl ? redirectInUrl : '/';
+
+//////////////////ghghgh
+
 
     const navigate = useNavigate();
     const { loginUser } = useContext( AuthContext );
@@ -42,7 +52,9 @@ export const Login = () => {
             return;
         }        
     
-        navigate ("/");
+        // Todo: navegar a la pantalla que el usuario estaba
+        navigate(redirect || '/');
+
 
     }
 

@@ -1,17 +1,42 @@
 import { useContext, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
-import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Link, Toolbar, Typography } from '@mui/material';
+// import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
+import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import { CartContext, UiContext } from '../../../context';
 
 export const Navbar = () => {
 
+    const navigate = useNavigate();
 
     const  {pathname} = useLocation();
   
-    const { toggleSideMenu } = useContext( UiContext );
-    const { numberOfItems } = useContext( CartContext );
+
+        // const { asPath, push } = useRouter();
+        const { toggleSideMenu } = useContext( UiContext );
+        const { numberOfItems } = useContext( CartContext );
+
+        const [searchTerm, setSearchTerm] = useState('');
+        const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+
+        const onSearchTerm = () => {
+        console.log(searchTerm);
+            if(searchTerm.trim().length === 0) return;
+            navigateTo(`/search/${searchTerm}`);
+        }
+    
+        const navigateTo = ( url: string ) => {
+            // toggleSideMenu();
+              navigate(url);
+    
+        //router.push(url);
+        }
+
+
+
+
 
 
   return (
@@ -25,7 +50,8 @@ export const Navbar = () => {
 
             <Box flex={ 1 } />
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }}
+                    className="fadeIn">
                 <NavLink to='/category/men' >
                 <Button color={ pathname === '/category/men' ? 'primary':'info'}>Hombres</Button>
                 </NavLink>
@@ -39,10 +65,54 @@ export const Navbar = () => {
 
 
             <Box flex={ 1 } />
+                
+                
 
-            <IconButton>
-                <SearchOutlined />
-            </IconButton>
+                {/* Pantallas pantallas grandes */}
+                {
+                    isSearchVisible 
+                        ? (
+                            <Input
+                                sx={{ display: { xs: 'none', sm: 'flex' } }}
+                                className='fadeIn'
+                                autoFocus
+                                value={ searchTerm }
+                                onChange={ (e) => setSearchTerm( e.target.value ) }
+                                onKeyPress={ (e) => e.key === 'Enter' ? onSearchTerm() : null }
+                                type='text'
+                                placeholder="Buscar..."
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={ () => setIsSearchVisible(false) }
+                                        >
+                                            <ClearOutlined />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        )
+                    : 
+                    (
+                        <IconButton 
+                            onClick={ () => setIsSearchVisible(true) }
+                            className="fadeIn"
+                            sx={{ display: { xs: 'none', sm: 'flex' } }}
+                        >
+                            <SearchOutlined />
+                        </IconButton>
+                    )
+                }
+
+
+                {/* Pantallas pequeñas */}
+                <IconButton
+                    sx={{ display: { xs: 'flex', sm: 'none' } }}
+                    onClick={ toggleSideMenu }
+                >
+                    <SearchOutlined />
+                </IconButton>
+
 
             <NavLink to="/cart" >
                     <IconButton>

@@ -15,32 +15,35 @@ import {Men} from './../pages/category/Men';
 import {Women} from './../pages/category/Women';
 import {Kid} from './../pages/category/Kid';
 import { Stutz } from '../pages/Stutz';
-import { AuthContext } from '../../context';
+// import { AuthContext } from '../../context';
 import {OrderPage} from '../pages/orders/OrderPage';
 import { Dashboard } from '../pages/admin/Dashboard';
 import { Users } from '../pages/admin/Users';
+import { Products } from '../pages/admin/products';
+import { ProductAdminPage } from '../pages/admin/products/product';
 import { Orders } from '../pages/admin/Orders';
 import { Order } from '../pages/admin/orders/Order';
 
 
 export const AppRouter = () => {
 
-    const { isLoggedIn } = useContext( AuthContext );
-      
+    // const { isLoggedIn } = useContext( AuthContext );
+    // const { user, isLoggedIn } = useContext(  AuthContext );      
 
+    // console.log(user, isLoggedIn);
     return (
         <Routes>
-            {
+            {/* {
                 ( !isLoggedIn )  
-                ? (
+                ? ( */}
                     <>
                             <Route path="/auth/*" element={ <Login /> } />
                             <Route path="/auth/register" element={ <Register /> } />
                             <Route path="/*" element={ <Navigate to="/auth/login" /> } />
-                        </>
+                        {/* </>
                     )
                     : (
-                        <>
+                        <> */}
                             <Route path="/" element={ <Stutz /> } />
                             <Route path="/category/men" element={ <Men /> } />
                             <Route path="/category/women" element={ <Women /> } />
@@ -49,6 +52,8 @@ export const AppRouter = () => {
                             <Route path="/checkout/summary" element={ <Summary /> } />
                             <Route path="/admin" element={ <Dashboard /> } />
                             <Route path="/admin/users" element={ <Users /> } />
+                            <Route path="/admin/products" element={ <Products /> } />
+                            <Route path="/admin/products/product/:slugadm" element={ <ProductAdminPage /> } />
                             <Route path="/admin/orders/order/:id" element={ <Order /> } />
                             <Route path="/admin/orders" element={ <Orders /> } />
                             <Route path="/orders/history" element={ <History /> } />
@@ -59,8 +64,8 @@ export const AppRouter = () => {
                             <Route path="/cart" element={ <CartPage /> } />
                             <Route path="/*" element={ <Navigate to="/" /> } />
                         </>
-                    )
-            }
+                    {/* )
+            } */}
 
         </Routes>
     )

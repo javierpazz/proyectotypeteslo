@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import Cookies from 'js-cookie';
@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { ShopLayout } from '../../components/layouts';
 import { countries } from "../../utils";
-import { CartContext } from '../../../context';
+import { AuthContext, CartContext } from '../../../context';
 
 type FormData = {
     firstName: string;
@@ -39,6 +39,19 @@ const getAddressFromCookies = ():FormData => {
 export const Address = () => {
     const navigate = useNavigate()
     const { updateAddress} = useContext( CartContext );
+
+////////////////////FGFGFGFG
+const { user} = useContext(  AuthContext );      
+useEffect(() => {
+    if (!user) {
+      navigate('/auth/login?redirect=/checkout/address');
+    }
+  }, [user, navigate]);
+
+////////////////////FGFGFGFG
+
+
+
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
        defaultValues: getAddressFromCookies() 

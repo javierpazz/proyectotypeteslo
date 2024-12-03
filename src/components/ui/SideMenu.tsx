@@ -14,6 +14,7 @@ export const SideMenu = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const onSearchTerm = () => {
+        console.log(searchTerm);
         if(searchTerm.trim().length === 0) return;
         navigateTo(`/search/${searchTerm}`);
     }
@@ -39,15 +40,16 @@ export const SideMenu = () => {
 
                 <ListItem>
                     <Input
+                        autoFocus
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' ? onSearchTerm(): null }
+                        onKeyPress={(e) => e.key === 'Enter' ? onSearchTerm(): null }
                         type='text'
                         placeholder="Buscar..."
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                aria-label="toggle password visibility"
+                                onClick={ onSearchTerm }
                                 >
                                  <SearchOutlined />
                                 </IconButton>
@@ -155,7 +157,8 @@ export const SideMenu = () => {
                             </ListItem>
 
 
-                <ListItem button>
+                <ListItem button
+                onClick={ () => navigateTo('/admin/products') }>
                     <ListItemIcon>
                         <CategoryOutlined/>
                     </ListItemIcon>

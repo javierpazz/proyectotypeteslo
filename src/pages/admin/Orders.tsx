@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
 import { Chip, Grid } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
@@ -7,7 +7,8 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayout } from '../../components/layouts'
 import { IOrder, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../context';
 
 const columns:GridColDef[] = [
     { field: 'id', headerName: 'Orden ID', width: 250 },
@@ -51,6 +52,20 @@ const columns:GridColDef[] = [
 export const Orders = () => {
 
     const [ orders, setOrders ] = useState<IOrder[]>([]);
+
+////////////////////FGFGFGFG
+const navigate = useNavigate()
+const { user} = useContext(  AuthContext );      
+useEffect(() => {
+    if (!user) {
+      navigate('/auth/login?redirect=/admin/orders');
+    }
+  }, [user, navigate]);
+
+////////////////////FGFGFGFG
+
+
+
 
     // const { data, error } = useSWR<IOrder[]>('/api/admin/orders');
 
