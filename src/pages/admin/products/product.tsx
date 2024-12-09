@@ -91,7 +91,7 @@ const loadProduct = async() => {
         productI.createdAt= '',
         productI.updatedAt= ''
     } else {
-        const resp = await stutzApi.get<IProduct>(`/productbyslug?slug=${ slugadm.toString() }`);
+        const resp = await stutzApi.get<IProduct>(`/products/${ slugadm.toString() }`);
         productI._id=resp.data._id,
         productI.description=resp.data.description,
         productI.images=resp.data.images,

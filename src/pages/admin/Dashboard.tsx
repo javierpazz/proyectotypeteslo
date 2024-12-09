@@ -17,7 +17,6 @@ export const Dashboard = () => {
         try {
           const resp = await stutzApi.get('/admin');
           setData(resp.data);
-          console.log(resp.data)
         } catch (error) {
           console.log({error})
         }
@@ -34,7 +33,7 @@ export const Dashboard = () => {
 
     useEffect(() => {
       const interval = setInterval(()=>{
-        console.log('Tick');
+        // console.log('Tick');
         setRefreshIn( refreshIn => refreshIn > 0 ? refreshIn - 1: 30 );
         refreshIn === 30 && loadData();
       }, 1000 );

@@ -54,9 +54,7 @@ export const Order = () => {
  useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IOrder>(`/orderbyid?id=${ id }`);
-            console.log(id);
-            console.log(resp.data);
+            const resp = await stutzApi.get<IOrder>(`orders/getorderbyid/${ id }`);
             setOrder({
                 _id: resp.data._id,
                 user: resp.data.user,
@@ -73,7 +71,6 @@ export const Order = () => {
                 paidAt : resp.data.paidAt
              });
         
-            console.log(order)
      
         } catch (error) {
           console.log(error)
@@ -81,7 +78,6 @@ export const Order = () => {
         }
        }
          loadProduct()
-         console.log(order)
         }, [id])
 
     const { shippingAddress } = order;

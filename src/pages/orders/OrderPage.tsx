@@ -45,6 +45,7 @@ export const OrderPage = () => {
  const [order, setOrder] = useState(OrderI);
  const params = useParams();
  const { id } = params;
+ console.log(id);
 
 //  useEffect(() => {
 //     if ( !user ) {
@@ -55,9 +56,7 @@ export const OrderPage = () => {
  useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IOrder>(`/orderbyid?id=${ id }`);
-            console.log(id);
-            console.log(resp.data);
+            const resp = await stutzApi.get<IOrder>(`orders/getorderbyid/${ id }`);
             setOrder({
                 _id: resp.data._id,
                 user: resp.data.user,
@@ -73,8 +72,6 @@ export const OrderPage = () => {
                 isPaid  : resp.data.isPaid,
                 paidAt : resp.data.paidAt
              });
-        
-            console.log(order)
      
         } catch (error) {
           console.log(error)
@@ -82,7 +79,6 @@ export const OrderPage = () => {
         }
        }
          loadProduct()
-         console.log(order)
         }, [id])
 
     const { shippingAddress } = order;

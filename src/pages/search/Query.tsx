@@ -21,12 +21,12 @@ export const Query = () => {
 
   const loadProducts = async() => {
     try {
-      const resp = await stutzApi.get(`/productbysear?term=${params.query}`);
+      const resp = await stutzApi.get(`products/getproductsbysear/${params.query}`);
       setProducts(resp.data);
       const foundProducts = resp.data.length > 0;
       if ( !foundProducts ) {
         // products = await dbProducts.getAllProducts(); 
-        const respaux = await stutzApi.get("/productbysear?term=Onesie");
+        const respaux = await stutzApi.get("products/getproductsbysear/Onesie");
         setProducts(respaux.data);
       }
 

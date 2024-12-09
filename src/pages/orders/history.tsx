@@ -64,8 +64,9 @@ useEffect(() => {
     // const { data, error } = useSWR<IOrder[]>('/api/admin/orders');
 
     const loadData = async() => {
+      console.log(user!._id);
         try {
-          const resp = await stutzApi.get(`/ordersbyus?id=${user!._id}`);
+          const resp = await stutzApi.get(`orders/getordersbyus/${user!._id}`);
           setOrders(resp.data);
           console.log(resp.data);
         } catch (error) {

@@ -72,7 +72,7 @@ const onAddProduct = () => {
 
   const loadProduct = async() => {
     try {
-      const resp = await stutzApi.get<IProduct>(`/productbyslug?slug=${ slug }`);
+      const resp = await stutzApi.get<IProduct>(`/products/${ slug }`);
       setProduct(resp.data);
 
       setTempCartProduct({
