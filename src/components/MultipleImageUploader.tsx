@@ -22,7 +22,7 @@ const ImageUploader = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:4000/api/upload", formData, {
+      const response = await axios.post("http://localhost:4000/api/tes/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Imagen subida con éxito: " + response.data.filePath);

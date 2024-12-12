@@ -175,10 +175,10 @@ const loadProduct = async() => {
             for( const file of target.files ) {
                 const formData = new FormData();
                 formData.append('file', file);
-                console.log(formData);
-                const { data } = await stutzApi.post<{ message: string}>('/upload', formData, {
+                const { data } = await stutzApi.post<{ message: string}>('/admin/upload', formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                   });
+                  console.log(data)
                 setValue('images', [...getValues('images'), data.message], { shouldValidate: true });
             }
 

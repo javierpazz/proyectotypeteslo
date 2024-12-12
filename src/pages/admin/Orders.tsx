@@ -73,7 +73,7 @@ useEffect(() => {
         try {
           const resp = await stutzApi.get('/admin/orders');
           setOrders(resp.data);
-        //   console.log(resp.data);
+          console.log(resp.data);
         } catch (error) {
           console.log({error})
         }
