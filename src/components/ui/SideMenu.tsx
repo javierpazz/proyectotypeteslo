@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
 import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, DashboardOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { AuthContext, UiContext } from "../../../context";
@@ -146,6 +146,13 @@ export const SideMenu = () => {
                 <Divider />
                 <ListSubheader>Admin Panel</ListSubheader>
 
+                <ListItem button
+                onClick={ () => navigateTo('/admin/entradas') }>
+                    <ListItemIcon>
+                        <CategoryOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Escribania'} />
+                </ListItem>
 
                 <ListItem 
                                 button

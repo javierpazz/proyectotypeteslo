@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { NavLink } from "react-router-dom";
 
-import { Box, Button, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, CardActionArea, CardMedia, Grid, Typography } from '@mui/material';
 
 import { ItemCounter } from '../ui';
 import { CartContext } from '../../../context';

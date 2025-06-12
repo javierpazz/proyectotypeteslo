@@ -1,17 +1,17 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 // import { GetServerSideProps } from 'next'
 // import { useRouter } from 'next/router';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, ListItem, Paper, Radio, RadioGroup, TextField } from '@mui/material';
+import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 
 import { AdminLayout } from '../../../components/layouts'
-import { ICartProduct, IProduct, ISize } from '../../../interfaces';
+import {  IProduct  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 
-const validTypes  = ['shirts','pants','hoodies','hats']
+const ValidCategories  = ['shirts','pants','hoodies','hats']
 const validGender = ['men','women','kid','unisex']
 const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
 
@@ -26,7 +26,7 @@ interface FormData {
     slug       : string;
     tags       : string[];
     title      : string;
-    type       : string;
+    category   : string;
     gender     : string;
 }
 const productI = 
@@ -40,7 +40,7 @@ const productI =
           slug: "",
           tags: ['sweatshirt'],
           title: "",
-          type: '',
+          category: '',
           gender: '',
           createdAt: '',
           updatedAt: '',
@@ -54,6 +54,7 @@ export const ProductAdminPage = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [ newTagValue, setNewTagValue ] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const navigate = useNavigate();
 
 ////////fg/fg/f/g/////////
 
@@ -73,6 +74,7 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
+    console.log(defaultValues);
     try {
 
         if ( slugadm === 'new' ) {
@@ -86,12 +88,12 @@ const loadProduct = async() => {
         productI.slug= "",
         productI.tags= ['sweatshirt'],
         productI.title= "",
-        productI.type= '',
+        productI.category= '',
         productI.gender= '',
         productI.createdAt= '',
         productI.updatedAt= ''
     } else {
-        const resp = await stutzApi.get<IProduct>(`/products/${ slugadm.toString() }`);
+        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
         productI._id=resp.data._id,
         productI.description=resp.data.description,
         productI.images=resp.data.images,
@@ -101,7 +103,7 @@ const loadProduct = async() => {
         productI.slug=resp.data.slug,
         productI.tags=resp.data.tags,
         productI.title=resp.data.title,
-        productI.type=resp.data.type,
+        productI.category=resp.data.category,
         productI.gender=resp.data.gender,
         productI.createdAt=resp.data.createdAt,
         productI.updatedAt=resp.data.updatedAt
@@ -119,7 +121,7 @@ const loadProduct = async() => {
 ////////fg/fg/f/g/////////
 
     useEffect(() => {
-      const subscription = watch(( value, { name, type } ) => {
+      const subscription = watch(( value, { name } ) => {
           if ( name === 'title' ) {
               const newSlug = value.title?.trim()
                     .replaceAll(' ', '_')
@@ -175,7 +177,7 @@ const loadProduct = async() => {
             for( const file of target.files ) {
                 const formData = new FormData();
                 formData.append('file', file);
-                const { data } = await stutzApi.post<{ message: string}>('/admin/upload', formData, {
+                const { data } = await stutzApi.post<{ message: string}>('/api/tes/admin/upload', formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                   });
                   console.log(data)
@@ -205,14 +207,15 @@ const loadProduct = async() => {
 
         try {
             if (form._id){
-                const  data = await stutzApi.put('/admin/products', form)
+                await stutzApi.put('/api/tes/admin/products', form)
             }else{
-                const  data  = await stutzApi.post('/admin/products', form)
-           }
-
+                await stutzApi.post('/api/tes/admin/products', form)
+            }
             // console.log(data);
+
             if ( !form._id ) {
                 // router.replace(`/admin/products/product/${ form.slug }`);
+                navigate(`/admin/products/product/${ form.slug }`);
             } else {
                 setIsSaving(false)
             }
@@ -308,11 +311,11 @@ const loadProduct = async() => {
                             <FormLabel>Tipo</FormLabel>
                             <RadioGroup
                                 row
-                                value={ getValues('type') }
-                                onChange={ ({ target })=> setValue('type', target.value, { shouldValidate: true }) }
+                                value={ getValues('category') }
+                                onChange={ ({ target })=> setValue('category', target.value, { shouldValidate: true }) }
                             >
                                 {
-                                    validTypes.map( option => (
+                                    ValidCategories.map( option => (
                                         <FormControlLabel 
                                             key={ option }
                                             value={ option }

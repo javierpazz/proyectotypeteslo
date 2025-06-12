@@ -1,5 +1,4 @@
-import React, { FC, ReactNode, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { FC, ReactNode, useContext } from 'react';
 import { AuthContext } from '../../../context';
 
 interface Props {

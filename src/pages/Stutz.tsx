@@ -2,25 +2,23 @@ import { useState, useEffect } from 'react';
 import '../styles/globals.css';
 import { Typography } from '@mui/material';
 
-
-
 import { ShopLayout } from '../components/layouts';
 import { ProductList } from '../components/products';
 import { FullScreenLoading } from '../components/ui';
-import { IProduct } from '../interfaces';
 import stutzApi from '../../api/stutzApi';
-import MultipleImageUploader from '../components/MultipleImageUploader';
+// import { IProduct } from '../interfaces'
 
 
 
 export const Stutz = () => {
 
 
-  const [products, setProducts] = useState([])
+  // const [products, setProducts] = useState<IProduct>()
+  const [products, setProducts] = useState()
 
   const loadProducts = async() => {
     try {
-      const resp = await stutzApi.get('/products');
+      const resp = await stutzApi.get('api/tes/products');
       setProducts(resp.data);
     } catch (error) {
       console.log({error})

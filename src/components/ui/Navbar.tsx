@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Link, Toolbar, Typography } from '@mui/material';
+import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Toolbar, Typography } from '@mui/material';
 // import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import { CartContext, UiContext } from '../../../context';

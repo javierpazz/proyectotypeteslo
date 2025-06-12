@@ -19,7 +19,7 @@ interface Props {
 export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFullUrl }) => {
   return (
     <>
-        {/* <Head>
+        <head>
             <title>{ title }</title>
 
             <meta name="description" content={ pageDescription } />
@@ -34,7 +34,7 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
                 )
             }
 
-        </Head>  */}
+        </head> 
 
         <nav>
             <Navbar />

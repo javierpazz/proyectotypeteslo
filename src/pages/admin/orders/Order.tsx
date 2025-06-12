@@ -1,14 +1,13 @@
-import { useContext, useState, useEffect } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {  useState, useEffect } from 'react';
+import {  useParams } from 'react-router-dom';
 
-import { Link, Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
+import {  Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
 import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
 
 import { ShopLayout } from '../../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../../components/cart';
 import { IOrder } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
-import { AuthContext } from '../../../../context';
 
 const OrderI:IOrder = {
     _id : '',
@@ -27,9 +26,24 @@ const OrderI:IOrder = {
 //    paymentResult: '',
 
     numberOfItems: 0,
+    shippingPrice : 0,
     subTotal     : 0,
     tax          : 0,
     total        : 0,
+    totalBuy : 0,
+    id_client : "",
+    codCon : "",
+    codConNum : 0,
+    codSup : '0',
+    remNum : 0,
+    remDat : "",
+    invNum : 0,
+    invDat : "",
+    recNum : 0,
+    recDat : "",
+    desVal : "",
+    notes : "",
+    paymentMethod: 0,
 
     isPaid  : false,
     paidAt : '',
@@ -54,19 +68,33 @@ export const Order = () => {
  useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IOrder>(`orders/getorderbyid/${ id }`);
+            const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
             setOrder({
                 _id: resp.data._id,
                 user: resp.data.user,
                 orderItems: resp.data.orderItems,
                 shippingAddress: resp.data.shippingAddress,
             //    paymentResult: '',
-            
+                shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,
                 subTotal     : resp.data.subTotal,
                 tax          : resp.data.tax,
                 total        : resp.data.total,
-            
+                totalBuy     : resp.data.totalBuy,
+                id_client    : resp.data.id_client,
+                codCon      : resp.data.codCon,
+                codConNum       : resp.data.codConNum,
+                codSup      : resp.data.codSup,
+                remNum      : resp.data.remNum,
+                remDat      : resp.data.remDat,
+                invNum      : resp.data.invNum,
+                invDat      : resp.data.invDat,
+                recNum      : resp.data.recNum,
+                recDat      : resp.data.recDat,
+                desVal      : resp.data.desVal,
+                notes       : resp.data.notes,
+                paymentMethod       : resp.data.paymentMethod,
+                
                 isPaid  : resp.data.isPaid,
                 paidAt : resp.data.paidAt
              });

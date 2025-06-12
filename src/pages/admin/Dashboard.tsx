@@ -2,20 +2,23 @@ import { useState, useEffect } from 'react';
 import { AttachMoneyOutlined, CreditCardOffOutlined, CreditCardOutlined, DashboardOutlined, GroupOutlined, CategoryOutlined, CancelPresentationOutlined, ProductionQuantityLimitsOutlined, AccessTimeOutlined } from '@mui/icons-material';
 
 import { AdminLayout } from '../../components/layouts'
-import { Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { SummaryTile } from '../../components/admin'
 import { DashboardSummaryResponse } from '../../interfaces';
 import { stutzApi } from '../../../api';
 
-export const Dashboard = () => {
 
-    // const { data, error } = useSWR<DashboardSummaryResponse>('/api/admin/dashboard', {
+
+export const Dashboard = () => {
+    const [ data, setData ] = useState<DashboardSummaryResponse | null>(null);
+
+    // const { data, erro<DashboardSummaryResponse>r } = useSWR<DashboardSummaryResponse>('/api/admin/dashboard', {
     //     refreshInterval: 30 * 1000 // 30 segundos
     // });
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get('/admin');
+          const resp = await stutzApi.get<DashboardSummaryResponse>('/api/tes/admin');
           setData(resp.data);
         } catch (error) {
           console.log({error})
@@ -23,7 +26,6 @@ export const Dashboard = () => {
     
       }
 
-    const [data, setData] = useState([])
     const [refreshIn, setRefreshIn] = useState(30);
 
     useEffect(() => {
@@ -47,14 +49,10 @@ export const Dashboard = () => {
 
 
 
-    // if ( !error && !data ) {
-    //     return <></>
-    // }
+    if ( !data ) {
+        return <></>
+    }
 
-    // if ( error ){
-    //     console.log(error);
-    //     return <Typography>Error al cargar la información</Typography>
-    // }
 
 
     const {

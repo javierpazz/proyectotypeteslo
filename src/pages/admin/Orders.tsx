@@ -35,8 +35,8 @@ const columns:GridColDef[] = [
                     </NavLink>
                 )
     
-
-                // <a href={ `/admin/orders/order/${ row.id }` } target="_blank" rel="noreferrer" >
+                // <a href={ `/admin/orders/order/${ row.id }` } target="_
+                // blank" rel="noreferrer" >
                 //     Ver orden
                 // </a>
                 // )
@@ -71,7 +71,7 @@ useEffect(() => {
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get('/admin/orders');
+          const resp = await stutzApi.get('/api/tes/admin/orders');
           setOrders(resp.data);
           console.log(resp.data);
         } catch (error) {
@@ -107,11 +107,15 @@ useEffect(() => {
     >
          <Grid container className='fadeIn'>
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
-                <DataGrid 
-                    rows={ rows }
-                    columns={ columns }
-                    pageSize={ 10 }
-                    rowsPerPageOptions={ [10] }
+                <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                    paginationModel: { pageSize: 10, page: 0 },
+                    },
+                }}
+                pageSizeOptions={[10]}
                 />
 
             </Grid>

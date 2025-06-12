@@ -9,9 +9,9 @@ interface Props {
 export const AuthLayout: FC<Props> = ({ children, title  }) => {
   return (
     <>
-        {/* <head>
+        <head>
             <title>{ title }</title>
-        </head> */}
+        </head>
 
 
           <Box display='flex' justifyContent='center' alignItems='center' height="calc(100vh - 200px)">   

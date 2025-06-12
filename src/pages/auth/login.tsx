@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/material';
+// import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Box, Button, Chip, Grid, TextField, Typography } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../components/layouts'
 import { AuthContext } from '../../../context';
 import { validations } from '../../utils';
-import stutzApi from '../../../api/stutzApi';
 
 type FormData = {
     email   : string,
@@ -18,9 +18,9 @@ export const Login = () => {
 
 //////////////////ghghgh
 
-    const { search } = useLocation();
-    const redirectInUrl = new URLSearchParams(search).get('redirect');
-    const redirect = redirectInUrl ? redirectInUrl : '/';
+    // const { search } = useLocation();
+    // const redirectInUrl = new URLSearchParams(search).get('redirect');
+    // const redirect = redirectInUrl ? redirectInUrl : '/';
 
 //////////////////ghghgh
 
@@ -53,7 +53,8 @@ export const Login = () => {
         }        
     
         // Todo: navegar a la pantalla que el usuario estaba
-        navigate(redirect || '/');
+        navigate('/salepoint');
+        // navigate(redirect || '/');
 
 
     }

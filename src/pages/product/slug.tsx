@@ -44,7 +44,9 @@ export const Slug = () => {
     _id: '649f9b05c4416622ac833792',
     image: '1740176-00-A_0_2000.jpg',
     price: 1,
-    size: undefined,
+    porIva: 21,
+    medPro: "unidad",
+    size: "M",
     slug: 'mens_chill_crew_neck_sweatshirt',
     title: 'mens_chill_crew_neck_sweatshirt',
     gender: 'men',
@@ -72,14 +74,16 @@ const onAddProduct = () => {
 
   const loadProduct = async() => {
     try {
-      const resp = await stutzApi.get<IProduct>(`/products/${ slug }`);
+      const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slug }`);
       setProduct(resp.data);
 
       setTempCartProduct({
         _id: resp.data._id,
         image: resp.data.images[0],
         price: resp.data.price,
-        size: undefined,
+        porIva: resp.data.porIva,
+        medPro: resp.data.medPro,
+        size: "M",
         slug: resp.data.slug,
         title: resp.data.title,
         gender: resp.data.gender,
@@ -142,7 +146,7 @@ const onAddProduct = () => {
                 />
                 <SizeSelector 
                   // selectedSize={ product.sizes[2] } 
-                  sizes={ product.sizes}
+                  sizes={ product.sizes as ISize[]}
                   selectedSize={ tempCartProduct.size }
                   onSelectedSize={selectedSize}
 

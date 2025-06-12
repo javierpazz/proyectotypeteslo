@@ -38,7 +38,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
         }
 
         try {
-            const { data } = await stutzApi.get('/user/validate-token');
+            const { data } = await stutzApi.get('api/tes/user/validate-token');
             const { token, user } = data;
             Cookies.set('token', token );
             dispatch({ type: '[Auth] - Login', payload: user });
@@ -52,9 +52,10 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     const loginUser = async( email: string, password: string ): Promise<boolean> => {
 
         try {
-            const { data } = await stutzApi.post('/user/login', { email, password });
+            const { data } = await stutzApi.post('api/tes/user/login', { email, password });
             const { token, user } = data;
             Cookies.set('token', token );
+            localStorage.setItem('userInfo', JSON.stringify(data));
             dispatch({ type: '[Auth] - Login', payload: user });
             return true;
         } catch (error) {
@@ -66,7 +67,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
     const registerUser = async( name: string, email: string, password: string ): Promise<{hasError: boolean; message?: string}> => {
         try {
-            const { data } = await stutzApi.post('/user/register', { name, email, password });
+            const { data } = await stutzApi.post('api/tes/user/register', { name, email, password });
             const { token, user } = data;
             Cookies.set('token', token );
             dispatch({ type: '[Auth] - Login', payload: user });

@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Grid, Card, CardActionArea, CardMedia, Box, Typography, Link, Chip } from '@mui/material'
+import { Grid, Card, CardActionArea, CardMedia, Box, Typography, Chip } from '@mui/material'
 
 import { IProduct } from '../../interfaces'
 

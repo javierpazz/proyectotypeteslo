@@ -20,7 +20,7 @@ export const Users = () => {
     // const { data, error } = useSWR<IUser[]>('/api/admin/users');
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get('/admin/users');
+          const resp = await stutzApi.get<IUser[]>('/api/tes/admin/users');
           setUsers(resp.data);
         //   console.log(resp.data);
         } catch (error) {
@@ -49,7 +49,7 @@ export const Users = () => {
 
         try {
             
-            await stutzApi.put('/admin/users', {  userId, role: newRole });
+            await stutzApi.put('/api/tes/admin/users', {  userId, role: newRole });
 
         } catch (error) {
             setUsers( previosUsers );
@@ -103,11 +103,15 @@ export const Users = () => {
 
         <Grid container className='fadeIn'>
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
-                <DataGrid 
-                    rows={ rows }
-                    columns={ columns }
-                    pageSize={ 10 }
-                    rowsPerPageOptions={ [10] }
+                <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                    paginationModel: { pageSize: 10, page: 0 },
+                    },
+                }}
+                pageSizeOptions={[10]}
                 />
 
             </Grid>

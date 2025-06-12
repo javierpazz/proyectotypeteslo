@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { Typography, Grid, Chip, Link } from '@mui/material';
-import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { Typography, Grid, Chip } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 import { useEffect, useState, useContext } from "react";
@@ -66,7 +66,7 @@ useEffect(() => {
     const loadData = async() => {
       console.log(user!._id);
         try {
-          const resp = await stutzApi.get(`orders/getordersbyus/${user!._id}`);
+          const resp = await stutzApi.get(`/api/tes/orders/getordersbyus/${user!._id}`);
           setOrders(resp.data);
           console.log(resp.data);
         } catch (error) {

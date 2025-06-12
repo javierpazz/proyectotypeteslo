@@ -1,9 +1,16 @@
 export interface IProduct {
     _id: string;
+    codPro: string;
+    codProd: string;
+    codigoPro: string;
     description: string;
     images: string[];
     inStock: number;
+    minStock: number;
     price: number;
+    porIva: number;
+    medPro: string;
+    category: string;
     sizes: ISize[];
     slug: string;
     tags: string[];
@@ -21,3 +28,6 @@ export interface IProduct {
 
 export type ISize = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 export type IType = 'shirts'|'pants'|'hoodies'|'hats';
+
+
+

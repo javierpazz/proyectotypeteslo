@@ -2,7 +2,6 @@ import { FC, useContext } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { CartContext } from '../../../context';
 import { currency } from '../../utils';
-import { getEnvVariables } from '../../../helpers';
 
 
 interface Props {
@@ -16,7 +15,6 @@ interface Props {
 
 
 export const OrderSummary:FC<Props> = ({orderValues}) => {
-    const { VITE_TAX_RATE, VITE_API_URL } = getEnvVariables()
     
   const { numberOfItems, subTotal, total, tax } = useContext( CartContext );
   const summaryValues = orderValues ? orderValues : { numberOfItems, subTotal, total, tax };
@@ -40,7 +38,7 @@ export const OrderSummary:FC<Props> = ({orderValues}) => {
         </Grid>
 
         <Grid item xs={6}>
-            <Typography>Impuestos ({ Number(VITE_TAX_RATE) * 100 }%)</Typography>
+            <Typography>Impuestos </Typography>
         </Grid>
         <Grid item xs={6} display='flex' justifyContent='end'>
             <Typography>{ currency.format(summaryValues.tax) }</Typography>

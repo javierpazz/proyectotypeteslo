@@ -1,29 +1,21 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { getEnvVariables } from '../helpers';
-
-const { VITE_API_URL } = getEnvVariables()
 
 
 const stutzApi = axios.create({
-    baseURL: VITE_API_URL
+  // baseURL: "http://127.0.0.101:4000/api/tes"
+  baseURL: "http://127.0.0.101:4000"
 });
 
-// Todo: configurar interceptores
-stutzApi.interceptors.request.use( config => {
+stutzApi.interceptors.request.use(config => {
+  const token = Cookies.get('token');
 
-    config.headers = {
-        ...config.headers,
-        // 'x-token': localStorage.getItem('token')
-        'x-token': Cookies.get('token')
-        // 'x-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NGE3ZThkMGYzMjdjZTFjZDA2NDEyNjYiLCJlbWFpbCI6ImZlcm5hbmRvQGdvb2dsZS5jb20iLCJpYXQiOjE2ODk5NzU1NDYsImV4cCI6MTY4OTk4Mjc0Nn0.ERGR_v_6-3ZPvWSxMPgRV7bR0RW_lZGpL6blvzHqYXI"
-    }
+  if (token && config.headers) {
+    config.headers['x-token'] = token;
+    config.headers['authorization'] = (`Bearer ${token}`);
+  }
 
-    return config;
-})
-
+  return config;
+});
 
 export default stutzApi;
-
-
-

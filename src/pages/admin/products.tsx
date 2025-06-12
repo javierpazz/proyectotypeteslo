@@ -41,7 +41,7 @@ const columns:GridColDef[] = [
         }
     },
     { field: 'gender', headerName: 'Género' },
-    { field: 'type', headerName: 'Tipo' },
+    { field: 'category', headerName: 'Categoria' },
     { field: 'inStock', headerName: 'Inventario' },
     { field: 'price', headerName: 'Precio' },
     { field: 'sizes', headerName: 'Tallas', width: 250 },
@@ -58,7 +58,7 @@ export const Products = () => {
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get('/admin/products');
+          const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
           setProducts(resp.data);
         //   console.log(resp.data);
         } catch (error) {
@@ -81,7 +81,7 @@ export const Products = () => {
         img: product.images[0],
         title: product.title,
         gender: product.gender,
-        type: product.type,
+        // category: product.category,
         inStock: product.inStock,
         price: product.price,
         sizes: product.sizes.join(', '),
@@ -108,13 +108,16 @@ export const Products = () => {
 
          <Grid container className='fadeIn'>
             <Grid item xs={12} sx={{ height:650, width: '100%' }}>
-                <DataGrid 
-                    rows={ rows }
-                    columns={ columns }
-                    pageSize={ 10 }
-                    rowsPerPageOptions={ [10] }
+                <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                    paginationModel: { pageSize: 10, page: 0 },
+                    },
+                }}
+                pageSizeOptions={[10]}
                 />
-
             </Grid>
         </Grid>
         

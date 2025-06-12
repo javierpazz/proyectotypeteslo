@@ -16,7 +16,7 @@ export const Men = () => {
 
   const loadProducts = async() => {
     try {
-      const resp = await stutzApi.get('/products?gender=men');
+      const resp = await stutzApi.get('/api/tes/products?gender=men');
       setProducts(resp.data);
     } catch (error) {
       console.log({error})

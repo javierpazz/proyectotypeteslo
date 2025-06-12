@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { Link, Box, Button, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
+import { Box, Button, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
 
 import { CartContext } from '../../../context';
 import { ShopLayout } from '../../components/layouts/ShopLayout';
