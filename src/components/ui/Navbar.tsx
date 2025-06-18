@@ -43,14 +43,14 @@ export const Navbar = () => {
 
 <AppBar>
         <Toolbar>
-            <NavLink to="/" >
-                    <Typography variant='h6'>Teslo |</Typography>
-                    <Typography sx={{ ml: 0.5 }}>Shop</Typography>
+            <NavLink to="/admin/entradas" >
+                    <Typography variant='h6'>Escribania</Typography>
+                    {/* <Typography sx={{ ml: 0.5 }}>Shop</Typography> */}
             </NavLink>
 
             <Box flex={ 1 } />
 
-            <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }}
+            {/* <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }}
                     className="fadeIn">
                 <NavLink to='/category/men' >
                 <Button color={ pathname === '/category/men' ? 'primary':'info'}>Hombres</Button>
@@ -61,7 +61,7 @@ export const Navbar = () => {
                 <NavLink to='/category/kid' >
                 <Button color={ pathname === '/category/kid' ? 'primary':'info'}>Niños</Button>
                 </NavLink>
-            </Box>
+            </Box> */}
 
 
             <Box flex={ 1 } />
@@ -69,7 +69,7 @@ export const Navbar = () => {
                 
 
                 {/* Pantallas pantallas grandes */}
-                {
+                {/* {
                     isSearchVisible 
                         ? (
                             <Input
@@ -102,25 +102,25 @@ export const Navbar = () => {
                             <SearchOutlined />
                         </IconButton>
                     )
-                }
+                } */}
 
 
                 {/* Pantallas pequeñas */}
-                <IconButton
+                {/* <IconButton
                     sx={{ display: { xs: 'flex', sm: 'none' } }}
                     onClick={ toggleSideMenu }
                 >
                     <SearchOutlined />
-                </IconButton>
+                </IconButton> */}
 
 
-            <NavLink to="/cart" >
+            {/* <NavLink to="/cart" >
                     <IconButton>
                         <Badge badgeContent={ numberOfItems } color="secondary">
                             <ShoppingCartOutlined />
                         </Badge>
                     </IconButton>
-            </NavLink>
+            </NavLink> */}
 
 
             <Button onClick={ toggleSideMenu }>

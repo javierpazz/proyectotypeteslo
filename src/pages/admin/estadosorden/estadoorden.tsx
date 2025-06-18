@@ -8,7 +8,7 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  IInstrumento  } from '../../../interfaces';
+import { IEstadoOrden } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
@@ -16,19 +16,19 @@ import { AuthContext } from '../../../../context';
 
 interface FormData {
     _id?       : string;
-    codIns       : string;
+    note       : string;
     name       : string;
 }
-const instrumentoI = 
+const estadoordenI = 
       {
           _id: '',
-          codIns: "",
+          note: "",
           name: "",
      
       }
 
 
-export const InstrumentoAdminPage = () => {
+export const EstadoordenAdminPage = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ export const InstrumentoAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
-const [instrumento, setInstrumento] = useState(instrumentoI);
+const [estadoorden, setEstadoorden] = useState(estadoordenI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
 
@@ -57,7 +57,7 @@ const params = useParams();
 const { id } = params;
 
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
-    defaultValues: instrumento
+    defaultValues: estadoorden
 })
 
 
@@ -72,23 +72,23 @@ const loadProduct = async() => {
     try {
 
         if ( id === 'new' ) {
-        // crear un instrumentoo
-        instrumentoI._id= "",
-        instrumentoI.codIns= "",
-        instrumentoI.name= ""
+        // crear un estadoordeno
+        estadoordenI._id= "",
+        estadoordenI.note= "",
+        estadoordenI.name= ""
     } else {
-        const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
-        instrumentoI._id=resp.data._id,
-        instrumentoI.codIns=resp.data.codIns,
-        instrumentoI.name=resp.data.name
+        const resp = await stutzApi.get<IEstadoOrden>(`/api/tes/admin/estadosorden/${ id }`);
+        estadoordenI._id=resp.data._id,
+        estadoordenI.note=resp.data.note,
+        estadoordenI.name=resp.data.name
     }
   } catch (error) {
     console.log(error)
     
   }
-  setDefaultValues(instrumentoI); // Set default values
-  reset(instrumentoI); // Populate the form
-  setInstrumento(instrumentoI);
+  setDefaultValues(estadoordenI); // Set default values
+  reset(estadoordenI); // Populate the form
+  setEstadoorden(estadoordenI);
  }
 
 
@@ -120,18 +120,18 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/instrumentos', form)
+                await stutzApi.put('/api/tes/admin/estadosorden', form)
             }else{
-                await stutzApi.post('/api/tes/admin/instrumentos', form)
+                await stutzApi.post('/api/tes/admin/estadosorden', form)
             }
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/instrumentos`);
+                navigate(`/admin/estadosorden`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/instrumentos`);
+            navigate(`/admin/estadosorden`);
 
         } catch (error) {
             console.log(error);
@@ -142,8 +142,8 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Instrumento'} 
-            subTitle={`Editando: ${ instrumentoI.name }`}
+            title={'Estado Orden'} 
+            subTitle={`Editando: ${ estadoordenI.name }`}
             icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
@@ -165,16 +165,16 @@ const loadProduct = async() => {
 
                         <TextField
                             inputRef={input1Ref}
-                            label="Codigo"
+                            label="Estado"
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('codIns', {
+                            { ...register('name', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.codIns }
-                            helperText={ errors.codIns?.message }
+                            error={ !!errors.name }
+                            helperText={ errors.name?.message }
                         />
 
                         <TextField
@@ -183,12 +183,12 @@ const loadProduct = async() => {
                             fullWidth 
                             multiline
                             sx={{ mb: 1 }}
-                            { ...register('name', {
+                            { ...register('note', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.name }
-                            helperText={ errors.name?.message }
+                            error={ !!errors.note }
+                            helperText={ errors.note?.message }
                         />
 
 

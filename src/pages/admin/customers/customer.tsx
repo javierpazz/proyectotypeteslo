@@ -8,7 +8,7 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  IInstrumento  } from '../../../interfaces';
+import {  ICustomer  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
@@ -16,19 +16,28 @@ import { AuthContext } from '../../../../context';
 
 interface FormData {
     _id?       : string;
-    codIns       : string;
-    name       : string;
+    codCus       : string;
+    nameCus       : string;
+    emailCus: string;
+    domcomer: string;
+    cuit: string;
+    coniva: string;
+
 }
-const instrumentoI = 
+const customerI = 
       {
           _id: '',
-          codIns: "",
-          name: "",
+          codCus: "",
+          nameCus: "",
+          emailCus: "",
+          domcomer: "",
+          cuit: "",
+          coniva: "",
      
       }
 
 
-export const InstrumentoAdminPage = () => {
+export const CustomerAdminPage = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
@@ -49,7 +58,7 @@ export const InstrumentoAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
-const [instrumento, setInstrumento] = useState(instrumentoI);
+const [customer, setCustomer] = useState(customerI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
 
@@ -57,7 +66,7 @@ const params = useParams();
 const { id } = params;
 
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
-    defaultValues: instrumento
+    defaultValues: customer
 })
 
 
@@ -72,23 +81,31 @@ const loadProduct = async() => {
     try {
 
         if ( id === 'new' ) {
-        // crear un instrumentoo
-        instrumentoI._id= "",
-        instrumentoI.codIns= "",
-        instrumentoI.name= ""
+        // crear un customero
+        customerI._id= "",
+        customerI.codCus= "",
+        customerI.nameCus= ""
+        customerI.emailCus= ""
+        customerI.domcomer= ""
+        customerI.cuit= ""
+        customerI.coniva= ""
     } else {
-        const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
-        instrumentoI._id=resp.data._id,
-        instrumentoI.codIns=resp.data.codIns,
-        instrumentoI.name=resp.data.name
+        const resp = await stutzApi.get<ICustomer>(`/api/tes/admin/customers/${ id }`);
+        customerI._id=resp.data._id,
+        customerI.codCus=resp.data.codCus,
+        customerI.nameCus=resp.data.nameCus
+        customerI.emailCus=resp.data.emailCus
+        customerI.domcomer=resp.data.domcomer
+        customerI.cuit=resp.data.cuit
+        customerI.coniva=resp.data.coniva
     }
   } catch (error) {
     console.log(error)
     
   }
-  setDefaultValues(instrumentoI); // Set default values
-  reset(instrumentoI); // Populate the form
-  setInstrumento(instrumentoI);
+  setDefaultValues(customerI); // Set default values
+  reset(customerI); // Populate the form
+  setCustomer(customerI);
  }
 
 
@@ -120,18 +137,19 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/instrumentos', form)
+                await stutzApi.put('/api/tes/admin/customers', form)
             }else{
-                await stutzApi.post('/api/tes/admin/instrumentos', form)
+                await stutzApi.post('/api/tes/admin/customers', form)
             }
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/instrumentos`);
+                navigate(`/admin/customers`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/instrumentos`);
+            navigate(`/admin/customers`);
+
 
         } catch (error) {
             console.log(error);
@@ -142,8 +160,8 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Instrumento'} 
-            subTitle={`Editando: ${ instrumentoI.name }`}
+            title={'Cliente'} 
+            subTitle={`Editando: ${ customerI.nameCus }`}
             icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
@@ -169,12 +187,12 @@ const loadProduct = async() => {
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('codIns', {
+                            { ...register('codCus', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.codIns }
-                            helperText={ errors.codIns?.message }
+                            error={ !!errors.codCus }
+                            helperText={ errors.codCus?.message }
                         />
 
                         <TextField
@@ -183,12 +201,68 @@ const loadProduct = async() => {
                             fullWidth 
                             multiline
                             sx={{ mb: 1 }}
-                            { ...register('name', {
+                            { ...register('nameCus', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.name }
-                            helperText={ errors.name?.message }
+                            error={ !!errors.nameCus }
+                            helperText={ errors.nameCus?.message }
+                        />
+
+                        <TextField
+                            label="Email"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('emailCus', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.emailCus }
+                            helperText={ errors.emailCus?.message }
+                        />
+
+                        <TextField
+                            label="Domicilio"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('domcomer', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.domcomer }
+                            helperText={ errors.domcomer?.message }
+                        />
+
+                        <TextField
+                            label="CUIT"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('cuit', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.cuit }
+                            helperText={ errors.cuit?.message }
+                        />
+
+                        <TextField
+                            label="CONDICION IVA"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('coniva', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.coniva }
+                            helperText={ errors.coniva?.message }
                         />
 
 

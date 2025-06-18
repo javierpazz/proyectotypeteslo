@@ -1,6 +1,7 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../context';
 
 // export default function AdminNavBar() {
 export const AdminNavbarMenu = () => {
@@ -13,6 +14,8 @@ export const AdminNavbarMenu = () => {
   const [anchorElCash, setAnchorElCash] = useState<null | HTMLElement>(null);
   const [anchorElStocks, setAnchorElStocks] = useState<null | HTMLElement>(null);
   const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
+  const [anchorElConfi, setAnchorElConfi] = useState<null | HTMLElement>(null);
+  const [anchorElLogout, setAnchorElLogout] = useState<null | HTMLElement>(null);
 
   // // Funciones para abrir menú
   // const handleOpen = (setter) => (event) => setter(event.currentTarget);
@@ -27,22 +30,61 @@ export const AdminNavbarMenu = () => {
     () =>
       setter(null);
 
+////////////////////FGFGFGFG
+const { user} = useContext(  AuthContext );      
+////////////////////FGFGFGFG
+
+// TODO
+const signoutHandler = () => {
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
+    // window.location.href = '/signin';
+    window.location.href = '/';
+  };
+
+
   return (
     <AppBar position="static" color="primary">
-      <Toolbar sx={{ justifyContent: 'flex-end' }}>
+      {/* <Toolbar sx={{ justifyContent: 'flex-end' }}> */}
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Usuario cliente */}
-          <>
-            {/* <Button
+          <div style={{ display: 'flex' }}>
+
+            <Button
               color="primary"
               onClick={handleOpen(setAnchorElUser)}
             >
-            </Button> */}
-            <Menu
+              {(user && user.name && user.role !== "client") && (
+
+              <MenuItem component={Link} to="/salepoint" onClick={handleClose(setAnchorElUser)}>
+                Punto Venta.:{(localStorage.getItem('puntonum')) || ""}{(localStorage.getItem('nameCon')) || ""}
+              </MenuItem>
+
+
+              )}
+            </Button>
+        <Menu
+          anchorEl={anchorElEscri}
+          open={Boolean(anchorElEscri)}
+          onClose={handleClose(setAnchorElEscri)}
+        >
+        </Menu>
+
+            <Button
+              color="primary"
+              onClick={handleOpen(setAnchorElUser)}
+            > Usuario - 
+              { (user && user.name && user.role !== "client") && (
+                 user.name 
+              )}
+            </Button>
+            <Menu 
               anchorEl={anchorElUser}
               open={Boolean(anchorElUser)}
               onClose={handleClose(setAnchorElUser)}
             >
-              <MenuItem component={Link} to="/profile" onClick={handleClose(setAnchorElUser)}>
+              {/* <MenuItem component={Link} to="/profile" onClick={handleClose(setAnchorElUser)}>
                 Perfil Usuario
               </MenuItem>
               <MenuItem component={Link} to="/invoicehistory" onClick={handleClose(setAnchorElUser)}>
@@ -51,13 +93,14 @@ export const AdminNavbarMenu = () => {
               <MenuItem component={Link} to="/orderhistory" onClick={handleClose(setAnchorElUser)}>
                 Mis Ordenes
               </MenuItem>
-              <MenuItem divider />
+              <MenuItem divider /> */}
               {/* <MenuItem onClick={() => { handleClose(setAnchorElUser)(); signoutHandler(); }}>
                 Log Out
               </MenuItem> */}
             </Menu>
-          </>
+          </div>
 
+        <div style={{ display: 'flex' }}>
         {/* Ventas */}
         <Button
           color="primary"
@@ -83,16 +126,22 @@ export const AdminNavbarMenu = () => {
             Entradas
           </MenuItem>
           <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElEscri)}>
-             Diligencias
+             Diligencias 
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/entradasrst" onClick={handleClose(setAnchorElEscri)}>
+            Entradas Registradas  sin Terminar
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/entradasnrst" onClick={handleClose(setAnchorElEscri)}>
+            Entradas No Registradas  sin Terminar
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/entradaspst" onClick={handleClose(setAnchorElEscri)}>
+            Entradas Protocolizadas Sin Terminar
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/entradasnpst" onClick={handleClose(setAnchorElEscri)}>
+            Entradas No Protocolizadas Sin Terminar
           </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-             Entradas sin Facturar
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-            Entradas sin Protocolizar
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-            Entradas Protocolizados sin Terminar
+             Entradas sin Facturar (Sin Hacer)
           </MenuItem>
         </Menu>
 
@@ -250,7 +299,79 @@ export const AdminNavbarMenu = () => {
             Chat Support
           </MenuItem>
         </Menu>
+
+
+        {/* configuracion */}
+        <Button
+          color="primary"
+          onClick={handleOpen(setAnchorElConfi)}
+        >
+          Configuracion
+        </Button>
+        <Menu
+          anchorEl={anchorElConfi}
+          open={Boolean(anchorElConfi)}
+         onClose={handleClose(setAnchorElConfi)}
+          sx={{ maxHeight: 400, overflowY: 'auto' }}
+        >
+          <MenuItem component={Link} to="/admin/filtros" onClick={handleClose(setAnchorElConfi)}>
+            Informes y Filtros
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfi)}>
+            Diligencias
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/customers" onClick={handleClose(setAnchorElConfi)}>
+            Clientes
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/proveedores" onClick={handleClose(setAnchorElConfi)}>
+            Proveedores
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/valores" onClick={handleClose(setAnchorElConfi)}>
+            Valores
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/comprobantes" onClick={handleClose(setAnchorElConfi)}>
+            Comprobantes
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/configurations" onClick={handleClose(setAnchorElConfi)}>
+            Puntos de Venta
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/encargados" onClick={handleClose(setAnchorElConfi)}>
+            Encargados
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfi)}>
+            Usuarios
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/profile" onClick={handleClose(setAnchorElConfi)}>
+            Perfil Usuario
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/estadosorden" onClick={handleClose(setAnchorElConfi)}>
+            Estados de Ordenes
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/support" onClick={handleClose(setAnchorElConfi)}>
+            Chat Soporte
+          </MenuItem>
+        </Menu>
+        <Button
+          color="primary"
+          onClick={handleOpen(setAnchorElLogout)}
+        >
+          Log Out
+        </Button>
+        <Menu
+          anchorEl={anchorElLogout}
+          open={Boolean(anchorElLogout)}
+         onClose={handleClose(setAnchorElLogout)}
+          sx={{ maxHeight: 400, overflowY: 'auto' }}
+        >
+          <MenuItem component={Link} to="/admin/login" onClick={handleClose(setAnchorElLogout)}>
+                        Log Out
+          </MenuItem>
+        </Menu>
+
+      </div>
       </Toolbar>
+      {/* <Toolbar sx={{ justifyContent: 'flex-end' }}>
+      </Toolbar> */}
     </AppBar>
   );
 }

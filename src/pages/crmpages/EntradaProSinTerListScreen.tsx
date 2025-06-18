@@ -28,6 +28,7 @@ const columns:GridColDef[] = [
 
     },
     { field: 'remDat', headerName: 'Fecha', width: 100 },
+    { field: 'dueDat', headerName: 'Vencimiento', width: 100 },
     {
         field: 'terminado',
         headerName: 'Terminada',
@@ -90,21 +91,19 @@ const columns:GridColDef[] = [
 
 
 
-export const EntradaListScreen = () => {
 
-    
+export const EntradaProSinTerListScreen = () => {
+
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/login?redirect=/admin/entradaspst');
         }
     }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
-
-    
+    ////////////////////FGFGFGFG    
     
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
     const [ isloading, setIsloading ] = useState(false);
@@ -116,17 +115,18 @@ export const EntradaListScreen = () => {
     const loadData = async() => {
         try {
           setIsloading(true);
-          const resp = await stutzApi.get('/api/invoices/searchremSEsc');
-          setIsloading(false);
+        //   const { data } = await axios.get(`${API}/api/invoices/searchinvS?page=${page}&invoice=${invoice}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&comprobante=${codCom}`,{
+        //     headers: { Authorization: `Bearer ${userInfo.token}` },
+        // });
+          const resp = await stutzApi.get('/api/invoices/searchremSEscPST');
           setInvoices(resp.data.invoices);
+          setIsloading(false);
         } catch (error) {
           console.log({error})
         }
     
       }
 
-
-      
     useEffect(() => {
         loadData();
     }, [])
@@ -144,6 +144,7 @@ export const EntradaListScreen = () => {
         folNum : invoice.folNum,
         asiNum : invoice.asiNum,
         // asiDat : invoice.asiDat!.substring(0, 10),
+        dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
         asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
 
         escNum : invoice.escNum,
@@ -162,36 +163,33 @@ export const EntradaListScreen = () => {
         updatedAt: invoice.updatedAt!.substring(0, 10),
     }));
 
-    
+
   return (
     <AdminLayoutMenuList
         title={'Entradas'} 
-        subTitle={'Actualizando Entradas'}
+        subTitle={'Entradas Protocolizadas sin Terminar'}
         icon={ <ConfirmationNumberOutlined /> }
     >
         {
           isloading
             ? <FullScreenLoading />
             : 
+         <Grid container className='fadeIn'>
+            <Grid item xs={12} sx={{ height:650, width: '100%' }}>
+                <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                    paginationModel: { pageSize: 10, page: 0 },
+                    },
+                }}
+                pageSizeOptions={[10]}
+                />
 
-                <Grid container className='fadeIn'>
-                    <Grid item xs={12} sx={{ height:650, width: '100%' }}>
-                        <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        initialState={{
-                            pagination: {
-                            paginationModel: { pageSize: 10, page: 0 },
-                            },
-                        }}
-                        pageSizeOptions={[10]}
-                        />
-
-                    </Grid>
-                </Grid>
-
-        }
-
+            </Grid>
+        </Grid>
+}
         
     </AdminLayoutMenuList>
   )

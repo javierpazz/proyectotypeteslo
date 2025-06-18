@@ -14,7 +14,8 @@ export const authReducer = ( state: AuthState, action: AuthActionType ): AuthSta
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.payload
+                user: action.payload,
+                isLoading: false
             }
 
         case '[Auth] - Logout':
@@ -22,6 +23,7 @@ export const authReducer = ( state: AuthState, action: AuthActionType ): AuthSta
                 ...state,
                 isLoggedIn: false,
                 user: undefined,
+                isLoading: false,
             }
 
 

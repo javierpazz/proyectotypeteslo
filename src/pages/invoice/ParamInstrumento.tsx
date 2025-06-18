@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import {TableFormEscPar} from './TableFormEscPar';
 import { BiFileFind } from "react-icons/bi";
-import { CartContext } from '../../../context';
+import { AuthContext, CartContext } from '../../../context';
 import {
   Box,
   Button,
@@ -34,6 +34,8 @@ import { ICartProduct, IInstrumento } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
+import { useNavigate } from 'react-router-dom';
+import { FullScreenLoading } from '../../components/ui';
 
 const getError = (error:any) => {
   return error.response && error.response.data.message
@@ -42,13 +44,27 @@ const getError = (error:any) => {
 };
 
 export const ParamInstrumento = () => {
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/login?redirect=/admin/mesaen/paraminstrumento');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG    
+
+
+    const userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
+
 
   // const { state, dispatch: ctxDispatch } = useContext(Store);
     const {  cart, removeCart, addTodosProductToCartEscPar, createParam } = useContext(CartContext);
     
-    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
         const body = {
             orderItems: cart.map( p => ({
                 ...p,
@@ -102,6 +118,7 @@ export const ParamInstrumento = () => {
   const [showInvoice, setShowInvoice] = useState(false);
 
   const [isPaying, setIsPaying] = useState(false);
+  const [isloading, setIsloading] = useState(false);
 
 
 
@@ -298,22 +315,24 @@ const handleShowIns = () => {
 
   const instrumentoHandler = async () => {
     try {
-        await stutzApi.put('/api/tes/admin/instrumentos', 
-        {
-          body,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${userInfo.token}`,
+        setIsloading(true);
+        await stutzApi.put('/api/tes/admin/instrumentos/Det', 
+          {
+            body,
           },
-        }
-      );
-      //ctxDispatch({ type: 'INVOICE_CLEAR' });
-      //      dispatch({ type: 'CREATE_SUCCESS' });
-      //      localStorage.removeItem('cart');
-      setIsPaying(false);
-      setDesval('');
-      setNumval(' ');
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        //ctxDispatch({ type: 'INVOICE_CLEAR' });
+        //      dispatch({ type: 'CREATE_SUCCESS' });
+        //      localStorage.removeItem('cart');
+        setIsloading(false);
+        setIsPaying(false);
+        setDesval('');
+        setNumval(' ');
       setAmountval(0);
       //navigate(`/order/${data.order._id}`);
     } catch (err) {
@@ -408,7 +427,6 @@ const handleShowIns = () => {
             >
               CANCELA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
           </Grid>
 
           <Grid item md={4}>
@@ -418,11 +436,11 @@ const handleShowIns = () => {
               sx={{ bgcolor: 'yellow', color: 'black' }}
               // inputRef={input0Ref}
               onClick={placeInstrumentoHandler}
-              disabled={ !codIns}
+              disabled={ !codIns || isloading }
             >
               GRABA PARAMETROS
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
+            {isloading && <FullScreenLoading />}
           </Grid>
 
           <Grid item md={4}>

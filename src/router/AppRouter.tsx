@@ -30,8 +30,25 @@ import {MesaEntradaVal} from '../pages/invoice/MesaEntradaVal';
 import {MesaEntradaCon} from '../pages/invoice/MesaEntradaCon';
 import { Instrumentos } from '../pages/admin/Instrumentos';
 import { InstrumentoAdminPage } from '../pages/admin/instrumentos/instrumento';
+import { Customers } from '../pages/admin/Customers';
+import { CustomerAdminPage } from '../pages/admin/customers/customer';
+import { Proveedores } from '../pages/admin/Proveedores';
+import { ProveedorAdminPage } from '../pages/admin/proveedores/proveedor';
+import { Valores } from '../pages/admin/Valores';
+import { ValorAdminPage } from '../pages/admin/valores/valor';
+import { Encargados } from '../pages/admin/Encargados';
+import { EncargadoAdminPage } from '../pages/admin/encargados/encargado';
+import { Estadosorden } from '../pages/admin/Estadosorden';
+import { EstadoordenAdminPage } from '../pages/admin/estadosorden/estadoorden';
+import { ProductsEsc } from '../pages/admin/productsesc';
+import { ProductEscAdminPage } from '../pages/admin/diligencias/productesc';
+
 import { ParamInstrumento } from '../pages/invoice/ParamInstrumento';
 import {EntradaListScreen} from '../pages/crmpages/EntradaListScreen';
+import {EntradaRegSinTerListScreen} from '../pages/crmpages/EntradaRegSinTerListScreen';
+import {EntradaProSinTerListScreen} from '../pages/crmpages/EntradaProSinTerListScreen';
+import {EntradaNoRegSinTerListScreen} from '../pages/crmpages/EntradaNoRegSinTerListScreen';
+import {EntradaNoProSinTerListScreen} from '../pages/crmpages/EntradaNoProSinTerListScreen';
 import {DiligenciaListScreen} from '../pages/crmpages/DiligenciaListScreen';
 import { useEffect } from 'react';
 import { stutzApi } from '../../api';
@@ -39,15 +56,21 @@ import { stutzApi } from '../../api';
 
 export const AppRouter = () => {
 
+
   useEffect(() => {
+    const cargado = localStorage.getItem('punto');
+    if (!cargado) {
+
     const fetchData = async () => {
       const { data } = await stutzApi.get(`/api/configurations/`);
       localStorage.setItem('punto', data[0]._id);
       localStorage.setItem('puntonum', data[0].codCon);
-
+      localStorage.setItem('nameCon', data[0].name);
     }
     fetchData();
+    }
   }, []);
+
 
 
 
@@ -82,18 +105,34 @@ export const AppRouter = () => {
                             <Route path="/admin/orders/order/:id" element={ <Order /> } />
                             <Route path="/admin/orders" element={ <Orders /> } />
 
-                            <Route path="/admin/instrumentos" element={ <Instrumentos /> } />
                             <Route path="/salepoint" element={ <SalePointScreen /> }/>
                             <Route path="/admin/invoices" element={ <InvoiceListScreen /> } />
                             <Route path="/admin/remiter" element={ <Remits /> } />
                             <Route path="/admin/mesaentrada" element={ <MesaEntrada /> } />
                             <Route path="/admin/mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
                             <Route path="/admin/mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
-                            <Route path="/admin/instrumentos/instrumento/:slugadm" element={ <InstrumentoAdminPage /> } />
                             <Route path="/admin/paraminstrumento" element={ <ParamInstrumento /> } />
                             <Route path="/admin/entradas" element={ <EntradaListScreen /> } />
+                            <Route path="/admin/entradasrst" element={ <EntradaRegSinTerListScreen /> } />
+                            <Route path="/admin/entradasnrst" element={ <EntradaNoRegSinTerListScreen /> } />
+                            <Route path="/admin/entradaspst" element={ <EntradaProSinTerListScreen /> } />
+                            <Route path="/admin/entradasnpst" element={ <EntradaNoProSinTerListScreen /> } />
                             <Route path="/admin/diligencias" element={ <DiligenciaListScreen /> } />
                             <Route path="/admin/entrada/:id" element={ <MesaEntradaCon /> } />
+                            <Route path="/admin/instrumentos" element={ <Instrumentos /> } />
+                            <Route path="/admin/instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
+                            <Route path="/admin/customers" element={ <Customers /> } />
+                            <Route path="/admin/customers/customer/:id" element={ <CustomerAdminPage /> } />
+                            <Route path="/admin/proveedores" element={ <Proveedores /> } />
+                            <Route path="/admin/proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
+                            <Route path="/admin/valores" element={ <Valores /> } />
+                            <Route path="/admin/valores/valor/:id" element={ <ValorAdminPage /> } />
+                            <Route path="/admin/encargados" element={ <Encargados /> } />
+                            <Route path="/admin/encargados/encargado/:id" element={ <EncargadoAdminPage /> } />
+                            <Route path="/admin/estadosorden" element={ <Estadosorden /> } />
+                            <Route path="/admin/estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
+                            <Route path="/admin/productsesc" element={ <ProductsEsc /> } />
+                            <Route path="/admin/productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
 
                             <Route path="/orders/history" element={ <History /> } />
                             <Route path="/orders/:id" element={ <OrderPage /> } />

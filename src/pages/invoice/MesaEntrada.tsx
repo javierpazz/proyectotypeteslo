@@ -3,7 +3,7 @@ import {Header} from './Header';
 import { toast } from 'react-toastify';
 import {TableFormEsc} from './TableFormEsc';
 import { BiFileFind } from "react-icons/bi";
-import { CartContext } from '../../../context';
+import { AuthContext, CartContext } from '../../../context';
 import ReactToPrint from 'react-to-print';
 import {
   Box,
@@ -36,6 +36,8 @@ import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
+import { useNavigate } from 'react-router-dom';
+import { FullScreenLoading } from '../../components/ui';
 
 const getError = (error:any) => {
   return error.response && error.response.data.message
@@ -45,12 +47,27 @@ const getError = (error:any) => {
 
 export const MesaEntrada = () => {
 
-  // const { state, dispatch: ctxDispatch } = useContext(Store);
-    const {  cart, removeCart, addTodosProductToCartEsc } = useContext(CartContext);
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/login?redirect=/admin/mesaentrada');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG    
     
-    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
+
+
+        const userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
+
+  // const { state, dispatch: ctxDispatch } = useContext(Store);
+    const {  cart, createParam, addTodosProductToCartEsc } = useContext(CartContext);
+    
         const invoice: IOrder = {
             orderItems: cart.map( p => ({
                 ...p,
@@ -174,7 +191,7 @@ export const MesaEntrada = () => {
   const [showInvoice, setShowInvoice] = useState(false);
 
   const [isPaying, setIsPaying] = useState(false);
-
+  const [isloading, setIsloading] = useState(false);
   const config = {
     salePoint: userInfo.configurationObj.codCon,
     name: userInfo.configurationObj.name,
@@ -356,7 +373,7 @@ const handleShowIns = () => {
 
     useEffect(() => {
       if (customers) {
-        removeCart();
+        createParam();
         setValueeR("");
         setShowInvoice(false);
       }
@@ -438,7 +455,7 @@ const handleShowIns = () => {
               invoice.asieDat= asieDat;
               invoice.terminado= terminado;
           invoice.codCon = userInfo.codCon;
-          invoice.user = userInfo._id,
+          invoice.user = userInfo.user._id,
           invoice.codConNum = codConNum;
 
           invoice.codSup = '0';
@@ -464,6 +481,7 @@ const handleShowIns = () => {
 
   const orderHandler = async () => {
     try {
+      setIsloading(true);
       const { data } = await stutzApi.post(
         `/api/invoices/remEsc`,
 
@@ -488,7 +506,7 @@ const handleShowIns = () => {
               asieDat : invoice.asieDat,
               terminado : invoice.terminado,
           codCon: invoice.codCon,
-          user: userInfo._id,
+          user: userInfo.user._id,
           codConNum: invoice.codConNum,
 
           //        codSup: invoice.codSup,
@@ -513,6 +531,7 @@ const handleShowIns = () => {
       //ctxDispatch({ type: 'INVOICE_CLEAR' });
       //      dispatch({ type: 'CREATE_SUCCESS' });
       //      localStorage.removeItem('cart');
+      setIsloading(false);
       setIsPaying(false);
       setDesval('');
       setDesVal('');
@@ -539,7 +558,7 @@ const handleShowIns = () => {
 
   const clearitems = () => {
     input2Ref.current?.focus()
-    removeCart();
+    createParam();
     setValueeR("");
     setCodCust("");
     setRemNum("");
@@ -686,8 +705,8 @@ const handleShowIns = () => {
             <TextField
               fullWidth
               type="number"
-              label="Escritura N°"
-              placeholder="Escritura N°"
+              label="Instrumento N°"
+              placeholder="Instrumento N°"
               value={escNum}
               onChange={(e) => setEscNum(e.target.value)}
               // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
@@ -795,7 +814,6 @@ const handleShowIns = () => {
             >
               CANCELA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
           </Grid>
 
           <Grid item md={4}>
@@ -805,11 +823,11 @@ const handleShowIns = () => {
               sx={{ bgcolor: 'yellow', color: 'black' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
-              disabled={cart.length === 0 || !remDat || !codCus}
+              disabled={cart.length === 0 || !codCus || isloading}
             >
               GRABA ENTRADA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
+            {isloading && <FullScreenLoading />}
           </Grid>
 
           <Grid item md={4}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { PeopleOutline } from '@mui/icons-material'
 
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
@@ -7,12 +7,25 @@ import { Grid, Select, MenuItem } from '@mui/material';
 import { AdminLayout } from '../../components/layouts'
 import { IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
+import { AuthContext } from '../../../context';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 export const Users = () => {
 
+
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/login?redirect=/admin/users');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
 
     const [ users, setUsers ] = useState<IUser[]>([]);
 

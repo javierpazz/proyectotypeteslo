@@ -10,3 +10,6 @@ export * from './configuracion';
 export * from './customer';
 export * from './supplier';
 export * from './instrumentos';
+export * from './value';
+export * from './encargado';
+export * from './estadoorden';

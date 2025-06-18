@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export interface AuthState {
     isLoggedIn: boolean;
     user?: IUser;
+    isLoading: boolean,
 }
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 const AUTH_INITIAL_STATE: AuthState = {
     isLoggedIn: false,
     user: undefined,
+    isLoading: true,
 }
 
 export const AuthProvider:FC<Props> = ({ children }) => {
@@ -34,6 +36,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     const checkToken = async() => {
 
         if ( !Cookies.get('token') ) {
+            dispatch({ type: '[Auth] - Logout' });
             return;
         }
 
@@ -44,6 +47,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
             dispatch({ type: '[Auth] - Login', payload: user });
         } catch (error) {
             Cookies.remove('token');
+            dispatch({ type: '[Auth] - Logout' });
         }
     }
     

@@ -8,7 +8,7 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  IInstrumento  } from '../../../interfaces';
+import {  IValue  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
@@ -16,19 +16,19 @@ import { AuthContext } from '../../../../context';
 
 interface FormData {
     _id?       : string;
-    codIns       : string;
-    name       : string;
+    codVal       : string;
+    desVal       : string;
 }
-const instrumentoI = 
+const valorI = 
       {
           _id: '',
-          codIns: "",
-          name: "",
+          codVal: "",
+          desVal: "",
      
       }
 
 
-export const InstrumentoAdminPage = () => {
+export const ValorAdminPage = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ export const InstrumentoAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
-const [instrumento, setInstrumento] = useState(instrumentoI);
+const [valor, setValor] = useState(valorI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
 
@@ -57,7 +57,7 @@ const params = useParams();
 const { id } = params;
 
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
-    defaultValues: instrumento
+    defaultValues: valor
 })
 
 
@@ -72,23 +72,23 @@ const loadProduct = async() => {
     try {
 
         if ( id === 'new' ) {
-        // crear un instrumentoo
-        instrumentoI._id= "",
-        instrumentoI.codIns= "",
-        instrumentoI.name= ""
+        // crear un valoro
+        valorI._id= "",
+        valorI.codVal= "",
+        valorI.desVal= ""
     } else {
-        const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
-        instrumentoI._id=resp.data._id,
-        instrumentoI.codIns=resp.data.codIns,
-        instrumentoI.name=resp.data.name
+        const resp = await stutzApi.get<IValue>(`/api/tes/admin/valores/${ id }`);
+        valorI._id=resp.data._id,
+        valorI.codVal=resp.data.codVal,
+        valorI.desVal=resp.data.desVal
     }
   } catch (error) {
     console.log(error)
     
   }
-  setDefaultValues(instrumentoI); // Set default values
-  reset(instrumentoI); // Populate the form
-  setInstrumento(instrumentoI);
+  setDefaultValues(valorI); // Set default values
+  reset(valorI); // Populate the form
+  setValor(valorI);
  }
 
 
@@ -120,18 +120,18 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/instrumentos', form)
+                await stutzApi.put('/api/tes/admin/valores', form)
             }else{
-                await stutzApi.post('/api/tes/admin/instrumentos', form)
+                await stutzApi.post('/api/tes/admin/valores', form)
             }
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/instrumentos`);
+                navigate(`/admin/valores`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/instrumentos`);
+            navigate(`/admin/valores`);
 
         } catch (error) {
             console.log(error);
@@ -142,8 +142,8 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Instrumento'} 
-            subTitle={`Editando: ${ instrumentoI.name }`}
+            title={'Valor'} 
+            subTitle={`Editando: ${ valorI.desVal }`}
             icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
@@ -169,12 +169,12 @@ const loadProduct = async() => {
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('codIns', {
+                            { ...register('codVal', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.codIns }
-                            helperText={ errors.codIns?.message }
+                            error={ !!errors.codVal }
+                            helperText={ errors.codVal?.message }
                         />
 
                         <TextField
@@ -183,12 +183,12 @@ const loadProduct = async() => {
                             fullWidth 
                             multiline
                             sx={{ mb: 1 }}
-                            { ...register('name', {
+                            { ...register('desVal', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.name }
-                            helperText={ errors.name?.message }
+                            error={ !!errors.desVal }
+                            helperText={ errors.desVal?.message }
                         />
 
 

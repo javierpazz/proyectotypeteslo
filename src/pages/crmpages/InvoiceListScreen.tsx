@@ -53,16 +53,16 @@ export const InvoiceListScreen = () => {
 
     const [ orders, setOrders ] = useState<IOrder[]>([]);
 
-////////////////////FGFGFGFG
-const navigate = useNavigate()
-const { user} = useContext(  AuthContext );      
-useEffect(() => {
-    if (!user) {
-      navigate('/auth/login?redirect=/admin/invoices');
-    }
-  }, [user, navigate]);
+    ////////////////////FGFGFGFG
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate()
 
-////////////////////FGFGFGFG
+    useEffect(() => {
+        if (!user) {
+        navigate('/auth/login?redirect=/admin/entradas');
+        }
+    }, [user, navigate]);
+    ////////////////////FGFGFGFG
 
 
 

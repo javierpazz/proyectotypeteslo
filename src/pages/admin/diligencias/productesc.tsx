@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 
-import { AdminLayout } from '../../../components/layouts'
+import { AdminLayoutMenuList } from '../../../components/layouts'
 import {  IProduct  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
@@ -49,7 +49,7 @@ const productI =
       }
 
 
-export const ProductAdminPage = () => {
+export const ProductEscAdminPage = () => {
 
     // const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -238,7 +238,7 @@ const loadProduct = async() => {
     }
 
     return (
-        <AdminLayout 
+        <AdminLayoutMenuList 
             title={'Producto'} 
             subTitle={`Editando: ${ productI.title }`}
             icon={ <DriveFileRenameOutline /> }
@@ -484,7 +484,7 @@ const loadProduct = async() => {
 
                 </Grid>
             </form>
-        </AdminLayout>
+        </AdminLayoutMenuList>
     )
 }
 

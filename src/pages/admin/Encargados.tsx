@@ -4,34 +4,32 @@ import { Box, Button, Chip, Grid, Link } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IInstrumento  } from '../../interfaces';
+import { IEncargado  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
+export const Encargados = () => {
 
+const columns:GridColDef[] = [
+    { field: 'codEnc', headerName: 'Codigo' },
+    { 
+        field: 'name', 
+        headerName: 'Descripcion', 
+        width: 250,
+        renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+            return (
+                <NavLink to={`/admin/encargados/encargado/${row.id}`}>
+                    <Link underline='always'>
+                        { row.name}
+                    </Link>
+                </NavLink>
+            )
+        }
+    },
 
-
-export const Instrumentos = () => {
-
-    const columns:GridColDef[] = [
-        { field: 'codIns', headerName: 'Codigo' },
-        { 
-            field: 'name', 
-            headerName: 'Descripcion', 
-            width: 250,
-            renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
-                return (
-                    <NavLink to={`/admin/instrumentos/instrumento/${row.id}`}>
-                        <Link underline='always'>
-                            { row.name}
-                        </Link>
-                    </NavLink>
-                )
-            }
-        },
-        {
+    {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
@@ -43,8 +41,8 @@ export const Instrumentos = () => {
         
             }
         },
-    
-    ];
+
+];
 
 
     ////////////////////FGFGFGFG
@@ -53,19 +51,18 @@ export const Instrumentos = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/instrumentos');
+        navigate('/auth/login?redirect=/admin/encargados');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
-
-    const [ instrumentos, setInstrumentos ] = useState<IInstrumento[]>([]);
+    const [ encargados, setEncargados ] = useState<IEncargado[]>([]);
 
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IInstrumento[]>('/api/tes/admin/instrumentos');
-          setInstrumentos(resp.data);
+          const resp = await stutzApi.get<IEncargado[]>('/api/tes/admin/encargados');
+          setEncargados(resp.data);
         } catch (error) {
           console.log({error})
         }
@@ -76,20 +73,19 @@ export const Instrumentos = () => {
         loadData();
     }, [])
 
-    // const { data, error } = useSWR<IProduct[]>('/api/admin/instrumentos');
+    // const { data, error } = useSWR<IProduct[]>('/api/admin/encargados');
     // if ( !data && !error ) return (<></>);
     
-    
-    const rows = instrumentos.map( instrumentos => ({
-        id: instrumentos._id,
-        codIns: instrumentos.codIns,
-        name: instrumentos.name,
+    const rows = encargados.map( encargado => ({
+        id: encargado._id,
+        codEnc: encargado.codEnc,
+        name: encargado.name,
     }));
 
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/instrumentos/${id}`);
+        await stutzApi.delete(`/api/tes/admin/encargados/${id}`);
         window.location.reload();
     } catch (err) {
       }
@@ -97,22 +93,22 @@ export const Instrumentos = () => {
   };
 
 
-
-    if ( !instrumentos ) return (<></>);
+    
+    if ( !encargados ) return (<></>);
 
   return (
     <AdminLayoutMenuList 
-        title={`Instrumentos (${ instrumentos?.length })`} 
-        subTitle={'Mantenimiento de instrumentos'}
+        title={`Encargados (${ encargados?.length })`} 
+        subTitle={'Mantenimiento de Encargados'}
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/instrumentos/instrumento/new' >
+        <NavLink to='/admin/encargados/encargado/new' >
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
-                Crear Instrumento
+                Crear Encargado
             </Button>
             </NavLink>            
         </Box>

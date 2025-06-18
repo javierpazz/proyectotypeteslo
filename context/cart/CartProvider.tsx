@@ -129,6 +129,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
     }
 
     const addTodosProductToCartEscPar = ( products: ICartProduct[] ) => {
+        state.cart=[];
         const newCart = [...state.cart];
 
         products.forEach((product) => {
@@ -150,10 +151,10 @@ export const CartProvider:FC<Props> = ({ children }) => {
         });
 
         dispatch({ type: '[Cart] - Update products in cart', payload: newCart });
-
     }
 
     const addTodosProductToCartEsc = ( products: ICartProduct[], remDat:any ) => {
+        state.cart=[];
         const newCart = [...state.cart];
 
         products.forEach((product) => {

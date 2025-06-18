@@ -9,6 +9,7 @@ import { ICustomer, IInstrumento, IOrderItem } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
+import { FullScreenLoading } from '../../components/ui';
 
 type ISize = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 interface IOrderItemUnwind {
@@ -54,6 +55,8 @@ interface IOrderUnwiund {
     desVal?       : string;
     notes?       : string;
     paymentMethod: number;
+    instruName? : string;
+    customName? : string;
     libNum? : number;
     folNum? : number;
     asiNum? : number;
@@ -131,14 +134,14 @@ const columns:GridColDef[] = [
                     )
         }
     },
-    { field: 'nameCus', headerName: 'Cliente', width: 200 },
-    { field: 'nameIns', headerName: 'Instrumento', width: 200 },
+    { field: 'customName', headerName: 'Cliente', width: 200 },
+    { field: 'instruName', headerName: 'Instrumento', width: 200 },
     { field: 'namePro', headerName: 'Diligencia', width: 200 },
     { field: 'libNum', headerName: 'Libro', width: 100 },
     { field: 'folNum', headerName: 'Folio', width: 100 },
     { field: 'asiNum', headerName: 'asiento', width: 100 },
     { field: 'asiDat', headerName: 'Fecha Asiento', width: 100 },
-    { field: 'escNum', headerName: 'Nro Publico', width: 100 },
+    { field: 'escNum', headerName: 'Nro Instrum.', width: 100 },
     { field: 'asieNum', headerName: 'Asiento ', width: 100 },
     { field: 'asieDat', headerName: 'Fecha Publico', width: 100 },
     { field: 'total', headerName: 'Monto total', width: 100 },
@@ -175,19 +178,22 @@ const columns:GridColDef[] = [
 
 export const DiligenciaListScreen = () => {
 
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/login?redirect=/admin/diligencias');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
+
+
+
+    
     const [ invoices, setInvoices ] = useState<IOrderUnwiund[]>([]);
-
-////////////////////FGFGFGFG
-const navigate = useNavigate()
-const { user} = useContext(  AuthContext );      
-useEffect(() => {
-    if (!user) {
-      navigate('/auth/login?redirect=/admin/entradas');
-    }
-  }, [user, navigate]);
-
-////////////////////FGFGFGFG
-
+    const [ isloading, setIsloading ] = useState(false);
 
 
 
@@ -195,12 +201,13 @@ useEffect(() => {
 
     const loadData = async() => {
         try {
+          setIsloading(true);
         //   const { data } = await axios.get(`${API}/api/invoices/searchinvS?page=${page}&invoice=${invoice}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&comprobante=${codCom}`,{
         //     headers: { Authorization: `Bearer ${userInfo.token}` },
         // });
-          const resp = await stutzApi.get('/api/invoices/pruebaki');
+          const resp = await stutzApi.get('/api/invoices/diligencias');
           setInvoices(resp.data.invoices);
-          console.log(resp.data.invoices);
+          setIsloading(false);
         } catch (error) {
           console.log({error})
         }
@@ -212,22 +219,32 @@ useEffect(() => {
     }, [])
 
 
+    function formatDateNoTZ(dateString: string) {
+    const datePart = dateString.split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    return `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+    }
 
-    if ( !invoices ) return (<></>);
     
+
     const rows = invoices!.map( invoice => ({
         id    : (invoice.orderItems._id+invoice._id),
         punteid : invoice._id,
+        instruName : invoice.instruName,
+        customName : invoice.customName,
         libNum : invoice.libNum,
         folNum : invoice.folNum,
         asiNum : invoice.asiNum,
         // asiDat : invoice.asiDat!.substring(0, 10),
+        asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
         escNum : invoice.escNum,
         asieNum : invoice.asieNum,
         // asieDat : invoice.asieDat!.substring(0, 10),
+        asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
+
         terminado : invoice.terminado,
         remNum    : invoice.remNum,
-        remDat    : invoice.remDat!.substring(0, 10),
+        remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
         nameCus  : (invoice.id_client as ICustomer).nameCus,
         nameIns  : (invoice.id_instru as IInstrumento).name,
         namePro  : invoice.orderItems.title,
@@ -240,6 +257,7 @@ useEffect(() => {
         updatedAt: invoice.updatedAt!.substring(0, 10),
     }));
 
+    if ( !invoices ) return (<></>);
 
   return (
     <AdminLayoutMenuList
@@ -247,21 +265,26 @@ useEffect(() => {
         subTitle={'Actualizando Diligencias'}
         icon={ <ConfirmationNumberOutlined /> }
     >
-         <Grid container className='fadeIn'>
-            <Grid item xs={12} sx={{ height:650, width: '100%' }}>
-                <DataGrid
-                rows={rows}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                    paginationModel: { pageSize: 10, page: 0 },
-                    },
-                }}
-                pageSizeOptions={[10]}
-                />
+        {
+          isloading
+            ? <FullScreenLoading />
+            : 
+            <Grid container className='fadeIn'>
+                <Grid item xs={12} sx={{ height:650, width: '100%' }}>
+                    <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                        paginationModel: { pageSize: 10, page: 0 },
+                        },
+                    }}
+                    pageSizeOptions={[10]}
+                    />
 
+                </Grid>
             </Grid>
-        </Grid>
+        }
         
     </AdminLayoutMenuList>
   )

@@ -3,7 +3,7 @@ import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button, CardMedia, Grid, Link } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
-import { AdminLayout } from '../../components/layouts'
+import { AdminLayoutMenuList } from '../../components/layouts'
 import { IProduct  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -11,29 +11,14 @@ import { AuthContext } from '../../../context';
 
 
 const columns:GridColDef[] = [
-    { 
-        field: 'img', 
-        headerName: 'Foto',
-        renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
-            return (
-                <a href={ `/product/${ row.slug }` } target="_blank" rel="noreferrer">
-                    <CardMedia 
-                        component='img'
-                        alt={ row.title }
-                        className='fadeIn'
-                        image={ row.img }
-                    />
-                </a>
-            )
-        }
-    },
+    { field: 'codPro', headerName: 'Codigo' },
     { 
         field: 'title', 
         headerName: 'Title', 
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/products/product/${row.slug}`}>
+                <NavLink to={`/admin/productsesc/productesc/${row.slug}`}>
                     <Link underline='always'>
                         { row.title}
                     </Link>
@@ -51,7 +36,7 @@ const columns:GridColDef[] = [
 
 
 
-export const Products = () => {
+export const ProductsEsc = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -59,7 +44,7 @@ export const Products = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productos');
+        navigate('/auth/login?redirect=/admin/productosesc');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -89,6 +74,7 @@ export const Products = () => {
 
     const rows = products.map( product => ({
         id: product._id,
+        codPro: product.codPro,
         img: product.images[0],
         title: product.title,
         gender: product.gender,
@@ -101,18 +87,18 @@ export const Products = () => {
 
 
   return (
-    <AdminLayout 
-        title={`Productos (${ products?.length })`} 
-        subTitle={'Mantenimiento de productos'}
+    <AdminLayoutMenuList 
+        title={`Diligencias (${ products?.length })`} 
+        subTitle={'Mantenimiento de Diligencias'}
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/products/product/new' >
+        <NavLink to='/admin/productsesc/productesc/new' >
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
-                Crear producto
+                Crear Diligencia
             </Button>
             </NavLink>            
         </Box>
@@ -132,6 +118,6 @@ export const Products = () => {
             </Grid>
         </Grid>
         
-    </AdminLayout>
+    </AdminLayoutMenuList>
   )
 }

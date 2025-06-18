@@ -3,7 +3,7 @@ import {Header} from './Header';
 import { toast } from 'react-toastify';
 import {TableFormEscVal} from './TableFormEscVal';
 import { BiFileFind } from "react-icons/bi";
-import { CartContext } from '../../../context';
+import { AuthContext, CartContext } from '../../../context';
 import ReactToPrint from 'react-to-print';
 import {
   Box,
@@ -37,6 +37,7 @@ import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FullScreenLoading } from '../../components/ui';
 
 const getError = (error:any) => {
   return error.response && error.response.data.message
@@ -45,14 +46,27 @@ const getError = (error:any) => {
 };
 
 export const MesaEntradaVal = () => {
-  const navigate = useNavigate();
+  
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/login?redirect=/admin/mesaentradaVal');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG    
+
+    const userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
+  
 
   // const { state, dispatch: ctxDispatch } = useContext(Store);
     const {  cart, addTodosProductToCartEscPar } = useContext(CartContext);
     
-    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
         const OrderI: IOrder = {
             orderItems: cart.map( p => ({
                 ...p,
@@ -236,6 +250,7 @@ export const MesaEntradaVal = () => {
   const [showInvoice, setShowInvoice] = useState(false);
 
   const [isPaying, setIsPaying] = useState(false);
+  const [isloading, setIsloading] = useState(false);
 
   const config = {
     salePoint: userInfo.configurationObj.codCon,
@@ -523,6 +538,7 @@ const handleShowIns = () => {
 
   const orderHandler = async () => {
     try {
+      setIsloading(true);
       const { data } = await stutzApi.put(
         `/api/invoices/remModEsc/${invoice._id}`,
 
@@ -572,6 +588,7 @@ const handleShowIns = () => {
       //ctxDispatch({ type: 'INVOICE_CLEAR' });
       //      dispatch({ type: 'CREATE_SUCCESS' });
       //      localStorage.removeItem('cart');
+      setIsloading(false);
       setIsPaying(false);
       setDesval('');
       setDesVal('');
@@ -748,8 +765,8 @@ const handleShowIns = () => {
             <TextField
               fullWidth
               type="number"
-              label="Escritura N°"
-              placeholder="Escritura N°"
+              label="Instrumento N°"
+              placeholder="Instrumento N°"
               value={escNum}
               onChange={(e) => setEscNum(e.target.value)}
               // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
@@ -857,7 +874,6 @@ const handleShowIns = () => {
             >
               CANCELA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
           </Grid>
 
           <Grid item md={4}>
@@ -867,11 +883,11 @@ const handleShowIns = () => {
               sx={{ bgcolor: 'yellow', color: 'black' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
-              // disabled={ !remDat || !codCus}
+              disabled={ !codCus || isloading}
             >
               GRABA ENTRADA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
+            {isloading && <FullScreenLoading />}
           </Grid>
 
           <Grid item md={4}>

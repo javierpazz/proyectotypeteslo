@@ -126,6 +126,9 @@ const handleChange = (event: SelectChangeEvent<string>) => {
       userInfo.filtro.nameUse = userInfo.name;
 
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      localStorage.setItem('punto', codCon);
+      localStorage.setItem('puntonum', salePoint);
+      localStorage.setItem('nameCon', name);
       navigate(redirect);
 
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
