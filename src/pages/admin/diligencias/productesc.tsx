@@ -19,10 +19,12 @@ const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
 
 interface FormData {
     _id?       : string;
-    description: string;
+    codPro     : string;
+    codigoPro? : string;
     images     : string[];
     inStock    : number;
     price      : number;
+    description: string;
     sizes      : string[];
     slug       : string;
     tags       : string[];
@@ -33,7 +35,11 @@ interface FormData {
 const productI = 
       {
           _id: '',
-          description: "",
+          codPro: '',
+          codigoPro: '',
+          description: "diligencia",
+          medPro: "unidad",
+          porIva: 0,
           images: ['img1.jpg','img2.jpg'],
           inStock: 0,
           price: 0,
@@ -42,7 +48,7 @@ const productI =
           tags: ['sweatshirt'],
           title: "",
           category: '',
-          gender: '',
+          gender: 'kid',
           createdAt: '',
           updatedAt: '',
       
@@ -62,7 +68,7 @@ export const ProductEscAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/login?redirect=/admin/productsesc');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -70,7 +76,8 @@ export const ProductEscAdminPage = () => {
 const [defaultValues, setDefaultValues] = useState({});
 const [product, setProduct] = useState(productI);
 const params = useParams();
-const { slugadm } = params;
+const { title } = params;
+const input1Ref = useRef<HTMLInputElement>(null);
 
 const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
     defaultValues: product
@@ -78,6 +85,7 @@ const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch
 
 
 useEffect(() => {
+  input1Ref.current?.focus()
   loadProduct()
  }, [])
 
@@ -86,10 +94,13 @@ const loadProduct = async() => {
     console.log(defaultValues);
     try {
 
-        if ( slugadm === 'new' ) {
+        if ( title === 'new' ) {
         // crear un producto
         productI._id= "",
-        productI.description= "",
+        productI.codPro = '',
+        productI.codigoPro = '',
+        productI.description= "diligencia",
+        productI.medPro= "unidad",
         productI.images= ['img1.jpg','img2.jpg'],
         productI.inStock= 0,
         productI.price= 0,
@@ -98,12 +109,14 @@ const loadProduct = async() => {
         productI.tags= ['sweatshirt'],
         productI.title= "",
         productI.category= '',
-        productI.gender= '',
+        productI.gender= 'kid',
         productI.createdAt= '',
         productI.updatedAt= ''
     } else {
-        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
+        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ title!.toString() }`);
         productI._id=resp.data._id,
+        productI.codPro=resp.data.codPro,
+        productI.codigoPro=resp.data.codigoPro,
         productI.description=resp.data.description,
         productI.images=resp.data.images,
         productI.inStock=resp.data.inStock,
@@ -211,24 +224,23 @@ const loadProduct = async() => {
 
     const onSubmit = async( form: FormData ) => {
         
-        if ( form.images.length < 2 ) return alert('Mínimo 2 imagenes');
-        setIsSaving(true);
 
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/products', form)
+                await stutzApi.put('/api/tes/admin/productsesc', form)
             }else{
-                await stutzApi.post('/api/tes/admin/products', form)
+                await stutzApi.post('/api/tes/admin/productsesc', form)
             }
             // console.log(data);
 
             if ( !form._id ) {
-                // router.replace(`/admin/products/product/${ form.slug }`);
-                navigate(`/admin/products/product/${ form.slug }`);
+                // router.replace(`/admin/diligencias/product/${ form.slug }`);
+                // navigate(`/admin/productsesc/productesc/${ form.title }`);
+                navigate(`/admin/productsesc`);
             } else {
                 setIsSaving(false)
             }
-
+            navigate(`/admin/productsesc`);
 
         } catch (error) {
             console.log(error);
@@ -239,7 +251,7 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Producto'} 
+            title={'Diligencia'} 
             subTitle={`Editando: ${ productI.title }`}
             icon={ <DriveFileRenameOutline /> }
         >
@@ -260,49 +272,38 @@ const loadProduct = async() => {
                     {/* Data */}
                     <Grid item xs={12} sm={ 6 }>
 
+
                         <TextField
-                            label="Título"
+                            inputRef={input1Ref}
+                            label="Codigo"
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('title', {
+                            { ...register('codPro', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 2, message: 'Mínimo 2 caracteres' }
                             })}
-                            error={ !!errors.title }
-                            helperText={ errors.title?.message }
+                            error={ !!errors.codPro }
+                            helperText={ errors.codPro?.message }
                         />
 
-                        <TextField
-                            label="Descripción"
-                            variant="filled"
-                            fullWidth 
-                            multiline
-                            sx={{ mb: 1 }}
-                            { ...register('description', {
-                                required: 'Este campo es requerido',
-                            })}
-                            error={ !!errors.description }
-                            helperText={ errors.description?.message }
-                        />
+                            <TextField
+                                label="Título"
+                                variant="filled"
+                                fullWidth 
+                                sx={{ mb: 1 }}
+                                { ...register('title', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                                error={ !!errors.title }
+                                helperText={ errors.title?.message }
+                            />
 
-                        <TextField
-                            label="Inventario"
-                            type='number'
-                            variant="filled"
-                            fullWidth 
-                            sx={{ mb: 1 }}
-                            { ...register('inStock', {
-                                required: 'Este campo es requerido',
-                                min: { value: 0, message: 'Mínimo de valor cero' }
-                            })}
-                            error={ !!errors.inStock }
-                            helperText={ errors.inStock?.message }
-                        />
-                        
                         <TextField
                             label="Precio"
                             type='number'
+                            inputProps={{ step: '0.01' }} 
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
@@ -313,172 +314,29 @@ const loadProduct = async() => {
                             error={ !!errors.price }
                             helperText={ errors.price?.message }
                         />
+                            <TextField
+                                label="Codigo Barra"
+                                variant="filled"
+                                fullWidth 
+                                sx={{ mb: 1 }}
+                                { ...register('codigoPro', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                })}
+                                error={ !!errors.codigoPro }
+                                helperText={ errors.codigoPro?.message }
+                            />
+    
 
                         <Divider sx={{ my: 1 }} />
 
-                        <FormControl sx={{ mb: 1 }}>
-                            <FormLabel>Tipo</FormLabel>
-                            <RadioGroup
-                                row
-                                value={ getValues('category') }
-                                onChange={ ({ target })=> setValue('category', target.value, { shouldValidate: true }) }
-                            >
-                                {
-                                    ValidCategories.map( option => (
-                                        <FormControlLabel 
-                                            key={ option }
-                                            value={ option }
-                                            control={ <Radio color='secondary' /> }
-                                            label={ capitalize(option) }
-                                        />
-                                    ))
-                                }
-                            </RadioGroup>
-                        </FormControl>
 
-                        <FormControl sx={{ mb: 1 }}>
-                            <FormLabel>Género</FormLabel>
-                            <RadioGroup
-                                row
-                                value={ getValues('gender') }
-                                onChange={ ({ target })=> setValue('gender', target.value, { shouldValidate: true }) }
-                            >
-                                {
-                                    validGender.map( option => (
-                                        <FormControlLabel 
-                                            key={ option }
-                                            value={ option }
-                                            control={ <Radio color='secondary' /> }
-                                            label={ capitalize(option) }
-                                        />
-                                    ))
-                                }
-                            </RadioGroup>
-                        </FormControl>
 
-                        <FormGroup>
-                            <FormLabel>Tallas</FormLabel>
-                            {
-                                validSizes.map(size => (
-                                    <FormControlLabel
-                                        key={size}
-                                        control={ <Checkbox checked={ getValues('sizes').includes(size) } />} 
-                                        label={ size } 
-                                        onChange={ () => onChangeSize( size )  }
-                                    />
-                                ))
-                            }
-                        </FormGroup>
 
                     </Grid>
 
                     {/* Tags e imagenes */}
                     <Grid item xs={12} sm={ 6 }>
-                        <TextField
-                            label="Slug - URL"
-                            variant="filled"
-                            fullWidth
-                            sx={{ mb: 1 }}
-                            { ...register('slug', {
-                                required: 'Este campo es requerido',
-                                validate: (val) => val.trim().includes(' ') ? 'No puede tener espacios en blanco':undefined
-                            })}
-                            error={ !!errors.slug }
-                            helperText={ errors.slug?.message }
-                        />
-
-                        <TextField
-                            label="Etiquetas"
-                            variant="filled"
-                            fullWidth 
-                            sx={{ mb: 1 }}
-                            helperText="Presiona [spacebar] para agregar"
-                            value={ newTagValue }
-                            onChange={ ({ target }) => setNewTagValue(target.value) }
-                            onKeyUp={ ({ code })=> code === 'Space' ? onNewTag() : undefined }
-                        />
-                        
-                        <Box sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            listStyle: 'none',
-                            p: 0,
-                            m: 0,
-                        }}
-                        component="ul">
-                            {
-                                getValues('tags').map((tag) => {
-
-                                return (
-                                    <Chip
-                                        key={tag}
-                                        label={tag}
-                                        onDelete={ () => onDeleteTag(tag)}
-                                        color="primary"
-                                        size='small'
-                                        sx={{ ml: 1, mt: 1}}
-                                    />
-                                );
-                            })}
-                        </Box>
-
-                        <Divider sx={{ my: 2  }}/>
-                        
-                        <Box display='flex' flexDirection="column">
-                            <FormLabel sx={{ mb:1}}>Imágenes</FormLabel>
-                            <Button
-                                color="secondary"
-                                fullWidth
-                                startIcon={ <UploadOutlined /> }
-                                sx={{ mb: 3 }}
-                                onClick={ () => fileInputRef.current?.click() }
-                            >
-                                Cargar imagen
-                            </Button>
-                            <input 
-                                ref={ fileInputRef }
-                                type="file"
-                                multiple
-                                accept='image/png, image/gif, image/jpeg'
-                                style={{ display: 'none' }}
-                                onChange={ onFilesSelected }
-                            />
-
-
-                            <Chip 
-                                label="Es necesario al 2 imagenes"
-                                color='error'
-                                variant='outlined'
-                                sx={{ display: getValues('images').length < 2 ? 'flex': 'none' }}
-                            />
-
-                            <Grid container spacing={2}>
-                                {
-                                    getValues('images').map( img => (
-                                        <Grid item xs={4} sm={3} key={img}>
-                                            <Card>
-                                                <CardMedia 
-                                                    component='img'
-                                                    className='fadeIn'
-                                                    image={ img }
-                                                    alt={ img }
-                                                />
-                                                <CardActions>
-                                                    <Button 
-                                                        fullWidth 
-                                                        color="error"
-                                                        onClick={()=> onDeleteImage(img)}
-                                                    >
-                                                        Borrar
-                                                    </Button>
-                                                </CardActions>
-                                            </Card>
-                                        </Grid>
-                                    ))
-                                }
-                            </Grid>
-
-                        </Box>
 
                     </Grid>
 
@@ -512,7 +370,7 @@ const loadProduct = async() => {
 //     if ( !product ) {
 //         return {
 //             redirect: {
-//                 destination: '/admin/products',
+//                 destination: '/admin/diligencias',
 //                 permanent: false,
 //             }
 //         }

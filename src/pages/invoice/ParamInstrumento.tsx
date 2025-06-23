@@ -50,7 +50,7 @@ export const ParamInstrumento = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/mesaen/paraminstrumento');
+        navigate('/auth/loginadm?redirect=/admin/mesaen/paraminstrumento');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -384,6 +384,7 @@ const handleShowIns = () => {
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
               required
+              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">

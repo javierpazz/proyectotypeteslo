@@ -1,37 +1,40 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, CardMedia, Chip, Grid, Link } from '@mui/material'
+import { Box, Button, Chip, Grid, Link } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IProduct  } from '../../interfaces';
+import { IConfiguracion  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
-
-
-export const ProductsEsc = () => {
+export const ConfiguracionesEsc = () => {
 
 const columns:GridColDef[] = [
-    { field: 'codPro', headerName: 'Codigo' },
+    { field: 'codCon', headerName: 'Codigo' },
     { 
-        field: 'title', 
-        headerName: 'Title', 
+        field: 'name', 
+        headerName: 'Registro', 
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/productsesc/productesc/${row.title}`}>
+                <NavLink to={`/admin/configuraciones/configuracionesc/${row.id}`}>
                     <Link underline='always'>
-                        { row.title}
+                        { row.name}
                     </Link>
                 </NavLink>
             )
         }
     },
-    { field: 'price', headerName: 'Valor' },
-        {
+    { field: 'domcomer', headerName: 'Domicilio',width: 250, },
+    { field: 'cuit', headerName: 'CUIT',width: 150, },
+    { field: 'coniva', headerName: 'Condicion IVA',width: 150, },
+    { field: 'ib', headerName: 'IB',width: 150, },
+    { field: 'feciniact', headerName: 'Fecha Ini. Act.',width: 150, },
+
+    {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
@@ -45,25 +48,26 @@ const columns:GridColDef[] = [
         },
 
 ];
+
+
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productosesc');
+        navigate('/auth/login?redirect=/admin/configuraciones');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
-    const [ products, setProducts ] = useState<IProduct[]>([]);
+    const [ configuraciones, setConfiguraciones ] = useState<IConfiguracion[]>([]);
 
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
-          setProducts(resp.data);
-        //   console.log(resp.data);
+          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/admin/configuraciones');
+          setConfiguraciones(resp.data);
         } catch (error) {
           console.log({error})
         }
@@ -74,27 +78,24 @@ const columns:GridColDef[] = [
         loadData();
     }, [])
 
-    // const { data, error } = useSWR<IProduct[]>('/api/admin/products');
+    // const { data, error } = useSWR<IProduct[]>('/api/admin/configuraciones');
     // if ( !data && !error ) return (<></>);
     
-    
-    const rows = products.map( product => ({
-        id: product._id,
-        codPro: product.codPro,
-        title: product.title,
-        // gender: product.gender,
-        // // category: product.category,
-        // inStock: product.inStock,
-        price: product.price,
-        // sizes: product.sizes.join(', '),
-        // slug: product.slug,
+    const rows = configuraciones.map( configuracion => ({
+        id: configuracion._id,
+        codCon: configuracion.codCon,
+        name: configuracion.name,
+        domcomer: configuracion.domcomer,
+        cuit: configuracion.cuit,
+        coniva: configuracion.coniva,
+        ib: configuracion.ib,
+        feciniact: configuracion.feciniact,
     }));
 
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
-        console.log(id)
-        try {
-        await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
+      try {
+        await stutzApi.delete(`/api/tes/admin/configuracionesesc/${id}`);
         window.location.reload();
     } catch (err) {
       }
@@ -102,21 +103,22 @@ const columns:GridColDef[] = [
   };
 
 
-    if ( !products ) return (<></>);
+    
+    if ( !configuraciones ) return (<></>);
 
   return (
     <AdminLayoutMenuList 
-        title={`Diligencias (${ products?.length })`} 
-        subTitle={'Mantenimiento de Diligencias'}
+        title={`Registros (${ configuraciones?.length })`} 
+        subTitle={'Mantenimiento de Registros'}
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/productsesc/productesc/new' >
+        <NavLink to='/admin/configuraciones/configuracionesc/new' >
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
-                Crear Diligencia
+                Crear Registro
             </Button>
             </NavLink>            
         </Box>

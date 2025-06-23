@@ -8,7 +8,7 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  IValue  } from '../../../interfaces';
+import {  IConfiguracion  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
@@ -16,26 +16,33 @@ import { AuthContext } from '../../../../context';
 
 interface FormData {
     _id?       : string;
-    codVal       : string;
-    desVal       : string;
+    codCon       : string;
+    name       : string;
+    domcomer: string;
+    cuit: string;
+    coniva: string;
+
 }
-const valorI = 
+const configuracionI = 
       {
           _id: '',
-          codVal: "",
-          desVal: "",
+          codCon: "",
+          name: "",
+          domcomer: "",
+          cuit: "",
+          coniva: "",
      
       }
 
 
-export const ValorAdminPage = () => {
+export const ConfiguracionAdminPage = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/valores');
+        navigate('/auth/login?redirect=/admin/configuraciones');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -49,7 +56,7 @@ export const ValorAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
-const [valor, setValor] = useState(valorI);
+const [configuracion, setConfiguracion] = useState(configuracionI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
 
@@ -57,7 +64,7 @@ const params = useParams();
 const { id } = params;
 
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
-    defaultValues: valor
+    defaultValues: configuracion
 })
 
 
@@ -72,23 +79,29 @@ const loadProduct = async() => {
     try {
 
         if ( id === 'new' ) {
-        // crear un valoro
-        valorI._id= "",
-        valorI.codVal= "",
-        valorI.desVal= ""
+        // crear un configuraciono
+        configuracionI._id= "",
+        configuracionI.codCon= "",
+        configuracionI.name= ""
+        configuracionI.domcomer= ""
+        configuracionI.cuit= ""
+        configuracionI.coniva= ""
     } else {
-        const resp = await stutzApi.get<IValue>(`/api/tes/admin/valores/${ id }`);
-        valorI._id=resp.data._id,
-        valorI.codVal=resp.data.codVal,
-        valorI.desVal=resp.data.desVal
+        const resp = await stutzApi.get<IConfiguracion>(`/api/tes/admin/configuraciones/${ id }`);
+        configuracionI._id=resp.data._id,
+        configuracionI.codCon=resp.data.codCon,
+        configuracionI.name=resp.data.name
+        configuracionI.domcomer=resp.data.domcomer
+        configuracionI.cuit=resp.data.cuit
+        configuracionI.coniva=resp.data.coniva
     }
   } catch (error) {
     console.log(error)
     
   }
-  setDefaultValues(valorI); // Set default values
-  reset(valorI); // Populate the form
-  setValor(valorI);
+  setDefaultValues(configuracionI); // Set default values
+  reset(configuracionI); // Populate the form
+  setConfiguracion(configuracionI);
  }
 
 
@@ -120,18 +133,19 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/valores', form)
+                await stutzApi.put('/api/tes/admin/configuraciones', form)
             }else{
-                await stutzApi.post('/api/tes/admin/valores', form)
+                await stutzApi.post('/api/tes/admin/configuraciones', form)
             }
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/valores`);
+                navigate(`/admin/configuraciones`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/valores`);
+            navigate(`/admin/configuraciones`);
+
 
         } catch (error) {
             console.log(error);
@@ -142,8 +156,8 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Valor'} 
-            subTitle={`Editando: ${ valorI.desVal }`}
+            title={'Punto de Venta'} 
+            subTitle={`Editando: ${ configuracionI.name }`}
             icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
@@ -169,12 +183,12 @@ const loadProduct = async() => {
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('codVal', {
+                            { ...register('codCon', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.codVal }
-                            helperText={ errors.codVal?.message }
+                            error={ !!errors.codCon }
+                            helperText={ errors.codCon?.message }
                         />
 
                         <TextField
@@ -183,12 +197,55 @@ const loadProduct = async() => {
                             fullWidth 
                             multiline
                             sx={{ mb: 1 }}
-                            { ...register('desVal', {
+                            { ...register('name', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.desVal }
-                            helperText={ errors.desVal?.message }
+                            error={ !!errors.name }
+                            helperText={ errors.name?.message }
+                        />
+
+
+                        <TextField
+                            label="Domicilio"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('domcomer', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.domcomer }
+                            helperText={ errors.domcomer?.message }
+                        />
+
+                        <TextField
+                            label="CUIT"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('cuit', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.cuit }
+                            helperText={ errors.cuit?.message }
+                        />
+
+                        <TextField
+                            label="CONDICION IVA"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('coniva', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.coniva }
+                            helperText={ errors.coniva?.message }
                         />
 
 

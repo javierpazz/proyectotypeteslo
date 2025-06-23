@@ -10,7 +10,9 @@ interface ContextProps {
     isLoading: boolean;
     
     loginUser: (email: string, password: string) => Promise<boolean>;
+    loginUserAdm: (email: string, password: string) => Promise<boolean>;
     registerUser: (name: string, email: string, password: string) => Promise<{ hasError: boolean; message?: string; }>;
+    registerUserAdm: (name: string, email: string, password: string) => Promise<{ hasError: boolean; message?: string; }>;
     logout: () => void;
 }
 

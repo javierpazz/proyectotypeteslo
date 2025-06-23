@@ -1,15 +1,18 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
-import { Chip, Grid, Link } from '@mui/material'
+import { Button, Chip, Grid, Box, Link } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IOrder, ICustomer, IInstrumento } from '../../interfaces';
+import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
+import { BiFileFind } from 'react-icons/bi';
 
 const columns:GridColDef[] = [
     { field: 'remNum',
@@ -52,41 +55,70 @@ const columns:GridColDef[] = [
     },
     { field: 'nameCus', headerName: 'Cliente', width: 200 },
     { field: 'nameIns', headerName: 'Instrumento', width: 200 },
+    { field: 'namePar', headerName: 'Parte', width: 200 },
+    { field: 'nameCon', headerName: 'Registro', width: 200 },
+    { field: 'notes', headerName: 'Observaciones', width: 200 },
     { field: 'libNum', headerName: 'Libro', width: 100 },
     { field: 'folNum', headerName: 'Folio', width: 100 },
     { field: 'asiNum', headerName: 'asiento', width: 100 },
-    { field: 'asiDat', headerName: 'Fecha Asiento', width: 100 },
+    { field: 'asiDat', headerName: 'Fecha Asiento', width: 120 },
     { field: 'escNum', headerName: 'Nro Instrum.', width: 100 },
     { field: 'asieNum', headerName: 'Asiento ', width: 100 },
-    { field: 'asieDat', headerName: 'Fecha Publico', width: 100 },
+    { field: 'asieDat', headerName: 'Fecha Publico', width: 120 },
     { field: 'total', headerName: 'Monto total', width: 100 },
+    { field: 'nameUse', headerName: 'Usuario', width: 200 },
     {
-        field: 'check2',
-        headerName: 'Actualiza',
-        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-            return (
-                    <NavLink to={`/admin/mesaentradaAct/${row.id}?redirect=/admin/entradas`}>
+      field: 'check2',
+      headerName: 'Actualiza',
+      renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+        return (
+          <NavLink to={`/admin/mesaentradaAct/${row.id}?redirect=/admin/entradas`}>
                     { "Actualiza"}
                     </NavLink>
                 )
-        }
-    },
-    {
-        field: 'check3',
-        headerName: 'Valoriza',
-        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-            return (
-                    // <NavLink to={`/admin/invoices/invoice/${ row.id }`}>
-                    <NavLink to={`/admin/mesaentradaVal/${row.id}?redirect=/admin/entradas`}>
+              }
+            },
+            {
+              field: 'check3',
+              headerName: 'Valoriza',
+              renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                return (
+                  // <NavLink to={`/admin/invoices/invoice/${ row.id }`}>
+                  <NavLink to={`/admin/mesaentradaVal/${row.id}?redirect=/admin/entradas`}>
                     { "Valoriza"}
                     </NavLink>
                 )
-        }
-    },
+              }
+            },
+            {
+              field: 'check',
+              headerName: 'Acción',
+              renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                return (
+                  <Chip variant='outlined' label="Eliminar" color="error"
+                  onClick={() => deleteHandler(row.id)}
+                  />
+                )
+                
+              }
+            },
+            
     { field: 'createdAt', headerName: 'Creada en', width: 100 },
     { field: 'updatedAt', headerName: 'Modificada en', width: 100 },
 
 ];
+
+
+    const deleteHandler = async (id : string) => {
+    if (window.confirm('Esta Seguro de Eliminar?')) {
+      try {
+        // await stutzApi.delete(`/api/tes/admin/partes/${id}`);
+        await stutzApi.delete(`/api/invoices/${id}/deleteremitEsc`);
+        window.location.reload();
+    } catch (err) {
+      }
+    }
+  };
 
 
 
@@ -99,12 +131,30 @@ export const EntradaListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/loginadm?redirect=/admin/entradas');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
-
-    
+  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo')!)
+  : null;
+  const fech1 = userInfo.filtro.firstDat;
+  const fech2 = userInfo.filtro.lastDat;
+  const codCon = userInfo.filtro.codCon;
+  const codCom = userInfo.filtro.codCom;
+  const codIns = userInfo.filtro.codIns;
+  const codCus = userInfo.filtro.codCus;
+  const codPar = userInfo.filtro.codPar;
+  const codSup = userInfo.filtro.codSup;
+  const codPro = userInfo.filtro.codPro;
+  const codVal = userInfo.filtro.codVal;
+  const codCon2 = userInfo.filtro.codCon2;
+  const codEnc = userInfo.filtro.codEnc;
+  const codUse = userInfo.filtro.codUse;
+  const order = userInfo.filtro.order;
+  const estado = userInfo.filtro.estado;
+  const registro = userInfo.filtro.registro;
+      
     
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
     const [ isloading, setIsloading ] = useState(false);
@@ -113,23 +163,38 @@ export const EntradaListScreen = () => {
 
     // const { data, error } = useSWR<IOrder[]>('/api/admin/invoices');
 
-    const loadData = async() => {
-        try {
+    // const loadData = async() => {
+    //     try {
+    //       setIsloading(true);
+    //       const resp = await stutzApi.get('/api/invoices/searchremSEsc');
+    //       setIsloading(false);
+    //       setInvoices(resp.data.invoices);
+    //     } catch (error) {
+    //       console.log({error})
+    //     }
+    
+    //   }
+
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
           setIsloading(true);
-          const resp = await stutzApi.get('/api/invoices/searchremSEsc');
+          const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}`);
           setIsloading(false);
           setInvoices(resp.data.invoices);
-        } catch (error) {
-          console.log({error})
-        }
-    
+
+    } catch (err) {
       }
+    };
+      fetchData();
+  }, [ ]);
+
 
 
       
-    useEffect(() => {
-        loadData();
-    }, [])
+    // useEffect(() => {
+    //     loadData();
+    // }, [])
 
 
     function formatDateNoTZ(dateString: string) {
@@ -153,8 +218,12 @@ export const EntradaListScreen = () => {
         terminado : invoice.terminado,
         remNum    : invoice.remNum,
         remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+        notes: invoice.notes,
         nameCus  : (invoice.id_client as ICustomer).nameCus,
+        nameUse  : (invoice.user as IUser).name,
         nameIns  : (invoice.id_instru as IInstrumento).name,
+        namePar  : (invoice.id_parte as IParte)?.name ?? '',
+        nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         total : invoice.total,
         isPaid: invoice.isPaid,
         noProducts: invoice.numberOfItems,
@@ -162,6 +231,146 @@ export const EntradaListScreen = () => {
         updatedAt: invoice.updatedAt!.substring(0, 10),
     }));
 
+
+
+  const parametros = async () => {
+    navigate('/admin/filtro?redirect=/admin/entradas');
+  };
+
+
+// const exportToExcel = (data: any[], fileName = 'invoices.xlsx') => {
+//   // 1. Convertimos el array de objetos a una hoja de Excel
+//   const worksheet = XLSX.utils.json_to_sheet(data);
+
+//   // 2. Creamos un workbook con esa hoja
+//   const workbook = XLSX.utils.book_new();
+//   XLSX.utils.book_append_sheet(workbook, worksheet, 'Invoices');
+
+//   // 3. Escribimos el archivo en formato Excel (xlsx)
+//   const excelBuffer = XLSX.write(workbook, {
+//     bookType: 'xlsx',
+//     type: 'array',
+//   });
+
+//   // 4. Lo guardamos como archivo
+//   const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+//   saveAs(blob, fileName);
+// };
+
+
+
+    const exportToExcel = () => {
+    const rows = invoices.map(invoice => ({
+      id: invoice._id,
+      punteid: invoice._id,
+      libNum: invoice.libNum,
+      folNum: invoice.folNum,
+      asiNum: invoice.asiNum,
+      asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
+      escNum: invoice.escNum,
+      asieNum: invoice.asieNum,
+      asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
+      notes: invoice.notes,
+      terminado: invoice.terminado,
+      remNum: invoice.remNum,
+      remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+        nameCus  : (invoice.id_client as ICustomer).nameCus,
+        nameUse  : (invoice.user as IUser).name,
+        nameIns  : (invoice.id_instru as IInstrumento).name,
+        namePar  : (invoice.id_parte as IParte)?.name ?? '',
+        nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
+      total: invoice.total,
+      isPaid: invoice.isPaid,
+      noProducts: invoice.numberOfItems,
+      createdAt: invoice.createdAt?.substring(0, 10),
+      updatedAt: invoice.updatedAt?.substring(0, 10),
+    }));
+
+    // Opcional: Renombrar columnas para Excel
+    const exportData = rows.map(row => ([
+      row.remNum,
+       row.nameCus,
+       row.nameIns,
+       row.namePar,
+       row.nameCon,
+       row.remDat,
+       row.terminado,
+       row.notes,
+       row.libNum,
+       row.folNum,
+       row.asiNum,
+       row.asiDat,
+       row.escNum,
+       row.asieNum,
+       row.asieDat,
+       row.total,
+       row.nameUse,
+       row.id,
+       row.punteid,
+       row.createdAt,
+       row.updatedAt,
+    ]));
+  const headers = [
+      'Entrada N°',
+      'Cliente',
+      'Instrumento',
+      'Parte',
+      'Configuración',
+      'Fecha Entrada',
+      'Terminado',
+      'Observaciones',
+      'Libro',
+      'Folio',
+      'Asiento N°',
+      'Fecha Asiento',
+      'Inst.Publico N°',
+      'Asiento Publico N°',
+      'Fecha Asiento Publico',
+      'Total',
+      'Usuario',
+      'ID',
+      'Punteo',
+      'Creado',
+      'Actualizado',
+  ];
+
+  const headerInfo = [
+      [`desde:`, `${fech1}`,
+        `Hasta:`, `${fech2}`,
+        `Filtro por  :`,
+        `Cliente.:`,
+        `${userInfo.filtro.nameCus}`,
+        `Parte.:`,
+        `${userInfo.filtro.namePar}`,
+        `Instrumento.:`,
+        `${userInfo.filtro.nameIns}`,
+        `Registro.:`,
+        `${userInfo.filtro.nameCon}`,
+        `Usuario.:`,
+        `${userInfo.filtro.nameUse}`,
+        `Diligencia.:`,
+        `${userInfo.filtro.desPro}`,
+        `Terminado.: `,
+        `${userInfo.filtro.estado}`,
+        `Registrados.:`,
+        `${userInfo.filtro.registro}`,
+      ],
+      [],
+      headers
+    ];
+
+ const finalData = [...headerInfo, ...exportData];
+
+    const worksheet = XLSX.utils.json_to_sheet(finalData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Entradas');
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'Entradas.xlsx');
+  };
+
+
+    if ( !invoices ) return (<></>);
     
   return (
     <AdminLayoutMenuList
@@ -169,6 +378,21 @@ export const EntradaListScreen = () => {
         subTitle={'Actualizando Entradas'}
         icon={ <ConfirmationNumberOutlined /> }
     >
+
+          <Box mt={2} display="flex" gap={2} flexWrap="wrap">
+            <Button
+              onClick={parametros}
+              variant="contained"
+              startIcon={<BiFileFind />}
+              sx={{ bgcolor: 'yellow', color: 'black' }}
+            >
+              Filtro
+            </Button>
+            {/* <Button variant="outlined" color="success" onClick={() => exportToExcel(rows)}>EXCEL</Button> */}
+        <Button variant="outlined" color="success" onClick={exportToExcel}>
+          Excel
+        </Button>
+            </Box>
         {
           isloading
             ? <FullScreenLoading />

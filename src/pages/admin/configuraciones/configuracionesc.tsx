@@ -8,7 +8,7 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  ISupplier  } from '../../../interfaces';
+import {  IConfiguracion  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
@@ -16,35 +16,45 @@ import { AuthContext } from '../../../../context';
 
 interface FormData {
     _id?       : string;
-    codSup     : string;
+    codCon       : string;
     name       : string;
-    email      : string;
-    domcomer   : string;
-    cuit       : string;
-    coniva     : string;
-
+    domcomer: string;
+    cuit: string;
+    coniva: string;
+    ib: string;
+    feciniact: string;
+    numIntRem: number;
+    numIntRec: number;
+    numIntOdp: number;
+    numIntCaj: number;
+    numIntMov: number;
 }
-const supplierI = 
+const configuracionI = 
       {
           _id: '',
-          codSup: "",
+          codCon: "",
           name: "",
-          email: "",
           domcomer: "",
           cuit: "",
           coniva: "",
-     
+        ib: "",
+        feciniact: "",
+        numIntRem: 0,
+        numIntRec: 0,
+        numIntOdp: 0,
+        numIntCaj: 0,
+        numIntMov: 0,     
       }
 
 
-export const ProveedorAdminPage = () => {
+export const ConfiguracionEscAdminPage = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/proveedores');
+        navigate('/auth/login?redirect=/admin/configuracionesesc');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -58,7 +68,7 @@ export const ProveedorAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
-const [supplier, setSupplier] = useState(supplierI);
+const [configuracion, setConfiguracion] = useState(configuracionI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
 
@@ -66,7 +76,7 @@ const params = useParams();
 const { id } = params;
 
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
-    defaultValues: supplier
+    defaultValues: configuracion
 })
 
 
@@ -81,31 +91,43 @@ const loadProduct = async() => {
     try {
 
         if ( id === 'new' ) {
-        // crear un suppliero
-        supplierI._id= "",
-        supplierI.codSup= "",
-        supplierI.name= ""
-        supplierI.email= ""
-        supplierI.domcomer= ""
-        supplierI.cuit= ""
-        supplierI.coniva= ""
+        // crear un configuraciono
+        configuracionI._id= "",
+        configuracionI.codCon= "",
+        configuracionI.name= ""
+        configuracionI.domcomer= ""
+        configuracionI.cuit= ""
+        configuracionI.coniva= ""
+        configuracionI.ib= ""
+        configuracionI.feciniact= ""
+        configuracionI.numIntRem= 0
+        configuracionI.numIntRec= 0
+        configuracionI.numIntOdp= 0
+        configuracionI.numIntCaj= 0
+        configuracionI.numIntMov= 0
     } else {
-        const resp = await stutzApi.get<ISupplier>(`/api/tes/admin/proveedores/${ id }`);
-        supplierI._id=resp.data._id,
-        supplierI.codSup=resp.data.codSup,
-        supplierI.name=resp.data.name
-        supplierI.email=resp.data.email
-        supplierI.domcomer=resp.data.domcomer
-        supplierI.cuit=resp.data.cuit
-        supplierI.coniva=resp.data.coniva
+        const resp = await stutzApi.get<IConfiguracion>(`/api/tes/admin/configuraciones/${ id }`);
+        configuracionI._id=resp.data._id,
+        configuracionI.codCon=resp.data.codCon,
+        configuracionI.name=resp.data.name
+        configuracionI.domcomer=resp.data.domcomer
+        configuracionI.cuit=resp.data.cuit
+        configuracionI.coniva=resp.data.coniva
+        configuracionI.ib=resp.data.ib
+        configuracionI.feciniact=resp.data.feciniact
+        configuracionI.numIntRem=resp.data.numIntRem
+        configuracionI.numIntRec=resp.data.numIntRec
+        configuracionI.numIntOdp=resp.data.numIntOdp
+        configuracionI.numIntCaj=resp.data.numIntCaj
+        configuracionI.numIntMov=resp.data.numIntMov
     }
   } catch (error) {
     console.log(error)
     
   }
-  setDefaultValues(supplierI); // Set default values
-  reset(supplierI); // Populate the form
-  setSupplier(supplierI);
+  setDefaultValues(configuracionI); // Set default values
+  reset(configuracionI); // Populate the form
+  setConfiguracion(configuracionI);
  }
 
 
@@ -137,18 +159,19 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/proveedores', form)
+                await stutzApi.put('/api/tes/admin/configuraciones', form)
             }else{
-                await stutzApi.post('/api/tes/admin/proveedores', form)
+                await stutzApi.post('/api/tes/admin/configuraciones', form)
             }
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/proveedores`);
+                navigate(`/admin/configuracionesesc`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/proveedores`);
+            navigate(`/admin/configuracionesesc`);
+
 
         } catch (error) {
             console.log(error);
@@ -159,8 +182,8 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Proveedor'} 
-            subTitle={`Editando: ${ supplierI.name }`}
+            title={'Registro'} 
+            subTitle={`Editando: ${ configuracionI.name }`}
             icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
@@ -186,16 +209,16 @@ const loadProduct = async() => {
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('codSup', {
+                            { ...register('codCon', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.codSup }
-                            helperText={ errors.codSup?.message }
+                            error={ !!errors.codCon }
+                            helperText={ errors.codCon?.message }
                         />
 
                         <TextField
-                            label="Nombre"
+                            label="Descripción"
                             variant="filled"
                             fullWidth 
                             multiline
@@ -207,21 +230,10 @@ const loadProduct = async() => {
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
                         />
+
+
                         <TextField
-                            label="Email"
-                            variant="filled"
-                            fullWidth 
-                            multiline
-                            sx={{ mb: 1 }}
-                            { ...register('email', {
-                                required: 'Este campo es requerido',
-                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
-                            })}
-                            error={ !!errors.email }
-                            helperText={ errors.email?.message }
-                        />
-                        <TextField
-                            label="Domicilio Comercias"
+                            label="Domicilio"
                             variant="filled"
                             fullWidth 
                             multiline
@@ -233,6 +245,7 @@ const loadProduct = async() => {
                             error={ !!errors.domcomer }
                             helperText={ errors.domcomer?.message }
                         />
+
                         <TextField
                             label="CUIT"
                             variant="filled"
@@ -246,8 +259,9 @@ const loadProduct = async() => {
                             error={ !!errors.cuit }
                             helperText={ errors.cuit?.message }
                         />
+
                         <TextField
-                            label="Condicion IVA"
+                            label="CONDICION IVA"
                             variant="filled"
                             fullWidth 
                             multiline
@@ -260,6 +274,32 @@ const loadProduct = async() => {
                             helperText={ errors.coniva?.message }
                         />
 
+                        <TextField
+                            label="Ingresos Brutos"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('ib', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.ib }
+                            helperText={ errors.ib?.message }
+                        />
+                        <TextField
+                            label="Fecha Inicio Actividades"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('feciniact', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.feciniact }
+                            helperText={ errors.feciniact?.message }
+                        />
 
 
 

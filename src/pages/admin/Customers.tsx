@@ -16,7 +16,7 @@ const columns:GridColDef[] = [
     { field: 'codCus', headerName: 'Codigo' },
     { 
         field: 'name', 
-        headerName: 'Descripcion', 
+        headerName: 'Cliente', 
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
@@ -28,9 +28,9 @@ const columns:GridColDef[] = [
             )
         }
     },
-    { field: 'emailCus', headerName: 'Email' },
-    { field: 'domcomer', headerName: 'Domicilio' },
-    { field: 'cuit', headerName: 'CUIT' },
+    { field: 'emailCus', headerName: 'Email',width: 250, },
+    { field: 'domcomer', headerName: 'Domicilio',width: 250, },
+    { field: 'cuit', headerName: 'CUIT',width: 150, },
     { field: 'coniva', headerName: 'Condicion IVA',width: 150, },
 
     {

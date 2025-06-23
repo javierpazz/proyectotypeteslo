@@ -8,36 +8,44 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  IValue  } from '../../../interfaces';
+import {  IUser  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
-
-
 interface FormData {
     _id?       : string;
-    codVal       : string;
-    desVal       : string;
+    name       : string;
+    email       : string;
+    isAdmin     : boolean,
+    isActive    : boolean,
+    password    : string,
+    role        :string,
 }
-const valorI = 
+
+
+
+const userI = 
       {
           _id: '',
-          codVal: "",
-          desVal: "",
-     
+          name: "",
+          email: "",
+        isAdmin: false,
+        isActive: true,
+        password: "123456",
+        role:'client',
       }
 
 
-export const ValorAdminPage = () => {
+export const UserAdminPage = () => {
     ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user : user1, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/valores');
+        if (!user1 && !isLoading) {
+        navigate('/auth/login?redirect=/admin/users');
         }
-    }, [user, isLoading, navigate]);
+    }, [user1, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
 
@@ -49,7 +57,7 @@ export const ValorAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
-const [valor, setValor] = useState(valorI);
+const [user, setUser] = useState(userI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
 
@@ -57,7 +65,7 @@ const params = useParams();
 const { id } = params;
 
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
-    defaultValues: valor
+    defaultValues: user
 })
 
 
@@ -72,23 +80,31 @@ const loadProduct = async() => {
     try {
 
         if ( id === 'new' ) {
-        // crear un valoro
-        valorI._id= "",
-        valorI.codVal= "",
-        valorI.desVal= ""
+        // crear un usero
+        userI._id= "",
+        userI.name= ""
+        userI.email= ""
+        userI.isAdmin= false,
+        userI.isActive= true,
+        userI.password= "",
+        userI.role='client'
     } else {
-        const resp = await stutzApi.get<IValue>(`/api/tes/admin/valores/${ id }`);
-        valorI._id=resp.data._id,
-        valorI.codVal=resp.data.codVal,
-        valorI.desVal=resp.data.desVal
+        const resp = await stutzApi.get<IUser>(`/api/tes/admin/users/${ id }`);
+        userI._id=resp.data._id,
+        userI.name=resp.data.name
+        userI.email=resp.data.email
+        userI.isAdmin=resp.data.isAdmin
+        userI.isActive=resp.data.isActive
+        userI.password=resp.data.password
+        userI.role=resp.data.role
     }
   } catch (error) {
     console.log(error)
     
   }
-  setDefaultValues(valorI); // Set default values
-  reset(valorI); // Populate the form
-  setValor(valorI);
+  setDefaultValues(userI); // Set default values
+  reset(userI); // Populate the form
+  setUser(userI);
  }
 
 
@@ -120,18 +136,19 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/valores', form)
+                await stutzApi.put('/api/tes/admin/users', form)
             }else{
-                await stutzApi.post('/api/tes/admin/valores', form)
+                await stutzApi.post('/api/tes/admin/users', form)
             }
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/valores`);
+                navigate(`/admin/users`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/valores`);
+            navigate(`/admin/users`);
+
 
         } catch (error) {
             console.log(error);
@@ -142,8 +159,8 @@ const loadProduct = async() => {
 
     return (
         <AdminLayoutMenuList 
-            title={'Valor'} 
-            subTitle={`Editando: ${ valorI.desVal }`}
+            title={'Usuario'} 
+            subTitle={`Editando: ${ userI.name }`}
             icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
@@ -164,32 +181,47 @@ const loadProduct = async() => {
                     <Grid item xs={12} sm={ 6 }>
 
                         <TextField
-                            inputRef={input1Ref}
-                            label="Codigo"
-                            variant="filled"
-                            fullWidth 
-                            sx={{ mb: 1 }}
-                            { ...register('codVal', {
-                                required: 'Este campo es requerido',
-                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
-                            })}
-                            error={ !!errors.codVal }
-                            helperText={ errors.codVal?.message }
-                        />
-
-                        <TextField
-                            label="Descripción"
+                            label="Nombre"
                             variant="filled"
                             fullWidth 
                             multiline
                             sx={{ mb: 1 }}
-                            { ...register('desVal', {
+                            { ...register('name', {
                                 required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
-                            error={ !!errors.desVal }
-                            helperText={ errors.desVal?.message }
+                            error={ !!errors.name }
+                            helperText={ errors.name?.message }
                         />
+
+                        <TextField
+                            label="Email"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('email', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.email }
+                            helperText={ errors.email?.message }
+                        />
+
+                        <TextField
+                            label="Password"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('password', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.password }
+                            helperText={ errors.password?.message }
+                        />
+
 
 
 

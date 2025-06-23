@@ -1,10 +1,12 @@
 import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../context';
+import { AuthContext, UiContext } from '../../../context';
 
 // export default function AdminNavBar() {
 export const AdminNavbarMenu = () => {
+
+    const { toggleSideMenu } = useContext( UiContext );
 
     // Estados para cada menú desplegable
   const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
@@ -113,32 +115,29 @@ const signoutHandler = () => {
           open={Boolean(anchorElEscri)}
           onClose={handleClose(setAnchorElEscri)}
         >
+          <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfi)}>
+            Registros
+          </MenuItem>
           <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
             Instrumentos
           </MenuItem>
+          <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfi)}>
+            Diligencias
+          </MenuItem>
           <MenuItem component={Link} to="/admin/paraminstrumento" onClick={handleClose(setAnchorElEscri)}>
             Parametriza Instrumentos
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/partes" onClick={handleClose(setAnchorElConfi)}>
+            Partes
           </MenuItem>
           <MenuItem component={Link} to="/admin/mesaentrada" onClick={handleClose(setAnchorElEscri)}>
             Mesa de Entrada
           </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-            Entradas
+            Consulta Entradas
           </MenuItem>
           <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElEscri)}>
-             Diligencias 
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradasrst" onClick={handleClose(setAnchorElEscri)}>
-            Entradas Registradas  sin Terminar
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradasnrst" onClick={handleClose(setAnchorElEscri)}>
-            Entradas No Registradas  sin Terminar
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradaspst" onClick={handleClose(setAnchorElEscri)}>
-            Entradas Protocolizadas Sin Terminar
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradasnpst" onClick={handleClose(setAnchorElEscri)}>
-            Entradas No Protocolizadas Sin Terminar
+             Consulta Diligencias 
           </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
              Entradas sin Facturar (Sin Hacer)
@@ -224,7 +223,7 @@ const signoutHandler = () => {
         </Menu>
 
         {/* Stocks Ptos Venta */}
-        <Button
+        {/* <Button
           color="primary"
           onClick={handleOpen(setAnchorElStocks)}
         >
@@ -244,7 +243,7 @@ const signoutHandler = () => {
             <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElStocks)}>
               Informes
             </MenuItem>
-        </Menu>
+        </Menu> */}
 
         {/* Admin */}
         <Button
@@ -314,11 +313,11 @@ const signoutHandler = () => {
          onClose={handleClose(setAnchorElConfi)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/filtros" onClick={handleClose(setAnchorElConfi)}>
+          <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElConfi)}>
             Informes y Filtros
           </MenuItem>
-          <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfi)}>
-            Diligencias
+          <MenuItem component={Link} to="/admin/products" onClick={handleClose(setAnchorElConfi)}>
+            Productos
           </MenuItem>
           <MenuItem component={Link} to="/admin/customers" onClick={handleClose(setAnchorElConfi)}>
             Clientes
@@ -332,7 +331,7 @@ const signoutHandler = () => {
           <MenuItem component={Link} to="/admin/comprobantes" onClick={handleClose(setAnchorElConfi)}>
             Comprobantes
           </MenuItem>
-          <MenuItem component={Link} to="/admin/configurations" onClick={handleClose(setAnchorElConfi)}>
+          <MenuItem component={Link} to="/admin/configuraciones" onClick={handleClose(setAnchorElConfi)}>
             Puntos de Venta
           </MenuItem>
           <MenuItem component={Link} to="/admin/encargados" onClick={handleClose(setAnchorElConfi)}>
@@ -351,22 +350,11 @@ const signoutHandler = () => {
             Chat Soporte
           </MenuItem>
         </Menu>
-        <Button
-          color="primary"
-          onClick={handleOpen(setAnchorElLogout)}
-        >
-          Log Out
-        </Button>
-        <Menu
-          anchorEl={anchorElLogout}
-          open={Boolean(anchorElLogout)}
-         onClose={handleClose(setAnchorElLogout)}
-          sx={{ maxHeight: 400, overflowY: 'auto' }}
-        >
-          <MenuItem component={Link} to="/admin/login" onClick={handleClose(setAnchorElLogout)}>
-                        Log Out
-          </MenuItem>
-        </Menu>
+                <Button
+                    color="primary"
+                    onClick={ toggleSideMenu }>
+                    Menú
+                </Button>
 
       </div>
       </Toolbar>

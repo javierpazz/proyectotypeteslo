@@ -31,13 +31,14 @@ import { SelectChangeEvent } from '@mui/material/Select';
 // import Modal from 'react-bootstrap/Modal';
 // import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
+import { ICartProduct, ICustomer, IInstrumento, IOrder, IParte } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
+import { BuscaPar } from '../../components/buscador';
 
 const getError = (error:any) => {
   return error.response && error.response.data.message
@@ -53,7 +54,7 @@ export const MesaEntradaAct = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/mesaentradaAct');
+        navigate('/auth/loginadm?redirect=/admin/mesaentradaAct');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -93,8 +94,9 @@ export const MesaEntradaAct = () => {
             total : 0,
             totalBuy : 0,
             id_client : "",
+            id_parte : undefined,
             id_instru : "",
-            codCon : "",
+            id_config : "",
             user : "",
             codConNum : 0,
             codSup : '0',
@@ -135,8 +137,9 @@ export const MesaEntradaAct = () => {
                   OrderI.total        = resp.data.total;
                   OrderI.totalBuy     = resp.data.totalBuy;
                   OrderI.id_client    = resp.data.id_client;
+                  OrderI.id_parte    = resp.data.id_parte;
                   OrderI.id_instru    = resp.data.id_instru;
-                  OrderI.codCon      = resp.data.codCon;
+                  OrderI.id_config      = resp.data.id_config;
                   OrderI.codConNum       = resp.data.codConNum;
                   OrderI.codSup          = resp.data.codSup;
                   OrderI.remNum          = resp.data.remNum;
@@ -161,6 +164,9 @@ export const MesaEntradaAct = () => {
             setCodCust((invoice.id_client as ICustomer).codCus);
             setCodCus(invoice.id_client as any);
             setNameCus((invoice.id_client as ICustomer).nameCus);
+            setCodPart((invoice.id_parte as IParte).codPar);
+            setCodPar(invoice.id_parte as any);
+            setNamePar((invoice.id_parte as IParte).name);
             setRemNum(invoice.remNum as any) ;
             setRemDat(invoice.remDat!.substring(0, 10) as any);
             setDueDat(invoice.dueDat!.substring(0, 10) as any);
@@ -213,6 +219,9 @@ export const MesaEntradaAct = () => {
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
   const [userObj, setUserObj] = useState<ICustomer>();
+  const [codPar, setCodPar] = useState('');
+  const [codPart, setCodPart] = useState('');
+  const [namePar, setNamePar] = useState('');
   const [remNum, setRemNum] = useState("");
   const [libNum, setLibNum] = useState("");
   const [folNum, setFolNum] = useState("");
@@ -502,6 +511,7 @@ const handleShowIns = () => {
           );
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
+          invoice.id_parte = codPar;
               invoice.id_instru = codIns;
               invoice.libNum= +libNum;
               invoice.folNum= +folNum;
@@ -511,8 +521,8 @@ const handleShowIns = () => {
               invoice.asieNum= +asieNum;
               invoice.asieDat= asieDat;
               invoice.terminado= terminado;
-          invoice.codCon = userInfo.codCon;
-          invoice.user = userInfo._id,
+          // invoice.id_config = userInfo.codCon;
+          // invoice.user = userInfo._id,
           invoice.codConNum = codConNum;
 
           invoice.codSup = '0';
@@ -553,6 +563,7 @@ const handleShowIns = () => {
           totalBuy: invoice.totalBuy,
 
           codCus: invoice.id_client,
+          codPar: invoice.id_parte,
               codIns: invoice.id_instru,
               libNum : invoice.libNum,
               folNum : invoice.folNum,
@@ -562,8 +573,8 @@ const handleShowIns = () => {
               asieNum : invoice.asieNum,
               asieDat : invoice.asieDat,
               terminado : invoice.terminado,
-          codCon: invoice.codCon,
-          user: userInfo._id,
+          codCon: invoice.id_config,
+          user: invoice.user,
           codConNum: invoice.codConNum,
 
           //        codSup: invoice.codSup,
@@ -658,6 +669,7 @@ const handleShowIns = () => {
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
               required
+              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
@@ -671,7 +683,18 @@ const handleShowIns = () => {
             </Button>
           </Grid>
           <Grid item md={4}>
-            <Typography variant="h6">{nameIns}</Typography>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameIns}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameIns}
+      </Typography>
           </Grid>
 
           <Grid item md={1}>
@@ -718,6 +741,9 @@ const handleShowIns = () => {
               value={asiDat}
               onChange={(e) => setAsiDat(e.target.value)}
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
 
@@ -743,6 +769,7 @@ const handleShowIns = () => {
               onChange={(e) => setCodCust(e.target.value)}
               onKeyDown={(e) => ayudaCus(e)}
               required
+              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
@@ -756,7 +783,18 @@ const handleShowIns = () => {
             </Button>
           </Grid>
           <Grid item md={3}>
-            <Typography variant="h6">{nameCus}</Typography>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameCus}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameCus}
+      </Typography>
           </Grid>
           <Grid item md={1}>
                 <Typography></Typography>
@@ -793,8 +831,21 @@ const handleShowIns = () => {
               value={asieDat}
               onChange={(e) => setAsieDat(e.target.value)}
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
+        </Grid>
+
+        <Grid container spacing={2} mt={2}>
+            <BuscaPar
+            codPar={codPar}
+            setCodPar={setCodPar}
+            namePar={namePar}
+            setNamePar={setNamePar}
+            />
+
         </Grid>
 
 
@@ -822,6 +873,7 @@ const handleShowIns = () => {
               onChange={(e) => setRemDat(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input5Ref.current?.focus()}
               required
+
             />
           </Grid>
           <Grid item md={2}>
@@ -976,7 +1028,7 @@ const handleShowIns = () => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 400,
+              width: 800,
               bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 24,
@@ -998,7 +1050,7 @@ const handleShowIns = () => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 400,
+              width: 800,
               bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 24,

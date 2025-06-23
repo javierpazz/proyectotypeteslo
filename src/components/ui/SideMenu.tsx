@@ -124,7 +124,7 @@ export const SideMenu = () => {
                     </ListItem>
                        )
                        : (
-    
+                <>
                 <ListItem 
                 button
                 onClick={ () => navigateTo(`/auth/login`) }
@@ -134,6 +134,17 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Ingresar'} />
                 </ListItem>
+                <ListItem 
+                button
+                onClick={ () => navigateTo(`/auth/loginadm`) }
+            >
+                    <ListItemIcon>
+                        <VpnKeyOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Administracion'} />
+                </ListItem>
+
+                </>   
 
                  )
                        }

@@ -1,37 +1,39 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, CardMedia, Chip, Grid, Link } from '@mui/material'
+import { Box, Button, Chip, Grid, Link } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IProduct  } from '../../interfaces';
+import { IParte  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
-
-
-export const ProductsEsc = () => {
+export const Partes = () => {
 
 const columns:GridColDef[] = [
-    { field: 'codPro', headerName: 'Codigo' },
+    { field: 'codPar', headerName: 'Codigo' },
     { 
-        field: 'title', 
-        headerName: 'Title', 
+        field: 'name', 
+        headerName: 'Parte', 
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/productsesc/productesc/${row.title}`}>
+                <NavLink to={`/admin/partes/parte/${row.id}`}>
                     <Link underline='always'>
-                        { row.title}
+                        { row.name}
                     </Link>
                 </NavLink>
             )
         }
     },
-    { field: 'price', headerName: 'Valor' },
-        {
+    { field: 'email', headerName: 'Email',width: 250, },
+    { field: 'domcomer', headerName: 'Domicilio',width: 250, },
+    { field: 'cuit', headerName: 'CUIT',width: 150, },
+    { field: 'coniva', headerName: 'Condicion IVA',width: 150, },
+
+    {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
@@ -45,25 +47,27 @@ const columns:GridColDef[] = [
         },
 
 ];
+
+
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productosesc');
+        navigate('/auth/login?redirect=/admin/partes');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
-    const [ products, setProducts ] = useState<IProduct[]>([]);
+
+    const [ partes, setPartes ] = useState<IParte[]>([]);
 
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
-          setProducts(resp.data);
-        //   console.log(resp.data);
+          const resp = await stutzApi.get<IParte[]>('/api/tes/admin/partes');
+          setPartes(resp.data);
         } catch (error) {
           console.log({error})
         }
@@ -74,27 +78,23 @@ const columns:GridColDef[] = [
         loadData();
     }, [])
 
-    // const { data, error } = useSWR<IProduct[]>('/api/admin/products');
+    // const { data, error } = useSWR<IProduct[]>('/api/admin/partes');
     // if ( !data && !error ) return (<></>);
     
-    
-    const rows = products.map( product => ({
-        id: product._id,
-        codPro: product.codPro,
-        title: product.title,
-        // gender: product.gender,
-        // // category: product.category,
-        // inStock: product.inStock,
-        price: product.price,
-        // sizes: product.sizes.join(', '),
-        // slug: product.slug,
+    const rows = partes.map( parte => ({
+        id: parte._id,
+        codPar: parte.codPar,
+        name: parte.name,
+        email: parte.email,
+        domcomer: parte.domcomer,
+        cuit: parte.cuit,
+        coniva: parte.coniva,
     }));
 
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
-        console.log(id)
-        try {
-        await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
+      try {
+        await stutzApi.delete(`/api/tes/admin/partes/${id}`);
         window.location.reload();
     } catch (err) {
       }
@@ -102,21 +102,22 @@ const columns:GridColDef[] = [
   };
 
 
-    if ( !products ) return (<></>);
+    
+    if ( !partes ) return (<></>);
 
   return (
     <AdminLayoutMenuList 
-        title={`Diligencias (${ products?.length })`} 
-        subTitle={'Mantenimiento de Diligencias'}
+        title={`Partes (${ partes?.length })`} 
+        subTitle={'Mantenimiento de Partes'}
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/productsesc/productesc/new' >
+        <NavLink to='/admin/partes/parte/new' >
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
-                Crear Diligencia
+                Crear Parte
             </Button>
             </NavLink>            
         </Box>

@@ -47,23 +47,23 @@ const getError = (error:any) => {
 };
 
 export const MesaEntradaVal = () => {
-
+  
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/mesaentradaAct');
+        navigate('/auth/login?redirect=/admin/mesaentradaVal');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 
-        const userInfo = localStorage.getItem('userInfo')
+    const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 
-
+  
 
   // const { state, dispatch: ctxDispatch } = useContext(Store);
     const {  cart, addTodosProductToCartEscPar } = useContext(CartContext);
@@ -218,10 +218,10 @@ export const MesaEntradaVal = () => {
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
-  const [userObj, setUserObj] = useState<ICustomer>();
   const [codPar, setCodPar] = useState('');
   const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
+  const [userObj, setUserObj] = useState<ICustomer>();
   const [remNum, setRemNum] = useState("");
   const [libNum, setLibNum] = useState("");
   const [folNum, setFolNum] = useState("");
@@ -521,8 +521,8 @@ const handleShowIns = () => {
               invoice.asieNum= +asieNum;
               invoice.asieDat= asieDat;
               invoice.terminado= terminado;
-          // invoice.id_config = userInfo.codCon;
-          // invoice.user = userInfo._id,
+          invoice.id_config = userInfo.codCon;
+          invoice.user = userInfo._id,
           invoice.codConNum = codConNum;
 
           invoice.codSup = '0';
@@ -563,7 +563,6 @@ const handleShowIns = () => {
           totalBuy: invoice.totalBuy,
 
           codCus: invoice.id_client,
-          codPar: invoice.id_parte,
               codIns: invoice.id_instru,
               libNum : invoice.libNum,
               folNum : invoice.folNum,
@@ -574,7 +573,7 @@ const handleShowIns = () => {
               asieDat : invoice.asieDat,
               terminado : invoice.terminado,
           codCon: invoice.id_config,
-          user: invoice.user,
+          user: userInfo._id,
           codConNum: invoice.codConNum,
 
           //        codSup: invoice.codSup,
@@ -599,7 +598,7 @@ const handleShowIns = () => {
       //ctxDispatch({ type: 'INVOICE_CLEAR' });
       //      dispatch({ type: 'CREATE_SUCCESS' });
       //      localStorage.removeItem('cart');
-      setIsloading(true);
+      setIsloading(false);
       setIsPaying(false);
       setDesval('');
       setDesVal('');
@@ -669,7 +668,6 @@ const handleShowIns = () => {
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
               required
-              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
@@ -683,18 +681,7 @@ const handleShowIns = () => {
             </Button>
           </Grid>
           <Grid item md={4}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameIns}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameIns}
-      </Typography>
+            <Typography variant="h6">{nameIns}</Typography>
           </Grid>
 
           <Grid item md={1}>
@@ -741,9 +728,6 @@ const handleShowIns = () => {
               value={asiDat}
               onChange={(e) => setAsiDat(e.target.value)}
               required
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
           </Grid>
 
@@ -769,7 +753,6 @@ const handleShowIns = () => {
               onChange={(e) => setCodCust(e.target.value)}
               onKeyDown={(e) => ayudaCus(e)}
               required
-              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
@@ -783,18 +766,7 @@ const handleShowIns = () => {
             </Button>
           </Grid>
           <Grid item md={3}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameCus}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameCus}
-      </Typography>
+            <Typography variant="h6">{nameCus}</Typography>
           </Grid>
           <Grid item md={1}>
                 <Typography></Typography>
@@ -831,13 +803,9 @@ const handleShowIns = () => {
               value={asieDat}
               onChange={(e) => setAsieDat(e.target.value)}
               required
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
           </Grid>
         </Grid>
-
         <Grid container spacing={2} mt={2}>
             <BuscaPar
             codPar={codPar}
@@ -847,6 +815,7 @@ const handleShowIns = () => {
             />
 
         </Grid>
+
 
 
         <Grid container spacing={2} mt={2}>
@@ -1027,7 +996,7 @@ const handleShowIns = () => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 800,
+              width: 400,
               bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 24,
@@ -1049,7 +1018,7 @@ const handleShowIns = () => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 800,
+              width: 400,
               bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 24,

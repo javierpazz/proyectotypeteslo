@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { PeopleOutline } from '@mui/icons-material'
+import { AddOutlined, PeopleOutline } from '@mui/icons-material'
 
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
-import { Grid, Select, MenuItem } from '@mui/material';
+import { Link, Grid, Select, MenuItem, Box, Button, Chip } from '@mui/material';
 
-import { AdminLayout } from '../../components/layouts'
+import { AdminLayoutMenuList } from '../../components/layouts'
 import { IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 
@@ -47,8 +47,6 @@ export const Users = () => {
     }, [])
     
 
-    // if ( !data && !error ) return (<></>);
-    // if ( !users ) return (<></>);
 
     const onRoleUpdated = async( userId: string, newRole: string ) => {
 
@@ -72,10 +70,44 @@ export const Users = () => {
 
     }
 
+    const onActivoUpdated = async( userId: string, newisActive: boolean ) => {
+
+        const previosUsers = users.map( user => ({ ...user }));
+        const updatedUsers = users.map( user => ({
+            ...user,
+            isActive: userId === user._id ? newisActive : user.isActive
+        }));
+
+        setUsers(updatedUsers);
+
+        try {
+            
+            await stutzApi.put('/api/tes/admin/users/isActive', {  userId, isActive: newisActive });
+
+        } catch (error) {
+            setUsers( previosUsers );
+            console.log(error);
+            alert('No se pudo actualizar el estado del usuario');
+        }
+
+    }
 
     const columns: GridColDef[] = [
         { field: 'email', headerName: 'Correo', width: 250 },
-        { field: 'name', headerName: 'Nombre completo', width: 300 },
+        { 
+            field: 'name', 
+            headerName: 'Nombre completo', 
+            width: 250,
+            renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+                return (
+                    <NavLink to={`/admin/users/user/${row.id}`}>
+                        <Link underline='always'>
+                            { row.name}
+                        </Link>
+                    </NavLink>
+                )
+            }
+        },
         {
             field: 'role', 
             headerName: 'Rol', 
@@ -83,12 +115,13 @@ export const Users = () => {
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
                 return (
                     <Select
-                        value={ row.role }
-                        label="Rol"
-                        onChange={ ({ target }) => onRoleUpdated( row.id, target.value ) }
-                        sx={{ width: '300px' }}
+                    value={ row.role }
+                    label="Rol"
+                    onChange={ ({ target }) => onRoleUpdated( row.id, target.value ) }
+                    sx={{ width: '300px' }}
                     >
                         <MenuItem value='admin'> Admin </MenuItem>
+                        <MenuItem value='user'> User </MenuItem>
                         <MenuItem value='client'> Client </MenuItem>
                         <MenuItem value='super-user'> Super User </MenuItem>
                         <MenuItem value='SEO'> SEO </MenuItem>
@@ -96,22 +129,75 @@ export const Users = () => {
                 )
             }
         },
+        {
+            field: 'isActive', 
+            headerName: 'Activo', 
+            width: 150,
+            renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+                return (
+                    <Select
+                    value={ row.isActive }
+                    label="Activo"
+                    onChange={ ({ target }) => onActivoUpdated( row.id, target.value ) }
+                    sx={{ width: '300px' }}
+                    >
+                        <MenuItem value='true'> Activo </MenuItem>
+                        <MenuItem value='false'> InActivo </MenuItem>
+                    </Select>
+                )
+            }
+        },
+
+    {
+            field: 'check',
+            headerName: 'Acción',
+            renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                return (
+                        <Chip variant='outlined' label="Eliminar" color="error"
+                        onClick={() => deleteHandler(row.id)}
+                        />
+                    )
+        
+            }
+        },
+
     ];
 
     const rows = users.map( user => ({
         id: user._id,
         email: user.email,
         name: user.name,
-        role: user.role
+        role: user.role,
+        isActive: user.isActive
     }))
+
+    const deleteHandler = async (id : string) => {
+    if (window.confirm('Esta Seguro de Eliminar?')) {
+      try {
+        await stutzApi.delete(`/api/tes/admin/users/${id}`);
+        window.location.reload();
+    } catch (err) {
+      }
+    }
+  };
 
 
   return (
-    <AdminLayout 
+    <AdminLayoutMenuList 
         title={'Usuarios'} 
         subTitle={'Mantenimiento de usuarios'}
         icon={ <PeopleOutline /> }
     >
+        <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
+        <NavLink to='/admin/users/user/new' >
+            <Button
+                startIcon={ <AddOutlined /> }
+                color="secondary"
+            >
+                Crear Usuario
+            </Button>
+            </NavLink>            
+        </Box>
 
 
         <Grid container className='fadeIn'>
@@ -131,7 +217,7 @@ export const Users = () => {
         </Grid>
 
 
-    </AdminLayout>
+    </AdminLayoutMenuList>
   )
 }
 

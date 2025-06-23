@@ -21,7 +21,7 @@ export const SalePointScreen = () => {
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
-
+  console.log(redirect)
   const { user } = useContext( AuthContext );
 
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
@@ -46,13 +46,17 @@ export const SalePointScreen = () => {
 
 
   const filtro = {
-    firstDat : getTodayInGMT3(),
-    lastDat : getTodayInGMT3(),
+    // firstDat : getTodayInGMT3(),
+    // lastDat : getTodayInGMT3(),
+    firstDat : "0001-01-01",
+    lastDat : "3000-01-01",
     codCus : '',
+    codPar : '',
     codSup : '',
     codPro : '',
     codEnc : '',
     codCom : '',
+    codIns : '',
     codVal : '',
     codCon : '',
     codUse : '',
@@ -65,6 +69,8 @@ export const SalePointScreen = () => {
     desVal : 'Todos',
     nameEnc : 'Todos',
     order : 'newest',
+    estado : 'TOD',
+    registro : 'TOD',
   };
 
 
@@ -122,8 +128,8 @@ const handleChange = (event: SelectChangeEvent<string>) => {
       userInfo.filtro = filtro;
       userInfo.filtro.codCon = codCon;
       userInfo.filtro.nameCon = name;
-      userInfo.filtro.codUse = userInfo._id;
-      userInfo.filtro.nameUse = userInfo.name;
+      userInfo.filtro.codUse = user._id;
+      userInfo.filtro.nameUse = user.name;
 
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
       localStorage.setItem('punto', codCon);
@@ -134,7 +140,7 @@ const handleChange = (event: SelectChangeEvent<string>) => {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
     };
     // navigate('/admin/dashboard');
-    navigate('/');
+    navigate('/admin/entradas');
     window.location.reload();
   };
   

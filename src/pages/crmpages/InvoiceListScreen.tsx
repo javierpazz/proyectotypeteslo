@@ -59,7 +59,7 @@ export const InvoiceListScreen = () => {
 
     useEffect(() => {
         if (!user) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/loginadm?redirect=/admin/entradas');
         }
     }, [user, navigate]);
     ////////////////////FGFGFGFG

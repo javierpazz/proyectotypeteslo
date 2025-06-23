@@ -68,6 +68,21 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
     }
 
+    const loginUserAdm = async( email: string, password: string ): Promise<boolean> => {
+
+        try {
+            const { data } = await stutzApi.post('api/tes/user/loginadm', { email, password });
+            const { token, user } = data;
+            Cookies.set('token', token );
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            dispatch({ type: '[Auth] - Login', payload: user });
+            return true;
+        } catch (error) {
+            return false;
+        }
+
+    }
+
 
     const registerUser = async( name: string, email: string, password: string ): Promise<{hasError: boolean; message?: string}> => {
         try {
@@ -94,6 +109,31 @@ export const AuthProvider:FC<Props> = ({ children }) => {
         }
     }
 
+    const registerUserAdm = async( name: string, email: string, password: string ): Promise<{hasError: boolean; message?: string}> => {
+        try {
+            const { data } = await stutzApi.post('api/tes/user/registeradm', { name, email, password });
+            const { token, user } = data;
+            Cookies.set('token', token );
+            dispatch({ type: '[Auth] - Login', payload: user });
+            return {
+                hasError: false
+            }
+
+        } catch (error) {
+            if ( axios.isAxiosError(error) ) {
+                return {
+                    hasError: true,
+                    message: error.response?.data.message
+                }
+            }
+
+            return {
+                hasError: true,
+                message: 'No se pudo crear el usuario - intente de nuevo'
+            }
+        }
+    }
+    
     const logout = () => {
         Cookies.remove('token');
         Cookies.remove('cart');
@@ -109,7 +149,9 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
             // Methods
             loginUser,
+            loginUserAdm,
             registerUser,
+            registerUserAdm,
             logout,
 
         }}>

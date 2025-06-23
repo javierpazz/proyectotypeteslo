@@ -46,7 +46,7 @@ const OrderI:IOrder = {
     totalBuy : 0,
     id_client : "",
     id_instru : "",
-    codCon : "",
+    id_config : "",
     codConNum : 0,
     codSup : '0',
     remNum : 0,
@@ -72,7 +72,7 @@ export const MesaEntradaCon = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/mesaentradaCon');
+        navigate('/auth/loginadm?redirect=/admin/mesaentradaCon');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -143,7 +143,7 @@ export const MesaEntradaCon = () => {
                 totalBuy     : resp.data.totalBuy,
                 id_client    : resp.data.id_client,
                 id_instru    : resp.data.id_instru,
-                codCon      : resp.data.codCon,
+                id_config      : resp.data.id_config,
                 codConNum       : resp.data.codConNum,
                 codSup      : resp.data.codSup,
                 remNum      : resp.data.remNum,
@@ -222,7 +222,7 @@ export const MesaEntradaCon = () => {
   <Button variant="contained" color="primary" onClick={reactToPrintFn}>IMPRIME</Button>
   <Button variant="contained" color="secondary" onClick={actualiza}>ACTUALIZA</Button>
   <Button variant="contained" color="secondary" onClick={valoriza}>VALORIZA</Button>
-  <Button variant="outlined" color="success">EXCEL</Button>
+  {/* <Button variant="outlined" color="success">EXCEL</Button> */}
   <Button variant="outlined" color="error">BORRA ENTRADA</Button>
   <Button variant="outlined" color="secondary" onClick={clearitems}>CANCELA</Button>
 </Box>
@@ -250,6 +250,13 @@ export const MesaEntradaCon = () => {
           <Typography><strong>Ingresos Brutos:</strong> {config.ib}</Typography>
           <Typography><strong>Fecha de Inicio de Actividades:</strong> {config.feciniact}</Typography>
         </Grid>
+        <Grid item xs={12} md={6}>
+          <Typography>
+            <strong>Obs:</strong> {invoice.notes} 
+          </Typography>
+        </Grid>
+
+
       </Grid>
 
       <Box mt={3}>
@@ -258,6 +265,7 @@ export const MesaEntradaCon = () => {
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Descripción</TableCell>
+              <TableCell>Observaciones</TableCell>
               <TableCell>Estado</TableCell>
               <TableCell align="right">Valor</TableCell>
             </TableRow>
@@ -267,6 +275,7 @@ export const MesaEntradaCon = () => {
               <TableRow key={item._id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.title}</TableCell>
+                <TableCell>{item.observ}</TableCell>
                 <TableCell>
                   {item.terminado ? 'Terminado' : 'Pendiente'}
                 </TableCell>

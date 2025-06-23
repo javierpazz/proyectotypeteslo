@@ -44,7 +44,7 @@ export const CustomerAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/login?redirect=/admin/customers');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG

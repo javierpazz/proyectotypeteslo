@@ -35,7 +35,7 @@ export const EncargadoAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/login?redirect=/admin/encargados');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG

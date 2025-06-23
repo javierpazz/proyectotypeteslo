@@ -13,7 +13,7 @@ type FormData = {
     password: string,
   };
 
-export const Login = () => {
+export const LoginAdm = () => {
 
 
 //////////////////ghghgh
@@ -26,7 +26,7 @@ export const Login = () => {
 
 
     const navigate = useNavigate();
-    const { loginUser } = useContext( AuthContext );
+    const { loginUserAdm } = useContext( AuthContext );
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false);
@@ -44,7 +44,7 @@ export const Login = () => {
         //     setTimeout(() => setShowError(false), 3000);
         //     return;
         // }
-        const isValidLogin = await loginUser( email, password );
+        const isValidLogin = await loginUserAdm( email, password );
 
         if ( !isValidLogin ) {
             setShowError(true);
@@ -53,8 +53,8 @@ export const Login = () => {
         }        
     
         // Todo: navegar a la pantalla que el usuario estaba
-        // navigate('/salepoint');
-        navigate(redirect || '/');
+        navigate('/salepoint');
+        // navigate(redirect || '/');
 
 
     }
@@ -110,11 +110,11 @@ export const Login = () => {
                     </Button>
                 </Grid>
 
-                <Grid item xs={12} display='flex' justifyContent='end'>
+                {/* <Grid item xs={12} display='flex' justifyContent='end'>
                     <NavLink to="/auth/register" >
                             ¿No tienes cuenta?
                     </NavLink>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Box>
         </form>

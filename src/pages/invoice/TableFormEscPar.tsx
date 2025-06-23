@@ -122,9 +122,8 @@ export const TableFormEscPar: React.FC<TableFormProps> = ({
     input8Ref.current.focus()
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get(`/api/products/xpv?id_config=${id_config}`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
+        // const { data } = await stutzApi.get(`/api/products/xpv?id_config=${id_config}`);
+        const { data } = await stutzApi.get(`/api/products/`);
         setProductss(data);
         // dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {}
@@ -343,6 +342,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 onChange={(e) => setCodProd(e.target.value)}
                 onKeyDown={(e) => ayudaPro(e)}
                 required
+                autoComplete="off"
               />
             </Grid>
 

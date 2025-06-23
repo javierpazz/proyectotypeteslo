@@ -38,6 +38,7 @@ import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
 import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
+import { BuscaPar } from '../../components/buscador';
 
 const getError = (error:any) => {
   return error.response && error.response.data.message
@@ -53,7 +54,7 @@ export const MesaEntrada = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/mesaentrada');
+        navigate('/auth/loginadm?redirect=/admin/mesaentrada');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -94,8 +95,9 @@ export const MesaEntrada = () => {
             total : 0,
             totalBuy : 0,
             id_client : "",
+            id_parte : undefined,
             id_instru : "",
-            codCon : "",
+            id_config : "",
             user : "",
             codConNum : 0,
             codSup : '0',
@@ -152,6 +154,8 @@ export const MesaEntrada = () => {
   const [nameIns, setNameIns] = useState('');
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
+  const [codPar, setCodPar] = useState('');
+  const [namePar, setNamePar] = useState('');
   const [nameCus, setNameCus] = useState('');
   const [userObj, setUserObj] = useState<ICustomer>();
   const [remNum, setRemNum] = useState("");
@@ -445,6 +449,7 @@ const handleShowIns = () => {
           );
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
+              (codPar) ? invoice.id_parte = codPar : undefined;
               invoice.id_instru = codIns;
               invoice.libNum= +libNum;
               invoice.folNum= +folNum;
@@ -454,7 +459,7 @@ const handleShowIns = () => {
               invoice.asieNum= +asieNum;
               invoice.asieDat= asieDat;
               invoice.terminado= terminado;
-          invoice.codCon = userInfo.codCon;
+          invoice.id_config = userInfo.codCon;
           invoice.user = userInfo.user._id,
           invoice.codConNum = codConNum;
 
@@ -496,6 +501,7 @@ const handleShowIns = () => {
           totalBuy: invoice.totalBuy,
 
           codCus: invoice.id_client,
+              codPar: invoice.id_parte,
               codIns: invoice.id_instru,
               libNum : invoice.libNum,
               folNum : invoice.folNum,
@@ -505,7 +511,7 @@ const handleShowIns = () => {
               asieNum : invoice.asieNum,
               asieDat : invoice.asieDat,
               terminado : invoice.terminado,
-          codCon: invoice.codCon,
+          codCon: invoice.id_config,
           user: userInfo.user._id,
           codConNum: invoice.codConNum,
 
@@ -598,6 +604,7 @@ const handleShowIns = () => {
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
               required
+              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
@@ -611,7 +618,18 @@ const handleShowIns = () => {
             </Button>
           </Grid>
           <Grid item md={4}>
-            <Typography variant="h6">{nameIns}</Typography>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameIns}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameIns}
+      </Typography>
           </Grid>
 
           <Grid item md={1}>
@@ -658,6 +676,9 @@ const handleShowIns = () => {
               value={asiDat}
               onChange={(e) => setAsiDat(e.target.value)}
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
 
@@ -683,6 +704,7 @@ const handleShowIns = () => {
               onChange={(e) => setCodCust(e.target.value)}
               onKeyDown={(e) => ayudaCus(e)}
               required
+              autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
@@ -696,7 +718,18 @@ const handleShowIns = () => {
             </Button>
           </Grid>
           <Grid item md={3}>
-            <Typography variant="h6">{nameCus}</Typography>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameCus}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameCus}
+      </Typography>
           </Grid>
           <Grid item md={1}>
                 <Typography></Typography>
@@ -733,9 +766,25 @@ const handleShowIns = () => {
               value={asieDat}
               onChange={(e) => setAsieDat(e.target.value)}
               required
+                            InputLabelProps={{
+                shrink: true,
+              }}
+
             />
           </Grid>
         </Grid>
+
+
+        <Grid container spacing={2} mt={2}>
+            <BuscaPar
+            codPar={codPar}
+            setCodPar={setCodPar}
+            namePar={namePar}
+            setNamePar={setNamePar}
+            />
+
+        </Grid>
+
 
 
         <Grid container spacing={2} mt={2}>
@@ -916,7 +965,7 @@ const handleShowIns = () => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 400,
+              width: 800,
               bgcolor: 'background.paper',
               borderRadius: 2,
               boxShadow: 24,

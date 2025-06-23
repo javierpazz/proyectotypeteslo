@@ -35,7 +35,7 @@ export const EstadoordenAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/entradas');
+        navigate('/auth/login?redirect=/admin/estadosorden');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG

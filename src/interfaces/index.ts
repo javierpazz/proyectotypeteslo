@@ -13,3 +13,5 @@ export * from './instrumentos';
 export * from './value';
 export * from './encargado';
 export * from './estadoorden';
+export * from './comprobantes';
+export * from './parte';

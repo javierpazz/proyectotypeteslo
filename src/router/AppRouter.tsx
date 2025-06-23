@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import {Login} from '../pages/auth/Login';
+import {LoginAdm} from '../pages/auth/LoginAdm';
 import {Register} from '../pages/auth/Register';
 import {Slug} from '../pages/product/Slug';
 import {Query} from '../pages/search/Query';
@@ -42,13 +43,22 @@ import { Estadosorden } from '../pages/admin/Estadosorden';
 import { EstadoordenAdminPage } from '../pages/admin/estadosorden/estadoorden';
 import { ProductsEsc } from '../pages/admin/productsesc';
 import { ProductEscAdminPage } from '../pages/admin/diligencias/productesc';
+import { Comprobantes } from '../pages/admin/comprobantes';
+import { Configuraciones } from '../pages/admin/Configuraciones';
+import { ConfiguracionAdminPage } from '../pages/admin/configuraciones/configuracion';
+import { ConfiguracionesEsc } from '../pages/admin/Configuracionesesc';
+import { ConfiguracionEscAdminPage } from '../pages/admin/configuraciones/configuracionesc';
+import { Partes } from '../pages/admin/Partes';
+import { ParteAdminPage } from '../pages/admin/partes/parte';
+import { UserAdminPage } from '../pages/admin/users/user';
+import { Filtro } from '../pages/invoice/Filtro';
 
 import { ParamInstrumento } from '../pages/invoice/ParamInstrumento';
 import {EntradaListScreen} from '../pages/crmpages/EntradaListScreen';
-import {EntradaRegSinTerListScreen} from '../pages/crmpages/EntradaRegSinTerListScreen';
-import {EntradaProSinTerListScreen} from '../pages/crmpages/EntradaProSinTerListScreen';
-import {EntradaNoRegSinTerListScreen} from '../pages/crmpages/EntradaNoRegSinTerListScreen';
-import {EntradaNoProSinTerListScreen} from '../pages/crmpages/EntradaNoProSinTerListScreen';
+// import {EntradaRegSinTerListScreen} from '../pages/crmpages/EntradaRegSinTerListScreen';
+// import {EntradaProSinTerListScreen} from '../pages/crmpages/EntradaProSinTerListScreen';
+// import {EntradaNoRegSinTerListScreen} from '../pages/crmpages/EntradaNoRegSinTerListScreen';
+// import {EntradaNoProSinTerListScreen} from '../pages/crmpages/EntradaNoProSinTerListScreen';
 import {DiligenciaListScreen} from '../pages/crmpages/DiligenciaListScreen';
 import { useEffect } from 'react';
 import { stutzApi } from '../../api';
@@ -85,9 +95,10 @@ export const AppRouter = () => {
                 ( !isLoggedIn )  
                 ? ( */}
                     <>
-                            <Route path="/auth/*" element={ <Login /> } />
+                            <Route path="/auth/login" element={ <Login /> } />
+                            <Route path="/auth/loginadm" element={ <LoginAdm /> } />
                             <Route path="/auth/register" element={ <Register /> } />
-                            <Route path="/*" element={ <Navigate to="/auth/login" /> } />
+                            <Route path="/*" element={ <Navigate to="/auth/loginadm" /> } />
                         {/* </>
                     )
                     : (
@@ -113,10 +124,10 @@ export const AppRouter = () => {
                             <Route path="/admin/mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
                             <Route path="/admin/paraminstrumento" element={ <ParamInstrumento /> } />
                             <Route path="/admin/entradas" element={ <EntradaListScreen /> } />
-                            <Route path="/admin/entradasrst" element={ <EntradaRegSinTerListScreen /> } />
+                            {/* <Route path="/admin/entradasrst" element={ <EntradaRegSinTerListScreen /> } />
                             <Route path="/admin/entradasnrst" element={ <EntradaNoRegSinTerListScreen /> } />
                             <Route path="/admin/entradaspst" element={ <EntradaProSinTerListScreen /> } />
-                            <Route path="/admin/entradasnpst" element={ <EntradaNoProSinTerListScreen /> } />
+                            <Route path="/admin/entradasnpst" element={ <EntradaNoProSinTerListScreen /> } /> */}
                             <Route path="/admin/diligencias" element={ <DiligenciaListScreen /> } />
                             <Route path="/admin/entrada/:id" element={ <MesaEntradaCon /> } />
                             <Route path="/admin/instrumentos" element={ <Instrumentos /> } />
@@ -132,7 +143,17 @@ export const AppRouter = () => {
                             <Route path="/admin/estadosorden" element={ <Estadosorden /> } />
                             <Route path="/admin/estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
                             <Route path="/admin/productsesc" element={ <ProductsEsc /> } />
-                            <Route path="/admin/productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
+                            <Route path="/admin/productsesc/productesc/:title" element={ <ProductEscAdminPage /> } />
+                            <Route path="/admin/comprobantes" element={ <Comprobantes /> } />
+                            <Route path="/admin/configuraciones" element={ <Configuraciones /> } />
+                            <Route path="/admin/configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
+                            <Route path="/admin/configuracionesesc" element={ <ConfiguracionesEsc /> } />
+                            <Route path="/admin/configuraciones/configuracionesc/:id" element={ <ConfiguracionEscAdminPage /> } />
+                            <Route path="/admin/partes" element={ <Partes /> } />
+                            <Route path="/admin/partes/parte/:id" element={ <ParteAdminPage /> } />
+                            <Route path="/admin/users" element={ <Users /> } />
+                            <Route path="/admin/users/user/:id" element={ <UserAdminPage /> } />
+                            <Route path="/admin/filtro" element={ <Filtro /> } />
 
                             <Route path="/orders/history" element={ <History /> } />
                             <Route path="/orders/:id" element={ <OrderPage /> } />
