@@ -29,11 +29,10 @@ setNameUse,
 }) => {
 
 
-
+console.log(codUse);
   // const [codUse, setCodUse] = useState('');
   const [codUser, setCodUset] = useState('');
   const [users, setUsers] = useState<IUser[]>([]);
-  const [user, setUser] = useState<IUser>();
 
 
 
@@ -105,7 +104,7 @@ const handleShowUse = () => {
         setCodUset('');
         setNameUse('Elija Usuario');
     }else{
-      setUser(instRow);
+      // setUser(instRow);
       setCodUse(instRow._id);
       // setCodUset(instRow.codUse);
       setNameUse(instRow.name);

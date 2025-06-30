@@ -14,10 +14,8 @@ export const AdminNavbarMenu = () => {
   const [anchorElSales, setAnchorElSales] = useState<null | HTMLElement>(null);
   const [anchorElBuys, setAnchorElBuys] = useState<null | HTMLElement>(null);
   const [anchorElCash, setAnchorElCash] = useState<null | HTMLElement>(null);
-  const [anchorElStocks, setAnchorElStocks] = useState<null | HTMLElement>(null);
   const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
   const [anchorElConfi, setAnchorElConfi] = useState<null | HTMLElement>(null);
-  const [anchorElLogout, setAnchorElLogout] = useState<null | HTMLElement>(null);
 
   // // Funciones para abrir menú
   // const handleOpen = (setter) => (event) => setter(event.currentTarget);
@@ -37,13 +35,6 @@ const { user} = useContext(  AuthContext );
 ////////////////////FGFGFGFG
 
 // TODO
-const signoutHandler = () => {
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('shippingAddress');
-    localStorage.removeItem('paymentMethod');
-    // window.location.href = '/signin';
-    window.location.href = '/';
-  };
 
 
   return (

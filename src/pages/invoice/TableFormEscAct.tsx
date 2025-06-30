@@ -5,9 +5,8 @@ import { AiOutlineDelete } from 'react-icons/ai';
 
 
 
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BiFileFind } from "react-icons/bi";
 import {
   Box,
   Button,
@@ -43,7 +42,6 @@ type TableFormProps = {
   setList: any;
   total: any;
   setTotal: any;
-  valueeR: any;
   desval: any;
   numval: any;
   isPaying: any;
@@ -74,30 +72,30 @@ export const TableFormEscAct: React.FC<TableFormProps> = ({
   // isPaying
 }) => {
 
+  console.log(terminado)
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
-  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: '649f9b05c4416622ac833792',
-    image: '1740176-00-A_0_2000.jpg',
-    price: 1,
-    porIva: 21,
-    medPro: "unidad",
-    size: "M",
-    slug: 'mens_chill_crew_neck_sweatshirt',
-    title: 'mens_chill_crew_neck_sweatshirt',
-    gender: 'men',
-    quantity: 1,
-    venDat: "",
-    observ: "",
-    // terminado: false,
-  })
+  // const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
+  //   _id: '649f9b05c4416622ac833792',
+  //   image: '1740176-00-A_0_2000.jpg',
+  //   price: 1,
+  //   porIva: 21,
+  //   medPro: "unidad",
+  //   size: "M",
+  //   slug: 'mens_chill_crew_neck_sweatshirt',
+  //   title: 'mens_chill_crew_neck_sweatshirt',
+  //   gender: 'men',
+  //   quantity: 1,
+  //   venDat: "",
+  //   observ: "",
+  //   // terminado: false,
+  // })
 
 
-    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
+  //   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+  // ? JSON.parse(localStorage.getItem('userInfo')!)
+  // : null;
 
-  const id_config = userInfo.codCon;
   const getTodayInGMT3 = () => {
     const now = new Date();
     // Convertimos a la hora de Argentina (GMT-3)
@@ -112,20 +110,20 @@ export const TableFormEscAct: React.FC<TableFormProps> = ({
   const input9Ref = useRef<HTMLInputElement>(null);
   const input10Ref = useRef<HTMLInputElement>(null);
   const input11Ref = useRef<HTMLButtonElement>(null);
-  const input12Ref = useRef<HTMLButtonElement>(null);
   const input22Ref = useRef<HTMLInputElement>(null);
 
   const isEditing = false;
   const [productss, setProductss] = useState<IProduct[]>([]);
   const [productR, setProductR] = useState<IProduct>();
-  const [stock, setStock] = useState(0);
-  const [miStock, setMiStock] = useState(0);
+  // const [stock, setStock] = useState(0);
+  // const [miStock, setMiStock] = useState(0);
   // const [showPro, setShowPro] = useState(false);
   const [codProd, setCodProd] = useState('');
 //   const [medPro, setMedPro] = useState('');
   const [venDat, setVenDat] = useState(getTodayInGMT3());
   const [observ, setObserv] = useState('');
 
+  
 useEffect(() => {
   const EntTerminada = cart.some(item => item.terminado === false);
   setTerminado(!EntTerminada);
@@ -161,10 +159,6 @@ useEffect(() => {
   //   e.preventDefault();
   //   addToCartHandler();
   // };
-  const unloadpayment = async () => {
-    if (window.confirm('Los Datos son incorrectos')) {
-    }
-    };
     
   // const addToCartHandler = async (itemInv: ICartProduct) => {
   const addToCartHandler = async (productR:  IProduct) => {
@@ -244,9 +238,9 @@ useEffect(() => {
         setPrice(0);
         setPorIva(0);
         setAmount(0);
-        setStock(0);
+        // setStock(0);
         setProductR(undefined);
-        setMiStock(0);
+        // setMiStock(0);
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
@@ -258,22 +252,22 @@ useEffect(() => {
         setPrice(productRow.price);
         setPorIva(productRow.porIva);
         setAmount(productRow.price);
-        setStock(productRow.inStock);
-        setMiStock(productRow.minStock);
-        setTempCartProduct({_id: productRow._id,
-          image: productRow.images[0],
-          price: productRow.price,
-          porIva: productRow.porIva,
-          medPro: productRow.medPro,
-          size: "M",
-          slug: productRow.slug,
-          title: productRow.title,
-          gender: productRow.gender,
-          quantity : 1,
-            venDat: venDat,
-            observ: observ,
-            terminado: false,
-        });
+        // setStock(productRow.inStock);
+        // setMiStock(productRow.minStock);
+        // setTempCartProduct({_id: productRow._id,
+        //   image: productRow.images[0],
+        //   price: productRow.price,
+        //   porIva: productRow.porIva,
+        //   medPro: productRow.medPro,
+        //   size: "M",
+        //   slug: productRow.slug,
+        //   title: productRow.title,
+        //   gender: productRow.gender,
+        //   quantity : 1,
+        //     venDat: venDat,
+        //     observ: observ,
+        //     terminado: false,
+        // });
         input9Ref.current?.focus()
         setCodProd('');
     };

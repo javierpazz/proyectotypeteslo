@@ -29,11 +29,11 @@ setNameCus,
 }) => {
 
 
+  console.log(codCus);
 
   // const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [customers, setCustomers] = useState<ICustomer[]>([]);
-  const [customer, setCustomer] = useState<ICustomer>();
 
 
 
@@ -104,7 +104,7 @@ const handleShowCus = () => {
         setCodCust('');
         setNameCus('Elija Cliente');
     }else{
-      setCustomer(instRow);
+      // setCustomer(instRow);
       setCodCus(instRow._id);
       setCodCust(instRow.codCus);
       setNameCus(instRow.nameCus);

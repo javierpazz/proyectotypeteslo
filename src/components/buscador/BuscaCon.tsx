@@ -29,11 +29,11 @@ setNameCon,
 }) => {
 
 
+console.log(codCon);
 
   // const [codUse, setCodUse] = useState('');
   const [codCont, setCodCont] = useState('');
   const [configuraciones, setConfiguracions] = useState<IConfiguracion[]>([]);
-  const [configuracion, setConfiguracion] = useState<IConfiguracion>();
 
 
 
@@ -104,7 +104,7 @@ const handleShowCon = () => {
         setCodCont('');
         setNameCon('Elija Registro');
     }else{
-      setConfiguracion(instRow);
+      // setConfiguracion(instRow);
       setCodCon(instRow._id);
       setCodCont(instRow.codCon);
       setNameCon(instRow.name);

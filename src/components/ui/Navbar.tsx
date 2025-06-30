@@ -1,53 +1,29 @@
-import { useContext, useState } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Toolbar, Typography } from '@mui/material';
+import { useContext } from 'react';
+// import {  NavLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
+
+import { AppBar,  Box, Button, Toolbar, Typography } from '@mui/material';
 // import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
-import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
-import { CartContext, UiContext } from '../../../context';
+import {  UiContext } from '../../../context';
 
 export const Navbar = () => {
 
-    const navigate = useNavigate();
-
-    const  {pathname} = useLocation();
-  
-
         // const { asPath, push } = useRouter();
         const { toggleSideMenu } = useContext( UiContext );
-        const { numberOfItems } = useContext( CartContext );
-
-        const [searchTerm, setSearchTerm] = useState('');
-        const [isSearchVisible, setIsSearchVisible] = useState(false);
-
-
-        const onSearchTerm = () => {
-        console.log(searchTerm);
-            if(searchTerm.trim().length === 0) return;
-            navigateTo(`/search/${searchTerm}`);
-        }
-    
-        const navigateTo = ( url: string ) => {
-            // toggleSideMenu();
-              navigate(url);
-    
-        //router.push(url);
-        }
-
-
-
-
 
 
   return (
 
 <AppBar>
         <Toolbar>
-            <NavLink to="/admin/entradas" >
+            {/* <NavLink to="/admin/entradas" >
                     <Typography variant='h6'>Escribania</Typography>
-                    {/* <Typography sx={{ ml: 0.5 }}>Shop</Typography> */}
-            </NavLink>
-
+                    <Typography sx={{ ml: 0.5 }}>Shop</Typography>
+            </NavLink> */}
+            <MuiLink component={RouterLink} to="/admin/entradas" underline="none">
+                <Typography variant="h6">Escribania</Typography>
+            </MuiLink>
             <Box flex={ 1 } />
 
             {/* <Box sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }}

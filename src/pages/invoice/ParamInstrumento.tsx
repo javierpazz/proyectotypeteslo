@@ -1,5 +1,4 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import Cookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import {TableFormEscPar} from './TableFormEscPar';
 import { BiFileFind } from "react-icons/bi";
@@ -8,19 +7,10 @@ import {
   Box,
   Button,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Grid,
   Modal,
-  MenuItem,
-  Select,
   TextField,
-  InputLabel,
-  FormControl
 } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
 // import ListGroup from 'react-bootstrap/ListGroup';
 // import Card from 'react-bootstrap/Card';
 // import Row from 'react-bootstrap/Row';
@@ -90,9 +80,6 @@ export const ParamInstrumento = () => {
   const input8Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
 
-  const input21Ref = useRef<HTMLInputElement>(null);
-
-  const [showCus, setShowCus] = useState(false);
 
 
   // const [codUse, setCodUse] = useState('');

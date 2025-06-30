@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { AdminNavbarMenu } from '../admin';
 
 import { SideMenu } from '../ui';
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const AdminLayoutMenu:FC<Props> = ({ children, title, subTitle, icon }) => {
+    console.log(title,subTitle, icon)
   return (
     <>
 

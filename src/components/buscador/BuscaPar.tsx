@@ -29,11 +29,11 @@ setNamePar,
 }) => {
 
 
+console.log(codPar);
 
   // const [codPar, setCodPar] = useState('');
   const [codPart, setCodPart] = useState('');
   const [partes, setParrs] = useState<IParte[]>([]);
-  const [parte, setParr] = useState<IParte>();
 
 
 
@@ -104,7 +104,7 @@ const handleShowPar = () => {
         setCodPart('');
         setNamePar('Elija Parte');
     }else{
-      setParr(instRow);
+      // setParr(instRow);
       setCodPar(instRow._id);
       setCodPart(instRow.codPar);
       setNamePar(instRow.name);

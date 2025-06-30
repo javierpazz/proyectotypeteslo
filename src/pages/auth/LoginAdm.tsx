@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 // import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {   useNavigate } from 'react-router-dom';
 import { Box, Button, Chip, Grid, TextField, Typography } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
@@ -18,9 +18,9 @@ export const LoginAdm = () => {
 
 //////////////////ghghgh
 
-    const { search } = useLocation();
-    const redirectInUrl = new URLSearchParams(search).get('redirect');
-    const redirect = redirectInUrl ? redirectInUrl : '/';
+    // const { search } = useLocation();
+    // const redirectInUrl = new URLSearchParams(search).get('redirect');
+    // const redirect = redirectInUrl ? redirectInUrl : '/';
 
 //////////////////ghghgh
 

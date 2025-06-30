@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 
 
-import { IOrder } from '../../interfaces';
+import { IConfiguracion, ICustomer, IInstrumento, IOrder, IParte, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { AuthContext, CartContext } from '../../../context';
+import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from "react-to-print";
 
@@ -47,6 +47,7 @@ const OrderI:IOrder = {
     id_client : "",
     id_instru : "",
     id_config : "",
+    id_parte : "",
     codConNum : 0,
     codSup : '0',
     remNum : 0,
@@ -77,10 +78,12 @@ export const MesaEntradaCon = () => {
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 
-        const userInfo = localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo')!)
-    : null;
 
+  const [nameCus, setNameCus] = useState('');
+  const [nameCon, setNameCon] = useState('');
+  const [namePar, setNamePar] = useState('');
+  const [nameIns, setNameIns] = useState('');
+  const [nameUse, setNameUse] = useState('');
 
 
 
@@ -93,18 +96,6 @@ export const MesaEntradaCon = () => {
   const [showInvoice, setShowInvoice] = useState(true);
 
 
-  const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
 
 
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -144,6 +135,7 @@ export const MesaEntradaCon = () => {
                 id_client    : resp.data.id_client,
                 id_instru    : resp.data.id_instru,
                 id_config      : resp.data.id_config,
+                id_parte      : resp.data.id_parte,
                 codConNum       : resp.data.codConNum,
                 codSup      : resp.data.codSup,
                 remNum      : resp.data.remNum,
@@ -159,16 +151,30 @@ export const MesaEntradaCon = () => {
                 isPaid  : resp.data.isPaid,
                 paidAt : resp.data.paidAt
              });
-        
-     
+            setNameCus((invoice.id_client as ICustomer).nameCus);
+            setNameIns((invoice.id_instru as IInstrumento).name);
+            setNamePar((invoice.id_parte as IParte).name);
+            setNameCon((invoice.id_config as IConfiguracion).name);
+            setNameUse((invoice.user as IUser).name);
         } catch (error) {
           console.log(error)
           
         }
        }
          loadProduct()
-        }, [id, invoice])
-  useEffect(() => {
+        }, [])
+
+useEffect(() => {
+  if (!invoice) return;
+
+  setNameCus((invoice.id_client as ICustomer)?.nameCus || '');
+  setNameIns((invoice.id_instru as IInstrumento)?.name || '');
+  setNamePar((invoice.id_parte as IParte)?.name || '');
+  setNameCon((invoice.id_config as IConfiguracion)?.name || '');
+  setNameUse((invoice.user as IUser)?.name || '');
+}, [invoice]);
+
+   useEffect(() => {
     if (window.innerWidth < width) {
       alert('Place your phone in landscape mode for the best experience');
     }
@@ -235,20 +241,12 @@ export const MesaEntradaCon = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography><strong>{userInfo.nameCon}</strong></Typography>
-          <Typography><strong>Razón Social:</strong> {userInfo.nameCon}</Typography>
-          <Typography><strong>Domicilio Comercial:</strong> {config.address}</Typography>
-          <Typography><strong>Condición frente al IVA:</strong> {config.ivaCondition}</Typography>
-        </Grid>
-        <Grid item xs={12} md={6}>
           <Typography><strong>ENTRADA</strong></Typography>
-          <Typography>
-            <strong>Punto de Venta:</strong> {config.salePoint} <strong>Entrada Nro:</strong> {invoice.remNum}
-          </Typography>
-          <Typography><strong>Fecha de Emisión:</strong> {invoice.remDat?.substring(0, 10)}</Typography>
-          <Typography><strong>CUIT:</strong> {config.cuit}</Typography>
-          <Typography><strong>Ingresos Brutos:</strong> {config.ib}</Typography>
-          <Typography><strong>Fecha de Inicio de Actividades:</strong> {config.feciniact}</Typography>
+          <Typography><strong>Registro:</strong> {nameCon}</Typography>
+          <Typography><strong>Cliente:</strong> {nameCus}</Typography>
+          <Typography><strong>Parte:</strong> {namePar}</Typography>
+          <Typography><strong>Instrumento:</strong> {nameIns}</Typography>
+          <Typography><strong>Usuario:</strong> {nameUse}</Typography>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography>

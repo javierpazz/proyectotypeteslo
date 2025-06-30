@@ -1,6 +1,6 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import {Header} from './Header';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import {TableFormEsc} from './TableFormEsc';
 import { BiFileFind } from "react-icons/bi";
 import { AuthContext, CartContext } from '../../../context';
@@ -9,27 +9,10 @@ import {
   Box,
   Button,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Grid,
   Modal,
-  MenuItem,
-  Select,
   TextField,
-  InputLabel,
-  FormControl
 } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-// import ListGroup from 'react-bootstrap/ListGroup';
-// import Card from 'react-bootstrap/Card';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
-// import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
 import { ICartProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
@@ -40,11 +23,11 @@ import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
 import { BuscaPar } from '../../components/buscador';
 
-const getError = (error:any) => {
-  return error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message;
-};
+// const getError = (error:any) => {
+//   return error.response && error.response.data.message
+//     ? error.response.data.message
+//     : error.message;
+// };
 
 export const MesaEntrada = () => {
 
@@ -134,10 +117,8 @@ export const MesaEntrada = () => {
   const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
 
-  const input21Ref = useRef<HTMLInputElement>(null);
 
   const codConNum = userInfo.configurationObj.codCon;
-  const [showCus, setShowCus] = useState(false);
 
   const getTodayInGMT3 = () => {
     const now = new Date();
@@ -208,7 +189,7 @@ export const MesaEntrada = () => {
     date: "",
 
   };
-
+console.log(instrumento);
 /////////////////consulta cliente
 const handleShowCus = () => {
   setModalOpenCus(true);
@@ -550,10 +531,23 @@ const handleShowIns = () => {
       setNumval(' ');
       setAmountval(0);
       //navigate(`/order/${data.order._id}`);
-    } catch (err) {
-      // dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
+    // } catch (err) {
+    //   toast.error(getError(err));
+    // }
+  } catch (error: any) {
+    // Capturar errores HTTP u otros
+    if (error.response) {
+      console.error('Error de backend:', error.response.data);
+      alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);
+    } else if (error.request) {
+      console.error('No hubo respuesta del servidor', error.request);
+      alert('No hubo respuesta del servidor. Verifica tu conexión.');
+    } else {
+      console.error('Error inesperado', error.message);
+      alert('Error inesperado al guardar.');
     }
+  }
+
   };
 
 

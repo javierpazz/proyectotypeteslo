@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../styles/globals.css';
-import { Typography } from '@mui/material';
 
 import { ShopLayout } from '../components/layouts';
-import { ProductList } from '../components/products';
 import { FullScreenLoading } from '../components/ui';
 import stutzApi from '../../api/stutzApi';
 import { IProduct } from '../interfaces'

@@ -1,9 +1,8 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 // import { v4 as uuidv4 } from 'uuid';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BiFileFind } from "react-icons/bi";
 import {
   Box,
   Button,
@@ -39,7 +38,7 @@ type TableFormProps = {
   setList: any;
   total: any;
   setTotal: any;
-  valueeR: any;
+  // valueeR: any;
   desval: any;
   numval: any;
   isPaying: any;
@@ -70,56 +69,28 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
   // isPaying
 }) => {
 
+  console.log(terminado)
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
-  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: '649f9b05c4416622ac833792',
-    image: '1740176-00-A_0_2000.jpg',
-    price: 1,
-    porIva: 21,
-    medPro: "unidad",
-    size: "M",
-    slug: 'mens_chill_crew_neck_sweatshirt',
-    title: 'mens_chill_crew_neck_sweatshirt',
-    gender: 'men',
-    quantity: 1,
-    venDat: "",
-    observ: "",
-    terminado: false,
-  })
 
 
-    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-
-  const id_config = userInfo.codCon;
-  const getTodayInGMT3 = () => {
-    const now = new Date();
-    // Convertimos a la hora de Argentina (GMT-3)
-    const offset = now.getTimezoneOffset(); // En minutos
-    const localDate = new Date(now.getTime() - (offset + 180) * 60 * 1000); // 180 = 3 horas
-    
-    return localDate.toISOString().split("T")[0];
-  };
 
 
   const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
   const input9Ref = useRef<HTMLInputElement>(null);
   const input10Ref = useRef<HTMLInputElement>(null);
   const input11Ref = useRef<HTMLButtonElement>(null);
-  const input12Ref = useRef<HTMLButtonElement>(null);
   const input22Ref = useRef<HTMLInputElement>(null);
 
   const isEditing = false;
   const [productss, setProductss] = useState<IProduct[]>([]);
   const [productR, setProductR] = useState<IProduct>();
-  const [stock, setStock] = useState(0);
-  const [miStock, setMiStock] = useState(0);
+  // const [stock, setStock] = useState(0);
+  // const [miStock, setMiStock] = useState(0);
   // const [showPro, setShowPro] = useState(false);
   const [codProd, setCodProd] = useState('');
 //   const [medPro, setMedPro] = useState('');
-  const [venDat, setVenDat] = useState(getTodayInGMT3());
+  // const [venDat, setVenDat] = useState(getTodayInGMT3());
   const [observ, setObserv] = useState('');
 
   useEffect(() => {
@@ -152,10 +123,6 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
   //   e.preventDefault();
   //   addToCartHandler();
   // };
-  const unloadpayment = async () => {
-    if (window.confirm('Los Datos son incorrectos')) {
-    }
-    };
   const checkterminado = async () => {
 
     const haysinterminar = cart.some(item => item.terminado === false);
@@ -194,7 +161,7 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
           title: productR.title,
           gender: productR.gender,
           quantity : quantity,
-            venDat: venDat,
+            // venDat: venDat,
             observ: observ,
             terminado: false,
         };
@@ -251,9 +218,9 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
         setPrice(0);
         setPorIva(0);
         setAmount(0);
-        setStock(0);
+        // setStock(0);
         setProductR(undefined);
-        setMiStock(0);
+        // setMiStock(0);
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
@@ -265,22 +232,22 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
         setPrice(productRow.price);
         setPorIva(productRow.porIva);
         setAmount(productRow.price);
-        setStock(productRow.inStock);
-        setMiStock(productRow.minStock);
-        setTempCartProduct({_id: productRow._id,
-          image: productRow.images[0],
-          price: productRow.price,
-          porIva: productRow.porIva,
-          medPro: productRow.medPro,
-          size: "M",
-          slug: productRow.slug,
-          title: productRow.title,
-          gender: productRow.gender,
-          quantity : 1,
-            venDat: venDat,
-            observ: observ,
-            terminado: false,
-        });
+        // setStock(productRow.inStock);
+        // setMiStock(productRow.minStock);
+        // setTempCartProduct({_id: productRow._id,
+        //   image: productRow.images[0],
+        //   price: productRow.price,
+        //   porIva: productRow.porIva,
+        //   medPro: productRow.medPro,
+        //   size: "M",
+        //   slug: productRow.slug,
+        //   title: productRow.title,
+        //   gender: productRow.gender,
+        //   quantity : 1,
+        //     venDat: venDat,
+        //     observ: observ,
+        //     terminado: false,
+        // });
         input9Ref.current?.focus()
         setCodProd('');
     };

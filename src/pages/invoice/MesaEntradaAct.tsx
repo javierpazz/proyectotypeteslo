@@ -1,35 +1,16 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import {Header} from './Header';
 import { toast } from 'react-toastify';
 import {TableFormEscAct} from './TableFormEscAct';
 import { BiFileFind } from "react-icons/bi";
 import { AuthContext, CartContext } from '../../../context';
-import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Grid,
   Modal,
-  MenuItem,
-  Select,
   TextField,
-  InputLabel,
-  FormControl
 } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-// import ListGroup from 'react-bootstrap/ListGroup';
-// import Card from 'react-bootstrap/Card';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
-// import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
 import { ICartProduct, ICustomer, IInstrumento, IOrder, IParte } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
@@ -164,7 +145,7 @@ export const MesaEntradaAct = () => {
             setCodCust((invoice.id_client as ICustomer).codCus);
             setCodCus(invoice.id_client as any);
             setNameCus((invoice.id_client as ICustomer).nameCus);
-            setCodPart((invoice.id_parte as IParte).codPar);
+            // setCodPart((invoice.id_parte as IParte).codPar);
             setCodPar(invoice.id_parte as any);
             setNamePar((invoice.id_parte as IParte).name);
             setRemNum(invoice.remNum as any) ;
@@ -197,10 +178,8 @@ export const MesaEntradaAct = () => {
   const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
 
-  const input21Ref = useRef<HTMLInputElement>(null);
 
   const codConNum = userInfo.configurationObj.codCon;
-  const [showCus, setShowCus] = useState(false);
 
   const getTodayInGMT3 = () => {
     const now = new Date();
@@ -218,9 +197,9 @@ export const MesaEntradaAct = () => {
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
-  const [userObj, setUserObj] = useState<ICustomer>();
+  // const [userObj, setUserObj] = useState<ICustomer>();
   const [codPar, setCodPar] = useState('');
-  const [codPart, setCodPart] = useState('');
+  // const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
   const [remNum, setRemNum] = useState("");
   const [libNum, setLibNum] = useState("");
@@ -230,17 +209,16 @@ export const MesaEntradaAct = () => {
   const [escNum, setEscNum] = useState("");
   const [asieNum, setAsieNum] = useState("");
   const [asieDat, setAsieDat] = useState("");
-  const [remNumImp, setRemNumImp] = useState('');
   const [remDat, setRemDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState('');
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   const [desval, setDesval] = useState('');
-  const [valueeR, setValueeR] = useState('');
+  // const [valueeR, setValueeR] = useState('');
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
-  const [instrumento, setInstrumento] = useState<IInstrumento>();
+  // const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [codPro, setCodPro] = useState('');
   const [terminado, setTerminado] = useState(false);
@@ -254,25 +232,11 @@ export const MesaEntradaAct = () => {
   const [amountval, setAmountval] = useState(0);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
-  const [showInvoice, setShowInvoice] = useState(false);
 
   const [isPaying, setIsPaying] = useState(false);
   const [isloading, setIsloading] = useState(false);
 
-  const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
 
 /////////////////consulta cliente
 const handleShowCus = () => {
@@ -295,7 +259,7 @@ const handleShowCus = () => {
     }else{
       setCodCus(usersRow._id);
       setCodCust(usersRow.codCust);
-      setUserObj(usersRow);
+      // setUserObj(usersRow);
       setNameCus(usersRow.nameCus);
       input6Ref.current?.focus();
       };
@@ -393,7 +357,7 @@ const handleShowIns = () => {
       // cargaParametros(instRow.orderItems)
       // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
 
-      setInstrumento(instRow);
+      // setInstrumento(instRow);
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
       setNameIns(instRow.name);
@@ -420,12 +384,6 @@ const handleShowIns = () => {
 
 
 
-  const componentRef = useRef<HTMLDivElement | null>(null);
-  const TypedReactToPrint = ReactToPrint as unknown as React.FC<any>;
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   useEffect(() => {
     const calculateAmountval = () => {
@@ -549,7 +507,7 @@ const handleShowIns = () => {
   const orderHandler = async () => {
     try {
       setIsloading(true);
-      const { data } = await stutzApi.put(
+      await stutzApi.put(
         `/api/invoices/remModEsc/${invoice._id}`,
 
         {
@@ -645,7 +603,7 @@ const handleShowIns = () => {
         icon={ <CategoryOutlined /> }
     >
 
-    {!showInvoice ? (
+    {/* {!showInvoice ? ( */}
     <Box>
       <Box p={2} mb={2}>
         <Grid container>
@@ -969,7 +927,7 @@ const handleShowIns = () => {
                     setList={setList}
                     total={total}
                     setTotal={setTotal}
-                    valueeR={valueeR}
+                    // valueeR={valueeR}
                     desval={desval}
                     numval={numval}
                     isPaying={isPaying}
@@ -1067,105 +1025,6 @@ const handleShowIns = () => {
 
       </Box>
     </Box>
-        ) : (
-          <>
-            <TypedReactToPrint
-              trigger={() => <Button type="button">Print / Download</Button>}
-              content={() => componentRef.current}
-            />
-
-            <Button onClick={() => clearitems()}>Nuevo Entrada</Button>
-
-            {/* Invoice Preview */}
-
-            <div ref={componentRef} className="p-5">
-              <Header handlePrint={handlePrint} />
-
-              <div className="container mt-4">
-      <div className="card border-dark">
-        <div className="card-header bg-dark text-white text-center"></div>
-        <div className="card-body">
-          
-        <div className="card-header text-black text-center">TRABAJO</div>
-        <div className="row">
-            <div className="col-md-6">
-              <p><strong>{userInfo.nameCon}</strong></p>
-              <p><strong>Razon Social:</strong> {userInfo.nameCon}</p>
-              <p><strong>Domicilio Comercial:</strong> {config.address}</p>
-              <p><strong>Condición frente al IVA:</strong> {config.ivaCondition}</p>
-            </div>
-            <div className="col-md-6 ">
-              <p><strong>TRABAJO</strong></p>
-              <p><strong>Punto de Venta:</strong> {config.salePoint}    
-              <strong>     Comp. Nro:</strong> {remNumImp}</p>
-              <p><strong>Fecha de Emision:</strong> {remDat}</p>
-              <p><strong>CUIT:</strong> {config.cuit}</p>
-              <p><strong>Ingresos Brutos:</strong> {config.ib}</p>
-              <p><strong>Fecha de Inicio de Actividades:</strong> {config.feciniact}</p>
-            </div>
-          </div>
-                    <hr />
-            <div className="row">
-              <div className="col-md-6">
-                <p><strong>CUIT:</strong> {userObj!.cuit}</p>
-                <p><strong>Condición IVA:</strong> {userObj!.coniva}</p>
-              </div>
-              <div className="col-md-6">
-                <p><strong>Apellido y Nombre / Razon Social:</strong> {userObj!.nameCus}</p>
-                <p><strong>Dirección:</strong> {userObj!.domcomer}</p>
-              </div>
-          </div>
-
-          </div>
-          { true &&
-          (
-            <div>
-              <table className="table table-bordered mt-3">
-                <thead className="table-dark text-white">
-                  <tr>
-                    <th>#</th>
-                    <th>Descripción</th>
-                    <th className="text-end">Cantidad</th>
-                    <th className="text-end">Unidad</th>
-                    <th className="text-end">Precio</th>
-                    <th className="text-end">Subtotal</th>
-                    <th className="text-end">IVA (%)</th>
-                    <th className="text-end">Subtotal c/IVA</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {invoice.orderItems.map((item, index) => (
-                    <tr key={item._id}>
-                      <td>{index + 1}</td>
-                      <td>{item.title}</td>
-                      <td className="text-end">{item.quantity}</td>
-                      <td>{item.medPro}</td>
-                      <td className="text-end">${item.price}</td>
-                      <td className="text-end">${(item.quantity * item.price).toFixed(2)}</td>
-                      <td className="text-end">%{item.porIva}</td>
-                      <td className="text-end">${(item.quantity * item.price*(1+(item.porIva/100))).toFixed(2)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="text-end">
-                {/* <p><strong>Subtotal:</strong> ${totalSubImp}</p>
-                <p><strong>IVA:</strong> ${taxImp}</p> */}
-                <h5><strong>Total:</strong> ${totalImp}</h5>
-              </div>
-            </div>
-          )}
-
-
-      </div>
-    </div>
-
-
-
-
-            </div>
-          </>
-        )}
 
         </AdminLayoutMenu>
       </main>

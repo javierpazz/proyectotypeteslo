@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import { stutzApi } from '../../../api';
 import { IInstrumento } from '../../interfaces';
-import { InstrumentoSelector } from '../../pages/crmpages/InstrumentoSelector';
 
 
 type BuscaFormProps = {
@@ -30,12 +29,12 @@ setNameIns,
 }) => {
 
 
+console.log(codIns);
 
   // const [codUse, setCodUse] = useState('');
   const [codInst, setCodInst] = useState('');
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
-  const [instrumento, setInstrumento] = useState<IInstrumento>();
-
+  
 
 
 
@@ -105,7 +104,7 @@ const handleShowIns = () => {
         setCodInst('');
         setNameIns('Elija Instrumento');
     }else{
-      setInstrumento(instRow);
+      // setInstrumento(instRow);
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
       setNameIns(instRow.name);

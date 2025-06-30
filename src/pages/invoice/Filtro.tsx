@@ -1,4 +1,4 @@
-import { useContext, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -7,14 +7,10 @@ import {
   Typography,
   Grid,
   TextField,
-  Card,
-  CardContent,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  FormControlLabel,
-  Checkbox,
 } from '@mui/material';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
@@ -36,16 +32,9 @@ export const Filtro = () => {
     : null;
 
 
-  const input2Ref = useRef<HTMLInputElement>(null);
-  const input3Ref = useRef<HTMLInputElement>(null);
   const input5Ref = useRef<HTMLInputElement>(null);
-  const input6Ref = useRef<HTMLInputElement>(null);
   const input7Ref = useRef<HTMLInputElement>(null);
-  const input8Ref = useRef<HTMLInputElement>(null);
   const input9Ref = useRef<HTMLInputElement>(null);
-  const input0Ref = useRef<HTMLInputElement>(null);
-
-  const input21Ref = useRef<HTMLInputElement>(null);
 
 
   const getTodayInGMT3 = () => {
@@ -85,10 +74,17 @@ export const Filtro = () => {
   const [order, setOrder] = useState('newest');
   const [estado, setEstado] = useState('TOD');
   const [registro, setRegistro] = useState('TOD');
-  const [isReg, setIsReg] = useState(false);
-  const [isPro, setIsPro] = useState(false);
+  // const [isReg, setIsReg] = useState(false);
+  // const [isPro, setIsPro] = useState(false);
 
-
+console.log(codCom,
+nameCom,
+codSup,
+nameSup,
+codEnc,
+nameEnc,
+codVal,
+desVal,);
 
 
 

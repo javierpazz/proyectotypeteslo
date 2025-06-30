@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
-
 import { Navbar, SideMenu } from '../ui';
+import foto from '../../assets/escribania.jpg';
 
 
 
@@ -19,7 +19,18 @@ interface Props {
 export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFullUrl }) => {
   return (
     <>
-        <head>
+
+        <div
+            style={{
+            backgroundImage: `url(${foto})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            minHeight: '100vh',
+            }}
+        >
+
+        <div>
             <title>{ title }</title>
 
             <meta name="description" content={ pageDescription } />
@@ -34,7 +45,7 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
                 )
             }
 
-        </head> 
+        </div> 
 
         <nav>
             <Navbar />
@@ -55,6 +66,7 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
             {/* TODO: mi custom footer */}
         </footer>
 
+            </div> 
     </>
   )
 }

@@ -4,7 +4,8 @@ import Cookies from 'js-cookie';
 
 const stutzApi = axios.create({
   // baseURL: "http://127.0.0.101:4000/api/tes"
-  baseURL: "http://127.0.0.101:4000"
+  // baseURL: "http://127.0.0.101:4000"
+  baseURL: "http://192.168.0.102:4000"
 });
 
 stutzApi.interceptors.request.use(config => {

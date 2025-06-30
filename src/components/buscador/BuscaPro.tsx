@@ -28,11 +28,11 @@ desPro,
 setDesPro,
 }) => {
 
+console.log(codPro);
 
   // const [codUse, setCodUse] = useState('');
   const [codProt, setCodProt] = useState('');
   const [productos, setProductos] = useState<IProduct[]>([]);
-  const [producto, setProducto] = useState<IProduct>();
 
 
 
@@ -103,7 +103,7 @@ const handleShowPro = () => {
         setCodProt('');
         setDesPro('Elija Diligencia');
     }else{
-      setProducto(instRow);
+      // setProducto(instRow);
       setCodPro(instRow._id);
       setCodProt(instRow.codPro);
       setDesPro(instRow.title);

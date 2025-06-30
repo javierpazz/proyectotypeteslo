@@ -34,16 +34,6 @@ export const SalePointScreen = () => {
 
 
 
-  const getTodayInGMT3 = () => {
-    const now = new Date();
-    // Convertimos a la hora de Argentina (GMT-3)
-    const offset = now.getTimezoneOffset(); // En minutos
-    const localDate = new Date(now.getTime() - (offset + 180) * 60 * 1000); // 180 = 3 horas
-    
-    return localDate.toISOString().split("T")[0];
-  };
-
-
 
   const filtro = {
     // firstDat : getTodayInGMT3(),

@@ -1,20 +1,17 @@
-import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import {  useContext, useEffect, useRef, useState } from 'react';
 // import { GetServerSideProps } from 'next'
 // import { useRouter } from 'next/router';
 import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
-import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import { Box, Button,  Divider, Grid, TextField } from '@mui/material';
+import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
 import {  IProduct  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 
-const ValidCategories  = ['shirts','pants','hoodies','hats']
-const validGender = ['men','women','kid','unisex']
-const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
 
 
 interface FormData {
@@ -58,8 +55,6 @@ const productI =
 export const ProductEscAdminPage = () => {
 
     // const router = useRouter();
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [ newTagValue, setNewTagValue ] = useState('');
     const [isSaving, setIsSaving] = useState(false);
 
     ////////////////////FGFGFGFG
@@ -79,7 +74,7 @@ const params = useParams();
 const { title } = params;
 const input1Ref = useRef<HTMLInputElement>(null);
 
-const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
+const { register, handleSubmit, formState:{ errors }, setValue, watch, reset } = useForm<FormData>({
     defaultValues: product
 })
 
@@ -155,71 +150,6 @@ const loadProduct = async() => {
       });
       return () => subscription.unsubscribe();
     }, [watch, setValue])
-    
-
-
-
-    const onChangeSize = ( size: string ) => {
-        const currentSizes = getValues('sizes');
-        if ( currentSizes.includes( size ) ) {
-            return setValue('sizes', currentSizes.filter( s => s !== size ), { shouldValidate: true } );
-        }
-
-        setValue('sizes', [ ...currentSizes, size ], { shouldValidate: true });
-
-    }
-
-
-    const onNewTag = () => {
-        const newTag = newTagValue.trim().toLocaleLowerCase();
-        setNewTagValue('');
-        const currentTags = getValues('tags');
-
-        if ( currentTags.includes(newTag) ) {
-            return;
-        }
-
-        currentTags.push(newTag);
-    }
-
-    const onDeleteTag = ( tag: string ) => {
-        const updatedTags = getValues('tags').filter( t => t !== tag );
-        setValue('tags', updatedTags, { shouldValidate: true });
-    }
-
-    const onFilesSelected = async({ target }: ChangeEvent<HTMLInputElement>) => {
-
-        if ( !target.files || target.files.length === 0 ) {
-            return;
-        }
-
-        try {
-            
-            console.log( "file" );
-            for( const file of target.files ) {
-                const formData = new FormData();
-                formData.append('file', file);
-                const { data } = await stutzApi.post<{ message: string}>('/api/tes/admin/upload', formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                  });
-                  console.log(data)
-                setValue('images', [...getValues('images'), data.message], { shouldValidate: true });
-            }
-
-
-        } catch (error) {
-            console.log({ error });
-        }
-    }
-
-    const onDeleteImage = ( image: string) =>{
-        setValue(
-            'images', 
-            getValues('images').filter( img => img !== image ),
-            { shouldValidate: true }
-        );
-    }
-
 
 
     const onSubmit = async( form: FormData ) => {

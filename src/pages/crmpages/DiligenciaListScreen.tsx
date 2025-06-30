@@ -1,14 +1,17 @@
 
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
+
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
-import { Button, Chip, Grid, Link, Box } from '@mui/material'
+import { Button, Chip, Grid, Box } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IConfiguracion, ICustomer, IInstrumento, IOrderItem, IParte, IUser } from '../../interfaces';
+import { IConfiguracion, ICustomer, IInstrumento, IParte, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
 import { BiFileFind } from 'react-icons/bi';
@@ -88,11 +91,10 @@ const columns:GridColDef[] = [
         width: 100,
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <NavLink to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}>
-                     <Link underline='always'>
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                     underline='always'>
                          { row.remNum}
-                     </Link>
-                    </NavLink>
+                    </MuiLink>
                 )
         }
 
@@ -106,18 +108,16 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.terminado
                 ? (
-                    <NavLink to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}>
-                     <Link underline='always'>
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                     underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
-                     </Link>
-                    </NavLink>
+                    </MuiLink>
                   )
                 : (
-                    <NavLink to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}>
-                     <Link underline='always'>
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                     underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
-                     </Link>
-                    </NavLink>
+                    </MuiLink>
                     )
         }
     },
@@ -128,18 +128,16 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.dilterminado
                 ? (
-                    <NavLink to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}>
-                     <Link underline='always'>
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                     underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
-                     </Link>
-                    </NavLink>
+                    </MuiLink>
                   )
                 : (
-                    <NavLink to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}>
-                     <Link underline='always'>
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                     underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
-                     </Link>
-                    </NavLink>
+                    </MuiLink>
                     )
         }
     },
@@ -164,9 +162,9 @@ const columns:GridColDef[] = [
         headerName: 'Actualiza',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <NavLink to={`/admin/mesaentradaAct/${row.punteid}?redirect=/admin/entradas`}>
+                    <MuiLink component={RouterLink}  to={`/admin/mesaentradaAct/${row.punteid}?redirect=/admin/entradas`}>
                     { "Actualiza"}
-                    </NavLink>
+                    </MuiLink>
                 )
         }
     },
@@ -176,9 +174,9 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
                     // <NavLink to={`/admin/invoices/invoice/${ row.id }`}>
-                    <NavLink to={`/admin/mesaentradaVal/${row.punteid}?redirect=/admin/entradas`}>
+                    <MuiLink component={RouterLink}  to={`/admin/mesaentradaVal/${row.punteid}?redirect=/admin/entradas`}>
                     { "Valoriza"}
-                    </NavLink>
+                    </MuiLink>
                 )
         }
     },
@@ -208,15 +206,15 @@ export const DiligenciaListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codCom = userInfo.filtro.codCom;
+  // const codCom = userInfo.filtro.codCom;
   const codIns = userInfo.filtro.codIns;
   const codCus = userInfo.filtro.codCus;
   const codPar = userInfo.filtro.codPar;
-  const codSup = userInfo.filtro.codSup;
+  // const codSup = userInfo.filtro.codSup;
   const codPro = userInfo.filtro.codPro;
-  const codVal = userInfo.filtro.codVal;
-  const codCon2 = userInfo.filtro.codCon2;
-  const codEnc = userInfo.filtro.codEnc;
+  // const codVal = userInfo.filtro.codVal;
+  // const codCon2 = userInfo.filtro.codCon2;
+  // const codEnc = userInfo.filtro.codEnc;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
   const estado = userInfo.filtro.estado;

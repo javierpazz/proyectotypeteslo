@@ -74,7 +74,7 @@ export const Remits = () => {
             total : 0,
             totalBuy : 0,
             id_client : "",
-            codCon : "",
+            id_config : "",
             user : "",
             codConNum : 0,
             codSup : '0',
@@ -288,7 +288,7 @@ export const Remits = () => {
           );
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
-          invoice.codCon = userInfo.codCon;
+          invoice.id_config = userInfo.codCon;
           invoice.user = userInfo._id,
           invoice.codConNum = codConNum;
 
@@ -351,7 +351,7 @@ export const Remits = () => {
           totalBuy: invoice.totalBuy,
 
           codCus: invoice.id_client,
-          codCon: invoice.codCon,
+          codCon: invoice.id_config,
           user: userInfo._id,
           codConNum: invoice.codConNum,
 
