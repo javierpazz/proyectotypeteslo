@@ -17,6 +17,88 @@ import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
 import { BiFileFind } from 'react-icons/bi';
 
+
+
+
+export const EntradaListScreen = () => {
+
+    const [ userRole, setUserRole ] = useState("");
+    
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/loginadm?redirect=/admin/entradas');
+        }
+      }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
+  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo')!)
+  : null;
+  const fech1 = userInfo.filtro.firstDat;
+  const fech2 = userInfo.filtro.lastDat;
+  const codCon = userInfo.filtro.codCon;
+  // const codCom = userInfo.filtro.codCom;
+  const codIns = userInfo.filtro.codIns;
+  const codCus = userInfo.filtro.codCus;
+  const codPar = userInfo.filtro.codPar;
+  // const codSup = userInfo.filtro.codSup;
+  const codPro = userInfo.filtro.codPro;
+  // const codVal = userInfo.filtro.codVal;
+  // const codCon2 = userInfo.filtro.codCon2;
+  // const codEnc = userInfo.filtro.codEnc;
+  const codUse = userInfo.filtro.codUse;
+  const order = userInfo.filtro.order;
+  const estado = userInfo.filtro.estado;
+  const registro = userInfo.filtro.registro;
+  const obser = userInfo.filtro.obser;
+      
+    
+    const [ invoices, setInvoices ] = useState<IOrder[]>([]);
+    const [ isloading, setIsloading ] = useState(false);
+
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
+          setIsloading(true);
+          const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          setIsloading(false);
+          setInvoices(resp.data.invoices);
+          setUserRole(user!.role);
+
+    } catch (err) {
+      }
+    };
+      fetchData();
+  }, [ ]);
+
+
+
+      
+    // useEffect(() => {
+    //     loadData();
+    // }, [])
+
+
+
+    // const { data, error } = useSWR<IOrder[]>('/api/admin/invoices');
+
+    // const loadData = async() => {
+    //     try {
+    //       setIsloading(true);
+    //       const resp = await stutzApi.get('/api/invoices/searchremSEsc');
+    //       setIsloading(false);
+    //       setInvoices(resp.data.invoices);
+    //     } catch (error) {
+    //       console.log({error})
+    //     }
+    
+    //   }
+
+
+
 const columns:GridColDef[] = [
     { field: 'remNum',
       headerName: 'Entrada',
@@ -40,7 +122,7 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.terminado
                 ? (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink} to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
                      underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
@@ -94,6 +176,7 @@ const columns:GridColDef[] = [
               field: 'check',
               headerName: 'Acción',
               renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (userRole !== 'admin') return null;
                 return (
                   <Chip variant='outlined' label="Eliminar" color="error"
                   onClick={() => deleteHandler(row.id)}
@@ -121,80 +204,6 @@ const columns:GridColDef[] = [
   };
 
 
-
-export const EntradaListScreen = () => {
-
-    
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/entradas');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-  const fech1 = userInfo.filtro.firstDat;
-  const fech2 = userInfo.filtro.lastDat;
-  const codCon = userInfo.filtro.codCon;
-  // const codCom = userInfo.filtro.codCom;
-  const codIns = userInfo.filtro.codIns;
-  const codCus = userInfo.filtro.codCus;
-  const codPar = userInfo.filtro.codPar;
-  // const codSup = userInfo.filtro.codSup;
-  const codPro = userInfo.filtro.codPro;
-  // const codVal = userInfo.filtro.codVal;
-  // const codCon2 = userInfo.filtro.codCon2;
-  // const codEnc = userInfo.filtro.codEnc;
-  const codUse = userInfo.filtro.codUse;
-  const order = userInfo.filtro.order;
-  const estado = userInfo.filtro.estado;
-  const registro = userInfo.filtro.registro;
-      
-    
-    const [ invoices, setInvoices ] = useState<IOrder[]>([]);
-    const [ isloading, setIsloading ] = useState(false);
-
-
-
-    // const { data, error } = useSWR<IOrder[]>('/api/admin/invoices');
-
-    // const loadData = async() => {
-    //     try {
-    //       setIsloading(true);
-    //       const resp = await stutzApi.get('/api/invoices/searchremSEsc');
-    //       setIsloading(false);
-    //       setInvoices(resp.data.invoices);
-    //     } catch (error) {
-    //       console.log({error})
-    //     }
-    
-    //   }
-
- useEffect(() => {
-    const fetchData = async () => {
-      try {
-          setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}`);
-          setIsloading(false);
-          setInvoices(resp.data.invoices);
-
-    } catch (err) {
-      }
-    };
-      fetchData();
-  }, [ ]);
-
-
-
-      
-    // useEffect(() => {
-    //     loadData();
-    // }, [])
 
 
     function formatDateNoTZ(dateString: string) {

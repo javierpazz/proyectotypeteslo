@@ -2,7 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { AddOutlined, PeopleOutline } from '@mui/icons-material'
 
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
-import { Link, Grid, Select, MenuItem, Box, Button, Chip } from '@mui/material';
+import { Grid, Select, MenuItem, Box, Button, Chip } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IUser } from '../../interfaces';
@@ -18,12 +20,15 @@ export const Users = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
+    const [ userRole, setUserRole ] = useState("");
+
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
         navigate('/auth/login?redirect=/admin/users');
         }
+        setUserRole(user!.role);
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
@@ -100,11 +105,10 @@ export const Users = () => {
             width: 250,
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
                 return (
-                    <NavLink to={`/admin/users/user/${row.id}`}>
-                        <Link underline='always'>
+                    <MuiLink component={RouterLink} to={`/admin/users/user/${row.id}`}
+                        underline='always'>
                             { row.name}
-                        </Link>
-                    </NavLink>
+                    </MuiLink>
                 )
             }
         },
@@ -113,6 +117,7 @@ export const Users = () => {
             headerName: 'Rol', 
             width: 300,
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+                if (userRole !== 'admin') return null;
                 return (
                     <Select
                     value={ row.role }
@@ -134,6 +139,7 @@ export const Users = () => {
             headerName: 'Activo', 
             width: 150,
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+                if (userRole !== 'admin') return null;
                 return (
                     <Select
                     value={ row.isActive }
@@ -152,6 +158,7 @@ export const Users = () => {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (userRole !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}

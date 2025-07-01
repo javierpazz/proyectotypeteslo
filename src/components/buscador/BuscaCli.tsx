@@ -98,7 +98,7 @@ const handleShowCus = () => {
   
 
   const buscarPorCodCus = (codCust: string) => {
-    const instRow = customers.find((row) => row._id === codCust);
+    const instRow = customers.find((row) => row.codCus === codCust);
     if (!instRow) {
         setCodCus('');
         setCodCust('');

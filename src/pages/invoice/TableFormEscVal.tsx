@@ -251,6 +251,13 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
         input9Ref.current?.focus()
         setCodProd('');
     };
+
+        const linea = cart.find(p => p._id === productRow!._id);
+        if (linea) {
+              setObserv(linea.observ!);
+              setPrice(linea.price);
+              }
+
   };
   };
 

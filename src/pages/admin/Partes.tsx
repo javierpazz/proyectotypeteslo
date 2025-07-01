@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, Chip, Grid, Link } from '@mui/material'
+import { Box, Button, Chip, Grid } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
@@ -20,11 +22,10 @@ const columns:GridColDef[] = [
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/partes/parte/${row.id}`}>
-                    <Link underline='always'>
+                <MuiLink component={RouterLink}  to={`/admin/partes/parte/${row.id}`}
+                    underline='always'>
                         { row.name}
-                    </Link>
-                </NavLink>
+                </MuiLink>
             )
         }
     },

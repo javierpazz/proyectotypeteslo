@@ -97,7 +97,8 @@ const handleShowPro = () => {
   
 
   const buscarPorCodPro = (codProt: string) => {
-    const instRow = productos.find((row) => row.codPro === codProt);
+    // const instRow = productos.find((row) => row.codPro === codProt);
+    const instRow = productos.find((row) => (row.codPro === codProt || row.codigoPro === codProt));
     if (!instRow) {
         setCodPro('');
         setCodProt('');

@@ -106,7 +106,7 @@ const { user} = useContext(  AuthContext );
           open={Boolean(anchorElEscri)}
           onClose={handleClose(setAnchorElEscri)}
         >
-          <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfi)}>
+          {/* <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfi)}>
             Registros
           </MenuItem>
           <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
@@ -120,7 +120,7 @@ const { user} = useContext(  AuthContext );
           </MenuItem>
           <MenuItem component={Link} to="/admin/partes" onClick={handleClose(setAnchorElConfi)}>
             Partes
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem component={Link} to="/admin/mesaentrada" onClick={handleClose(setAnchorElEscri)}>
             Mesa de Entrada
           </MenuItem>
@@ -307,13 +307,28 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElConfi)}>
             Informes y Filtros
           </MenuItem>
-          <MenuItem component={Link} to="/admin/products" onClick={handleClose(setAnchorElConfi)}>
+          {/* <MenuItem component={Link} to="/admin/products" onClick={handleClose(setAnchorElConfi)}>
             Productos
+          </MenuItem> */}
+          <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfi)}>
+            Registros
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
+            Instrumentos
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfi)}>
+            Diligencias
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/paraminstrumento" onClick={handleClose(setAnchorElEscri)}>
+            Parametriza Instrumentos
           </MenuItem>
           <MenuItem component={Link} to="/admin/customers" onClick={handleClose(setAnchorElConfi)}>
             Clientes
           </MenuItem>
-          <MenuItem component={Link} to="/admin/proveedores" onClick={handleClose(setAnchorElConfi)}>
+          <MenuItem component={Link} to="/admin/partes" onClick={handleClose(setAnchorElConfi)}>
+            Partes
+          </MenuItem>
+          {/* <MenuItem component={Link} to="/admin/proveedores" onClick={handleClose(setAnchorElConfi)}>
             Proveedores
           </MenuItem>
           <MenuItem component={Link} to="/admin/valores" onClick={handleClose(setAnchorElConfi)}>
@@ -327,11 +342,11 @@ const { user} = useContext(  AuthContext );
           </MenuItem>
           <MenuItem component={Link} to="/admin/encargados" onClick={handleClose(setAnchorElConfi)}>
             Encargados
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfi)}>
             Usuarios
           </MenuItem>
-          <MenuItem component={Link} to="/admin/profile" onClick={handleClose(setAnchorElConfi)}>
+          {/* <MenuItem component={Link} to="/admin/profile" onClick={handleClose(setAnchorElConfi)}>
             Perfil Usuario
           </MenuItem>
           <MenuItem component={Link} to="/admin/estadosorden" onClick={handleClose(setAnchorElConfi)}>
@@ -339,7 +354,7 @@ const { user} = useContext(  AuthContext );
           </MenuItem>
           <MenuItem component={Link} to="/admin/support" onClick={handleClose(setAnchorElConfi)}>
             Chat Soporte
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
                 <Button
                     color="primary"

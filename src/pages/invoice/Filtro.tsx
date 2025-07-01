@@ -76,6 +76,9 @@ export const Filtro = () => {
   const [registro, setRegistro] = useState('TOD');
   // const [isReg, setIsReg] = useState(false);
   // const [isPro, setIsPro] = useState(false);
+  const [obser, setObser] = useState('');
+  
+
 
 console.log(codCom,
 nameCom,
@@ -114,6 +117,7 @@ desVal,);
     order : 'newest',
     estado : 'TOD',
     registro : 'TOD',
+    obser : '',
   };
 
   const filtro = {
@@ -138,6 +142,8 @@ desVal,);
     order : order,
     estado : estado,
     registro : registro,
+    obser : obser,
+
   };
 
   useEffect(() => {
@@ -172,6 +178,7 @@ desVal,);
       setOrder(userInfo.filtro.order);
       setEstado(userInfo.filtro.estado);
       setRegistro(userInfo.filtro.registro);
+      setObser(userInfo.filtro.obser);
     }else{
       setFirstDat('Todos');
       setLastDat('Todos');
@@ -196,6 +203,7 @@ desVal,);
       setOrder('newest');
       setEstado('TOD');
       setRegistro('TOD');
+      setObser('');
     }
     ;
 }, []);
@@ -362,6 +370,19 @@ desVal,);
                     </Select>
                   </FormControl>
             </Grid>
+              <Grid item md={2}>
+                <TextField
+                  fullWidth
+                  label="Observaciones"
+                  placeholder="Observaciones"
+                  value={obser}
+                  onChange={(e) => setObser(e.target.value)}
+                  // onKeyDown={(e) => e.key === "Enter" && input11Ref.current?.focus()}
+                />
+              </Grid>
+
+
+
               {/* <Grid item md={2}>
 
               <FormControlLabel

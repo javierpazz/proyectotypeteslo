@@ -19,6 +19,8 @@ interface FormData {
     isAdmin     : boolean,
     isActive    : boolean,
     password    : string,
+    passwordNue    : string,
+    passwordConNue    : string,
     role        :string,
 }
 
@@ -32,6 +34,8 @@ const userI =
         isAdmin: false,
         isActive: true,
         password: "123456",
+        passwordNue: "",
+        passwordConNue: "",
         role:'client',
       }
 
@@ -76,7 +80,6 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
-    console.log(defaultValues);
     try {
 
         if ( id === 'new' ) {
@@ -87,15 +90,21 @@ const loadProduct = async() => {
         userI.isAdmin= false,
         userI.isActive= true,
         userI.password= "",
+        userI.passwordNue= "",
+        userI.passwordConNue= "",
         userI.role='client'
     } else {
+
+        console.log("defaultValues");
         const resp = await stutzApi.get<IUser>(`/api/tes/admin/users/${ id }`);
         userI._id=resp.data._id,
         userI.name=resp.data.name
         userI.email=resp.data.email
         userI.isAdmin=resp.data.isAdmin
         userI.isActive=resp.data.isActive
-        userI.password=resp.data.password
+        userI.password=""
+        userI.passwordNue=""
+        userI.passwordConNue=""
         userI.role=resp.data.role
     }
   } catch (error) {
@@ -132,7 +141,13 @@ const loadProduct = async() => {
 
 
     const onSubmit = async( form: FormData ) => {
-        
+
+        if (form.passwordNue !== form.passwordConNue) {
+                window.confirm('No es correcto el nuevo Password');
+                return;
+        }
+
+
         setIsSaving(true);
         try {
             if (form._id){
@@ -220,6 +235,26 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.password }
                             helperText={ errors.password?.message }
+                        />
+                        <TextField
+                            label="Nuevo Password"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('passwordNue', )}
+                            error={ !!errors.passwordNue }
+                            helperText={ errors.passwordNue?.message }
+                        />
+                        <TextField
+                            label="Confirma Nuevo Password"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('passwordConNue', )}
+                            error={ !!errors.passwordConNue }
+                            helperText={ errors.passwordConNue?.message }
                         />
 
 

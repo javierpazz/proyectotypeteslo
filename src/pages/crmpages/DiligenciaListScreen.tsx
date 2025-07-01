@@ -219,6 +219,7 @@ export const DiligenciaListScreen = () => {
   const order = userInfo.filtro.order;
   const estado = userInfo.filtro.estado;
   const registro = userInfo.filtro.registro;
+  const obser = userInfo.filtro.obser;
         
 
 
@@ -238,7 +239,7 @@ export const DiligenciaListScreen = () => {
         //     headers: { Authorization: `Bearer ${userInfo.token}` },
         // });
         //   const resp = await stutzApi.get('/api/invoices/diligencias');
-          const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}`);
+          const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           setInvoices(resp.data.invoices);
           setIsloading(false);
           console.log(resp.data.invoices)

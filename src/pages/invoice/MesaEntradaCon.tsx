@@ -229,7 +229,7 @@ useEffect(() => {
   <Button variant="contained" color="secondary" onClick={actualiza}>ACTUALIZA</Button>
   <Button variant="contained" color="secondary" onClick={valoriza}>VALORIZA</Button>
   {/* <Button variant="outlined" color="success">EXCEL</Button> */}
-  <Button variant="outlined" color="error">BORRA ENTRADA</Button>
+  {/* <Button variant="outlined" color="error">BORRA ENTRADA</Button> */}
   <Button variant="outlined" color="secondary" onClick={clearitems}>CANCELA</Button>
 </Box>
 
@@ -241,7 +241,7 @@ useEffect(() => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography><strong>ENTRADA</strong></Typography>
+          <Typography><strong>ENTRADA  {invoice.remNum}</strong></Typography>
           <Typography><strong>Registro:</strong> {nameCon}</Typography>
           <Typography><strong>Cliente:</strong> {nameCus}</Typography>
           <Typography><strong>Parte:</strong> {namePar}</Typography>

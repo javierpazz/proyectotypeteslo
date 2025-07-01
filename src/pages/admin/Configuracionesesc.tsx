@@ -1,12 +1,15 @@
 import { useState, useEffect, useContext  } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
+
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, Chip, Grid, Link } from '@mui/material'
+import { Box, Button, Chip, Grid } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IConfiguracion  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
@@ -20,11 +23,10 @@ const columns:GridColDef[] = [
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/configuraciones/configuracionesc/${row.id}`}>
-                    <Link underline='always'>
+                <MuiLink component={RouterLink} to={`/admin/configuraciones/configuracionesc/${row.id}`}
+                    underline='always'>
                         { row.name}
-                    </Link>
-                </NavLink>
+                </MuiLink>
             )
         }
     },
@@ -95,7 +97,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/configuracionesesc/${id}`);
+        await stutzApi.delete(`/api/tes/admin/configuraciones/${id}`);
         window.location.reload();
     } catch (err) {
       }
@@ -113,14 +115,14 @@ const columns:GridColDef[] = [
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/configuraciones/configuracionesc/new' >
+        <MuiLink component={RouterLink} to='/admin/configuraciones/configuracionesc/new' >
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
                 Crear Registro
             </Button>
-            </NavLink>            
+            </MuiLink>            
         </Box>
 
          <Grid container className='fadeIn'>

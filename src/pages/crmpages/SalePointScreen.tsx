@@ -55,12 +55,15 @@ export const SalePointScreen = () => {
     nameUse : 'Todos',
     nameSup : 'Todos',
     desPro : 'Todos',
+    nameIns : 'Todos',
+    namePar : 'Todos',
     nameCom : 'Todos',
     desVal : 'Todos',
     nameEnc : 'Todos',
     order : 'newest',
     estado : 'TOD',
     registro : 'TOD',
+    obser : '',
   };
 
 

@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import { AccountCircleOutlined, AdminPanelSettings, CategoryOutlined, ConfirmationNumberOutlined, DashboardOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
+import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
+import {  CategoryOutlined, LoginOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { AuthContext, UiContext } from "../../../context";
 
 
@@ -11,13 +11,7 @@ export const SideMenu = () => {
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
     const { user, isLoggedIn, logout } = useContext(  AuthContext );
 
-    const [searchTerm, setSearchTerm] = useState('');
 
-    const onSearchTerm = () => {
-        console.log(searchTerm);
-        if(searchTerm.trim().length === 0) return;
-        navigateTo(`/search/${searchTerm}`);
-    }
 
     const navigateTo = ( url: string ) => {
         toggleSideMenu();
@@ -38,7 +32,7 @@ export const SideMenu = () => {
             
             <List>
 
-                <ListItem>
+                {/* <ListItem>
                     <Input
                         autoFocus
                         value={searchTerm}
@@ -56,13 +50,13 @@ export const SideMenu = () => {
                             </InputAdornment>
                         }
                     />
-                </ListItem>
+                </ListItem> */}
 
                 {
                     isLoggedIn && (
                         <>
 
-                <ListItem button>
+                {/* <ListItem button>
                     <ListItemIcon>
                         <AccountCircleOutlined/>
                     </ListItemIcon>
@@ -76,13 +70,13 @@ export const SideMenu = () => {
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Mis Ordenes'} />
-                </ListItem>
+                </ListItem> */}
                 </>
                     )
                 }
 
 
-                <ListItem 
+                {/* <ListItem 
                     button 
                     sx={{ display: { xs: '', sm: 'none' } }} 
                     onClick={ () => navigateTo('/category/men') }
@@ -111,7 +105,7 @@ export const SideMenu = () => {
                         <EscalatorWarningOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Niños'} />
-                </ListItem>
+                </ListItem> */}
 
                 {
                     isLoggedIn 
@@ -120,12 +114,12 @@ export const SideMenu = () => {
                         <ListItemIcon>
                             <LoginOutlined/>
                         </ListItemIcon>
-                        <ListItemText primary={'Salir'} />
+                        <ListItemText primary={'Log Out'} />
                     </ListItem>
                        )
                        : (
                 <>
-                <ListItem 
+                {/* <ListItem 
                 button
                 onClick={ () => navigateTo(`/auth/login`) }
             >
@@ -133,7 +127,7 @@ export const SideMenu = () => {
                         <VpnKeyOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Ingresar'} />
-                </ListItem>
+                </ListItem> */}
                 <ListItem 
                 button
                 onClick={ () => navigateTo(`/auth/loginadm`) }
@@ -141,7 +135,7 @@ export const SideMenu = () => {
                     <ListItemIcon>
                         <VpnKeyOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Administracion'} />
+                    <ListItemText primary={'Log In'} />
                 </ListItem>
 
                 </>   
@@ -165,7 +159,7 @@ export const SideMenu = () => {
                     <ListItemText primary={'Escribania'} />
                 </ListItem>
 
-                <ListItem 
+                {/* <ListItem 
                                 button
                                 onClick={ () => navigateTo('/admin/') }>
                                 <ListItemIcon>
@@ -198,7 +192,7 @@ export const SideMenu = () => {
                         <AdminPanelSettings/>
                     </ListItemIcon>
                     <ListItemText primary={'Usuarios'} />
-                </ListItem>
+                </ListItem> */}
                 </>
                     )
                 }

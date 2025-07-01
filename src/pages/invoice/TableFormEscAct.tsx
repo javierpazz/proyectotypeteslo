@@ -271,6 +271,14 @@ useEffect(() => {
         input9Ref.current?.focus()
         setCodProd('');
     };
+
+        const linea = cart.find(p => p._id === productRow!._id);
+        if (linea) {
+              setObserv(linea.observ!);
+              setVenDat(linea.venDat!);
+              setPrice(linea.price);
+              }
+
   };
   };
 
