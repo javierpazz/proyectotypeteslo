@@ -22,7 +22,6 @@ import { BiFileFind } from 'react-icons/bi';
 
 export const EntradaListScreen = () => {
 
-    const [ userRole, setUserRole ] = useState("");
     
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -66,7 +65,6 @@ export const EntradaListScreen = () => {
           const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           setIsloading(false);
           setInvoices(resp.data.invoices);
-          setUserRole(user!.role);
 
     } catch (err) {
       }
@@ -176,7 +174,7 @@ const columns:GridColDef[] = [
               field: 'check',
               headerName: 'Acción',
               renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if (userRole !== 'admin') return null;
+                if (user?.role !== 'admin') return null;
                 return (
                   <Chip variant='outlined' label="Eliminar" color="error"
                   onClick={() => deleteHandler(row.id)}

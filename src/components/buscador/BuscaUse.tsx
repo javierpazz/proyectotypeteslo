@@ -17,6 +17,8 @@ type BuscaFormProps = {
   setCodUse: any;
   nameUse: any;
   setNameUse: any;
+  nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
+  inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
@@ -26,6 +28,8 @@ codUse,
 setCodUse,
 nameUse,
 setNameUse,
+nextRef,
+inputRef,
 }) => {
 
 
@@ -89,11 +93,22 @@ const handleShowUse = () => {
   };
 
   
-  const ayudaUse = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodUse(codUser);
-    e.key === "F2" && handleShowUse();
-    e.key === "Tab" && buscarPorCodUse(codUser);
-  };
+  // const ayudaUse = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodUse(codUser);
+  //   e.key === "F2" && handleShowUse();
+  //   e.key === "Tab" && buscarPorCodUse(codUser);
+  // };
+const ayudaUse = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    // e.preventDefault();
+    buscarPorCodUse(codUser);
+    nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowUse();
+  }
+};
   
 
   const buscarPorCodUse = (_id: string) => {
@@ -139,13 +154,13 @@ const handleShowUse = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState(users);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
   if (modalOpenUse) {
     setTimeout(() => {
-      inputRef.current?.focus();
+      inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
 }, [modalOpenUse]);
@@ -198,11 +213,13 @@ useEffect(() => {
             <TextField
               fullWidth
               // inputRef={input2Ref}
+              inputRef={inputRef}   // <-- asignar ref aquí
               label={codUser === '' ? 'Usuario' : ''}
               placeholder=" Usuario"
               value={codUser}
               onChange={(e) => setCodUset(e.target.value)}
               onKeyDown={(e) => ayudaUse(e)}
+              // disabled={true}
               required
               autoComplete="off"
             />
@@ -259,7 +276,7 @@ useEffect(() => {
       <label htmlFor="codeInput">Código de Usuario:</label>
       <input
         id="codeInput"
-        ref={inputRef}
+        ref={inputRef1}
         type="text"
         value={search}
         onChange={handleChange}

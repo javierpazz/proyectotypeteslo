@@ -15,8 +15,12 @@ import { IInstrumento } from '../../interfaces';
 type BuscaFormProps = {
   codIns: any;
   setCodIns: any;
+  codInst: any;
+  setCodInst: any;
   nameIns: any;
   setNameIns: any;
+  nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
+  inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
@@ -24,20 +28,19 @@ type BuscaFormProps = {
 export const BuscaIns: React.FC<BuscaFormProps> = ({
 codIns,
 setCodIns,
+codInst,
+setCodInst,
 nameIns,
 setNameIns,
+nextRef,
+inputRef,
 }) => {
 
 
 console.log(codIns);
 
   // const [codUse, setCodUse] = useState('');
-  const [codInst, setCodInst] = useState('');
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
-  
-
-
-
 
   const [modalOpenIns, setModalOpenIns] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -90,11 +93,22 @@ const handleShowIns = () => {
   };
 
   
-  const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodIns(codInst);
-    e.key === "F2" && handleShowIns();
-    e.key === "Tab" && buscarPorCodIns(codInst);
-  };
+  // const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Tab" && buscarPorCodIns(codInst);
+  //   e.key === "Enter" && buscarPorCodIns(codInst);
+  //   e.key === "F2" && handleShowIns();
+  // };
+const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodIns(codInst);
+    nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowIns();
+  }
+};
   
 
   const buscarPorCodIns = (codInst: string) => {
@@ -139,13 +153,13 @@ const handleShowIns = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState(instrumentos);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
   if (modalOpenIns) {
     setTimeout(() => {
-      inputRef.current?.focus();
+      inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
 }, [modalOpenIns]);
@@ -260,7 +274,7 @@ useEffect(() => {
       <label htmlFor="codeInput">Código de Instrumento:</label>
       <input
         id="codeInput"
-        ref={inputRef}
+        ref={inputRef1}
         type="text"
         value={search}
         onChange={handleChange}

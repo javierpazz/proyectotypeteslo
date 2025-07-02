@@ -145,7 +145,7 @@ export const MesaEntradaAct = () => {
             setCodCust((invoice.id_client as ICustomer).codCus);
             setCodCus(invoice.id_client as any);
             setNameCus((invoice.id_client as ICustomer).nameCus);
-            // setCodPart((invoice.id_parte as IParte).codPar);
+            setCodPart((invoice.id_parte as IParte).codPar);
             setCodPar(invoice.id_parte as any);
             setNamePar((invoice.id_parte as IParte).name);
             setRemNum(invoice.remNum as any) ;
@@ -177,6 +177,7 @@ export const MesaEntradaAct = () => {
   const input8Ref = useRef<HTMLInputElement>(null);
   const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
+  const inputParRef = useRef<HTMLInputElement>(null);
 
 
   const codConNum = userInfo.configurationObj.codCon;
@@ -199,7 +200,7 @@ export const MesaEntradaAct = () => {
   const [nameCus, setNameCus] = useState('');
   // const [userObj, setUserObj] = useState<ICustomer>();
   const [codPar, setCodPar] = useState('');
-  // const [codPart, setCodPart] = useState('');
+  const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
   const [remNum, setRemNum] = useState("");
   const [libNum, setLibNum] = useState("");
@@ -243,11 +244,21 @@ const handleShowCus = () => {
   setModalOpenCus(true);
   };
   
-  const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodCus(codCust);
-    e.key === "F2" && handleShowCus();
-    e.key === "Tab" && buscarPorCodCus(codCust);
-  };
+  // const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodCus(codCust);
+  //   e.key === "F2" && handleShowCus();
+  //   e.key === "Tab" && buscarPorCodCus(codCust);
+  // };
+const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodCus(codCust);
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowCus();
+  }
+};
   
 
   const buscarPorCodCus = (codCust: string) => {
@@ -258,10 +269,10 @@ const handleShowCus = () => {
         setNameCus('Elija Cliente');
     }else{
       setCodCus(usersRow._id);
-      setCodCust(usersRow.codCust);
+      setCodCust(usersRow.codCus);
       // setUserObj(usersRow);
       setNameCus(usersRow.nameCus);
-      input6Ref.current?.focus();
+      inputParRef.current?.focus();
       };
   };
 
@@ -340,12 +351,22 @@ const handleShowIns = () => {
   };
 
   
-  const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodIns(codInst);
-    e.key === "F2" && handleShowIns();
-    e.key === "Tab" && buscarPorCodIns(codInst);
-  };
-  
+  // const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodIns(codInst);
+  //   e.key === "F2" && handleShowIns();
+  //   e.key === "Tab" && buscarPorCodIns(codInst);
+  // };
+const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodIns(codInst);
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowIns();
+  }
+};
+    
 
   const buscarPorCodIns = (codInst: string) => {
     const instRow = instrumentos.find((row) => row.codIns === codInst);
@@ -800,8 +821,12 @@ const handleShowIns = () => {
             <BuscaPar
             codPar={codPar}
             setCodPar={setCodPar}
+            codPart={codPart}
+            setCodPart={setCodPart}
             namePar={namePar}
             setNamePar={setNamePar}
+            nextRef={input6Ref}
+            inputRef={inputParRef} 
             />
 
         </Grid>

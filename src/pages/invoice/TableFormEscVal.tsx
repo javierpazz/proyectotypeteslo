@@ -195,10 +195,21 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
 
 
 
-  const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodPro(codProd);
-    e.key === "F2" && handleShowPro();
-  };
+  // const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodPro(codProd);
+  //   e.key === "F2" && handleShowPro();
+  // };
+const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodPro(codProd);
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowPro();
+  }
+};
+  
   
 
   const buscarPorCodPro = (codProd: string) => {

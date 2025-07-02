@@ -191,10 +191,21 @@ useEffect(() => {
 
 
 
-  const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodPro(codProd);
-    e.key === "F2" && handleShowPro();
-  };
+  // const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodPro(codProd);
+  //   e.key === "F2" && handleShowPro();
+  // };
+const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodPro(codProd);
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowPro();
+  }
+};
+  
   
 
   const buscarPorCodPro = (codProd: string) => {
@@ -218,7 +229,7 @@ useEffect(() => {
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
-        setCodProd(productRow.codProd);
+        setCodProd(productRow.codPro);
         setDesPro(productRow.title);
         // setVenDat('');
         // setObserv('');
@@ -229,6 +240,13 @@ useEffect(() => {
         input9Ref.current?.focus()
         setCodProd('');
     };
+        const linea = cart.find(p => p._id === productRow!._id);
+        if (linea) {
+              setObserv(linea.observ!);
+              setVenDat(linea.venDat!);
+              setPrice(linea.price);
+              }
+
   };
   };
 

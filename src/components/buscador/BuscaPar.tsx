@@ -15,8 +15,12 @@ import { IParte } from '../../interfaces';
 type BuscaFormProps = {
   codPar: any;
   setCodPar: any;
+  codPart: any;
+  setCodPart: any;
   namePar: any;
   setNamePar: any;
+  nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
+  inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
@@ -24,16 +28,19 @@ type BuscaFormProps = {
 export const BuscaPar: React.FC<BuscaFormProps> = ({
 codPar,
 setCodPar,
+codPart,
+setCodPart,
 namePar,
 setNamePar,
+nextRef,
+inputRef,
 }) => {
 
 
 console.log(codPar);
 
   // const [codPar, setCodPar] = useState('');
-  const [codPart, setCodPart] = useState('');
-  const [partes, setParrs] = useState<IParte[]>([]);
+  const [partes, setPartes] = useState<IParte[]>([]);
 
 
 
@@ -90,11 +97,22 @@ const handleShowPar = () => {
   };
 
   
-  const ayudaPar = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodPar(codPart);
-    e.key === "F2" && handleShowPar();
-    e.key === "Tab" && buscarPorCodPar(codPart);
-  };
+  // const ayudaPar = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodPar(codPart);
+  //   e.key === "F2" && handleShowPar();
+  //   e.key === "Tab" && buscarPorCodPar(codPart);
+  // };
+const ayudaPar = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodPar(codPart);
+    nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowPar();
+  }
+};
   
 
   const buscarPorCodPar = (codPart: string) => {
@@ -128,7 +146,7 @@ const handleShowPar = () => {
     const fetchData = async () => {
       try {
         const { data } = await stutzApi.get(`/api/tes/admin/partes`);
-        setParrs(data);
+        setPartes(data);
         setFiltered(data);
       } catch (err) {}
     };
@@ -139,13 +157,13 @@ const handleShowPar = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState(partes);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
   if (modalOpenPar) {
     setTimeout(() => {
-      inputRef.current?.focus();
+      inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
 }, [modalOpenPar]);
@@ -198,6 +216,7 @@ useEffect(() => {
             <TextField
               fullWidth
               // inputRef={input2Ref}
+              inputRef={inputRef}   // <-- asignar ref aquí
               label={codPart === '' ? 'Parte' : ''}
               placeholder=" Parte"
               value={codPart}
@@ -259,7 +278,7 @@ useEffect(() => {
       <label htmlFor="codeInput">Código de Parte:</label>
       <input
         id="codeInput"
-        ref={inputRef}
+        ref={inputRef1}
         type="text"
         value={search}
         onChange={handleChange}

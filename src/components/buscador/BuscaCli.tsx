@@ -15,8 +15,12 @@ import { ICustomer } from '../../interfaces';
 type BuscaFormProps = {
   codCus: any;
   setCodCus: any;
+  codCust: any;
+  setCodCust: any;
   nameCus: any;
   setNameCus: any;
+  nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
+  inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
@@ -24,15 +28,18 @@ type BuscaFormProps = {
 export const BuscaCli: React.FC<BuscaFormProps> = ({
 codCus,
 setCodCus,
+codCust,
+setCodCust,
 nameCus,
 setNameCus,
+nextRef,
+inputRef,
 }) => {
 
 
   console.log(codCus);
 
   // const [codCus, setCodCus] = useState('');
-  const [codCust, setCodCust] = useState('');
   const [customers, setCustomers] = useState<ICustomer[]>([]);
 
 
@@ -90,11 +97,22 @@ const handleShowCus = () => {
   };
 
   
-  const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodCus(codCust);
-    e.key === "F2" && handleShowCus();
-    e.key === "Tab" && buscarPorCodCus(codCust);
-  };
+  // const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodCus(codCust);
+  //   e.key === "F2" && handleShowCus();
+  //   e.key === "Tab" && buscarPorCodCus(codCust);
+  // };
+const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === "Tab") {
+    e.preventDefault();
+    buscarPorCodCus(codCust);
+    nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
+  }
+  if (e.key === "F2") {
+    e.preventDefault();
+    handleShowCus();
+  }
+};
   
 
   const buscarPorCodCus = (codCust: string) => {
@@ -139,13 +157,13 @@ const handleShowCus = () => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState(customers);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
   if (modalOpenCus) {
     setTimeout(() => {
-      inputRef.current?.focus();
+      inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
 }, [modalOpenCus]);
@@ -197,6 +215,7 @@ useEffect(() => {
             <TextField
               fullWidth
               // inputRef={input2Ref}
+              inputRef={inputRef}   // <-- asignar ref aquí
               label={codCust === '' ? 'Cliente' : ''}
               placeholder=" Cliente"
               value={codCust}
@@ -258,7 +277,7 @@ useEffect(() => {
       <label htmlFor="codeInput">Código de Cliente:</label>
       <input
         id="codeInput"
-        ref={inputRef}
+        ref={inputRef1}
         type="text"
         value={search}
         onChange={handleChange}

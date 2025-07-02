@@ -35,6 +35,12 @@ export const Filtro = () => {
   const input5Ref = useRef<HTMLInputElement>(null);
   const input7Ref = useRef<HTMLInputElement>(null);
   const input9Ref = useRef<HTMLInputElement>(null);
+  const inputConRef = useRef<HTMLInputElement>(null);
+  const inputUseRef = useRef<HTMLInputElement>(null);
+  const inputInsRef = useRef<HTMLInputElement>(null);
+  const inputProRef = useRef<HTMLInputElement>(null);
+  const inputCusRef = useRef<HTMLInputElement>(null);
+  const inputParRef = useRef<HTMLInputElement>(null);
 
 
   const getTodayInGMT3 = () => {
@@ -47,16 +53,21 @@ export const Filtro = () => {
   };
 
   const [codIns, setCodIns] = useState('');
+  const [codInst, setCodInst] = useState('');
   const [nameIns, setNameIns] = useState('');
   const [codCon, setCodCon] = useState('');
+  const [codCont, setCodCont] = useState('');
   const [nameCon, setNameCon] = useState('');
   const [codUse, setCodUse] = useState('');
   const [nameUse, setNameUse] = useState('');
   const [codPro, setCodPro] = useState('');
+  const [codProt, setCodProt] = useState('');
   const [desPro, setDesPro] = useState('');
   const [codCus, setCodCus] = useState('');
+  const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
   const [codPar, setCodPar] = useState('');
+  const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
 
   const [firstDat, setFirstDat] = useState(getTodayInGMT3());
@@ -420,8 +431,12 @@ desVal,);
             <BuscaCon
             codCon={codCon}
             setCodCon={setCodCon}
+            codCont={codCont}
+            setCodCont={setCodCont}
             nameCon={nameCon}
             setNameCon={setNameCon}
+            nextRef={inputUseRef}
+            inputRef={inputConRef} 
             />
 
 
@@ -430,6 +445,8 @@ desVal,);
             setCodUse={setCodUse}
             nameUse={nameUse}
             setNameUse={setNameUse}
+            nextRef={inputInsRef}
+            inputRef={inputUseRef} 
             />
 
         </Grid>
@@ -438,15 +455,23 @@ desVal,);
             <BuscaIns
             codIns={codIns}
             setCodIns={setCodIns}
+            codInst={codInst}
+            setCodInst={setCodInst}
             nameIns={nameIns}
             setNameIns={setNameIns}
+            nextRef={inputProRef}
+            inputRef={inputInsRef} 
             />
 
             <BuscaPro
             codPro={codPro}
+            setCodProt={setCodProt}
+            codProt={codProt}
             setCodPro={setCodPro}
             desPro={desPro}
             setDesPro={setDesPro}
+            nextRef={inputCusRef}
+            inputRef={inputProRef} 
             />
 
         </Grid>
@@ -455,16 +480,24 @@ desVal,);
             <BuscaCli
             codCus={codCus}
             setCodCus={setCodCus}
+            codCust={codCust}
+            setCodCust={setCodCust}
             nameCus={nameCus}
             setNameCus={setNameCus}
+            nextRef={inputParRef}
+            inputRef={inputCusRef} 
             />
 
 
             <BuscaPar
             codPar={codPar}
             setCodPar={setCodPar}
+            codPart={codPart}
+            setCodPart={setCodPart}
             namePar={namePar}
             setNamePar={setNamePar}
+            nextRef={inputConRef}
+            inputRef={inputParRef} 
             />
 
         </Grid>
