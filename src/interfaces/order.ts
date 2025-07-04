@@ -1,4 +1,4 @@
-import { IConfiguracion, ICustomer, ISupplier, ISize, IUser, IInstrumento, IParte } from './';
+import { IConfiguracion, ICustomer, ISupplier, ISize, IUser, IInstrumento, IParte, IComprobante } from './';
 
 export interface IOrder {
 
@@ -8,7 +8,9 @@ export interface IOrder {
     id_instru?: IInstrumento | string;
     id_parte?: IParte | string | undefined;
     id_config?: IConfiguracion | string;
-    codSup?: ISupplier | string;
+    id_config2?: IConfiguracion | string;
+    codCom?: IComprobante | string;
+    supplier?: ISupplier | string;
     orderItems: IOrderItem[];
     shippingAddress: ShippingAddress;
     paymentResult?: string;
@@ -22,6 +24,8 @@ export interface IOrder {
     codConNum    : number;
     remNum?       : number;
     remDat?       : string;
+    movpvNum?       : number;
+    movpvDat?       : string;
     dueDat?       : string;
     invNum?       : number;
     invDat?       : string;

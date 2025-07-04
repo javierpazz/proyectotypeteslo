@@ -14,11 +14,11 @@ import {
 } from '@mui/material';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
-import { BuscaPar, BuscaCli, BuscaProEsc, BuscaIns, BuscaCon, BuscaUse } from '../../components/buscador';
+import { BuscaSup, BuscaCli, BuscaPro, BuscaCom, BuscaCon, BuscaUse, BuscaEnc, BuscaVal } from '../../components/buscador';
 
 
 
-export const Filtro = () => {
+export const FiltroCrm = () => {
 
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -37,10 +37,13 @@ export const Filtro = () => {
   const input9Ref = useRef<HTMLInputElement>(null);
   const inputConRef = useRef<HTMLInputElement>(null);
   const inputUseRef = useRef<HTMLInputElement>(null);
-  const inputInsRef = useRef<HTMLInputElement>(null);
+  const inputComRef = useRef<HTMLInputElement>(null);
+  const inputSupRef = useRef<HTMLInputElement>(null);
   const inputProRef = useRef<HTMLInputElement>(null);
   const inputCusRef = useRef<HTMLInputElement>(null);
   const inputParRef = useRef<HTMLInputElement>(null);
+  const inputEncRef = useRef<HTMLInputElement>(null);
+  const inputValRef = useRef<HTMLInputElement>(null);
 
 
   const getTodayInGMT3 = () => {
@@ -52,9 +55,9 @@ export const Filtro = () => {
     return localDate.toISOString().split("T")[0];
   };
 
-  const [codIns, setCodIns] = useState('');
-  const [codInst, setCodInst] = useState('');
-  const [nameIns, setNameIns] = useState('');
+  const [codCom, setCodCom] = useState('');
+  const [codComt, setCodComt] = useState('');
+  const [nameCom, setNameCom] = useState('');
   const [codCon, setCodCon] = useState('');
   const [codCont, setCodCont] = useState('');
   const [nameCon, setNameCon] = useState('');
@@ -73,13 +76,14 @@ export const Filtro = () => {
   const [firstDat, setFirstDat] = useState(getTodayInGMT3());
   const [lastDat, setLastDat] = useState(getTodayInGMT3());
 
-  const [codCom, setCodCom] = useState('');
-  const [nameCom, setNameCom] = useState('');
   const [codSup, setCodSup] = useState('');
+  const [codSupt, setCodSupt] = useState('');
   const [nameSup, setNameSup] = useState('');
   const [codEnc, setCodEnc] = useState('');
+  const [codEnct, setCodEnct] = useState('');
   const [nameEnc, setNameEnc] = useState('');
   const [codVal, setCodVal] = useState('');
+  const [codValt, setCodValt] = useState('');
   const [desVal, setDesVal] = useState('');
   
   const [order, setOrder] = useState('newest');
@@ -136,18 +140,20 @@ desVal,);
     lastDat : lastDat,
     codCus : codCus,
     codPar : codPar,
-    // codSup : codSup,
+    codSup : codSup,
     codPro : codPro,
-    // codEnc : codEnc,
-    // codCom : codCom,
-    codIns : codIns,
-    // codVal : codVal,
+    codEnc : codEnc,
+    codCom : codCom,
+    codVal : codVal,
     codCon : codCon,
     codUse : codUse,
     nameCus : nameCus,
+    nameSup : nameSup,
+    nameEnc : nameEnc,
     namePar : namePar,
     desPro : desPro,
-    nameIns : nameIns,
+    desVal : desVal,
+    nameCom : nameCom,
     nameUse : nameUse,
     nameCon : nameCon,
     order : order,
@@ -172,8 +178,8 @@ desVal,);
       setNamePar(userInfo.filtro.namePar);
       setCodPro(userInfo.filtro.codPro);
       setDesPro(userInfo.filtro.desPro);
-      setCodIns(userInfo.filtro.codIns);
-      setNameIns(userInfo.filtro.nameIns);
+      setCodCom(userInfo.filtro.codCom);
+      setNameCom(userInfo.filtro.nameCom);
       setCodSup(userInfo.filtro.codSup);
       setNameSup(userInfo.filtro.nameSup);
       setCodCom(userInfo.filtro.codCom);
@@ -199,7 +205,7 @@ desVal,);
       setNamePar('Todos');
       // setCodPro('Todos');
       setDesPro('Todos');
-      setNameIns('Todos');
+      setNameCom('Todos');
       // setCodSup('Todos');
       setNameSup('Todos');
       // setCodCom('Todos');
@@ -250,14 +256,14 @@ desVal,);
       filtro.namePar = namePar;
       filtro.codPro = codPro;
       filtro.desPro = desPro;
-      // filtro.codSup = codSup;
-      // filtro.nameSup = nameSup;
-      // filtro.codCom = codCom;
-      // filtro.nameCom = nameCom;
-      filtro.codIns = codIns;
-      filtro.nameIns = nameIns;
-      // filtro.codEnc = codEnc;
-      // filtro.nameEnc = nameEnc;
+      filtro.codSup = codSup;
+      filtro.nameSup = nameSup;
+      filtro.codCom = codCom;
+      filtro.nameCom = nameCom;
+      filtro.codVal = codVal;
+      filtro.desVal = desVal;
+      filtro.codEnc = codEnc;
+      filtro.nameEnc = nameEnc;
       filtro.codUse = codUse;
       filtro.nameUse = nameUse;
       filtro.codCon = codCon;
@@ -445,37 +451,23 @@ desVal,);
             setCodUse={setCodUse}
             nameUse={nameUse}
             setNameUse={setNameUse}
-            nextRef={inputInsRef}
+            nextRef={inputComRef}
             inputRef={inputUseRef} 
             />
 
         </Grid>
         <Grid container spacing={2} mt={2}>
 
-            <BuscaIns
-            codIns={codIns}
-            setCodIns={setCodIns}
-            codInst={codInst}
-            setCodInst={setCodInst}
-            nameIns={nameIns}
-            setNameIns={setNameIns}
-            nextRef={inputProRef}
-            inputRef={inputInsRef} 
-            />
-
-            <BuscaProEsc
-            codPro={codPro}
-            setCodProt={setCodProt}
-            codProt={codProt}
-            setCodPro={setCodPro}
-            desPro={desPro}
-            setDesPro={setDesPro}
+            <BuscaCom
+            codCom={codCom}
+            setCodCom={setCodCom}
+            codComt={codComt}
+            setCodComt={setCodComt}
+            nameCom={nameCom}
+            setNameCom={setNameCom}
             nextRef={inputCusRef}
-            inputRef={inputProRef} 
+            inputRef={inputComRef} 
             />
-
-        </Grid>
-        <Grid container spacing={2} mt={2}>
 
             <BuscaCli
             codCus={codCus}
@@ -484,21 +476,65 @@ desVal,);
             setCodCust={setCodCust}
             nameCus={nameCus}
             setNameCus={setNameCus}
-            nextRef={inputParRef}
+            nextRef={inputSupRef}
             inputRef={inputCusRef} 
             />
 
 
-            <BuscaPar
-            codPar={codPar}
-            setCodPar={setCodPar}
-            codPart={codPart}
-            setCodPart={setCodPart}
-            namePar={namePar}
-            setNamePar={setNamePar}
-            nextRef={inputConRef}
-            inputRef={inputParRef} 
+
+        </Grid>
+        <Grid container spacing={2} mt={2}>
+
+
+            <BuscaSup
+            codSup={codSup}
+            setCodSup={setCodSup}
+            codSupt={codSupt}
+            setCodSupt={setCodSupt}
+            nameSup={nameSup}
+            setNameSup={setNameSup}
+            nextRef={inputProRef}
+            inputRef={inputSupRef} 
             />
+
+
+            <BuscaPro
+            codPro={codPro}
+            setCodProt={setCodProt}
+            codProt={codProt}
+            setCodPro={setCodPro}
+            desPro={desPro}
+            setDesPro={setDesPro}
+            nextRef={inputEncRef}
+            inputRef={inputProRef} 
+            />
+
+        </Grid>
+        <Grid container spacing={2} mt={2}>
+
+            <BuscaEnc
+            codEnc={codEnc}
+            setCodEnc={setCodEnc}
+            codEnct={codEnct}
+            setCodEnct={setCodEnct}
+            nameEnc={nameEnc}
+            setNameEnc={setNameEnc}
+            nextRef={inputValRef}
+            inputRef={inputEncRef} 
+            />
+
+            <BuscaVal
+            codVal={codVal}
+            setCodVal={setCodVal}
+            codValt={codValt}
+            setCodValt={setCodValt}
+            desVal={desVal}
+            setDesVal={setDesVal}
+            nextRef={inputConRef}
+            inputRef={inputValRef} 
+            />
+
+
 
         </Grid>
 

@@ -25,7 +25,7 @@ type BuscaFormProps = {
 
 
 
-export const BuscaPro: React.FC<BuscaFormProps> = ({
+export const BuscaProEsc: React.FC<BuscaFormProps> = ({
 codPro,
 setCodPro,
 codProt,
@@ -120,7 +120,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!instRow) {
         setCodPro('');
         setCodProt('');
-        setDesPro('Elija Producto');
+        setDesPro('Elija Diligencia');
     }else{
       // setProducto(instRow);
       setCodPro(instRow._id);
@@ -216,8 +216,8 @@ useEffect(() => {
               fullWidth
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codProt === '' ? 'Producto' : ''}
-              placeholder="Producto"
+              label={codProt === '' ? 'Diligencia' : ''}
+              placeholder="Diligencia"
               value={codProt}
               onChange={(e) => setCodProt(e.target.value)}
               onKeyDown={(e) => ayudaPro(e)}
@@ -274,7 +274,7 @@ useEffect(() => {
               <Button onClick={() => setModalOpenPro(false)}>X</Button>
             </Box>
     <div style={{ padding: '10px' }}>
-      <label htmlFor="codeInput">Código de Producto:</label>
+      <label htmlFor="codeInput">Código de Diligencia:</label>
       <input
         id="codeInput"
         ref={inputRef1}

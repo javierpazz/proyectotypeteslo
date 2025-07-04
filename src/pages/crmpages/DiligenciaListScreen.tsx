@@ -459,10 +459,11 @@ export const DiligenciaListScreen = () => {
             ? <FullScreenLoading />
             : 
             <Grid container className='fadeIn'>
-                <Grid item xs={12} sx={{ height:650, width: '100%' }}>
+                <Grid item xs={12} sx={{ height:450, width: '100%' }}>
                     <DataGrid
                     rows={rows}
                     columns={columns}
+                     rowHeight={30}
                     initialState={{
                         pagination: {
                         paginationModel: { pageSize: 10, page: 0 },

@@ -20,7 +20,7 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 
-export const InvoiceListScreen = () => {
+export const RemitListScreen = () => {
 
     
     ////////////////////FGFGFGFG
@@ -29,7 +29,7 @@ export const InvoiceListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoices');
+        navigate('/auth/loginadm?redirect=/admin/remits');
         }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -62,7 +62,7 @@ export const InvoiceListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchinvS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/invoices/searchremS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           console.log(resp.data)
           setIsloading(false);
           setInvoices(resp.data.invoices);
@@ -75,26 +75,26 @@ export const InvoiceListScreen = () => {
 
 
 const columns:GridColDef[] = [
-  { field: 'nameCom', headerName: 'Comprobante', width: 200 },
-  { field: 'invNum',
-    headerName: 'Numero',
-    width: 100,
-    align: 'right',
-    headerAlign: 'center',
-    renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-      return (
-        <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
-        underline='always'>
-                         { row.invNum}
+    { field: 'remNum',
+        headerName: 'Remito',
+        width: 100,
+        align: 'right',
+        headerAlign: 'center',
+        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+            return (
+                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                underline='always'>
+                         { row.remNum}
                     </MuiLink>
                 )
-              }
-              
-              
-            },
-    { field: 'invDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
-    { field: 'remNum', headerName: 'Remito', width: 100, align: 'right' },
+            }
+            
+            
+        },
     { field: 'remDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
+    { field: 'nameCom', headerName: 'Comprobante', width: 200 },
+    { field: 'invNum', headerName: 'Nro Comp', width: 100, align: 'right' },
+    { field: 'invDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
     
     { field: 'nameCus', headerName: 'Cliente', width: 200, headerAlign: 'center' },
     { field: 'total',
@@ -126,6 +126,15 @@ const columns:GridColDef[] = [
     }
     
     const rows = invoices!.map( invoice => ({
+                //   <td >{invoice.codCom.nameCom}</td>
+                //   <td className="text-end">{invoice.invNum ? invoice.invNum : 'REMITO S/F'}</td>
+                //   <td className="text-center">{invoice.invDat ? invoice.invDat.substring(0, 10): ''}</td>
+                //   <td className="text-end">{invoice.remNum}</td>
+                //       {invoice.ordYes === 'Y' ? <td className="text-end">{invoice._id}</td> : <td></td>}
+                //   <td className="text-end">{invoice.recNum}</td>
+                //   <td>{invoice.id_client ? invoice.id_client.nameCus : 'CLIENTE BORRADO'}</td>
+                //   <td className="text-center">{invoice.recDat ? invoice.recDat.substring(0, 10) : 'No'}</td>
+                //   <td className="text-end">{invoice.total.toFixed(2)}</td>
 
 
 
@@ -153,7 +162,7 @@ const columns:GridColDef[] = [
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/invoices');
+    navigate('/admin/filtrocrm?redirect=/admin/remits');
   };
   const createHandler = async () => {
     navigate(`/admin/invoicer`);
@@ -198,11 +207,11 @@ const columns:GridColDef[] = [
 
     // Opcional: Renombrar columnas para Excel
     const exportData = rows.map(row => ([
+       row.remNum,
+       row.remDat,
        row.nameCom,
        row.invNum,
        row.invDat,
-       row.remNum,
-       row.remDat,
        row.nameCus,
        row.total,
        row.recNum,
@@ -226,11 +235,11 @@ const columns:GridColDef[] = [
        row.updatedAt,
     ]));
   const headers = [
+      'Remito',
+      'Fecha Remito',
       'Comprobante',
       'Numero',
       'Fecha Comprobante',
-      'Remito',
-      'Fecha Remito',
       'Cliente',
       'Importe',
       'Recibo',
@@ -287,10 +296,10 @@ const columns:GridColDef[] = [
 
     const worksheet = XLSX.utils.json_to_sheet(finalData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Comprobantes');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Remitos');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'Comprobantes.xlsx');
+    saveAs(blob, 'Remitos.xlsx');
   };
 
 
@@ -298,8 +307,8 @@ const columns:GridColDef[] = [
     
   return (
     <AdminLayoutMenuList
-        title={'Comprobantes de Venta'} 
-        subTitle={'Consulta Comprobantes de Venta'}
+        title={'Remitos de Venta'} 
+        subTitle={'Consulta Remitos de Venta'}
         icon={ <ConfirmationNumberOutlined /> }
     >
 
@@ -323,7 +332,7 @@ const columns:GridColDef[] = [
              sx={{ bgcolor: 'yellow', color: 'black' }}
              type="button"
              onClick={createHandler}>
-              Crea Comprobante Venta
+              Crea Remito de Venta
             </Button>
           </div>
         </Box>

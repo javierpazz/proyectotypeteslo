@@ -9,43 +9,40 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { IProduct } from '../../interfaces';
+import { IComprobante } from '../../interfaces';
 
 
 type BuscaFormProps = {
-  codPro: any;
-  setCodPro: any;
-  codProt: any;
-  setCodProt: any;
-  desPro: any;
-  setDesPro: any;
+  codCom: any;
+  setCodCom: any;
+  codComt: any;
+  setCodComt: any;
+  nameCom: any;
+  setNameCom: any;
   nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
   inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
 
-export const BuscaPro: React.FC<BuscaFormProps> = ({
-codPro,
-setCodPro,
-codProt,
-setCodProt,
-desPro,
-setDesPro,
+export const BuscaCom: React.FC<BuscaFormProps> = ({
+codCom,
+setCodCom,
+codComt,
+setCodComt,
+nameCom,
+setNameCom,
 nextRef,
 inputRef,
 }) => {
 
-console.log(codPro);
+
+console.log(codCom);
 
   // const [codUse, setCodUse] = useState('');
-  const [productos, setProductos] = useState<IProduct[]>([]);
+  const [comprobantes, setComprobantes] = useState<IComprobante[]>([]);
 
-
-
-
-
-  const [modalOpenPro, setModalOpenPro] = useState(false);
+  const [modalOpenCom, setModalOpenCom] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
 
@@ -53,30 +50,30 @@ console.log(codPro);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setModalOpenPro(false);
+        setModalOpenCom(false);
       }
     };
 
-    if (modalOpenPro) {
+    if (modalOpenCom) {
       document.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [modalOpenPro]);
+  }, [modalOpenCom]);
 
 
 const handleClickOutside = (e: MouseEvent) => {
   if (modalRef.current && e.target instanceof Node && !modalRef.current.contains(e.target)) {
-    setModalOpenPro(false);
+    setModalOpenCom(false);
   }
 };
 
 
 
   useEffect(() => {
-    if (modalOpenPro) {
+    if (modalOpenCom) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -84,69 +81,68 @@ const handleClickOutside = (e: MouseEvent) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [modalOpenPro]);
-/////////////////consulta producto
+  }, [modalOpenCom]);
+/////////////////consulta comprobante
 
-const handleShowPro = () => {
-    setModalOpenPro(true);
-    // const instRow = productos.find((row) => row.codPro === codProt);
+const handleShowCom = () => {
+    setModalOpenCom(true);
+    // const instRow = instrumentos.find((row) => row.codIns === codInst);
     // if (instRow) {
     // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
     // };
   };
 
   
-  // const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   e.key === "Enter" && buscarPorCodPro(codProt);
-  //   e.key === "F2" && handleShowPro();
-  //   e.key === "Tab" && buscarPorCodPro(codProt);
+  // const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Tab" && buscarPorCodIns(codInst);
+  //   e.key === "Enter" && buscarPorCodIns(codInst);
+  //   e.key === "F2" && handleShowIns();
   // };
-const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+const ayudaCom = (e: React.KeyboardEvent<HTMLDivElement>) => {
   if (e.key === "Enter" || e.key === "Tab") {
     e.preventDefault();
-    buscarPorCodPro(codProt);
+    buscarPorCodCom(codComt);
     nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
   }
   if (e.key === "F2") {
     e.preventDefault();
-    handleShowPro();
+    handleShowCom();
   }
 };
   
 
-  const buscarPorCodPro = (codProt: string) => {
-    // const instRow = productos.find((row) => row.codPro === codProt);
-    const instRow = productos.find((row) => (row.codPro === codProt || row.codigoPro === codProt));
+  const buscarPorCodCom = (codComt: string) => {
+    const instRow = comprobantes.find((row) => row.codCom === codComt);
     if (!instRow) {
-        setCodPro('');
-        setCodProt('');
-        setDesPro('Elija Producto');
+        setCodCom('');
+        setCodComt('');
+        setNameCom('Elija Comprobante');
     }else{
-      // setProducto(instRow);
-      setCodPro(instRow._id);
-      setCodProt(instRow.codPro);
-      setDesPro(instRow.title);
+      // setComprobante(instRow);
+      setCodCom(instRow._id);
+      setCodComt(instRow.codCom);
+      setNameCom(instRow.nameCom);
       };
   };
 
-  const handleSelectPro = (producto: IProduct) => {
+  const handleSelectCom = (comprobante: IComprobante) => {
 
-    setCodPro(producto._id);
-    setCodProt(producto.codPro);
-    setDesPro(producto.title);
+    setCodCom(comprobante._id);
+    setCodComt(comprobante.codCom);
+    setNameCom(comprobante.nameCom);
 
-    setModalOpenPro(false);
+    setModalOpenCom(false);
   };
 
-/////////////////consulta producto
+/////////////////consulta comprobante
 
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get(`/api/tes/admin/products`);
-        setProductos(data);
+        const { data } = await stutzApi.get(`/api/tes/admin/comprobantes`);
+        setComprobantes(data);
         setFiltered(data);
       } catch (err) {}
     };
@@ -155,25 +151,27 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
   const [search, setSearch] = useState('');
-  const [filtered, setFiltered] = useState(productos);
+  const [filtered, setFiltered] = useState(comprobantes);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
-  if (modalOpenPro) {
+  if (modalOpenCom) {
     setTimeout(() => {
       inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
-}, [modalOpenPro]);
+}, [modalOpenCom]);
+
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase();
     setSearch(value);
-    const result = productos.filter(p =>
-      p.codPro.includes(value) || p.title.toLowerCase().includes(value.toLowerCase())
+    const result = comprobantes.filter(p =>
+      p.codCom.includes(value) || p.nameCom.toLowerCase().includes(value.toLowerCase())
     );
     setFiltered(result);
     setHighlightedIndex(0); // Reset al buscar
@@ -187,7 +185,7 @@ useEffect(() => {
     } else if (e.key === 'ArrowUp') {
       setHighlightedIndex(prev => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter') {
-      handleSelectPro(filtered[highlightedIndex]);
+      handleSelectCom(filtered[highlightedIndex]);
     }
   };
 
@@ -215,19 +213,18 @@ useEffect(() => {
             <TextField
               fullWidth
               // inputRef={input2Ref}
-              inputRef={inputRef}   // <-- asignar ref aquí
-              label={codProt === '' ? 'Producto' : ''}
-              placeholder="Producto"
-              value={codProt}
-              onChange={(e) => setCodProt(e.target.value)}
-              onKeyDown={(e) => ayudaPro(e)}
+              label={codComt === '' ? 'Comprobante' : ''}
+              placeholder="Comprobante"
+              value={codComt}
+              onChange={(e) => setCodComt(e.target.value)}
+              onKeyDown={(e) => ayudaCom(e)}
               required
               autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
             <Button
-              onClick={handleShowPro}
+              onClick={handleShowCom}
               variant="contained"
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
@@ -236,18 +233,18 @@ useEffect(() => {
             </Button>
           </Grid>
           <Grid item md={3}>
-            <Typography
-              variant="h6"
-              noWrap
-              title={desPro}
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {desPro}
-            </Typography>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameCom}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameCom}
+      </Typography>
           </Grid>
 
  
@@ -255,7 +252,7 @@ useEffect(() => {
 
 
 
-        <Modal open={modalOpenPro} onClose={() => setModalOpenPro(false)}>
+        <Modal open={modalOpenCom} onClose={() => setModalOpenCom(false)}>
           <Box
             ref={modalRef}
             sx={{
@@ -271,10 +268,10 @@ useEffect(() => {
             }}
           >
             <Box display="flex" justifyContent="flex-end">
-              <Button onClick={() => setModalOpenPro(false)}>X</Button>
+              <Button onClick={() => setModalOpenCom(false)}>X</Button>
             </Box>
     <div style={{ padding: '10px' }}>
-      <label htmlFor="codeInput">Código de Producto:</label>
+      <label htmlFor="codeInput">Código de Comprobante:</label>
       <input
         id="codeInput"
         ref={inputRef1}
@@ -299,8 +296,8 @@ useEffect(() => {
         >
           {filtered.map((p, index) => (
             <li
-              key={p.codPro}
-              onClick={() => handleSelectPro(p)}
+              key={p.codCom}
+              onClick={() => handleSelectCom(p)}
               style={{
                 padding: '6px',
                 cursor: 'pointer',
@@ -308,7 +305,7 @@ useEffect(() => {
                 backgroundColor: index === highlightedIndex ? '#cce5ff' : '#fff'
               }}
             >
-              <strong>{p.codPro}</strong> - {p.title}
+              <strong>{p.codCom}</strong> - {p.nameCom}
             </li>
           ))}
         </ul>

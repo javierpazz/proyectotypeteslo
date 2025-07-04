@@ -24,6 +24,11 @@ import { Orders } from '../pages/admin/Orders';
 import { Order } from '../pages/admin/orders/Order';
 import {SalePointScreen} from '../pages/crmpages/SalePointScreen';
 import {InvoiceListScreen} from '../pages/crmpages/InvoiceListScreen';
+import {RemitListScreen} from '../pages/crmpages/RemitListScreen';
+import {RemitpvListScreen} from '../pages/crmpages/RemitpvListScreen';
+import {InvoiceBuyListScreen} from '../pages/crmpages/InvoiceBuyListScreen';
+import {RemitBuyListScreen} from '../pages/crmpages/RemitBuyListScreen';
+import {RemitBuypvListScreen} from '../pages/crmpages/RemitBuypvListScreen';
 import {Remits} from '../pages/invoice/Remits';
 import {MesaEntrada} from '../pages/invoice/MesaEntrada';
 import {MesaEntradaAct} from '../pages/invoice/MesaEntradaAct';
@@ -52,6 +57,7 @@ import { Partes } from '../pages/admin/Partes';
 import { ParteAdminPage } from '../pages/admin/partes/parte';
 import { UserAdminPage } from '../pages/admin/users/user';
 import { Filtro } from '../pages/invoice/Filtro';
+import { FiltroCrm } from '../pages/invoice/FiltroCrm';
 
 import { ParamInstrumento } from '../pages/invoice/ParamInstrumento';
 import {EntradaListScreen} from '../pages/crmpages/EntradaListScreen';
@@ -118,6 +124,11 @@ export const AppRouter = () => {
 
                             <Route path="/salepoint" element={ <SalePointScreen /> }/>
                             <Route path="/admin/invoices" element={ <InvoiceListScreen /> } />
+                            <Route path="/admin/remits" element={ <RemitListScreen /> } />
+                            <Route path="/admin/invoicesBuy" element={ <InvoiceBuyListScreen /> } />
+                            <Route path="/admin/remitsBuy" element={ <RemitBuyListScreen /> } />
+                            <Route path="/admin/remitspv" element={ <RemitpvListScreen /> } />
+                            <Route path="/admin/remitsBuypv" element={ <RemitBuypvListScreen /> } />
                             <Route path="/admin/remiter" element={ <Remits /> } />
                             <Route path="/admin/mesaentrada" element={ <MesaEntrada /> } />
                             <Route path="/admin/mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
@@ -154,6 +165,7 @@ export const AppRouter = () => {
                             <Route path="/admin/users" element={ <Users /> } />
                             <Route path="/admin/users/user/:id" element={ <UserAdminPage /> } />
                             <Route path="/admin/filtro" element={ <Filtro /> } />
+                            <Route path="/admin/filtrocrm" element={ <FiltroCrm /> } />
 
                             <Route path="/orders/history" element={ <History /> } />
                             <Route path="/orders/:id" element={ <OrderPage /> } />

@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante } from '../../interfaces';
+import { IOrder, ISupplier, IInstrumento, IParte, IConfiguracion, IUser, IComprobante } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -20,7 +20,7 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 
-export const InvoiceListScreen = () => {
+export const RemitBuyListScreen = () => {
 
     
     ////////////////////FGFGFGFG
@@ -29,7 +29,7 @@ export const InvoiceListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoices');
+        navigate('/auth/loginadm?redirect=/admin/invoicesBuy');
         }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -62,7 +62,7 @@ export const InvoiceListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchinvS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/invoices/searchremB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           console.log(resp.data)
           setIsloading(false);
           setInvoices(resp.data.invoices);
@@ -75,35 +75,35 @@ export const InvoiceListScreen = () => {
 
 
 const columns:GridColDef[] = [
-  { field: 'nameCom', headerName: 'Comprobante', width: 200 },
-  { field: 'invNum',
-    headerName: 'Numero',
-    width: 100,
-    align: 'right',
-    headerAlign: 'center',
-    renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-      return (
-        <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
-        underline='always'>
-                         { row.invNum}
+    { field: 'remNum',
+        headerName: 'Remito',
+        width: 100,
+        align: 'right',
+        headerAlign: 'center',
+        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+            return (
+                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                underline='always'>
+                         { row.remNum}
                     </MuiLink>
                 )
-              }
-              
-              
-            },
-    { field: 'invDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
-    { field: 'remNum', headerName: 'Remito', width: 100, align: 'right' },
+            }
+            
+            
+        },
     { field: 'remDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
+    { field: 'nameCom', headerName: 'Comprobante', width: 200 },
+    { field: 'invNum', headerName: 'Nro Comp', width: 100, align: 'right' },
+    { field: 'invDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
     
-    { field: 'nameCus', headerName: 'Cliente', width: 200, headerAlign: 'center' },
-    { field: 'total',
+    { field: 'nameSup', headerName: 'Proovedor', width: 200, headerAlign: 'center' },
+    { field: 'totalBuy',
       headerName: 'Monto total',
       width: 100,
       align: 'right',
       headerAlign: 'center',
     },
-    { field: 'recNum', headerName: 'Recibo', width: 100, align: 'right', headerAlign: 'center' },
+    { field: 'recNum', headerName: 'O.Pago', width: 100, align: 'right', headerAlign: 'center' },
     { field: 'recDat', headerName: 'Pagos', width: 100, headerAlign: 'center',
  },
     { field: 'nameCon', headerName: 'Punto Venta', width: 200 },
@@ -126,6 +126,15 @@ const columns:GridColDef[] = [
     }
     
     const rows = invoices!.map( invoice => ({
+                //   <td >{invoice.codCom.nameCom}</td>
+                //   <td className="text-end">{invoice.invNum ? invoice.invNum : 'REMITO S/F'}</td>
+                //   <td className="text-center">{invoice.invDat ? invoice.invDat.substring(0, 10): ''}</td>
+                //   <td className="text-end">{invoice.remNum}</td>
+                //       {invoice.ordYes === 'Y' ? <td className="text-end">{invoice._id}</td> : <td></td>}
+                //   <td className="text-end">{invoice.recNum}</td>
+                //   <td>{invoice.id_client ? invoice.id_client.nameCus : 'CLIENTE BORRADO'}</td>
+                //   <td className="text-center">{invoice.recDat ? invoice.recDat.substring(0, 10) : 'No'}</td>
+                //   <td className="text-end">{invoice.total.toFixed(2)}</td>
 
 
 
@@ -137,13 +146,13 @@ const columns:GridColDef[] = [
         recNum    : invoice.recNum,
         recDat: invoice.recDat ? formatDateNoTZ(invoice.recDat) : '',
         notes: invoice.notes,
-        nameCus  : (invoice.id_client as ICustomer).nameCus,
+        nameSup  : (invoice.supplier as ISupplier)?.name ?? '',
         nameUse  : (invoice.user as IUser)?.name ?? '',
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         nameCom  : (invoice.codCom as IComprobante)?.nameCom ?? '',
-        total : invoice.total.toFixed(2),
+        totalBuy : invoice.totalBuy.toFixed(2),
         // isPaid: invoice.isPaid,
         noProducts: invoice.numberOfItems,
         createdAt: invoice.createdAt!.substring(0, 10),
@@ -183,13 +192,13 @@ const columns:GridColDef[] = [
       terminado: invoice.terminado,
       remNum: invoice.remNum,
       remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
-        nameCus  : (invoice.id_client as ICustomer).nameCus,
+        nameSup  : (invoice.supplier as ISupplier).name,
         nameUse  : (invoice.user as IUser).name,
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         nameCom  : (invoice.codCom as IComprobante)?.nameCom ?? '',
-      total: invoice.total,
+      totalBuy: invoice.totalBuy,
       isPaid: invoice.isPaid,
       noProducts: invoice.numberOfItems,
       createdAt: invoice.createdAt?.substring(0, 10),
@@ -203,8 +212,8 @@ const columns:GridColDef[] = [
        row.invDat,
        row.remNum,
        row.remDat,
-       row.nameCus,
-       row.total,
+       row.nameSup,
+       row.totalBuy,
        row.recNum,
        row.recDat,
        row.nameCon,
@@ -231,9 +240,9 @@ const columns:GridColDef[] = [
       'Fecha Comprobante',
       'Remito',
       'Fecha Remito',
-      'Cliente',
+      'Proovedor',
       'Importe',
-      'Recibo',
+      'O.Pago',
       'Fecha',
       'Configuración',
       'Observaciones',
@@ -258,8 +267,8 @@ const columns:GridColDef[] = [
       [`desde:`, `${fech1}`,
         `Hasta:`, `${fech2}`,
         `Filtro por  :`,
-        `Cliente.:`,
-        `${userInfo.filtro.nameCus}`,
+        `Proveedor.:`,
+        `${userInfo.filtro.nameSup}`,
         `Parte.:`,
         `${userInfo.filtro.namePar}`,
         `Instrumento.:`,
@@ -287,10 +296,10 @@ const columns:GridColDef[] = [
 
     const worksheet = XLSX.utils.json_to_sheet(finalData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Comprobantes');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'RemitosCompra');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'Comprobantes.xlsx');
+    saveAs(blob, 'RemitosCompra.xlsx');
   };
 
 
@@ -298,8 +307,8 @@ const columns:GridColDef[] = [
     
   return (
     <AdminLayoutMenuList
-        title={'Comprobantes de Venta'} 
-        subTitle={'Consulta Comprobantes de Venta'}
+        title={'Remitos de Compra'} 
+        subTitle={'Consulta Remitos de Compra'}
         icon={ <ConfirmationNumberOutlined /> }
     >
 
@@ -323,7 +332,7 @@ const columns:GridColDef[] = [
              sx={{ bgcolor: 'yellow', color: 'black' }}
              type="button"
              onClick={createHandler}>
-              Crea Comprobante Venta
+              Crea Comprobante Compra
             </Button>
           </div>
         </Box>

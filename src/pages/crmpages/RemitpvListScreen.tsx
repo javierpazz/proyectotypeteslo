@@ -20,7 +20,7 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 
-export const InvoiceListScreen = () => {
+export const RemitpvListScreen = () => {
 
     
     ////////////////////FGFGFGFG
@@ -29,7 +29,7 @@ export const InvoiceListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoices');
+        navigate('/auth/loginadm?redirect=/admin/remitspv');
         }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -62,7 +62,7 @@ export const InvoiceListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchinvS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/invoices/searchmovS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           console.log(resp.data)
           setIsloading(false);
           setInvoices(resp.data.invoices);
@@ -75,38 +75,32 @@ export const InvoiceListScreen = () => {
 
 
 const columns:GridColDef[] = [
-  { field: 'nameCom', headerName: 'Comprobante', width: 200 },
-  { field: 'invNum',
-    headerName: 'Numero',
-    width: 100,
-    align: 'right',
-    headerAlign: 'center',
-    renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-      return (
-        <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
-        underline='always'>
-                         { row.invNum}
+    { field: 'movpvNum',
+        headerName: 'Entrega',
+        width: 100,
+        align: 'right',
+        headerAlign: 'center',
+        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+            return (
+                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                underline='always'>
+                         { row.movpvNum}
                     </MuiLink>
                 )
-              }
-              
-              
-            },
-    { field: 'invDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
-    { field: 'remNum', headerName: 'Remito', width: 100, align: 'right' },
-    { field: 'remDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
+            }
+            
+            
+        },
+    { field: 'movpvDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
     
-    { field: 'nameCus', headerName: 'Cliente', width: 200, headerAlign: 'center' },
     { field: 'total',
       headerName: 'Monto total',
       width: 100,
       align: 'right',
       headerAlign: 'center',
     },
-    { field: 'recNum', headerName: 'Recibo', width: 100, align: 'right', headerAlign: 'center' },
-    { field: 'recDat', headerName: 'Pagos', width: 100, headerAlign: 'center',
- },
-    { field: 'nameCon', headerName: 'Punto Venta', width: 200 },
+    { field: 'nameCon', headerName: 'P Venta Entrega', width: 200 },
+    { field: 'nameDes', headerName: 'P Venta Recibe', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
     { field: 'nameUse', headerName: 'Usuario', width: 200 },
             
@@ -126,22 +120,32 @@ const columns:GridColDef[] = [
     }
     
     const rows = invoices!.map( invoice => ({
+                //   <td >{invoice.codCom.nameCom}</td>
+                //   <td className="text-end">{invoice.invNum ? invoice.invNum : 'REMITO S/F'}</td>
+                //   <td className="text-center">{invoice.invDat ? invoice.invDat.substring(0, 10): ''}</td>
+                //   <td className="text-end">{invoice.remNum}</td>
+                //       {invoice.ordYes === 'Y' ? <td className="text-end">{invoice._id}</td> : <td></td>}
+                //   <td className="text-end">{invoice.recNum}</td>
+                //   <td>{invoice.id_client ? invoice.id_client.nameCus : 'CLIENTE BORRADO'}</td>
+                //   <td className="text-center">{invoice.recDat ? invoice.recDat.substring(0, 10) : 'No'}</td>
+                //   <td className="text-end">{invoice.total.toFixed(2)}</td>
 
 
 
         id    : invoice._id,
-        remNum    : invoice.remNum,
-        remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+        movpvNum    : invoice.movpvNum,
+        movpvDat: invoice.movpvDat ? formatDateNoTZ(invoice.movpvDat) : '',
         invNum    : invoice.invNum,
         invDat: invoice.invDat ? formatDateNoTZ(invoice.invDat) : '',
         recNum    : invoice.recNum,
         recDat: invoice.recDat ? formatDateNoTZ(invoice.recDat) : '',
         notes: invoice.notes,
-        nameCus  : (invoice.id_client as ICustomer).nameCus,
+        nameCus  : (invoice.id_client as ICustomer)?.nameCus ?? '',
         nameUse  : (invoice.user as IUser)?.name ?? '',
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
+        nameDes  : (invoice.id_config2 as IConfiguracion)?.name ?? '',
         nameCom  : (invoice.codCom as IComprobante)?.nameCom ?? '',
         total : invoice.total.toFixed(2),
         // isPaid: invoice.isPaid,
@@ -153,7 +157,7 @@ const columns:GridColDef[] = [
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/invoices');
+    navigate('/admin/filtrocrm?redirect=/admin/remitspv');
   };
   const createHandler = async () => {
     navigate(`/admin/invoicer`);
@@ -181,13 +185,14 @@ const columns:GridColDef[] = [
       asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
       notes: invoice.notes,
       terminado: invoice.terminado,
-      remNum: invoice.remNum,
-      remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
-        nameCus  : (invoice.id_client as ICustomer).nameCus,
+      movpvNum: invoice.movpvNum,
+      movpvDat: invoice.movpvDat ? formatDateNoTZ(invoice.movpvDat) : '',
+        nameCus  : (invoice.id_client as ICustomer)?.nameCus ?? '',
         nameUse  : (invoice.user as IUser).name,
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
+        nameDes  : (invoice.id_config2 as IConfiguracion)?.name ?? '',
         nameCom  : (invoice.codCom as IComprobante)?.nameCom ?? '',
       total: invoice.total,
       isPaid: invoice.isPaid,
@@ -198,16 +203,17 @@ const columns:GridColDef[] = [
 
     // Opcional: Renombrar columnas para Excel
     const exportData = rows.map(row => ([
+       row.movpvNum,
+       row.movpvDat,
        row.nameCom,
        row.invNum,
        row.invDat,
-       row.remNum,
-       row.remDat,
        row.nameCus,
        row.total,
        row.recNum,
        row.recDat,
        row.nameCon,
+       row.nameDes,
        row.notes,
        row.nameUse,
        row.nameIns,
@@ -226,16 +232,17 @@ const columns:GridColDef[] = [
        row.updatedAt,
     ]));
   const headers = [
+      'Entrega',
+      'Fecha Entrega',
       'Comprobante',
       'Numero',
       'Fecha Comprobante',
-      'Remito',
-      'Fecha Remito',
       'Cliente',
       'Importe',
       'Recibo',
       'Fecha',
-      'Configuración',
+      'P Vnta Entrega',
+      'P Venta Recibe',
       'Observaciones',
       'Usuario',
       'Instrumento',
@@ -287,10 +294,10 @@ const columns:GridColDef[] = [
 
     const worksheet = XLSX.utils.json_to_sheet(finalData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Comprobantes');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'EntregasAPuntosdeVenta');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'Comprobantes.xlsx');
+    saveAs(blob, 'EntregasAPuntosdeVenta.xlsx');
   };
 
 
@@ -298,8 +305,8 @@ const columns:GridColDef[] = [
     
   return (
     <AdminLayoutMenuList
-        title={'Comprobantes de Venta'} 
-        subTitle={'Consulta Comprobantes de Venta'}
+        title={'Entregas a Puntos de Venta'} 
+        subTitle={'Consulta Entregas a Puntos de Venta'}
         icon={ <ConfirmationNumberOutlined /> }
     >
 
@@ -323,7 +330,7 @@ const columns:GridColDef[] = [
              sx={{ bgcolor: 'yellow', color: 'black' }}
              type="button"
              onClick={createHandler}>
-              Crea Comprobante Venta
+              Crea Entrega a P.Venta
             </Button>
           </div>
         </Box>

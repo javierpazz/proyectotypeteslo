@@ -9,43 +9,40 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { IProduct } from '../../interfaces';
+import { IValue } from '../../interfaces';
 
 
 type BuscaFormProps = {
-  codPro: any;
-  setCodPro: any;
-  codProt: any;
-  setCodProt: any;
-  desPro: any;
-  setDesPro: any;
+  codVal: any;
+  setCodVal: any;
+  codValt: any;
+  setCodValt: any;
+  desVal: any;
+  setDesVal: any;
   nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
   inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
 
-export const BuscaPro: React.FC<BuscaFormProps> = ({
-codPro,
-setCodPro,
-codProt,
-setCodProt,
-desPro,
-setDesPro,
+export const BuscaVal: React.FC<BuscaFormProps> = ({
+codVal,
+setCodVal,
+codValt,
+setCodValt,
+desVal,
+setDesVal,
 nextRef,
 inputRef,
 }) => {
 
-console.log(codPro);
+
+console.log(codVal);
 
   // const [codUse, setCodUse] = useState('');
-  const [productos, setProductos] = useState<IProduct[]>([]);
+  const [values, setValues] = useState<IValue[]>([]);
 
-
-
-
-
-  const [modalOpenPro, setModalOpenPro] = useState(false);
+  const [modalOpenVal, setModalOpenVal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
 
@@ -53,30 +50,30 @@ console.log(codPro);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setModalOpenPro(false);
+        setModalOpenVal(false);
       }
     };
 
-    if (modalOpenPro) {
+    if (modalOpenVal) {
       document.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [modalOpenPro]);
+  }, [modalOpenVal]);
 
 
 const handleClickOutside = (e: MouseEvent) => {
   if (modalRef.current && e.target instanceof Node && !modalRef.current.contains(e.target)) {
-    setModalOpenPro(false);
+    setModalOpenVal(false);
   }
 };
 
 
 
   useEffect(() => {
-    if (modalOpenPro) {
+    if (modalOpenVal) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -84,69 +81,69 @@ const handleClickOutside = (e: MouseEvent) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [modalOpenPro]);
-/////////////////consulta producto
+  }, [modalOpenVal]);
+/////////////////consulta value
 
-const handleShowPro = () => {
-    setModalOpenPro(true);
-    // const instRow = productos.find((row) => row.codPro === codProt);
+const handleShowVal = () => {
+    setModalOpenVal(true);
+    // const instRow = values.find((row) => row.codIns === codInst);
     // if (instRow) {
     // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
     // };
   };
 
   
-  // const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   e.key === "Enter" && buscarPorCodPro(codProt);
-  //   e.key === "F2" && handleShowPro();
-  //   e.key === "Tab" && buscarPorCodPro(codProt);
+  // const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Tab" && buscarPorCodIns(codInst);
+  //   e.key === "Enter" && buscarPorCodIns(codInst);
+  //   e.key === "F2" && handleShowIns();
   // };
-const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+const ayudaVal = (e: React.KeyboardEvent<HTMLDivElement>) => {
   if (e.key === "Enter" || e.key === "Tab") {
     e.preventDefault();
-    buscarPorCodPro(codProt);
+    buscarPorCodVal(codValt);
     nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
   }
   if (e.key === "F2") {
     e.preventDefault();
-    handleShowPro();
+    handleShowVal();
   }
 };
   
 
-  const buscarPorCodPro = (codProt: string) => {
-    // const instRow = productos.find((row) => row.codPro === codProt);
-    const instRow = productos.find((row) => (row.codPro === codProt || row.codigoPro === codProt));
+  const buscarPorCodVal = (codValt: string) => {
+    const instRow = values.find((row) => row.codVal === codValt);
     if (!instRow) {
-        setCodPro('');
-        setCodProt('');
-        setDesPro('Elija Producto');
+        setCodVal('');
+        setCodValt('');
+        setDesVal('Elija Valor');
     }else{
-      // setProducto(instRow);
-      setCodPro(instRow._id);
-      setCodProt(instRow.codPro);
-      setDesPro(instRow.title);
+      // setValplier(instRow);
+      setCodVal(instRow._id);
+      setCodValt(instRow.codVal);
+      setDesVal(instRow.desVal);
       };
   };
 
-  const handleSelectPro = (producto: IProduct) => {
+  const handleSelectVal = (value: IValue) => {
 
-    setCodPro(producto._id);
-    setCodProt(producto.codPro);
-    setDesPro(producto.title);
+    setCodVal(value._id);
+    setCodValt(value.codVal);
+    setDesVal(value.desVal);
 
-    setModalOpenPro(false);
+    setModalOpenVal(false);
   };
 
-/////////////////consulta producto
+/////////////////consulta value
 
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get(`/api/tes/admin/products`);
-        setProductos(data);
+        // const { data } = await stutzApi.get(`/api/tes/admin/values`);
+        const { data } = await stutzApi.get(`/api/valuees`);
+        setValues(data);
         setFiltered(data);
       } catch (err) {}
     };
@@ -155,25 +152,27 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
   const [search, setSearch] = useState('');
-  const [filtered, setFiltered] = useState(productos);
+  const [filtered, setFiltered] = useState(values);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
-  if (modalOpenPro) {
+  if (modalOpenVal) {
     setTimeout(() => {
       inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
-}, [modalOpenPro]);
+}, [modalOpenVal]);
+
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase();
     setSearch(value);
-    const result = productos.filter(p =>
-      p.codPro.includes(value) || p.title.toLowerCase().includes(value.toLowerCase())
+    const result = values.filter(p =>
+      p.codVal.includes(value) || p.desVal.toLowerCase().includes(value.toLowerCase())
     );
     setFiltered(result);
     setHighlightedIndex(0); // Reset al buscar
@@ -187,7 +186,7 @@ useEffect(() => {
     } else if (e.key === 'ArrowUp') {
       setHighlightedIndex(prev => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter') {
-      handleSelectPro(filtered[highlightedIndex]);
+      handleSelectVal(filtered[highlightedIndex]);
     }
   };
 
@@ -216,18 +215,18 @@ useEffect(() => {
               fullWidth
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codProt === '' ? 'Producto' : ''}
-              placeholder="Producto"
-              value={codProt}
-              onChange={(e) => setCodProt(e.target.value)}
-              onKeyDown={(e) => ayudaPro(e)}
+              label={codValt === '' ? 'Value' : ''}
+              placeholder="Value"
+              value={codValt}
+              onChange={(e) => setCodValt(e.target.value)}
+              onKeyDown={(e) => ayudaVal(e)}
               required
               autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
             <Button
-              onClick={handleShowPro}
+              onClick={handleShowVal}
               variant="contained"
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
@@ -236,18 +235,18 @@ useEffect(() => {
             </Button>
           </Grid>
           <Grid item md={3}>
-            <Typography
-              variant="h6"
-              noWrap
-              title={desPro}
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {desPro}
-            </Typography>
+      <Typography
+        variant="h6"
+        noWrap
+        title={desVal}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {desVal}
+      </Typography>
           </Grid>
 
  
@@ -255,7 +254,7 @@ useEffect(() => {
 
 
 
-        <Modal open={modalOpenPro} onClose={() => setModalOpenPro(false)}>
+        <Modal open={modalOpenVal} onClose={() => setModalOpenVal(false)}>
           <Box
             ref={modalRef}
             sx={{
@@ -271,10 +270,10 @@ useEffect(() => {
             }}
           >
             <Box display="flex" justifyContent="flex-end">
-              <Button onClick={() => setModalOpenPro(false)}>X</Button>
+              <Button onClick={() => setModalOpenVal(false)}>X</Button>
             </Box>
     <div style={{ padding: '10px' }}>
-      <label htmlFor="codeInput">Código de Producto:</label>
+      <label htmlFor="codeInput">Código de Value:</label>
       <input
         id="codeInput"
         ref={inputRef1}
@@ -299,8 +298,8 @@ useEffect(() => {
         >
           {filtered.map((p, index) => (
             <li
-              key={p.codPro}
-              onClick={() => handleSelectPro(p)}
+              key={p.codVal}
+              onClick={() => handleSelectVal(p)}
               style={{
                 padding: '6px',
                 cursor: 'pointer',
@@ -308,7 +307,7 @@ useEffect(() => {
                 backgroundColor: index === highlightedIndex ? '#cce5ff' : '#fff'
               }}
             >
-              <strong>{p.codPro}</strong> - {p.title}
+              <strong>{p.codVal}</strong> - {p.desVal}
             </li>
           ))}
         </ul>
