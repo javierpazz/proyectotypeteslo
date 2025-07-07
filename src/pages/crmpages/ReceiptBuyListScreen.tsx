@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante } from '../../interfaces';
+import { IRecipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado, ISupplier } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -20,7 +20,7 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 
-export const RemitBuypvListScreen = () => {
+export const ReceiptBuyListScreen = () => {
 
     
     ////////////////////FGFGFGFG
@@ -29,7 +29,7 @@ export const RemitBuypvListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/remitsBuypv');
+        navigate('/auth/loginadm?redirect=/admin/invoicesRec');
         }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -55,17 +55,17 @@ export const RemitBuypvListScreen = () => {
   const obser = userInfo.filtro.obser;
       
     
-    const [ invoices, setInvoices ] = useState<IOrder[]>([]);
+    const [ recibos, setrecibos ] = useState<IRecipt[]>([]);
     const [ isloading, setIsloading ] = useState(false);
 
  useEffect(() => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchmovB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
+          const resp = await stutzApi.get(`/api/receipts/searchrecB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
           console.log(resp.data)
           setIsloading(false);
-          setInvoices(resp.data.invoices);
+          setrecibos(resp.data.receipts);
 
     } catch (err) {
       }
@@ -73,72 +73,79 @@ export const RemitBuypvListScreen = () => {
       fetchData();
   }, [ ]);
 
-const controlStockHandler = async (row:any) => {
-  row.orderItems.map((item:any) => stockHandler({ item }));
-};
-
-const stockHandler = async (item:any) => {
-try {
-  await stutzApi.put(
-    `/api/products/downstock/${item.item._id}`,
-    {
-      quantitys: item.item.quantity,
-    },
-    {
-      headers: {
-        authorization: `Bearer ${userInfo.token}`,
+const unapplyReceipt = async (row: any) => {
+  try {
+    //          dispatch({ type: 'UPDATE_REQUEST' });
+    await stutzApi.put(
+      `/api/invoices/${row.recNum}/unapplyrecB`,
+      {
+        recNum: row.recNum,
+        supplier: row.supplier._id,
       },
-    }
-  );
-} catch (err) {
-}
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });    
+    //          dispatch({type: 'UPDATE_SUCCESS' });
+    // toast.success('row Unapplied successfully');
+    //          navigate('/admin/products');
+  } catch (err) {
+  }
 };
+    // buscar todas loock at the invoices that have a row and modify de numRec by nul
+//dr
+const prodeleteReceipt = (row:any) => {
+  if (window.confirm('Esta seguro de Borrar')) {
+      deleteReceipt(row);
+      //dr
+      unapplyReceipt(row);
+      // buscar todas loock at the invoices that have a receipt and modify de numRec by nul
+      //dr
 
-//do
-
-
-  const deleteHandler = async (row:any) => {
-    if (window.confirm('Are you sure to delete?')) {
-      controlStockHandler(row);
-      try {
-        await stutzApi.delete(`/api/invoices/${row.id}`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-      } catch (err) {
-      }
     }
   };
 
 
 
+  const deleteReceipt = async (row: any) => {
+      try {
+        await stutzApi.delete(`/api/receipts/${row.id}`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+      } catch (err) {
+      }
+    };
+
+
 const columns:GridColDef[] = [
-    { field: 'movpvNum',
-        headerName: 'Entrega',
+    { field: 'recNum',
+        headerName: 'O.Pago',
         width: 100,
         align: 'right',
         headerAlign: 'center',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                <MuiLink component={RouterLink}  to={`/admin/invoicerBuyRempvCon/${row.id}?redirect=/admin/remitsbuypv`}
+                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
                 underline='always'>
-                         { row.movpvNum}
+                         { row.recNum}
                     </MuiLink>
                 )
             }
             
             
         },
-    { field: 'movpvDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
+    { field: 'recDat', headerName: 'Fecha', width: 100, headerAlign: 'center' },
     
-    { field: 'total',
-      headerName: 'Monto total',
+    { field: 'nameSup', headerName: 'Proveedor', width: 200 },
+    { field: 'notes', headerName: 'Observaciones', width: 200 },
+    { field: 'desval', headerName: 'VALOR', width: 100 },
+    { field: 'totalBuy',
+      headerName: 'Importe',
       width: 100,
       align: 'right',
       headerAlign: 'center',
     },
-    { field: 'nameCon', headerName: 'P Venta Recibe', width: 200 },
-    { field: 'nameDes', headerName: 'P Venta Entrega', width: 200 },
-    { field: 'notes', headerName: 'Observaciones', width: 200 },
+    
+    { field: 'nameCon', headerName: 'Punto de Venta', width: 200 },
     { field: 'nameUse', headerName: 'Usuario', width: 200 },
                 {
               field: 'check',
@@ -147,13 +154,13 @@ const columns:GridColDef[] = [
                 if (user?.role !== 'admin') return null;
                 return (
                   <Chip variant='outlined' label="Eliminar" color="error"
-                  onClick={() => deleteHandler(row)}
+                  onClick={() => prodeleteReceipt(row)}
                   />
                 )
                 
               }
             },
-            
+
     { field: 'createdAt', headerName: 'Creada en', width: 100 },
     { field: 'updatedAt', headerName: 'Modificada en', width: 100 },
 
@@ -169,144 +176,76 @@ const columns:GridColDef[] = [
     return `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
     }
     
-    const rows = invoices!.map( invoice => ({
-                //   <td >{invoice.codCom.nameCom}</td>
-                //   <td className="text-end">{invoice.invNum ? invoice.invNum : 'REMITO S/F'}</td>
-                //   <td className="text-center">{invoice.invDat ? invoice.invDat.substring(0, 10): ''}</td>
-                //   <td className="text-end">{invoice.remNum}</td>
-                //       {invoice.ordYes === 'Y' ? <td className="text-end">{invoice._id}</td> : <td></td>}
-                //   <td className="text-end">{invoice.recNum}</td>
-                //   <td>{invoice.id_client ? invoice.id_client.nameCus : 'CLIENTE BORRADO'}</td>
-                //   <td className="text-center">{invoice.recDat ? invoice.recDat.substring(0, 10) : 'No'}</td>
-                //   <td className="text-end">{invoice.total.toFixed(2)}</td>
-
-
-
-        id    : invoice._id,
-        movpvNum    : invoice.movpvNum,
-        movpvDat: invoice.movpvDat ? formatDateNoTZ(invoice.movpvDat) : '',
-        invNum    : invoice.invNum,
-        invDat: invoice.invDat ? formatDateNoTZ(invoice.invDat) : '',
-        recNum    : invoice.recNum,
-        recDat: invoice.recDat ? formatDateNoTZ(invoice.recDat) : '',
-        notes: invoice.notes,
-        nameCus  : (invoice.id_client as ICustomer)?.nameCus ?? '',
-        nameUse  : (invoice.user as IUser)?.name ?? '',
-        nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
-        namePar  : (invoice.id_parte as IParte)?.name ?? '',
-        nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
-        nameDes  : (invoice.id_config2 as IConfiguracion)?.name ?? '',
-        nameCom  : (invoice.codCom as IComprobante)?.nameCom ?? '',
-        total : invoice.total.toFixed(2),
-        // isPaid: invoice.isPaid,
-        noProducts: invoice.numberOfItems,
-        createdAt: invoice.createdAt!.substring(0, 10),
-        updatedAt: invoice.updatedAt!.substring(0, 10),
+    const rows = recibos!.map( recibo => ({
+        id    : recibo._id,
+        recNum    : recibo.recNum,
+        recDat: recibo.recDat ? formatDateNoTZ(recibo.recDat) : '',
+        notes: recibo.notes,
+        desVal: recibo.desval,
+        nameSup  : (recibo.supplier as ISupplier)?.name ?? '',
+        nameUse  : (recibo.user as IUser)?.name ?? '',
+        nameCon  : (recibo.id_config as IConfiguracion)?.name ?? '',
+        nameEnc  : (recibo.id_encarg as IEncargado)?.name ?? '',
+        totalBuy : recibo.totalBuy.toFixed(2),
+        createdAt: recibo.createdAt!.substring(0, 10),
+        updatedAt: recibo.updatedAt!.substring(0, 10),
     }));
 
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/remitsBuypv');
+    navigate('/admin/filtrocrm?redirect=/admin/recibosCajIng');
   };
   const createHandler = async () => {
-    navigate(`/admin/invoicer`);
+    navigate(`/admin/recibor`);
 };
 
 
 
 
     const exportToExcel = () => {
-    const rows = invoices.map(invoice => ({
-      id: invoice._id,
-      punteid: invoice._id,
+    const rows = recibos.map(recibo => ({
+        id: recibo._id,
+        punteid: recibo._id,
+        recNum    : recibo.recNum,
+        recDat: recibo.recDat ? formatDateNoTZ(recibo.recDat) : '',
+        notes: recibo.notes,
+        desVal: recibo.desval,
+        nameSup  : (recibo.supplier as ISupplier)?.name ?? '',
+        nameUse  : (recibo.user as IUser)?.name ?? '',
+        nameCon  : (recibo.id_config as IConfiguracion)?.name ?? '',
+        nameEnc  : (recibo.id_encarg as IEncargado)?.name ?? '',
+        totalBuy : recibo.totalBuy.toFixed(2),
+        createdAt: recibo.createdAt!.substring(0, 10),
+        updatedAt: recibo.updatedAt!.substring(0, 10),
 
-      invNum: invoice.invNum,
-      invDat: invoice.invDat ? formatDateNoTZ(invoice.invDat) : '',
-      recNum: invoice.recNum,
-      recDat: invoice.recDat ? formatDateNoTZ(invoice.recDat) : '',
-
-      libNum: invoice.libNum,
-      folNum: invoice.folNum,
-      asiNum: invoice.asiNum,
-      asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
-      escNum: invoice.escNum,
-      asieNum: invoice.asieNum,
-      asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
-      notes: invoice.notes,
-      terminado: invoice.terminado,
-      movpvNum: invoice.movpvNum,
-      movpvDat: invoice.movpvDat ? formatDateNoTZ(invoice.movpvDat) : '',
-        nameCus  : (invoice.id_client as ICustomer)?.nameCus ?? '',
-        nameUse  : (invoice.user as IUser).name,
-        nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
-        namePar  : (invoice.id_parte as IParte)?.name ?? '',
-        nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
-        nameDes  : (invoice.id_config2 as IConfiguracion)?.name ?? '',
-        nameCom  : (invoice.codCom as IComprobante)?.nameCom ?? '',
-      total: invoice.total,
-      isPaid: invoice.isPaid,
-      noProducts: invoice.numberOfItems,
-      createdAt: invoice.createdAt?.substring(0, 10),
-      updatedAt: invoice.updatedAt?.substring(0, 10),
     }));
 
     // Opcional: Renombrar columnas para Excel
     const exportData = rows.map(row => ([
-       row.movpvNum,
-       row.movpvDat,
-       row.nameCom,
-       row.invNum,
-       row.invDat,
-       row.nameCus,
-       row.total,
-       row.recNum,
-       row.recDat,
-       row.nameCon,
-       row.nameDes,
-       row.notes,
-       row.nameUse,
-       row.nameIns,
-       row.namePar,
-       row.terminado,
-       row.libNum,
-       row.folNum,
-       row.asiNum,
-       row.asiDat,
-       row.escNum,
-       row.asieNum,
-       row.asieDat,
-       row.id,
-       row.punteid,
-       row.createdAt,
-       row.updatedAt,
-    ]));
-  const headers = [
-      'Entrega',
-      'Fecha Entrega',
-      'Comprobante',
-      'Numero',
-      'Fecha Comprobante',
-      'Cliente',
-      'Importe',
-      'Recibo',
+      row.recNum,
+      row.recDat,
+      row.notes,
+      row.desVal,
+      row.totalBuy,
+      row.nameSup,
+      row.nameCon,
+      row.nameEnc,
+      row.nameUse,
+      row.createdAt,
+      row.updatedAt,
+      ]));
+
+    const headers = [
+      'Orden de Pago ',
       'Fecha',
-      'P Vnta Recibe',
-      'P Venta Entrega',
       'Observaciones',
+      'valor',
+      'Importe',
+      'Proveedor',
+      'Punto de Venta',
+      'Encargado',
       'Usuario',
-      'Instrumento',
-      'Parte',
-      'Terminado',
-      'Libro',
-      'Folio',
-      'Asiento N°',
-      'Fecha Asiento',
-      'Inst.Publico N°',
-      'Asiento Publico N°',
-      'Fecha Asiento Publico',
-      'ID',
-      'Punteo',
       'Creado',
       'Actualizado',
   ];
@@ -344,19 +283,19 @@ const columns:GridColDef[] = [
 
     const worksheet = XLSX.utils.json_to_sheet(finalData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'RecepccionesDesdePuntosdeVenta');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'OrdenDePago');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'RecepccionesDesdePuntosdeVenta.xlsx');
+    saveAs(blob, 'OrdenDePago.xlsx');
   };
 
 
-    if ( !invoices ) return (<></>);
+    if ( !recibos ) return (<></>);
     
   return (
     <AdminLayoutMenuList
-        title={'Recepciones desde Puntos de Venta'} 
-        subTitle={'Consulta Recepciones desde Puntos de Venta'}
+        title={'Orden de Pago '} 
+        subTitle={'Consulta Orden de Pago '}
         icon={ <ConfirmationNumberOutlined /> }
     >
 
@@ -371,7 +310,6 @@ const columns:GridColDef[] = [
                   Filtro
               </Button>
             )}
-            {/* <Button variant="outlined" color="success" onClick={() => exportToExcel(rows)}>EXCEL</Button> */}
         <Button variant="outlined" color="success" onClick={exportToExcel}>
           Excel
         </Button>
@@ -382,7 +320,7 @@ const columns:GridColDef[] = [
              sx={{ bgcolor: 'yellow', color: 'black' }}
              type="button"
              onClick={createHandler}>
-              Crea Recepcion dese P.Venta
+              Crea Orden De Pago
             </Button>
           </div>
         </Box>

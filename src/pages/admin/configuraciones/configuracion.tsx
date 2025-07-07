@@ -21,7 +21,13 @@ interface FormData {
     domcomer: string;
     cuit: string;
     coniva: string;
-
+    ib: string;
+    feciniact: string;
+    numIntRem: number;
+    numIntRec: number;
+    numIntOdp: number;
+    numIntCaj: number;
+    numIntMov: number;
 }
 const configuracionI = 
       {
@@ -31,7 +37,13 @@ const configuracionI =
           domcomer: "",
           cuit: "",
           coniva: "",
-     
+        ib: "",
+        feciniact: "",
+        numIntRem: 0,
+        numIntRec: 0,
+        numIntOdp: 0,
+        numIntCaj: 0,
+        numIntMov: 0,     
       }
 
 
@@ -86,6 +98,13 @@ const loadProduct = async() => {
         configuracionI.domcomer= ""
         configuracionI.cuit= ""
         configuracionI.coniva= ""
+        configuracionI.ib= ""
+        configuracionI.feciniact= ""
+        configuracionI.numIntRem= 0
+        configuracionI.numIntRec= 0
+        configuracionI.numIntOdp= 0
+        configuracionI.numIntCaj= 0
+        configuracionI.numIntMov= 0
     } else {
         const resp = await stutzApi.get<IConfiguracion>(`/api/tes/admin/configuraciones/${ id }`);
         configuracionI._id=resp.data._id,
@@ -94,6 +113,13 @@ const loadProduct = async() => {
         configuracionI.domcomer=resp.data.domcomer
         configuracionI.cuit=resp.data.cuit
         configuracionI.coniva=resp.data.coniva
+        configuracionI.ib=resp.data.ib
+        configuracionI.feciniact=resp.data.feciniact
+        configuracionI.numIntRem=resp.data.numIntRem
+        configuracionI.numIntRec=resp.data.numIntRec
+        configuracionI.numIntOdp=resp.data.numIntOdp
+        configuracionI.numIntCaj=resp.data.numIntCaj
+        configuracionI.numIntMov=resp.data.numIntMov
     }
   } catch (error) {
     console.log(error)
@@ -140,11 +166,11 @@ const loadProduct = async() => {
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/configuraciones`);
+                navigate(`/admin/configuracionesesc`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/configuraciones`);
+            navigate(`/admin/configuracionesesc`);
 
 
         } catch (error) {
@@ -248,6 +274,32 @@ const loadProduct = async() => {
                             helperText={ errors.coniva?.message }
                         />
 
+                        <TextField
+                            label="Ingresos Brutos"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('ib', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.ib }
+                            helperText={ errors.ib?.message }
+                        />
+                        <TextField
+                            label="Fecha Inicio Actividades"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('feciniact', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.feciniact }
+                            helperText={ errors.feciniact?.message }
+                        />
 
 
 

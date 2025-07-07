@@ -83,7 +83,7 @@ export const MesaEntrada = () => {
             id_config : "",
             user : "",
             codConNum : 0,
-            codSup : '0',
+            supplier : '0',
             remNum : 0,
             remDat : "",
             invNum : 0,
@@ -466,7 +466,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           invoice.user = userInfo.user._id,
           invoice.codConNum = codConNum;
 
-          invoice.codSup = '0';
+          invoice.supplier = '0';
           invoice.remNum = +remNum;
           invoice.remDat = remDat;
           invoice.dueDat = dueDat;

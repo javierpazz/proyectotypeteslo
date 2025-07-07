@@ -22,7 +22,7 @@ const columns:GridColDef[] = [
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/comprobantes/comprobante/${row.nameCom}`}>
+                <NavLink to={`/admin/comprobantes/comprobante/${row.id}`}>
                     <Link underline='always'>
                         { row.nameCom}
                     </Link>
@@ -61,13 +61,19 @@ const columns:GridColDef[] = [
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
+  
+    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
 
     const [ comprobantes, setProducts ] = useState<IComprobante[]>([]);
 
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IComprobante[]>('/api/tes/admin/comprobantes');
+        //   const resp = await stutzApi.get<IComprobante[]>('/api/tes/admin/comprobantes?id_config=${userInfo.codCon}');
+          const resp = await stutzApi.get(`/api/tes/admin/comprobantes?id_config=${userInfo.codCon}`);
           setProducts(resp.data);
         //   console.log(resp.data);
         } catch (error) {

@@ -29,7 +29,7 @@ export const RemitBuyListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoicesBuy');
+        navigate('/auth/loginadm?redirect=/admin/remitsBuy');
         }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -43,7 +43,7 @@ export const RemitBuyListScreen = () => {
   const codIns = userInfo.filtro.codIns;
   const codCus = userInfo.filtro.codCus;
   const codPar = userInfo.filtro.codPar;
-  // const codSup = userInfo.filtro.codSup;
+  const codSup = userInfo.filtro.codSup;
   const codPro = userInfo.filtro.codPro;
   // const codVal = userInfo.filtro.codVal;
   // const codCon2 = userInfo.filtro.codCon2;
@@ -62,7 +62,7 @@ export const RemitBuyListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchremB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/invoices/searchremB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
           console.log(resp.data)
           setIsloading(false);
           setInvoices(resp.data.invoices);
@@ -73,6 +73,76 @@ export const RemitBuyListScreen = () => {
       fetchData();
   }, [ ]);
 
+const controlStockHandler = async (row:any) => {
+  row.orderItems.map((item:any) => stockHandler({ item }));
+};
+
+const stockHandler = async (item:any) => {
+try {
+  await stutzApi.put(
+    `/api/products/downstock/${item.item._id}`,
+    {
+      quantitys: item.item.quantity,
+    },
+    {
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+  );
+} catch (err) {
+}
+};
+
+//do
+  const noDelInvoice = async () => {
+    if (
+      window.confirm(
+        'Este Remito tiene una Orden de Pago aplicada, debe eliminar la Orden para Hacerlo'
+      )
+    ) {
+    }
+  };
+
+
+  const deleteHandler = async (row:any) => {
+      if (window.confirm('Esta seguro de Borrar?')) {
+    if (row.recNum) {
+      noDelInvoice();
+    } else {
+      if (!row.invNum) {
+        //do
+      controlStockHandler(row);
+      try {
+        await stutzApi.delete(`/api/invoices/${row.id}`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+      } catch (err) {
+      }
+    }
+      else {
+              try {
+                await stutzApi.put(
+                  `/api/invoices/${row.id}/deleteremit`,
+                  {
+                    remNum: null,
+                    // invNum: null,
+                  },
+                  {
+                    headers: { Authorization: `Bearer ${userInfo.token}` },
+                  }
+                );
+              } catch (err) {
+              }
+            
+          }
+
+  }
+
+  
+  }
+  };
+
 
 const columns:GridColDef[] = [
     { field: 'remNum',
@@ -82,7 +152,9 @@ const columns:GridColDef[] = [
         headerAlign: 'center',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+
+              // <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                 <MuiLink component={RouterLink}  to={`/admin/invoicerRemBuyCon/${row.id}?redirect=/admin/remitsBuy`}
                 underline='always'>
                          { row.remNum}
                     </MuiLink>
@@ -109,6 +181,19 @@ const columns:GridColDef[] = [
     { field: 'nameCon', headerName: 'Punto Venta', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
     { field: 'nameUse', headerName: 'Usuario', width: 200 },
+                {
+              field: 'check',
+              headerName: 'Acción',
+              renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (user?.role !== 'admin') return null;
+                return (
+                  <Chip variant='outlined' label="Eliminar" color="error"
+                  onClick={() => deleteHandler(row)}
+                  />
+                )
+                
+              }
+            },
             
     { field: 'createdAt', headerName: 'Creada en', width: 100 },
     { field: 'updatedAt', headerName: 'Modificada en', width: 100 },
@@ -162,7 +247,7 @@ const columns:GridColDef[] = [
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/invoices');
+    navigate('/admin/filtrocrm?redirect=/admin/remitsBuy');
   };
   const createHandler = async () => {
     navigate(`/admin/invoicer`);
@@ -313,14 +398,16 @@ const columns:GridColDef[] = [
     >
 
           <Box mt={2} display="flex" gap={2} flexWrap="wrap">
-            <Button
+        {(user?.role==="admin") && (
+              <Button
               onClick={parametros}
               variant="contained"
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
-            >
-              Filtro
-            </Button>
+              >
+                  Filtro
+              </Button>
+            )}
             {/* <Button variant="outlined" color="success" onClick={() => exportToExcel(rows)}>EXCEL</Button> */}
         <Button variant="outlined" color="success" onClick={exportToExcel}>
           Excel
@@ -349,7 +436,7 @@ const columns:GridColDef[] = [
                         <DataGrid
                         rows={rows}
                         columns={columns}
-                        rowHeight={30}
+                        rowHeight={35}
                         initialState={{
                             pagination: {
                             paginationModel: { pageSize: 10, page: 0 },

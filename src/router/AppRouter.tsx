@@ -22,9 +22,21 @@ import { Products } from '../pages/admin/products';
 import { ProductAdminPage } from '../pages/admin/products/product';
 import { Orders } from '../pages/admin/Orders';
 import { Order } from '../pages/admin/orders/Order';
+
+import { AppCon } from '../pages/crmpages/AppCon';
+import { AppBuyCon } from '../pages/crmpages/AppBuyCon';
+import { AppRemCon } from '../pages/crmpages/AppRemCon';
+import { AppRemBuyCon } from '../pages/crmpages/AppRemBuyCon';
+import { AppRempvCon } from '../pages/crmpages/AppRempvCon';
+import { AppBuyRempvCon } from '../pages/crmpages/AppBuyRempvCon';
+
 import {SalePointScreen} from '../pages/crmpages/SalePointScreen';
 import {InvoiceListScreen} from '../pages/crmpages/InvoiceListScreen';
 import {RemitListScreen} from '../pages/crmpages/RemitListScreen';
+import {CajaIngListScreen} from '../pages/crmpages/CajaIngListScreen';
+import {CajaEgrListScreen} from '../pages/crmpages/CajaEgrListScreen';
+import {ReceiptListScreen} from '../pages/crmpages/ReceiptListScreen';
+import {ReceiptBuyListScreen} from '../pages/crmpages/ReceiptBuyListScreen';
 import {RemitpvListScreen} from '../pages/crmpages/RemitpvListScreen';
 import {InvoiceBuyListScreen} from '../pages/crmpages/InvoiceBuyListScreen';
 import {RemitBuyListScreen} from '../pages/crmpages/RemitBuyListScreen';
@@ -38,6 +50,7 @@ import { Instrumentos } from '../pages/admin/Instrumentos';
 import { InstrumentoAdminPage } from '../pages/admin/instrumentos/instrumento';
 import { Customers } from '../pages/admin/Customers';
 import { CustomerAdminPage } from '../pages/admin/customers/customer';
+import { ComprobanteAdminPage } from '../pages/admin/comprobantes/comprobante';
 import { Proveedores } from '../pages/admin/Proveedores';
 import { ProveedorAdminPage } from '../pages/admin/proveedores/proveedor';
 import { Valores } from '../pages/admin/Valores';
@@ -123,11 +136,23 @@ export const AppRouter = () => {
                             <Route path="/admin/orders" element={ <Orders /> } />
 
                             <Route path="/salepoint" element={ <SalePointScreen /> }/>
+
+                            <Route path="/admin/invoicerRemCon/:id" element={ <AppRemCon />  }/>
+                            <Route path="/admin/invoicerRemBuyCon/:id" element={ <AppRemBuyCon />  }/>
+                            <Route path="/admin/invoicerRempvCon/:id" element={ <AppRempvCon />  }/>
+                            <Route path="/admin/invoicerBuyRempvCon/:id" element={ <AppBuyRempvCon />  }/>
+                            <Route path="/admin/invoicerCon/:id" element={ <AppCon />  }/>
+                            <Route path="/admin/invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
+
                             <Route path="/admin/invoices" element={ <InvoiceListScreen /> } />
                             <Route path="/admin/remits" element={ <RemitListScreen /> } />
                             <Route path="/admin/invoicesBuy" element={ <InvoiceBuyListScreen /> } />
                             <Route path="/admin/remitsBuy" element={ <RemitBuyListScreen /> } />
                             <Route path="/admin/remitspv" element={ <RemitpvListScreen /> } />
+                            <Route path="/admin/invoicesCajIng" element={ <CajaIngListScreen /> } />
+                            <Route path="/admin/invoicesCajEgr" element={ <CajaEgrListScreen /> } />
+                            <Route path="/admin/invoicesRec" element={ <ReceiptListScreen /> } />
+                            <Route path="/admin/invoicesBuyRec" element={ <ReceiptBuyListScreen /> } />
                             <Route path="/admin/remitsBuypv" element={ <RemitBuypvListScreen /> } />
                             <Route path="/admin/remiter" element={ <Remits /> } />
                             <Route path="/admin/mesaentrada" element={ <MesaEntrada /> } />
@@ -145,6 +170,7 @@ export const AppRouter = () => {
                             <Route path="/admin/instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
                             <Route path="/admin/customers" element={ <Customers /> } />
                             <Route path="/admin/customers/customer/:id" element={ <CustomerAdminPage /> } />
+                            <Route path="/admin/comprobantes/comprobante/:id" element={ <ComprobanteAdminPage /> } />
                             <Route path="/admin/proveedores" element={ <Proveedores /> } />
                             <Route path="/admin/proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
                             <Route path="/admin/valores" element={ <Valores /> } />

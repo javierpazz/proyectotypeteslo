@@ -20,7 +20,7 @@ const columns:GridColDef[] = [
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/configuraciones/configuracionesc/${row.id}`}>
+                <NavLink to={`/admin/configuraciones/configuracion/${row.id}`}>
                     <Link underline='always'>
                         { row.name}
                     </Link>

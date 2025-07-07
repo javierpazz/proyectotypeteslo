@@ -463,7 +463,7 @@ export const DiligenciaListScreen = () => {
                     <DataGrid
                     rows={rows}
                     columns={columns}
-                     rowHeight={30}
+                     rowHeight={35}
                     initialState={{
                         pagination: {
                         paginationModel: { pageSize: 10, page: 0 },
