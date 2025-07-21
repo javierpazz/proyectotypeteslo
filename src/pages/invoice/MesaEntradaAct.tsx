@@ -106,6 +106,7 @@ export const MesaEntradaAct = () => {
       const loadProduct = async() => {
           try {
               const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+              console.log(resp)
                   OrderI._id = resp.data._id;
                   OrderI.user = resp.data.user;
                   OrderI.orderItems = resp.data.orderItems;
@@ -626,7 +627,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
     {/* {!showInvoice ? ( */}
     <Box>
-      <Box p={2} mb={2}>
+      <Box p={0} mb={2}>
         <Grid container>
           <Grid item md={4}>
                 <Typography variant="h1"></Typography>
@@ -637,10 +638,11 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} >
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input2Ref}
               label={codInst === '' ? 'Código Instrumento' : ''}
               placeholder="Codigo Instrumento"
@@ -658,7 +660,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
             >
-              Buscar F2
+              F2
             </Button>
           </Grid>
           <Grid item md={4}>
@@ -679,6 +681,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={1}>
             <TextField
               fullWidth
+              size="small"
               type="number"
               label="Libro N°"
               placeholder="Libro N°"
@@ -691,6 +694,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={1}>
             <TextField
               fullWidth
+              size="small"
               type="number"
               label="Folio N°"
               placeholder="Folio N°"
@@ -703,6 +707,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={1}>
             <TextField
               fullWidth
+              size="small"
               type="number"
               label="Asiento N°"
               placeholder="Asiento N°"
@@ -715,6 +720,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               type="date"
               label="Fecha Asiento"
               value={asiDat}
@@ -733,7 +739,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
 
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
 
 
 
@@ -741,6 +747,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input3Ref}
               label={codCust === '' ? 'Código Cliente' : ''}
               placeholder="Codigo Cliente"
@@ -758,7 +765,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
             >
-              Buscar F2
+              F2
             </Button>
           </Grid>
           <Grid item md={3}>
@@ -781,6 +788,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={1}>
             <TextField
               fullWidth
+              size="small"
               type="number"
               label="Instrumento N°"
               placeholder="Instrumento N°"
@@ -793,6 +801,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={1}>
             <TextField
               fullWidth
+              size="small"
               type="number"
               label="Asiento N°"
               placeholder="Asiento N°"
@@ -805,6 +814,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               type="date"
               label="Fecha Asiento"
               value={asieDat}
@@ -817,7 +827,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
             <BuscaPar
             codPar={codPar}
             setCodPar={setCodPar}
@@ -832,10 +842,11 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         </Grid>
 
 
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               type="number"
               inputRef={input6Ref}
               label="Entrada N°"
@@ -849,6 +860,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input9Ref}
               type="date"
               label="Fecha Entrada"
@@ -862,6 +874,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input5Ref}
               type="date"
               label="Fecha Vencimiento"
@@ -874,6 +887,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           <Grid item md={6}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input7Ref}
               label="Observaciones"
               placeholder="Observaciones"
@@ -897,6 +911,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           </Grid>
  */}
 
+      <Box border={1} p={2} borderRadius={2} mt={1}>
       <Box border={1} p={2} borderRadius={2}>
         <Grid container spacing={2}>
           <Grid item md={4}>
@@ -926,9 +941,11 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           </Grid>
 
           <Grid item md={4}>
-            <Typography variant="h5">Total: ${amountval.toFixed(2)}</Typography>
+            <Typography variant="h5" sx={{ textAlign: 'right' }}>Total: ${amountval.toFixed(2)}</Typography>
           </Grid>
         </Grid>
+      </Box>
+
                 {/* This is our table form */}
                 <article>
                   <TableFormEscAct

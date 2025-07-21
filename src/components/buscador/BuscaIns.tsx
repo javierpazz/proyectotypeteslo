@@ -212,6 +212,7 @@ useEffect(() => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               // inputRef={input2Ref}
               label={codInst === '' ? 'Instrumento' : ''}
               placeholder="Instrumento"
@@ -229,7 +230,7 @@ useEffect(() => {
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
             >
-              Buscar F2
+              F2
             </Button>
           </Grid>
           <Grid item md={3}>

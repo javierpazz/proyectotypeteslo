@@ -20,6 +20,7 @@ import { ICartProduct, IProduct } from '../../interfaces';
 import {ProductSelector} from '../../../src/pages/crmpages/ProductSelector';
 import { CartContext } from '../../../context';
 import { stutzApi } from '../../../api';
+import { BiFileFind } from 'react-icons/bi';
 
 type TableFormProps = {
   terminado: any;
@@ -331,6 +332,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 inputRef={input8Ref}
                 label="Diligencia"
                 fullWidth
+              size="small"
                 value={codProd}
                 onChange={(e) => setCodProd(e.target.value)}
                 onKeyDown={(e) => ayudaPro(e)}
@@ -339,7 +341,7 @@ const handleClickOutside = (e: MouseEvent) => {
               />
             </Grid>
 
-          {/* <Grid item md={1} display="flex" alignItems="center">
+          <Grid item md={1} display="flex" alignItems="center">
               <Button
                 variant="contained"
                 startIcon={<BiFileFind />}
@@ -347,10 +349,10 @@ const handleClickOutside = (e: MouseEvent) => {
                 title="Buscador"
                 sx={{ bgcolor: 'yellow', color: 'black' }}
               >
-                Buscar
+                F2
               </Button>
             </Grid>
- */}
+
             <Grid item md={4}>
                   {/* <Typography variant="subtitle2">Producto</Typography> */}
                   <Typography variant="h6">{desPro}</Typography>
@@ -359,6 +361,7 @@ const handleClickOutside = (e: MouseEvent) => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input9Ref}
               type="date"
               label="Fecha Vencimiento"
@@ -368,9 +371,10 @@ const handleClickOutside = (e: MouseEvent) => {
               required
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input10Ref}
               label="Observaciones"
               placeholder="Observaciones"
@@ -390,7 +394,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 variant="contained"
                 color="warning"
                 fullWidth
-                sx={{ mt: 2, bgcolor: 'yellow', color: 'black' }}
+                sx={{ bgcolor: 'yellow', color: 'black' }}
                 onClick={() => addToCartHandler(productR as IProduct)}
               >
                 {isEditing ? 'Editing Row Item' : 'Agrega'}
@@ -421,6 +425,7 @@ const handleClickOutside = (e: MouseEvent) => {
           </Box>
         </Modal>
 
+      <Box border={1} p={2} borderRadius={2} mt={2}>
         {/* Tabla de items */}
         <table width="100%" className="mb-10">
           <thead>
@@ -464,6 +469,7 @@ const handleClickOutside = (e: MouseEvent) => {
             ))}
           </tbody>
         </table>
+        </Box>
       </Box>
     </>
   );

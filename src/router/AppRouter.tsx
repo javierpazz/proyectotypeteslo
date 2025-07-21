@@ -23,12 +23,33 @@ import { ProductAdminPage } from '../pages/admin/products/product';
 import { Orders } from '../pages/admin/Orders';
 import { Order } from '../pages/admin/orders/Order';
 
+
+
+import { App } from '../pages/invoice/App';
+// import { AppBuy } from '../pages/crmpages/AppBuy';
+// import { AppRem } from '../pages/crmpages/AppRem';
+// import { AppRemBuy } from '../pages/crmpages/AppRemBuy';
+// import { AppRempv } from '../pages/crmpages/AppRempv';
+// import { AppBuyRempv } from '../pages/crmpages/AppBuyRempv';
+// import { AppRec } from '../pages/crmpages/AppRec';
+// import { AppBuyRec } from '../pages/crmpages/AppBuyRec';
+// import { AppCajIng } from '../pages/crmpages/AppCajIng';
+// import { AppCajEgr } from '../pages/crmpages/AppCajEgr';
+
 import { AppCon } from '../pages/crmpages/AppCon';
 import { AppBuyCon } from '../pages/crmpages/AppBuyCon';
 import { AppRemCon } from '../pages/crmpages/AppRemCon';
 import { AppRemBuyCon } from '../pages/crmpages/AppRemBuyCon';
 import { AppRempvCon } from '../pages/crmpages/AppRempvCon';
 import { AppBuyRempvCon } from '../pages/crmpages/AppBuyRempvCon';
+import { AppRecCon } from '../pages/crmpages/AppRecCon';
+import { AppBuyRecCon } from '../pages/crmpages/AppBuyRecCon';
+import { AppCajIngCon } from '../pages/crmpages/AppCajIngCon';
+import { AppCajEgrCon } from '../pages/crmpages/AppCajEgrCon';
+
+// import { CajaIngEgrListScreen } from '../pages/crminfor/CajaIngListScreen';
+
+
 
 import {SalePointScreen} from '../pages/crmpages/SalePointScreen';
 import {InvoiceListScreen} from '../pages/crmpages/InvoiceListScreen';
@@ -61,6 +82,8 @@ import { Estadosorden } from '../pages/admin/Estadosorden';
 import { EstadoordenAdminPage } from '../pages/admin/estadosorden/estadoorden';
 import { ProductsEsc } from '../pages/admin/productsesc';
 import { ProductEscAdminPage } from '../pages/admin/diligencias/productesc';
+import { ProductsFac } from '../pages/admin/productsfac';
+import { ProductFacAdminPage } from '../pages/admin/productsfac/productfac';
 import { Comprobantes } from '../pages/admin/comprobantes';
 import { Configuraciones } from '../pages/admin/Configuraciones';
 import { ConfiguracionAdminPage } from '../pages/admin/configuraciones/configuracion';
@@ -137,12 +160,21 @@ export const AppRouter = () => {
 
                             <Route path="/salepoint" element={ <SalePointScreen /> }/>
 
+                            <Route path="/admin/invoicer" element={ <App />  }/>
+
+
                             <Route path="/admin/invoicerRemCon/:id" element={ <AppRemCon />  }/>
                             <Route path="/admin/invoicerRemBuyCon/:id" element={ <AppRemBuyCon />  }/>
                             <Route path="/admin/invoicerRempvCon/:id" element={ <AppRempvCon />  }/>
                             <Route path="/admin/invoicerBuyRempvCon/:id" element={ <AppBuyRempvCon />  }/>
                             <Route path="/admin/invoicerCon/:id" element={ <AppCon />  }/>
                             <Route path="/admin/invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
+                            <Route path="/admin/invoicerRecCon/:id" element={ <AppRecCon />  }/>
+                            <Route path="/admin/invoicerBuyRecCon/:id" element={ <AppBuyRecCon />  }/>
+                            <Route path="/admin/invoicerCajIngCon/:id" element={ <AppCajIngCon />  }/>
+                            <Route path="/admin/invoicerCajEgrCon/:id" element={ <AppCajEgrCon />  }/>
+
+                            {/* <Route path="/admin/invoicesCajIngEgr" element={ <CajaIngEgrListScreen />  }/> */}
 
                             <Route path="/admin/invoices" element={ <InvoiceListScreen /> } />
                             <Route path="/admin/remits" element={ <RemitListScreen /> } />
@@ -181,6 +213,8 @@ export const AppRouter = () => {
                             <Route path="/admin/estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
                             <Route path="/admin/productsesc" element={ <ProductsEsc /> } />
                             <Route path="/admin/productsesc/productesc/:title" element={ <ProductEscAdminPage /> } />
+                            <Route path="/admin/productsfac" element={ <ProductsFac /> } />
+                            <Route path="/admin/productsfac/productfac/:title" element={ <ProductFacAdminPage /> } />
                             <Route path="/admin/comprobantes" element={ <Comprobantes /> } />
                             <Route path="/admin/configuraciones" element={ <Configuraciones /> } />
                             <Route path="/admin/configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />

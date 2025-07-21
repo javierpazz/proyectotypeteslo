@@ -1,16 +1,14 @@
-import { IConfiguracion, ICustomer, ISupplier, ISize, IUser, IInstrumento, IParte, IComprobante } from './';
+import { IConfiguracion, ICustomer, ISupplier, IUser, IComprobante, IOrderItem, ShippingAddress } from './';
 
-export interface IOrder {
+export interface IInvoice {
 
     _id? : string;
     user?: IUser | string;
-    id_client?: ICustomer | string;
-    id_instru?: IInstrumento | string;
-    id_parte?: IParte | string | undefined;
-    id_config?: IConfiguracion | string;
-    id_config2?: IConfiguracion | string;
+    codCus?: ICustomer | string;
+    codCon?: IConfiguracion | string;
+    codCon2?: IConfiguracion | string;
     codCom?: IComprobante | string;
-    supplier?: ISupplier | string;
+    codSup?: ISupplier | string;
     orderItems: IOrderItem[];
     shippingAddress: ShippingAddress;
     paymentResult?: string;
@@ -57,33 +55,3 @@ export interface IOrder {
     updatedAt?: string;
 }
 
-
-
-export interface IOrderItem {
-    _id      : string;
-    title    : string;
-    size     : ISize;
-    quantity : number;
-    slug     : string;
-    image    : string;
-    price    : number;
-    porIva   : number;
-    medPro   : string;
-    gender   : string;
-    venDat?: string;
-    observ?: string;
-    terminado?: boolean;
-
-}
-
-
-export interface ShippingAddress {
-    firstName: string;
-    lastName : string;
-    address  : string;
-    address2?: string;
-    zip      : string;
-    city     : string;
-    country  : string;
-    phone    : string;
-}

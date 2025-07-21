@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IRecipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado, ISupplier } from '../../interfaces';
+import { IReceipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado, ISupplier } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -29,7 +29,7 @@ export const ReceiptBuyListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoicesRec');
+        navigate('/auth/loginadm?redirect=/admin/invoicesBuyRec');
         }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -55,7 +55,7 @@ export const ReceiptBuyListScreen = () => {
   const obser = userInfo.filtro.obser;
       
     
-    const [ recibos, setrecibos ] = useState<IRecipt[]>([]);
+    const [ recibos, setrecibos ] = useState<IReceipt[]>([]);
     const [ isloading, setIsloading ] = useState(false);
 
  useEffect(() => {
@@ -124,7 +124,7 @@ const columns:GridColDef[] = [
         headerAlign: 'center',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                <MuiLink component={RouterLink}  to={`/admin/invoicerBuyRecCon/${row.id}?redirect=/admin/invoicesBuyRec`}
                 underline='always'>
                          { row.recNum}
                     </MuiLink>
@@ -194,7 +194,7 @@ const columns:GridColDef[] = [
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/recibosCajIng');
+    navigate('/admin/filtrocrm?redirect=/admin/invoicesBuyRec');
   };
   const createHandler = async () => {
     navigate(`/admin/recibor`);

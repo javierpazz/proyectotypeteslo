@@ -1,22 +1,37 @@
+import { IConfiguracion, ISupplier } from "./";
+
 export interface IProduct {
     _id: string;
     codPro: string;
-    codProd: string;
+    // codProd: string;
     codigoPro: string;
-    description: string;
+    title: string;
+    medPro: string;
+    slug: string;
     images: string[];
+    image1: string ;
+    image2:  string;
+    image3:  string;
+    brand:  string;
+    category: string;
+    id_config?: IConfiguracion | string;
+    supplier?: ISupplier | string;
+    id_category: string;
+    description: string;
+    price: number;
+    priceBuy: number;
     inStock: number;
     minStock: number;
-    price: number;
     porIva: number;
-    medPro: string;
-    category: string;
-    sizes: ISize[];
-    slug: string;
-    tags: string[];
-    title: string;
+    rating: number;
+    numReviews: number;
+    // reviews: [reviewSchema],
+    tags: string[],
     type: IType;
     gender: 'men'|'women'|'kid'|'unisex'
+    sizes: ISize[];
+
+
 
 
     // TODO: agregar createdAt y updatedAt

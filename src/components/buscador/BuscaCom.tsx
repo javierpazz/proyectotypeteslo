@@ -19,6 +19,8 @@ type BuscaFormProps = {
   setCodComt: any;
   nameCom: any;
   setNameCom: any;
+  comprob: any;
+  setComprob: any;
   nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
   inputRef?: React.RefObject<HTMLInputElement>
 };
@@ -32,12 +34,20 @@ codComt,
 setCodComt,
 nameCom,
 setNameCom,
+comprob,
+setComprob,
 nextRef,
 inputRef,
 }) => {
 
 
 console.log(codCom);
+
+  
+    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
 
   // const [codUse, setCodUse] = useState('');
   const [comprobantes, setComprobantes] = useState<IComprobante[]>([]);
@@ -118,7 +128,7 @@ const ayudaCom = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setCodComt('');
         setNameCom('Elija Comprobante');
     }else{
-      // setComprobante(instRow);
+      setComprob(instRow);
       setCodCom(instRow._id);
       setCodComt(instRow.codCom);
       setNameCom(instRow.nameCom);
@@ -127,6 +137,7 @@ const ayudaCom = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
   const handleSelectCom = (comprobante: IComprobante) => {
 
+    setComprob(comprobante);
     setCodCom(comprobante._id);
     setCodComt(comprobante.codCom);
     setNameCom(comprobante.nameCom);
@@ -141,7 +152,8 @@ const ayudaCom = (e: React.KeyboardEvent<HTMLDivElement>) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get(`/api/tes/admin/comprobantes`);
+        // const resp = await stutzApi.get(`/api/tes/admin/comprobantes?id_config=${userInfo.codCon}`);
+        const { data } = await stutzApi.get(`/api/tes/admin/comprobantes?id_config=${userInfo.codCon}`);
         setComprobantes(data);
         setFiltered(data);
       } catch (err) {}
@@ -212,7 +224,9 @@ useEffect(() => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               // inputRef={input2Ref}
+              inputRef={inputRef}   // <-- asignar ref aquí
               label={codComt === '' ? 'Comprobante' : ''}
               placeholder="Comprobante"
               value={codComt}
@@ -229,7 +243,7 @@ useEffect(() => {
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
             >
-              Buscar F2
+              F2
             </Button>
           </Grid>
           <Grid item md={3}>

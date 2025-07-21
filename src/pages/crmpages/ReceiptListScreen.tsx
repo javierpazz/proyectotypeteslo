@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IRecipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado } from '../../interfaces';
+import { IReceipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -55,7 +55,7 @@ export const ReceiptListScreen = () => {
   const obser = userInfo.filtro.obser;
       
     
-    const [ recibos, setrecibos ] = useState<IRecipt[]>([]);
+    const [ recibos, setrecibos ] = useState<IReceipt[]>([]);
     const [ isloading, setIsloading ] = useState(false);
 
  useEffect(() => {
@@ -128,7 +128,7 @@ const columns:GridColDef[] = [
         headerAlign: 'center',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                <MuiLink component={RouterLink}  to={`/admin/invoicerRecCon/${row.id}?redirect=/admin/invoicesRec`}
                 underline='always'>
                          { row.recNum}
                     </MuiLink>
@@ -199,7 +199,7 @@ const columns:GridColDef[] = [
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/recibosCajIng');
+    navigate('/admin/filtrocrm?redirect=/admin/invoicesRec');
   };
   const createHandler = async () => {
     navigate(`/admin/recibor`);

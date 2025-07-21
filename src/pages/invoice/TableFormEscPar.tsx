@@ -197,7 +197,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
-        setCodProd(productRow.codProd);
+        setCodProd(productRow.codPro);
         setDesPro(productRow.title);
         // setVenDat('');
         // setObserv('');

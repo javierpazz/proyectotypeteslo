@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 
-import { ICustomer,  IOrder, ISupplier } from '../../interfaces';
+import { IComprobante, IConfiguracion, ICustomer,  IOrder, ISupplier } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
@@ -77,30 +77,6 @@ export const AppRemBuyCon = () => {
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-
-const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
-
-
-
-  // const [nameCus, setNameCus] = useState('');
-  // const [nameCon, setNameCon] = useState('');
-  // const [namePar, setNamePar] = useState('');
-  // const [nameIns, setNameIns] = useState('');
-  // const [nameUse, setNameUse] = useState('');
 
 
 
@@ -253,21 +229,22 @@ useEffect(() => {
 
             <Grid container spacing={2} mt={2}>
               <Grid item xs={12} md={6}>
-                <Typography><strong>{userInfo.nameCon}</strong></Typography>
-                <Typography><strong>Razon Social:</strong> {userInfo.nameCon}</Typography>
-                <Typography><strong>Domicilio Comercial:</strong> {config.address}</Typography>
-                <Typography><strong>Condición frente al IVA:</strong> {config.ivaCondition}</Typography>
+                <Typography><strong>{(invoice.id_config as IConfiguracion)?.name}</strong></Typography>
+                <Typography><strong>Razon Social:</strong> {(invoice.id_config as IConfiguracion)?.name}</Typography>
+                <Typography><strong>Domicilio Comercial:</strong> {(invoice.id_config as IConfiguracion)?.domcomer}</Typography>
+                <Typography><strong>Condición frente al IVA:</strong> {(invoice.id_config as IConfiguracion)?.coniva}</Typography>
               </Grid>
               <Grid item xs={12} md={6}>
-                <Typography><strong>REMITO</strong></Typography>
-                <Typography><strong>Punto de Venta:</strong> {config.salePoint}</Typography>
+                <Typography><strong>{(invoice.codCom as IComprobante)?.nameCom}</strong></Typography>
+                <Typography><strong>Punto de Venta:</strong> {(invoice.id_config as IConfiguracion)?.codCon}</Typography>
                 <Typography><strong>Comp. Nro:</strong> {invoice.remNum}</Typography>
                 <Typography><strong>Fecha de Emision:</strong> {invoice.remDat?.substring(0, 10)}</Typography>
-                <Typography><strong>CUIT:</strong> {config.cuit}</Typography>
-                <Typography><strong>Ingresos Brutos:</strong> {config.ib}</Typography>
-                <Typography><strong>Fecha de Inicio de Actividades:</strong> {config.feciniact}</Typography>
+                <Typography><strong>CUIT:</strong> {(invoice.id_config as IConfiguracion)?.cuit}</Typography>
+                <Typography><strong>Ingresos Brutos:</strong> {(invoice.id_config as IConfiguracion)?.ib}</Typography>
+                <Typography><strong>Fecha de Inicio de Actividades:</strong> {(invoice.id_config as IConfiguracion)?.feciniact}</Typography>
               </Grid>
             </Grid>
+
 
             <Divider sx={{ my: 2 }} />
 

@@ -1,8 +1,9 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { toast, ToastContainer } from 'react-toastify';
 // import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BiFileFind } from "react-icons/bi";
 import {
   Box,
   Button,
@@ -16,7 +17,6 @@ import { ICartProduct, IProduct } from '../../interfaces';
 import {ProductSelector} from '../../../src/pages/crmpages/ProductSelector';
 import { CartContext } from '../../../context';
 import { stutzApi } from '../../../api';
-import { BiFileFind } from 'react-icons/bi';
 
 type TableFormProps = {
   terminado: any;
@@ -39,7 +39,7 @@ type TableFormProps = {
   setList: any;
   total: any;
   setTotal: any;
-  // valueeR: any;
+  valueeR: any;
   desval: any;
   numval: any;
   isPaying: any;
@@ -47,7 +47,7 @@ type TableFormProps = {
 
 // export const TableForm = (input0Ref,
 
-export const TableFormEscVal: React.FC<TableFormProps> = ({
+export const TableFormFac: React.FC<TableFormProps> = ({
   terminado,
   setTerminado,
   input8Ref,
@@ -73,7 +73,23 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
   console.log(terminado)
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
+  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
+    _id: '649f9b05c4416622ac833792',
+    image: '1740176-00-A_0_2000.jpg',
+    price: 1,
+    porIva: 21,
+    medPro: "unidad",
+    size: "M",
+    slug: 'mens_chill_crew_neck_sweatshirt',
+    title: 'mens_chill_crew_neck_sweatshirt',
+    gender: 'men',
+    quantity: 1,
+  })
 
+  
+    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
 
 
 
@@ -86,11 +102,11 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
   const isEditing = false;
   const [productss, setProductss] = useState<IProduct[]>([]);
   const [productR, setProductR] = useState<IProduct>();
-  // const [stock, setStock] = useState(0);
-  // const [miStock, setMiStock] = useState(0);
+  const [stock, setStock] = useState(0);
+  const [miStock, setMiStock] = useState(0);
   // const [showPro, setShowPro] = useState(false);
   const [codProd, setCodProd] = useState('');
-//   const [medPro, setMedPro] = useState('');
+  const [medPro, setMedPro] = useState('');
   // const [venDat, setVenDat] = useState(getTodayInGMT3());
   const [observ, setObserv] = useState('');
 
@@ -101,7 +117,7 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
         // const { data } = await stutzApi.get(`/api/products/xpv?id_config=${id_config}`, {
         //   headers: { Authorization: `Bearer ${userInfo.token}` },
         // });
-        const { data } = await stutzApi.get(`/api/products/`);
+        const { data } = await stutzApi.get(`/api/products/xpv?id_config=${userInfo.codCon}`);
         setProductss(data);
         // dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {}
@@ -136,11 +152,16 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
       setTerminado(newter);
     }
     };
-    
+
+  const unloadpayment = async () => {
+    if (window.confirm('El Importe tiene que ser mayor a Cero')) {
+    }
+    };
+        
     
   // const addToCartHandler = async (itemInv: ICartProduct) => {
   const addToCartHandler = async (productR:  IProduct) => {
-    // if (amount <= 0) {unloadpayment();} else {
+    if (amount <= 0) {unloadpayment();} else {
     quantity = round2(quantity);
     amount = round2(amount);
     price = round2(price);
@@ -162,16 +183,16 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
           title: productR.title,
           gender: productR.gender,
           quantity : quantity,
-            // venDat: venDat,
-            observ: observ,
-            terminado: false,
+            // // venDat: venDat,
+            // observ: observ,
+            // terminado: false,
         };
           
           addProductToCartEsc( cartProduct as ICartProduct );
           checkterminado();
           input8Ref.current.focus()
     }
-  // };
+  };
   };
   const terminadoSiNo = (itemInv: ICartProduct) => {
     input8Ref.current.focus()
@@ -225,12 +246,12 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setCodProd('');
         setDesPro('Elija un Producto');
         // setVenDat('');
-        setObserv('');
+        // setObserv('');
         setQuantity(0);
         setPrice(0);
         setPorIva(0);
         setAmount(0);
-        // setStock(0);
+        setStock(0);
         setProductR(undefined);
         // setMiStock(0);
       }else{
@@ -256,11 +277,36 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
         //   title: productRow.title,
         //   gender: productRow.gender,
         //   quantity : 1,
-        //     venDat: venDat,
-        //     observ: observ,
-        //     terminado: false,
         // });
-        input9Ref.current?.focus()
+        // stockControlFromNumber(tempCartProduct.quantity)
+
+        const newProduct: ICartProduct = {
+          _id: productRow._id,
+          image: productRow.images[0],
+          price: productRow.price,
+          porIva: productRow.porIva,
+          medPro: productRow.medPro,
+          size: "M",
+          slug: productRow.slug,
+          title: productRow.title,
+          gender: productRow.gender,
+          quantity: 1,
+        };
+
+        // setTempCartProduct(newProduct);
+        // stockControlFromNumber(newProduct.quantity)
+        if (productRow) {
+          if (newProduct.quantity > productRow.inStock) {
+            toast.error('Este Producto no tiene stock');
+          } else if (productRow.inStock - newProduct.quantity <= productRow.minStock) {
+            toast.error('Este Producto tiene Minimo Stock');
+          }
+        }
+        setTempCartProduct(newProduct);
+        setStock(productRow.inStock);
+        setMiStock(productRow.minStock);
+
+        input11Ref.current?.focus()
         setCodProd('');
     };
 
@@ -337,19 +383,45 @@ const handleClickOutside = (e: MouseEvent) => {
 
 
 
+const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const value = +e.target.value; // Convertimos a número
+
+  setQuantity(e.target.value); // Siempre actualizamos el input
+
+  if (value > stock) {
+    toast.error('Este Producto no tiene stock');
+  } else if (stock - value <= miStock) {
+    toast.error('Este Producto tiene Minimo Stock');
+  }
+};
+
+
+
+const stockControlFromNumber = (value: number) => {
+  if (value > stock) {
+    toast.error('Este Producto no tiene stock');
+  } else if (stock - value <= miStock) {
+    toast.error('Este Producto tiene Minimo Stock');
+  }
+  setQuantity(value.toString());
+};
+
 
   return (
     <>
       <ToastContainer position="top-right" theme="colored" />
+      <Box border={1} p={2} borderRadius={2} mt={1}>
 
-      <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2}} mt={2}>
+      {/* <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2}} mt={2}> */}
+
+      <Box border={1} p={2} borderRadius={2}>
         <form>
           <Grid container spacing={2} alignItems="center">
 
             <Grid item md={1}>
               <TextField
                 inputRef={input8Ref}
-                label="Diligencia"
+                label="Producto"
                 fullWidth
               size="small"
                 value={codProd}
@@ -380,6 +452,26 @@ const handleClickOutside = (e: MouseEvent) => {
             <Grid item md={1}>
               <TextField
                 inputRef={input9Ref}
+                label="Cantidad"
+                type="number"
+                fullWidth
+              size="small"
+                value={quantity}
+                onChange={(e) => stockControl(e)}
+                onKeyDown={(e) => e.key === "Enter" && input10Ref.current?.focus()}
+                required
+              />
+            </Grid>
+
+            <Grid item md={1}>
+                  <Typography variant="h6">{tempCartProduct.medPro}</Typography>
+            </Grid>
+
+
+
+            <Grid item md={2}>
+              <TextField
+                inputRef={input10Ref}
                 label="Precio"
                 type="number"
                 inputProps={{ step: '0.01' }} 
@@ -387,15 +479,14 @@ const handleClickOutside = (e: MouseEvent) => {
               size="small"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && input10Ref.current?.focus()}
+                onKeyDown={(e) => e.key === "Enter" && input11Ref.current?.focus()}
                 required
               />
             </Grid>
 
-          <Grid item md={4}>
+          {/* <Grid item md={4}>
             <TextField
               fullWidth
-              size="small"
               inputRef={input10Ref}
               label="Observaciones"
               placeholder="Observaciones"
@@ -403,18 +494,20 @@ const handleClickOutside = (e: MouseEvent) => {
               onChange={(e) => setObserv(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input11Ref.current?.focus()}
             />
-          </Grid>
+          </Grid> */}
 
-            {/* <Grid item md={1}>
+            <Grid item md={1}>
                   <Typography>{amount.toFixed(2)}</Typography>
             </Grid>
- */}
-            <Grid item md={1}>
+
+
+          <Grid item md={1} display="flex" alignItems="center">
               <Button
                 ref={input11Ref}
                 variant="contained"
                 color="warning"
                 fullWidth
+              size="small"
                 sx={{ bgcolor: 'yellow', color: 'black' }}
                 onClick={() => addToCartHandler(productR as IProduct)}
               >
@@ -424,6 +517,8 @@ const handleClickOutside = (e: MouseEvent) => {
 
           </Grid>
         </form>
+      </Box>
+
              <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
           <Box
             ref={modalRef}
@@ -446,51 +541,40 @@ const handleClickOutside = (e: MouseEvent) => {
           </Box>
         </Modal>
 
-      <Box border={1} p={2} borderRadius={2} mt={2}>
+      <Box border={1} p={2} borderRadius={2} mt={0.1}>
         {/* Tabla de items */}
         <table width="100%" className="mb-10">
           <thead>
             <tr>
-              {/* <th>Codigo Producto</th> */}
+              <th>Codigo Producto</th>
               <th>Descripción</th>
-              <th>Observaciones</th>
-              {/* <th>Vence</th> */}
+              <th>Cantidad</th>
+              <th>Unidad</th>
               <th>Precio</th>
-              <th>Terminado</th>
+              <th>Total</th>
               <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
             {cart.map((itemInv) => (
               <tr key={itemInv._id}>
-                {/* <td>{itemInv._id}</td> */}
+                <td>{itemInv._id}</td>
                 <td>{itemInv.title}</td>
-                <td>{itemInv.observ}</td>
-                {/* <td style={{ textAlign: 'center' }}>{itemInv.venDat}</td> */}
-                <td style={{ textAlign: 'right' }} >{(itemInv.quantity * itemInv.price).toFixed(2)}</td>
-                <td style={{ textAlign: 'center' }}>{itemInv.terminado == true ? 'Si' : 'No'}</td>
-                {/* <td>
+                <td style={{ textAlign: 'right' }}>{(itemInv.quantity.toFixed(2))}</td>
+                <td>{itemInv.medPro}</td>
+                <td style={{ textAlign: 'right' }}>{(itemInv.price).toFixed(2)}</td>
+                <td style={{ textAlign: 'right' }}>{(itemInv.quantity * itemInv.price).toFixed(2)}</td>
+                <td style={{ textAlign: 'center' }}>
                   <IconButton onClick={() => removeItemHandler(itemInv)} color="error">
-                    Elimina
-                  </IconButton>
-                </td> */}
-                <td style={{ textAlign: 'left' }}>
-                  <IconButton
-                    color="error"
-                    onClick={() => removeItemHandler(itemInv)}
-                    // disabled={isPaying}
-                  >
-                    <AiOutlineDelete className="text-red-500 font-bold text-xl" />
-                  </IconButton>
-                  <IconButton onClick={() => terminadoSiNo(itemInv)} color="secondary">
-                    {itemInv.terminado == true ? 'Activar' : 'Terminar'}
+                    <AiOutlineDelete />
                   </IconButton>
                 </td>
               </tr>
             ))}
           </tbody>
+
         </table>
-        </Box>
+</Box>
       </Box>
     </>
   );

@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Button,
+  Card,
+  CardContent,
+  CardHeader,
   Box,
   Typography,
   Grid,
@@ -11,7 +14,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  SelectChangeEvent,
 } from '@mui/material';
+
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { BuscaSup, BuscaCli, BuscaPro, BuscaCom, BuscaCon, BuscaUse, BuscaEnc, BuscaVal } from '../../components/buscador';
@@ -31,6 +36,15 @@ export const FiltroCrm = () => {
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 
+  const [informe, setInforme] = useState<string>('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    const selected = event.target.value;
+    setInforme(selected);
+    if (selected) {
+      navigate(selected); // redirecciona al informe seleccionado
+    }
+  }
 
   const input5Ref = useRef<HTMLInputElement>(null);
   const input7Ref = useRef<HTMLInputElement>(null);
@@ -226,6 +240,32 @@ desVal,);
 }, []);
 
 
+  const parametros = async () => {
+    if (window.confirm('Esta seguro de Generar el Informe Parametros?')) {
+      filtro.firstDat = firstDat;
+      filtro.lastDat = lastDat;
+      filtro.codCus = codCus;
+      filtro.nameCus = nameCus;
+      filtro.codPro = codPro;
+      filtro.desPro = desPro;
+      filtro.codSup = codSup;
+      filtro.nameSup = nameSup;
+      filtro.codCom = codCom;
+      filtro.nameCom = nameCom;
+      filtro.codEnc = codEnc;
+      filtro.nameEnc = nameEnc;
+      filtro.codUse = codUse;
+      filtro.nameUse = nameUse;
+      filtro.codCon = codCon;
+      filtro.nameCon = nameCon;
+      filtro.order = order;
+
+        userInfo.filtro = filtro
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        navigate(informe);
+    };  
+
+  };
 
 
 
@@ -297,14 +337,51 @@ desVal,);
                     <Typography variant="h1">FILTROS</Typography>
           </Grid>
         </Grid>
+   <Grid container spacing={2} mt={0}>
+      <Grid item xs={12} md={4}>
+            <FormControl fullWidth>
+              <InputLabel id="informe-label">Informe</InputLabel>
+              <Select
+                labelId="informe-label"
+                id="informe-select"
+                value={informe}
+                label="Informe"
+              size="small"
+                onChange={handleChange}
+              >
+                <MenuItem value="/admin/invoicesCajIngEgr">Caja</MenuItem>
+                <MenuItem value="/admin/informe/IngEgr">Caja Control Ingresos y Retiros Por Encargado</MenuItem>
+                <MenuItem value="/admin/informe/ctacus">Cta Cte Clientes</MenuItem>
+                <MenuItem value="/admin/informe/ctasup">Cta Cte Proveedores</MenuItem>
+                <MenuItem value="/admin/informe/cuspro">Clientes - Productos Vendidos</MenuItem>
+                <MenuItem value="/admin/informe/suppro">Proveedores - Productos Comprados</MenuItem>
+                <MenuItem value="/admin/informe/procus">Productos - Clientes a los que Vendimos</MenuItem>
+                <MenuItem value="/admin/informe/prosup">Productos - Proveedores a los que Compramos</MenuItem>
+                <MenuItem value="/admin/informe/proiye">Productos Ingresos / Egresos</MenuItem>
+                <MenuItem value="/admin/informe/listaprecio">Productos Lista de Precios</MenuItem>
+                <MenuItem value="/admin/informe/stockminimo">Productos con Stock Mínimo</MenuItem>
+              </Select>
+            </FormControl>
+           </Grid>
+          <Grid item md={2} display="flex" alignItems="center">
+
+            <Button
+              onClick={parametros}
+              variant="contained"
+              sx={{ bgcolor: 'yellow', color: 'black' }}
+            >
+              Generar Informe
+            </Button>
+          </Grid>
+    </Grid>
 
 
 
-
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input9Ref}
               type="date"
               label="Desde"
@@ -320,6 +397,7 @@ desVal,);
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input5Ref}
               type="date"
               label="Hasta"
@@ -344,6 +422,7 @@ desVal,);
                       id="order"
                       value={order}
                       label="Orden"
+              size="small"
                       onChange={(e) => setOrder(e.target.value)}
                       >
                       <MenuItem value="newest">Fecha Desc</MenuItem>
@@ -360,6 +439,7 @@ desVal,);
                       id="estado"
                       value={estado}
                       label="Estado"
+              size="small"
                       onChange={(e) => setEstado(e.target.value)}
                       >
                       <MenuItem value="TOD">Todas Entradas/Diligencias </MenuItem>
@@ -377,6 +457,7 @@ desVal,);
                       id="registro"
                       value={registro}
                       label="Asiento"
+              size="small"
                       onChange={(e) => setRegistro(e.target.value)}
                       >
                       <MenuItem value="TOD">Todas Entradas/Diligencias </MenuItem>
@@ -390,6 +471,7 @@ desVal,);
               <Grid item md={2}>
                 <TextField
                   fullWidth
+              size="small"
                   label="Observaciones"
                   placeholder="Observaciones"
                   value={obser}
@@ -432,7 +514,7 @@ desVal,);
 
                   </Grid>
 
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
 
             <BuscaCon
             codCon={codCon}
@@ -456,7 +538,7 @@ desVal,);
             />
 
         </Grid>
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
 
             <BuscaCom
             codCom={codCom}
@@ -483,7 +565,7 @@ desVal,);
 
 
         </Grid>
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
 
 
             <BuscaSup
@@ -510,7 +592,7 @@ desVal,);
             />
 
         </Grid>
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2} mt={0}>
 
             <BuscaEnc
             codEnc={codEnc}

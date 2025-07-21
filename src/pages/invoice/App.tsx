@@ -1,27 +1,25 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import {Header} from './Header';
 // import { toast } from 'react-toastify';
-import {TableFormEsc} from './TableFormEsc';
-import { BiFileFind } from "react-icons/bi";
-import { AuthContext, CartContext } from '../../../context';
+import {TableFormFac} from './TableFormFac';
+import { AuthContext, CartContext, ReceiptContext } from '../../../context';
 import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
   Typography,
   Grid,
-  Modal,
   TextField,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
+import { ICartProduct, IComprobante, ICustomer, IInstrumento, IInvoice, IReceipt, IValue } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
-import { CustomerSelector } from '../crmpages/CustomerSelector';
-import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
 import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
-import { BuscaPar } from '../../components/buscador';
+import { BuscaCom, BuscaCli, BuscaVal } from '../../components/buscador';
 
 // const getError = (error:any) => {
 //   return error.response && error.response.data.message
@@ -29,7 +27,7 @@ import { BuscaPar } from '../../components/buscador';
 //     : error.message;
 // };
 
-export const MesaEntrada = () => {
+export const App = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -37,7 +35,7 @@ export const MesaEntrada = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/mesaentrada');
+        navigate('/auth/loginadm?redirect=/admin/invoicer');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -50,9 +48,10 @@ export const MesaEntrada = () => {
 
 
   // const { state, dispatch: ctxDispatch } = useContext(Store);
-    const {  cart, createParam, addTodosProductToCartEsc } = useContext(CartContext);
+    const {  cart, createParam } = useContext(CartContext);
+    const {  receipt } = useContext(ReceiptContext);
     
-        const invoice: IOrder = {
+        const invoice: IInvoice = {
             orderItems: cart.map( p => ({
                 ...p,
                 size: p.size!
@@ -77,13 +76,11 @@ export const MesaEntrada = () => {
             tax : 0,
             total : 0,
             totalBuy : 0,
-            id_client : "",
-            id_parte : undefined,
-            id_instru : "",
-            id_config : "",
+            codCus : "",
+            codCon : "",
             user : "",
             codConNum : 0,
-            supplier : '0',
+            codSup : '0',
             remNum : 0,
             remDat : "",
             invNum : 0,
@@ -95,6 +92,34 @@ export const MesaEntrada = () => {
             paymentMethod: 0,
 
         }              
+
+
+           const receiptB: IReceipt = {
+            receiptItems: receipt.map( p => ({
+                ...p,
+                // size: p.size!
+            })),
+            subTotal: 0,
+            total: 0,
+            isPaid: false,
+            totalBuy: 0,
+            codConNum: 0,
+
+            codCus : "",
+            codCon : "",
+            user : "",
+            codSup : '0',
+            
+            cajNum: 0,
+            cajDat: "",
+            desVal: "",
+            recNum: 0,
+            recDat: "",
+            paidAt: "",
+            ordNum: 0,
+            salbuy: "",
+            notes: "",
+        }
 
   
 
@@ -108,18 +133,34 @@ export const MesaEntrada = () => {
     // }
 
 
+  const input1Ref = useRef<HTMLInputElement>(null);
   const input2Ref = useRef<HTMLInputElement>(null);
   const input3Ref = useRef<HTMLInputElement>(null);
+  const input4Ref = useRef<HTMLInputElement>(null);
   const input5Ref = useRef<HTMLInputElement>(null);
   const input6Ref = useRef<HTMLInputElement>(null);
   const input7Ref = useRef<HTMLInputElement>(null);
   const input8Ref = useRef<HTMLInputElement>(null);
-  const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
-  const inputParRef = useRef<HTMLInputElement>(null);
+  const input11Ref = useRef<HTMLInputElement>(null);
+  const input12Ref = useRef<HTMLInputElement>(null);
+  const input13Ref = useRef<HTMLInputElement>(null);
+  const input14Ref = useRef<HTMLInputElement>(null);
+  const input15Ref = useRef<HTMLInputElement>(null);
+  
+  const input20Ref = useRef<HTMLInputElement>(null);
+  const input21Ref = useRef<HTMLInputElement>(null);
+  const inputCusRef = useRef<HTMLInputElement>(null);
+  const inputComRef = useRef<HTMLInputElement>(null);
+  const inputValRef = useRef<HTMLInputElement>(null);
 
 
   const codConNum = userInfo.configurationObj.codCon;
+  // const id_config = userInfo.codCon;
+  // const [isHaber, setIsHaber] = useState();
+  // const [noDisc, setNoDisc] = useState(false);
+  // const [toDisc, setToDisc] = useState(true);
+  // const [itDisc, setItDisc] = useState(false);
 
   const getTodayInGMT3 = () => {
     const now = new Date();
@@ -131,16 +172,23 @@ export const MesaEntrada = () => {
   };
 
   // const [codUse, setCodUse] = useState('');
-  const [codIns, setCodIns] = useState('');
-  const [codInst, setCodInst] = useState('');
-  const [nameIns, setNameIns] = useState('');
+  const [codCom, setCodCom] = useState('');
+  const [codComt, setCodComt] = useState('');
+  const [nameCom, setNameCom] = useState('');
+  const [comprob, setComprob] = useState<IComprobante>();
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
+  const [nameCus, setNameCus] = useState('');
+  const [codVal, setCodVal] = useState('');
+  const [codValt, setCodValt] = useState('');
+  const [codValo, setCodValo] = useState('');
+  const [codval, setCodval] = useState('');
+  const [nameVal, setNameVal] = useState('');
   const [codPart, setCodPart] = useState('');
   const [codPar, setCodPar] = useState('');
   const [namePar, setNamePar] = useState('');
-  const [nameCus, setNameCus] = useState('');
   const [userObj, setUserObj] = useState<ICustomer>();
+  const [invNum, setInvNum] = useState("");
   const [remNum, setRemNum] = useState("");
   const [libNum, setLibNum] = useState("");
   const [folNum, setFolNum] = useState("");
@@ -150,17 +198,19 @@ export const MesaEntrada = () => {
   const [asieNum, setAsieNum] = useState("");
   const [asieDat, setAsieDat] = useState("");
   const [remNumImp, setRemNumImp] = useState('');
+  const [invDat, setInvDat] = useState(getTodayInGMT3());
   const [remDat, setRemDat] = useState(getTodayInGMT3());
-  const [recNum, setRecNum] = useState('');
+  const [recNum, setRecNum] = useState(0);
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   const [desval, setDesval] = useState('');
-  const [valueeR, setValueeR] = useState('');
+  const [valueeR, setValueeR] = useState<IValue>();
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
   const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
+  const [valuees, setValuees] = useState([]);
   const [codPro, setCodPro] = useState('');
   const [terminado, setTerminado] = useState(false);
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
@@ -176,6 +226,10 @@ export const MesaEntrada = () => {
   const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
   const [showInvoice, setShowInvoice] = useState(false);
+  const [geRem, setGeRem] = useState(false);
+  const [totalSubImp, setTotalSubImp] = useState(0);
+  const [taxImp, setTaxImp] = useState(0);
+  const [invNumImp, setInvNumImp] = useState(0);
 
   const [isPaying, setIsPaying] = useState(false);
   const [isloading, setIsloading] = useState(false);
@@ -192,43 +246,6 @@ export const MesaEntrada = () => {
 
   };
 console.log(instrumento);
-/////////////////consulta cliente
-const handleShowCus = () => {
-  setModalOpenCus(true);
-  };
-  
-  // const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   e.key === "Enter" && buscarPorCodCus(codCust);
-  //   e.key === "F2" && handleShowCus();
-  //   e.key === "Tab" && buscarPorCodCus(codCust);
-  // };
-  
-const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  if (e.key === "Enter" || e.key === "Tab") {
-    e.preventDefault();
-    buscarPorCodCus(codCust);
-  }
-  if (e.key === "F2") {
-    e.preventDefault();
-    handleShowCus();
-  }
-};
-
-  const buscarPorCodCus = (codCust: string) => {
-    const usersRow = customers.find((row) => row.codCus === codCust);
-    if (!usersRow) {
-        setCodCus('');
-        setCodCust('');
-        setNameCus('Elija Cliente');
-    }else{
-      setCodCus(usersRow._id);
-      setCodCust(usersRow.codCus);
-      setUserObj(usersRow);
-      setNameCus(usersRow.nameCus);
-      inputParRef.current?.focus();
-      };
-  };
-
 
 
 
@@ -237,15 +254,6 @@ const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
   const [modalOpenIns, setModalOpenIns] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectCus = (customer: ICustomer) => {
-
-    setCodCus(customer._id);
-    setCodCust(customer.codCus);
-    setNameCus(customer.nameCus);
-    // input8Ref.current.focus()
-
-    setModalOpenCus(false);
-  };
 
   // Cerrar con Escape
   useEffect(() => {
@@ -295,67 +303,6 @@ const handleClickOutside = (e: MouseEvent) => {
 /////////////////consulta cliente
 /////////////////consulta instrumento
 
-const handleShowIns = () => {
-    setModalOpenIns(true);
-    // const instRow = instrumentos.find((row) => row.codIns === codInst);
-    // if (instRow) {
-    // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
-    // };
-  };
-
-  
-  // const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   e.key === "Enter" && buscarPorCodIns(codInst);
-  //   e.key === "F2" && handleShowIns();
-  //   e.key === "Tab" && buscarPorCodIns(codInst);
-  // };
-const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  if (e.key === "Enter" || e.key === "Tab") {
-    e.preventDefault();
-    buscarPorCodIns(codInst);
-  }
-  if (e.key === "F2") {
-    e.preventDefault();
-    handleShowIns();
-  }
-};
-    
-
-  const buscarPorCodIns = (codInst: string) => {
-    const instRow = instrumentos.find((row) => row.codIns === codInst);
-    if (!instRow) {
-        setCodIns('');
-        setCodInst('');
-        setNameIns('Elija Instrumento');
-    }else{
-      // cargaParametros(instRow.orderItems)
-      addTodosProductToCartEsc(instRow.orderItems as ICartProduct[], remDat);
-
-      setInstrumento(instRow);
-      setCodIns(instRow._id);
-      setCodInst(instRow.codIns);
-      setNameIns(instRow.name);
-      input3Ref.current?.focus();
-      };
-  };
-
-
-
-
-
-
-  const handleSelectIns = (instrumento: IInstrumento) => {
-
-    setCodIns(instrumento._id);
-    setCodInst(instrumento.codIns);
-    setNameIns(instrumento.name);
-    // input8Ref.current.focus()
-
-    setModalOpenIns(false);
-  };
-
-/////////////////consulta instrumento
-
 
 
   const componentRef = useRef<HTMLDivElement | null>(null);
@@ -376,45 +323,44 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     }
     setCodCus(codCus);
     calculateAmountval();
-  }, [cart]);
+    setDesVal(desVal);
+    calculateAmountval();
+    // addToCartHandler(valueeR);
+  }, [cart, numval, desval, recNum, recDat]);
 
     useEffect(() => {
       if (customers) {
         createParam();
-        setValueeR("");
+        // setValueeR({});
         setShowInvoice(false);
       }
     }, [customers]);
 
 
   useEffect(() => {
-    input2Ref.current?.focus()
-    const fetchData = async () => {
-      try {
-        const { data } = await stutzApi.get(`/api/customers/`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        setCustomers(data);
-      } catch (err) {}
-    };
-    fetchData();
+    inputComRef.current?.focus()
   }, []);
-
 
   useEffect(() => {
-    input2Ref.current?.focus()
-    const fetchData = async () => {
+    const fetchDataVal = async () => {
       try {
-        const { data } = await stutzApi.get(`/api/tes/admin/instrumentos`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        setInstrumentos(data);
+        // const { data } = await axios.get(`${API}/api/valuees/`, {
+        //   headers: { Authorization: `Bearer ${userInfo.token}` },
+        // });
+        const { data } = await stutzApi.get(`/api/valuees`);
+        setValuees(data);
+        const valores1 = data.find((row:any) => row.codVal === "1");
+        setValueeR(valores1);
+        setCodval(valores1._id);
+        setCodValo(valores1.codVal);
+        setDesval(valores1.desVal);
+        setCodVal(valores1._id);
+        setDesVal(valores1.desVal);
+
       } catch (err) {}
     };
-    fetchData();
+    fetchDataVal();
   }, []);
-
-
 
   useEffect(() => {
     if (window.innerWidth < width) {
@@ -426,7 +372,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
   const placeCancelInvoiceHandler = async () => {
     clearitems();
-    console.log("inicio")
   };
 
   const placeInvoiceHandler = async () => {
@@ -434,6 +379,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (isPaying && (!recNum || !recDat || !desVal)) {
         unloadpayment();
       } else {
+        
         if (remDat && codCus) {
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
           invoice.subTotal = round2(
@@ -451,33 +397,60 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             invoice.subTotal + invoice.shippingPrice + invoice.tax
           );
           invoice.totalBuy = 0;
-          invoice.id_client = codCus;
-              (codPar) ? invoice.id_parte = codPar : undefined;
-              invoice.id_instru = codIns;
-              invoice.libNum= +libNum;
-              invoice.folNum= +folNum;
-              invoice.asiNum= +asiNum;
-              invoice.asiDat= asiDat;
-              invoice.escNum= +escNum;
-              invoice.asieNum= +asieNum;
-              invoice.asieDat= asieDat;
-              invoice.terminado= terminado;
-          invoice.id_config = userInfo.codCon;
+          invoice.codCus = codCus;
+          invoice.codCon = userInfo.codCon;
           invoice.user = userInfo.user._id,
           invoice.codConNum = codConNum;
-
-          invoice.supplier = '0';
+          invoice.codCom = codCom;
+          invoice.isHaber = comprob!.isHaber;
+          invoice.geRem = geRem;
+          
+          invoice.codSup = undefined;
           invoice.remNum = +remNum;
           invoice.remDat = remDat;
           invoice.dueDat = dueDat;
-          invoice.invNum = 0;
-          invoice.invDat = "";
+          invoice.invNum = +invNum;
+          invoice.invDat = invDat;
           invoice.recNum = 0;
+          // invoice.recDat = null;
+          invoice.recDat = undefined;
           invoice.recDat = "";
           invoice.desVal = desVal;
           invoice.notes = notes;
+          invoice.salbuy = 'SALE';
+          /////////
+          if (!isPaying) {
+            receiptB.recNum = recNum;
+            receiptB.recDat = recDat;
+            } else {
+              receiptB.recNum = 0;
+              // receiptB.recDat = null;
+              receiptB.recDat = "";
+            }
 
-          orderHandler();
+            receiptB.receiptItems = [{
+              _id: codval,
+              valuee: codval,
+              desval: desval,
+              numval: numval,
+              amountval: amountval,
+            }];
+
+
+            receiptB.subTotal = invoice.subTotal;
+            receiptB.total = invoice.total;
+            receiptB.totalBuy = invoice.totalBuy;
+            receiptB.codCus = invoice.codCus;
+            receiptB.codCon = invoice.codCon;
+            receiptB.user = userInfo.user._id,
+            receiptB.codConNum = invoice.codConNum;
+            receiptB.codSup = undefined;
+            receiptB.desVal = desVal;
+            receiptB.notes = invoice.notes;
+            receiptB.salbuy = 'SALE';
+            
+            /////////
+            orderHandler();
           clearitems();
         }
       }
@@ -485,77 +458,39 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   };
 
 
-
-
   const orderHandler = async () => {
+    const invoiceAux = invoice;
+    const receiptAux = receiptB;
+            console.log("sdsdsdsd")
+            console.log(invoiceAux)
+            console.log(receiptAux)
+            console.log("sdsdsdsd")
     try {
       setIsloading(true);
       const { data } = await stutzApi.post(
-        `/api/invoices/remEsc`,
-
-        {
-          orderItems: invoice.orderItems,
-          shippingAddress: invoice.shippingAddress,
-          paymentMethod: invoice.paymentMethod,
-          subTotal: invoice.subTotal,
-          shippingPrice: invoice.shippingPrice,
-          tax: invoice.tax,
-          total: invoice.total,
-          totalBuy: invoice.totalBuy,
-
-          codCus: invoice.id_client,
-              codPar: invoice.id_parte,
-              codIns: invoice.id_instru,
-              libNum : invoice.libNum,
-              folNum : invoice.folNum,
-              asiNum : invoice.asiNum,
-              asiDat : invoice.asiDat,
-              escNum : invoice.escNum,
-              asieNum : invoice.asieNum,
-              asieDat : invoice.asieDat,
-              terminado : invoice.terminado,
-          codCon: invoice.id_config,
-          user: userInfo.user._id,
-          codConNum: invoice.codConNum,
-
-          //        codSup: invoice.codSup,
-
-          remNum: invoice.remNum,
-          remDat: invoice.remDat,
-          dueDat: invoice.dueDat,
-          invNum: invoice.invNum,
-          invDat: invoice.invDat,
-          recNum: invoice.recNum,
-          recDat: invoice.recDat,
-          desVal: invoice.desVal,
-          notes: invoice.notes,
-          salbuy: 'SALE',
-        },
+        `/api/invoices`,
+        {invoiceAux, receiptAux },
+        // {invoiceAux },
         {
           headers: {
             authorization: `Bearer ${userInfo.token}`,
           },
         }
       );
-      //ctxDispatch({ type: 'INVOICE_CLEAR' });
-      //      dispatch({ type: 'CREATE_SUCCESS' });
-      //      localStorage.removeItem('cart');
       setIsloading(false);
+
       setIsPaying(false);
-      setDesval('');
-      setDesVal('');
-      setRemNumImp(data.invoice.remNum);
-      // setTotalSubImp(data.invoice.subTotal);
-      // setTaxImp(data.invoice.tax);
+      setInvNumImp(data.invoice.invNum);
+      setTotalSubImp(data.invoice.subTotal);
+      setTaxImp(data.invoice.tax);
       setTotalImp(data.invoice.total);
-      setRecNum('');
-      setRecDat('');
-      setNumval(' ');
-      setAmountval(0);
+      // setDesval('');
+      // setDesVal('');
+      // setRecNum('');
+      // setRecDat('');
+      // setNumval(' ');
+      // setAmountval(0);
       //navigate(`/order/${data.order._id}`);
-    // } catch (err) {
-    //   toast.error(getError(err));
-    // }
   } catch (error: any) {
     // Capturar errores HTTP u otros
     if (error.response) {
@@ -568,24 +503,62 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       console.error('Error inesperado', error.message);
       alert('Error inesperado al guardar.');
     }
-  }
+          setIsloading(false);
 
+  }
   };
 
 
   const unloadpayment = async () => {
-    if (window.confirm('Cargo correctamente los Datos?')) {
+    if (window.confirm('Faltan Completar Datos')) {
     }
   };
 
+  /////////////////////////////////////////////
+  const Paying = () => {
+    setIsPaying(!isPaying);
+    if (isPaying) {
+      setDesval('');
+      setDesVal('');
+      setRecNum(0);
+      setRecDat('');
+      setNumval(' ');
+      setAmountval(0);
+      setDesval(valueeR!.desVal);
+      setDesVal(valueeR!.desVal);
+      setRecDat(invDat);
+      inputValRef.current?.focus()
+    }
+    if (!isPaying) {
+      // setDesval('JUJU');
+      // setDesVal('JUJU');
+      setDesval('');
+      setDesVal('');
+      setRecNum(0);
+      setRecDat('');
+      setNumval(' ');
+      setAmountval(0);
+      input8Ref.current?.focus()
+
+    }
+  };
+
+
+
   const clearitems = () => {
-    input2Ref.current?.focus()
+    inputComRef.current?.focus()
     createParam();
-    setValueeR("");
+    // setValueeR({});
+    setCodComt("");
     setCodCust("");
     setRemNum("");
+    setInvNum("");
     setShowInvoice(false);
   };
+
+
+
+
 
   return (
     // <>
@@ -597,116 +570,64 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     >
 
     {!showInvoice ? (
-    <Box>
-      <Box p={0} mb={2}>
+      <Box>
+      <Box border={1} p={2} borderRadius={2}>
+
         <Grid container>
           <Grid item md={4}>
                 <Typography variant="h1"></Typography>
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">MESA DE ENTRADA</Typography>
+                    <Typography variant="h1">COMPROBANTES DE VENTA</Typography>
           </Grid>
         </Grid>
+
 
         <Grid container spacing={2} >
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              inputRef={input2Ref}
-              label={codInst === '' ? 'Código Instrumento' : ''}
-              placeholder="Codigo Instrumento"
-              value={codInst}
-              onChange={(e) => setCodInst(e.target.value)}
-              onKeyDown={(e) => ayudaIns(e)}
-              required
-              autoComplete="off"
+            <BuscaCom
+            codCom={codCom}
+            setCodCom={setCodCom}
+            codComt={codComt}
+            setCodComt={setCodComt}
+            nameCom={nameCom}
+            setNameCom={setNameCom}
+            comprob={comprob}
+            setComprob={setComprob}
+            nextRef={inputCusRef}
+            inputRef={inputComRef} 
             />
-          </Grid>
-          <Grid item md={1} display="flex" alignItems="center">
-            <Button
-              onClick={handleShowIns}
-              variant="contained"
-              startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
-            >
-              F2
-            </Button>
-          </Grid>
-          <Grid item md={4}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameIns}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameIns}
-      </Typography>
-          </Grid>
-
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Libro N°"
-              placeholder="Libro N°"
-              value={libNum}
-              onChange={(e) => setLibNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-            />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Folio N°"
-              placeholder="Folio N°"
-              value={folNum}
-              onChange={(e) => setFolNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Asiento N°"
-              placeholder="Asiento N°"
-              value={asiNum}
-              onChange={(e) => setAsiNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              type="date"
-              label="Fecha Asiento"
-              value={asiDat}
-              onChange={(e) => setAsiDat(e.target.value)}
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
-
 
 
         </Grid>
 
+        <Grid container spacing={2} mt={0}>
+            <BuscaCli
+            codCus={codCus}
+            setCodCus={setCodCus}
+            codCust={codCust}
+            setCodCust={setCodCust}
+            nameCus={nameCus}
+            setNameCus={setNameCus}
+            nextRef={input3Ref}
+            inputRef={inputCusRef} 
+            />
+
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={geRem}
+                    onChange={(e) => setGeRem(e.target.checked)}
+                    name="geRem"
+                  />
+                }
+                label="Genera Remito"
+              />
+            </Typography>
+
+
+        </Grid>
 
 
 
@@ -715,127 +636,25 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             <TextField
               fullWidth
               size="small"
+              type="number"
               inputRef={input3Ref}
-              label={codCust === '' ? 'Código Cliente' : ''}
-              placeholder="Codigo Cliente"
-              value={codCust}
-              onChange={(e) => setCodCust(e.target.value)}
-              onKeyDown={(e) => ayudaCus(e)}
+              label="Comprobante N°"
+              placeholder="Comprobante N°"
+              value={invNum}
+              onChange={(e) => setInvNum(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && input4Ref.current?.focus()}
               required
-              autoComplete="off"
             />
-          </Grid>
-          <Grid item md={1} display="flex" alignItems="center">
-            <Button
-              onClick={handleShowCus}
-              variant="contained"
-              startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
-            >
-              F2
-            </Button>
-          </Grid>
-          <Grid item md={3}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameCus}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameCus}
-      </Typography>
-          </Grid>
-          <Grid item md={1}>
-                <Typography></Typography>
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Instrumento N°"
-              placeholder="Instrumento N°"
-              value={escNum}
-              onChange={(e) => setEscNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Asiento N°"
-              placeholder="Asiento N°"
-              value={asieNum}
-              onChange={(e) => setAsieNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
           </Grid>
           <Grid item md={2}>
             <TextField
               fullWidth
               size="small"
+              inputRef={input4Ref}
               type="date"
-              label="Fecha Asiento"
-              value={asieDat}
-              onChange={(e) => setAsieDat(e.target.value)}
-              required
-                            InputLabelProps={{
-                shrink: true,
-              }}
-
-            />
-          </Grid>
-        </Grid>
-
-
-        <Grid container spacing={2} mt={0}>
-            <BuscaPar
-            codPar={codPar}
-            setCodPar={setCodPar}
-            codPart={codPart}
-            setCodPart={setCodPart}
-            namePar={namePar}
-            setNamePar={setNamePar}
-            nextRef={input6Ref}
-            inputRef={inputParRef} 
-            />
-
-        </Grid>
-
-
-
-        <Grid container spacing={2} mt={0}>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              inputRef={input6Ref}
-              label="Entrada N°"
-              placeholder="Entrada N°"
-              value={remNum}
-              onChange={(e) => setRemNum(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-            />
-          </Grid>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              inputRef={input9Ref}
-              type="date"
-              label="Fecha Entrada"
-              value={remDat}
-              onChange={(e) => setRemDat(e.target.value)}
+              label="Fecha Comnprobante"
+              value={invDat}
+              onChange={(e) => setInvDat(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input5Ref.current?.focus()}
               required
             />
@@ -849,11 +668,25 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               label="Fecha Vencimiento"
               value={dueDat}
               onChange={(e) => setDueDat(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && input6Ref.current?.focus()}
+              required
+            />
+          </Grid>
+          <Grid item md={2}>
+            <TextField
+              fullWidth
+              size="small"
+              type="number"
+              inputRef={input6Ref}
+              label="Remito N°"
+              placeholder="Remito N°"
+              value={remNum}
+              onChange={(e) => setRemNum(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input7Ref.current?.focus()}
               required
             />
           </Grid>
-          <Grid item md={6}>
+          <Grid item md={4}>
             <TextField
               fullWidth
               size="small"
@@ -866,6 +699,77 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             />
           </Grid>
         </Grid>
+
+      <Box border={1} p={2} borderRadius={2} mt={1}>
+        <Grid container spacing={2} >
+            <BuscaVal
+            codVal={codVal}
+            setCodVal={setCodVal}
+            codValt={codValt}
+            setCodValt={setCodValt}
+            desVal={desVal}
+            setDesVal={setDesVal}
+            nextRef={input12Ref}
+            inputRef={inputValRef} 
+            />
+
+          <Grid item md={2}>
+            <TextField
+              fullWidth
+              size="small"
+              type="number"
+              inputRef={input12Ref}
+              label="Valor N°"
+              placeholder="Valor N°"
+              value={numval}
+              onChange={(e) => setNumval(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && input11Ref.current?.focus()}
+              required
+            />
+          </Grid>
+
+          <Grid item md={2}>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ bgcolor: 'yellow', color: 'black' }}
+              onClick={Paying}
+              disabled={
+               cart.length === 0 ||
+                  // !invNum ||
+                  !invDat ||
+                  !codCus
+              }
+            >
+            {!isPaying ? 'No Cargar Cobro' : 'Carga Cobro'}
+            </Button>
+          </Grid>
+          <Grid item md={2}>
+          {  !isPaying
+            ? (
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ bgcolor: 'yellow', color: 'black' }}
+            >
+              COBRANDO
+            </Button>
+          )
+          :(
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ bgcolor: 'yellow', color: 'black' }}
+            >
+              CUENTA CORRIENTE
+            </Button>
+          )}
+          </Grid>
+        </Grid>
+
+
+      </Box>
+
       </Box>
 
           {/* <Grid item md={1} display="flex" alignItems="center">
@@ -917,7 +821,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
                 {/* This is our table form */}
                 <article>
-                  <TableFormEsc
+                  <TableFormFac
                     terminado={terminado}
                     setTerminado={setTerminado}
                     input0Ref={input0Ref}
@@ -946,91 +850,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
                     //                    setTotInvwithTax={setTotInvwithTax}
                   />
                 </article>
-      
-                {/* <Dialog
-                  open={showCus}
-                  onClose={() => setShowCus(false)}
-                  fullWidth
-                  maxWidth="sm"
-                >
-                  <DialogTitle>Elija un Cliente</DialogTitle>
-                  <DialogContent>
-                    <FormControl fullWidth margin="normal">
-                      <InputLabel id="select-client-label">Clientes</InputLabel>
-                      <Select
-                        labelId="select-client-label"
-                        value=""
-                        onChange={(e) => handleChange(e)}
-                      >
-                        {customers.map((elemento) => (
-                          <MenuItem key={elemento._id} value={elemento._id}>
-                            {elemento.nameCus}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
 
-                    <TextField
-                      label="Cliente"
-                      fullWidth
-                      value={name}
-                      disabled
-                      margin="normal"
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={submitHandlerCus}
-                      disabled={!name}
-                      variant="contained"
-                    >
-                      Continuar
-                    </Button>
-                  </DialogActions>
-                </Dialog> */}
-        <Modal open={modalOpenCus} onClose={() => setModalOpenCus(false)}>
-          <Box
-            ref={modalRef}
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 800,
-              bgcolor: 'background.paper',
-              borderRadius: 2,
-              boxShadow: 24,
-              p: 2
-            }}
-          >
-            <Box display="flex" justifyContent="flex-end">
-              <Button onClick={() => setModalOpenCus(false)}>X</Button>
-            </Box>
-            <CustomerSelector onSelectCus={handleSelectCus} customers={customers} />
-          </Box>
-        </Modal>
 
-        <Modal open={modalOpenIns} onClose={() => setModalOpenIns(false)}>
-          <Box
-            ref={modalRef}
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 800,
-              bgcolor: 'background.paper',
-              borderRadius: 2,
-              boxShadow: 24,
-              p: 2
-            }}
-          >
-            <Box display="flex" justifyContent="flex-end">
-              <Button onClick={() => setModalOpenIns(false)}>X</Button>
-            </Box>
-            <InstrumentoSelector onSelectIns={handleSelectIns} instrumentos={instrumentos} />
-          </Box>
-        </Modal>
 
 
       </Box>

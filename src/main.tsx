@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 // import './index.css'
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme } from './themes';
-import { AuthProvider, UiProvider, CartProvider } from './../context';
+import { AuthProvider, UiProvider, CartProvider, ReceiptProvider } from './../context';
 
 
 import { AppRouter } from './router/AppRouter'
@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
     <AuthProvider>
     <CartProvider>
+    <ReceiptProvider>
     <UiProvider>
     <ThemeProvider theme={ lightTheme}>
         <CssBaseline />
@@ -20,7 +21,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <AppRouter />
     </ThemeProvider>
     </UiProvider>
-      </CartProvider>
+    </ReceiptProvider>
+    </CartProvider>
     </AuthProvider>
 
     </BrowserRouter>

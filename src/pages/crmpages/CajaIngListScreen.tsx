@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IRecipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado } from '../../interfaces';
+import { IReceipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -55,14 +55,14 @@ export const CajaIngListScreen = () => {
   const obser = userInfo.filtro.obser;
       
     
-    const [ recibos, setrecibos ] = useState<IRecipt[]>([]);
+    const [ recibos, setrecibos ] = useState<IReceipt[]>([]);
     const [ isloading, setIsloading ] = useState(false);
 
  useEffect(() => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/receipts/searchcajS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}encargado=${codEnc}`);
+          const resp = await stutzApi.get(`/api/receipts/searchcajS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&encargado=${codEnc}`);
           console.log(resp.data)
           setIsloading(false);
           setrecibos(resp.data.receipts);
@@ -73,6 +73,7 @@ export const CajaIngListScreen = () => {
       fetchData();
   }, [ ]);
 
+  
 const prodeleteReceipt = (row:any) => {
   if (window.confirm('Are you sure to delete?')) {
       deleteReceipt(row);
@@ -90,6 +91,7 @@ const prodeleteReceipt = (row:any) => {
       }
   };
 
+
 const columns:GridColDef[] = [
     { field: 'cajNum',
         headerName: 'Comprobante',
@@ -98,7 +100,7 @@ const columns:GridColDef[] = [
         headerAlign: 'center',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                <MuiLink component={RouterLink}  to={`/admin/invoicerCajIngCon/${row.id}?redirect=/admin/invoicesCajIng`}
                 underline='always'>
                          { row.cajNum}
                     </MuiLink>
@@ -135,6 +137,7 @@ const columns:GridColDef[] = [
                 
               }
             },
+
 
     { field: 'createdAt', headerName: 'Creada en', width: 100 },
     { field: 'updatedAt', headerName: 'Modificada en', width: 100 },
@@ -214,8 +217,8 @@ const columns:GridColDef[] = [
       ]));
 
     const headers = [
-      'Nro Ingreso ',
-      'Fecha Ingreso',
+      'Nro Retiro ',
+      'Fecha Retiro',
       'Observaciones',
       'valor',
       'Importe',
