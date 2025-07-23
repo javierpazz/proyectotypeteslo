@@ -1,5 +1,6 @@
 export * from './BuscaIns'
 export * from './BuscaCon'
+export * from './BuscaConFac'
 export * from './BuscaUse'
 export * from './BuscaPro'
 export * from './BuscaProEsc'

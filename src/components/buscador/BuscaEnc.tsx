@@ -37,8 +37,7 @@ inputRef,
 }) => {
 
 
-console.log(codEnc);
-
+void  codEnc;
   // const [codUse, setCodUse] = useState('');
   const [encargados, setEncargados] = useState<IEncargado[]>([]);
 

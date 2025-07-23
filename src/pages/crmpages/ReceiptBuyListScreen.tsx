@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IReceipt, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IComprobante, IEncargado, ISupplier } from '../../interfaces';
+import { IReceiptB, IConfiguracion, IUser, IEncargado, ISupplier } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -39,23 +39,12 @@ export const ReceiptBuyListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codCom = userInfo.filtro.codCom;
-  const codIns = userInfo.filtro.codIns;
-  const codCus = userInfo.filtro.codCus;
-  const codPar = userInfo.filtro.codPar;
   const codSup = userInfo.filtro.codSup;
-  const codPro = userInfo.filtro.codPro;
-  // const codVal = userInfo.filtro.codVal;
-  // const codCon2 = userInfo.filtro.codCon2;
-  // const codEnc = userInfo.filtro.codEnc;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
-  const estado = userInfo.filtro.estado;
-  const registro = userInfo.filtro.registro;
-  const obser = userInfo.filtro.obser;
       
     
-    const [ recibos, setrecibos ] = useState<IReceipt[]>([]);
+    const [ recibos, setrecibos ] = useState<IReceiptB[]>([]);
     const [ isloading, setIsloading ] = useState(false);
 
  useEffect(() => {
@@ -63,7 +52,6 @@ export const ReceiptBuyListScreen = () => {
       try {
           setIsloading(true);
           const resp = await stutzApi.get(`/api/receipts/searchrecB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
-          console.log(resp.data)
           setIsloading(false);
           setrecibos(resp.data.receipts);
 

@@ -36,18 +36,17 @@ nextRef,
 inputRef,
 }) => {
 
-console.log(codPro);
+void  codPro;
 
   // const [codUse, setCodUse] = useState('');
   const [productos, setProductos] = useState<IProduct[]>([]);
-
-
-
-
-
   const [modalOpenPro, setModalOpenPro] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  
+    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
 
   // Cerrar con Escape
   useEffect(() => {
@@ -145,7 +144,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get(`/api/tes/admin/products`);
+        const { data } = await stutzApi.get(`/api/products/xpv?id_config=${userInfo.codCon}`);
         setProductos(data);
         setFiltered(data);
       } catch (err) {}

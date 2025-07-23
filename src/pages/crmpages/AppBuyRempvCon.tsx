@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 
-import { IComprobante, IConfiguracion, ICustomer,  IOrder } from '../../interfaces';
+import { IComprobante, IConfiguracion, IOrder } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
@@ -77,30 +77,6 @@ export const AppBuyRempvCon = () => {
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-
-const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
-
-
-
-  // const [nameCus, setNameCus] = useState('');
-  // const [nameCon, setNameCon] = useState('');
-  // const [namePar, setNamePar] = useState('');
-  // const [nameIns, setNameIns] = useState('');
-  // const [nameUse, setNameUse] = useState('');
 
 
 
@@ -173,7 +149,6 @@ const config = {
             // setNameCon((invoice.id_config as IConfiguracion).name);
             // setNameUse((invoice.user as IUser).name);
         } catch (error) {
-          console.log(error)
           
         }
        }

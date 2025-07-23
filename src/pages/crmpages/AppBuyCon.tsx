@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 
-import { IComprobante, IConfiguracion, ICustomer,  IOrder, ISupplier } from '../../interfaces';
+import { IComprobante, IConfiguracion, IOrder, ISupplier } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';

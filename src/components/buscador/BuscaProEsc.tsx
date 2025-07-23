@@ -36,7 +36,7 @@ nextRef,
 inputRef,
 }) => {
 
-console.log(codPro);
+void  codPro;
 
   // const [codUse, setCodUse] = useState('');
   const [productos, setProductos] = useState<IProduct[]>([]);

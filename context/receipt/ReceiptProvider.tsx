@@ -142,7 +142,7 @@ export const ReceiptProvider:FC<Props> = ({ children }) => {
 
             cajNum: 0,
             cajDat: "",
-            desval: "",
+            desVal: "",
             recNum: 0,
             recDat: "",
             paidAt: "",

@@ -4,7 +4,7 @@ import {  useContext, useEffect, useRef, useState } from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { Box, Button,  Divider, Grid, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
@@ -84,7 +84,6 @@ export const ProductFacAdminPage = () => {
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 
-    const [defaultValues, setDefaultValues] = useState({});
     const [product, setProduct] = useState(productI);
     const params = useParams();
     const { title } = params;
@@ -119,7 +118,6 @@ useEffect(() => {
         id_config: typeof data.id_config === 'string' ? data.id_config : data.id_config?._id || '',
         supplier: typeof data.supplier === 'string' ? data.supplier : data.supplier?._id || '',
         };
-        console.log(cleanData)
         setProduct(cleanData);
         reset(cleanData);
 

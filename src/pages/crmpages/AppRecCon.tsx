@@ -15,14 +15,14 @@ import {
 } from '@mui/material';
 
 
-import { IComprobante, IConfiguracion, ICustomer,  IReceipt } from '../../interfaces';
+import { IConfiguracion, ICustomer,  IReceiptB } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from "react-to-print";
 
 
-const ReceiptI:IReceipt = {
+const ReceiptI:IReceiptB = {
     _id : '',
     user: '',
     id_client: "",
@@ -89,7 +89,7 @@ export const AppRecCon = () => {
 useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IReceipt>(`/api/receipts/${ id }`);
+            const resp = await stutzApi.get<IReceiptB>(`/api/receipts/${ id }`);
             setReceipt(resp.data);
             //     _id: resp.data._id,
             //     user: resp.data.user,

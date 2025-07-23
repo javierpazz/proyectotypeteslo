@@ -33,8 +33,9 @@ inputRef,
 }) => {
 
 
-console.log(codUse);
-  // const [codUse, setCodUse] = useState('');
+void  codUse;
+
+// const [codUse, setCodUse] = useState('');
   const [codUser, setCodUset] = useState('');
   const [users, setUsers] = useState<IUser[]>([]);
 

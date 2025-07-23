@@ -37,7 +37,7 @@ inputRef,
 }) => {
 
 
-console.log(codVal);
+void  codVal;
 
   // const [codUse, setCodUse] = useState('');
   const [values, setValues] = useState<IValue[]>([]);

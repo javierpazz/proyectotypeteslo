@@ -1,54 +1,55 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import {Header} from './Header';
-import { toast } from 'react-toastify';
-import {TableForm} from './TableForm';
-import { BiFileFind } from "react-icons/bi";
-import { CartContext } from '../../../context';
+// import { toast } from 'react-toastify';
+import {TableFormFacBuy} from './TableFormFacBuy';
+import { AuthContext, CartContext, ReceiptContext } from '../../../context';
 import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Grid,
-  MenuItem,
-  Select,
   TextField,
-  InputLabel,
-  FormControl
 } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-// import ListGroup from 'react-bootstrap/ListGroup';
-// import Card from 'react-bootstrap/Card';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
-// import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IOrder } from '../../interfaces';
+import { ICustomer, IInstrumento, IInvoice, IReceipt, IValue } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { FullScreenLoading } from '../../components/ui';
+import { BuscaSup } from '../../components/buscador';
 
-const getError = (error:any) => {
-  return error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message;
-};
+// const getError = (error:any) => {
+//   return error.response && error.response.data.message
+//     ? error.response.data.message
+//     : error.message;
+// };
 
-export const Remits = () => {
+export const AppRemBuy = () => {
+
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/loginadm?redirect=/admin/remiterBuy');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG    
+    
+
+
+        const userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
 
   // const { state, dispatch: ctxDispatch } = useContext(Store);
-    const {  cart, removeCartProduct } = useContext(CartContext);
+    const {  cart, createParam } = useContext(CartContext);
+    const {  receipt } = useContext(ReceiptContext);
     
-    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-        const invoice: IOrder = {
+        const invoice: IInvoice = {
             orderItems: cart.map( p => ({
                 ...p,
                 size: p.size!
@@ -73,8 +74,8 @@ export const Remits = () => {
             tax : 0,
             total : 0,
             totalBuy : 0,
-            id_client : "",
-            id_config : "",
+            codCus : "",
+            codCon : "",
             user : "",
             codConNum : 0,
             codSup : '0',
@@ -90,6 +91,34 @@ export const Remits = () => {
 
         }              
 
+
+           const receiptB: IReceipt = {
+            receiptItems: receipt.map( p => ({
+                ...p,
+                // size: p.size!
+            })),
+            subTotal: 0,
+            total: 0,
+            isPaid: false,
+            totalBuy: 0,
+            codConNum: 0,
+
+            codCus : "",
+            codCon : "",
+            user : "",
+            codSup : '0',
+            
+            cajNum: 0,
+            cajDat: "",
+            desVal: "",
+            recNum: 0,
+            recDat: "",
+            paidAt: "",
+            ordNum: 0,
+            salbuy: "",
+            notes: "",
+        }
+
   
 
     // useEffect(() => {
@@ -102,18 +131,21 @@ export const Remits = () => {
     // }
 
 
-  const input2Ref = useRef<HTMLInputElement>(null);
+  const input3Ref = useRef<HTMLInputElement>(null);
+  const input4Ref = useRef<HTMLInputElement>(null);
   const input5Ref = useRef<HTMLInputElement>(null);
-  const input6Ref = useRef<HTMLInputElement>(null);
   const input7Ref = useRef<HTMLInputElement>(null);
   const input8Ref = useRef<HTMLInputElement>(null);
-  const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
+  const inputSupRef = useRef<HTMLInputElement>(null);
 
-  const input21Ref = useRef<HTMLInputElement>(null);
 
   const codConNum = userInfo.configurationObj.codCon;
-  const [showCus, setShowCus] = useState(false);
+  // const id_config = userInfo.codCon;
+  // const [isHaber, setIsHaber] = useState();
+  // const [noDisc, setNoDisc] = useState(false);
+  // const [toDisc, setToDisc] = useState(true);
+  // const [itDisc, setItDisc] = useState(false);
 
   const getTodayInGMT3 = () => {
     const now = new Date();
@@ -125,22 +157,32 @@ export const Remits = () => {
   };
 
   // const [codUse, setCodUse] = useState('');
-  const [codCus, setCodCus] = useState('');
-  const [codCust, setCodCust] = useState('');
-  const [name, setName] = useState('');
+  const [codCom, setCodCom] = useState('');
+  const [codComt, setCodComt] = useState('');
+  const [codSup, setCodSup] = useState('');
+  const [codSupt, setCodSupt] = useState('');
+  const [nameSup, setNameSup] = useState('');
+  const [codVal, setCodVal] = useState('');
+  const [codValo, setCodValo] = useState('');
+  const [codval, setCodval] = useState('');
   const [userObj, setUserObj] = useState<ICustomer>();
-  const [remNum, setRemNum] = useState(0);
+  const [invNum, setInvNum] = useState("");
+  const [remNum, setRemNum] = useState("");
   const [remNumImp, setRemNumImp] = useState('');
+  const [invDat, setInvDat] = useState(getTodayInGMT3());
   const [remDat, setRemDat] = useState(getTodayInGMT3());
-  const [recNum, setRecNum] = useState('');
+  const [recNum, setRecNum] = useState(0);
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   const [desval, setDesval] = useState('');
-  const [valueeR, setValueeR] = useState('');
+  const [valueeR, setValueeR] = useState<IValue>();
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
+  const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
+  const [valuees, setValuees] = useState([]);
   const [codPro, setCodPro] = useState('');
+  const [terminado, setTerminado] = useState(false);
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
   const [notes, setNotes] = useState('');
   const [desPro, setDesPro] = useState('');
@@ -154,9 +196,13 @@ export const Remits = () => {
   const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
   const [showInvoice, setShowInvoice] = useState(false);
+  const [geRem, setGeRem] = useState(false);
+  const [totalSubImp, setTotalSubImp] = useState(0);
+  const [taxImp, setTaxImp] = useState(0);
+  const [invNumImp, setInvNumImp] = useState(0);
 
   const [isPaying, setIsPaying] = useState(false);
-
+  const [isloading, setIsloading] = useState(false);
   const config = {
     salePoint: userInfo.configurationObj.codCon,
     name: userInfo.configurationObj.name,
@@ -169,6 +215,85 @@ export const Remits = () => {
     date: "",
 
   };
+void
+codComt,
+codValo,
+codval,
+setUserObj,
+setRemNumImp,
+setRemDat,
+valueeR,
+setInstrumento,
+setCustomers,
+valuees,
+setTotalImp,
+codVal,
+invNum,
+setRecNum,
+setRecDat,
+totalSubImp,
+taxImp,
+invNumImp,
+setCodCom,
+setInvDat,
+setGeRem,
+instrumento;
+
+
+
+  const [modalOpenCus, setModalOpenCus] = useState(false);
+  const [modalOpenIns, setModalOpenIns] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+
+  // Cerrar con Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalOpenCus(false);
+        setModalOpenIns(false);
+      }
+    };
+
+    if (modalOpenCus) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    if (modalOpenIns) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [modalOpenCus,modalOpenIns]);
+
+
+const handleClickOutside = (e: MouseEvent) => {
+  if (modalRef.current && e.target instanceof Node && !modalRef.current.contains(e.target)) {
+    setModalOpenCus(false);
+  }
+};
+
+
+
+  useEffect(() => {
+    if (modalOpenCus) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    if (modalOpenIns) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [modalOpenCus, modalOpenIns]);
+/////////////////consulta cliente
+/////////////////consulta instrumento
+
 
 
   const componentRef = useRef<HTMLDivElement | null>(null);
@@ -187,24 +312,46 @@ export const Remits = () => {
     if (numval === '') {
       setNumval(' ');
     }
-    setCodCus(codCus);
+    setCodSup(codSup);
     calculateAmountval();
-  }, [cart]);
+    setDesVal(desVal);
+    calculateAmountval();
+    // addToCartHandler(valueeR);
+  }, [cart, numval, desval, recNum, recDat]);
+
+    useEffect(() => {
+      if (customers) {
+        createParam();
+        // setValueeR({});
+        setShowInvoice(false);
+      }
+    }, [customers]);
+
 
   useEffect(() => {
-    clearitems();
-    input2Ref.current?.focus()
-    const fetchData = async () => {
-      try {
-        const { data } = await stutzApi.get(`/api/customers/`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        setCustomers(data);
-      } catch (err) {}
-    };
-    fetchData();
+    inputSupRef.current?.focus()
   }, []);
 
+  useEffect(() => {
+    const fetchDataVal = async () => {
+      try {
+        // const { data } = await axios.get(`${API}/api/valuees/`, {
+        //   headers: { Authorization: `Bearer ${userInfo.token}` },
+        // });
+        const { data } = await stutzApi.get(`/api/valuees`);
+        setValuees(data);
+        const valores1 = data.find((row:any) => row.codVal === "1");
+        setValueeR(valores1);
+        setCodval(valores1._id);
+        setCodValo(valores1.codVal);
+        setDesval(valores1.desVal);
+        setCodVal(valores1._id);
+        setDesVal(valores1.desVal);
+
+      } catch (err) {}
+    };
+    fetchDataVal();
+  }, []);
 
   useEffect(() => {
     if (window.innerWidth < width) {
@@ -213,64 +360,36 @@ export const Remits = () => {
   }, [width]);
 
 
-  const handleShowCus = () => {
-    setShowCus(true);
-    input21Ref.current?.focus();
+
+  const placeCancelInvoiceHandler = async () => {
+    clearitems();
   };
 
-
-  const searchUser = (codCus: string) => {
-    const usersRow = customers.find((row) => row._id === codCus);
-    if(usersRow) {
-    setUserObj(usersRow);
-    setCodCus(usersRow._id);
-    setCodCust(usersRow.codCus);
-    setName(usersRow.nameCus);
-    };
+  const stockHandler = async (item:any) => {
+    try {
+      await stutzApi.put(
+        `/api/products/upstock/${item.item._id}`,
+        {
+          quantitys: item.item.quantity,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+    } catch (err) {
+    }
   };
 
   
-  const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.key === "Enter" && buscarPorCodCus(codCust);
-    e.key === "F2" && handleShowCus();
-    e.key === "Tab" && buscarPorCodCus(codCust);
-  };
-  
-
-  const buscarPorCodCus = (codCust: string) => {
-    const usersRow = customers.find((row) => row.codCus === codCust);
-    if (!usersRow) {
-        setCodCus('');
-        setCodCust('');
-        setName('Elija Cliente');
-    }else{
-      setCodCus(usersRow._id);
-      setCodCust(usersRow.codCust);
-      setUserObj(usersRow);
-      setName(usersRow.nameCus);
-      input6Ref.current?.focus();
-      };
-  };
-
-  const handleChange = (e: SelectChangeEvent<string>) => {
-    searchUser(e.target.value);
-  };
-  const submitHandlerCus = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setShowCus(false)
-  };
-
-
-
-  const placeCancelInvoiceHandler = async () => {};
-
   const placeInvoiceHandler = async () => {
       if (window.confirm('Esta seguro de Grabar?')) {
       if (isPaying && (!recNum || !recDat || !desVal)) {
         unloadpayment();
       } else {
-        if (remDat && codCus) {
-          cart.map((item) => stockHandler( item ));
+        if (remNum && remDat && codSup) {
+          cart.map((item) => stockHandler({ item }));
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
           invoice.subTotal = round2(
             cart.reduce((a, c) => a + c.quantity * c.price, 0)
@@ -283,63 +402,82 @@ export const Remits = () => {
           invoice.tax = round2(
             cart.reduce((a, c) => a + c.quantity * c.price * (c.porIva/100), 0)
           );
-          invoice.total = round2(
+          invoice.totalBuy = round2(
             invoice.subTotal + invoice.shippingPrice + invoice.tax
           );
-          invoice.totalBuy = 0;
-          invoice.id_client = codCus;
-          invoice.id_config = userInfo.codCon;
-          invoice.user = userInfo._id,
+          invoice.total = 0;
+          invoice.codCus = undefined;
+          invoice.codCon = userInfo.codCon;
+          invoice.user = userInfo.user._id,
           invoice.codConNum = codConNum;
-
-          invoice.codSup = '0';
-          invoice.remNum = remNum;
+          invoice.codCom = codCom;
+        //   invoice.isHaber = comprob!.isHaber;
+          invoice.geRem = geRem;
+          
+          invoice.codSup = codSup;
+          invoice.remNum = +remNum;
           invoice.remDat = remDat;
-          invoice.invNum = 0;
-          invoice.invDat = "";
+          invoice.dueDat = dueDat;
+          invoice.invNum = +invNum;
+          invoice.invDat = invDat;
           invoice.recNum = 0;
+          // invoice.recDat = null;
+        //   invoice.recDat = undefined;
           invoice.recDat = "";
           invoice.desVal = desVal;
           invoice.notes = notes;
+          invoice.salbuy = 'BUY';
+        //   /////////
+        //   if (!isPaying) {
+        //     receiptB.recNum = recNum;
+        //     receiptB.recDat = recDat;
+        //     } else {
+        //       receiptB.recNum = 0;
+        //       // receiptB.recDat = null;
+        //       receiptB.recDat = "";
+        //     }
 
-          orderHandler();
-          setShowInvoice(true);
-          //      handlePrint();
+        //     receiptB.receiptItems = [{
+        //       _id: codval,
+        //       valuee: codval,
+        //       desval: desval,
+        //       numval: numval,
+        //       amountval: amountval,
+        //     }];
+
+
+        //     receiptB.subTotal = invoice.subTotal;
+        //     receiptB.total = invoice.total;
+        //     receiptB.totalBuy = invoice.totalBuy;
+        //     receiptB.codCus = undefined;
+        //     receiptB.codCon = invoice.codCon;
+        //     receiptB.user = userInfo.user._id,
+        //     receiptB.codConNum = invoice.codConNum;
+        //     receiptB.codSup = invoice.codCus;
+        //     receiptB.desVal = desVal;
+        //     receiptB.notes = invoice.notes;
+        //     receiptB.salbuy = 'BUY';
+            
+        //     /////////
+            orderHandler();
+          clearitems();
         }
       }
     };
   };
 
 
-
-  /////////////////////////////////////////////
-
-  const stockHandler = async (item:ICartProduct) => {
-    // console.log(item.item._id);
-    console.log(item);
-
-    try {
-      await stutzApi.put(
-        `/api/products/downstock/${item._id}`,
-        {
-          quantitys: item.quantity,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${userInfo.token}`,
-          },
-        }
-      );
-    } catch (err) {
-      toast.error(getError(err));
-    }
-  };
-
   const orderHandler = async () => {
+    const invoiceAux = invoice;
+    const receiptAux = receiptB;
+            console.log("sdsdsdsd")
+            console.log(invoiceAux)
+            console.log(receiptAux)
+            console.log("sdsdsdsd")
     try {
+      setIsloading(true);
       const { data } = await stutzApi.post(
         `/api/invoices/rem`,
-
         {
           orderItems: invoice.orderItems,
           shippingAddress: invoice.shippingAddress,
@@ -350,13 +488,11 @@ export const Remits = () => {
           total: invoice.total,
           totalBuy: invoice.totalBuy,
 
-          codCus: invoice.id_client,
-          codCon: invoice.id_config,
-          user: userInfo._id,
+          codSup: invoice.codSup,
+          codCon: invoice.codCon,
+          user: userInfo.user._id,
           codConNum: invoice.codConNum,
-
-          //        codSup: invoice.codSup,
-
+          
           remNum: invoice.remNum,
           remDat: invoice.remDat,
           invNum: invoice.invNum,
@@ -365,7 +501,7 @@ export const Remits = () => {
           recDat: invoice.recDat,
           desVal: invoice.desVal,
           notes: invoice.notes,
-          salbuy: 'SALE',
+          salbuy: 'BUY',
         },
         {
           headers: {
@@ -373,111 +509,121 @@ export const Remits = () => {
           },
         }
       );
-      //ctxDispatch({ type: 'INVOICE_CLEAR' });
-      //      dispatch({ type: 'CREATE_SUCCESS' });
-      //      localStorage.removeItem('cart');
+      setIsloading(false);
+
       setIsPaying(false);
-      setDesval('');
-      setDesVal('');
-      setRemNumImp(data.invoice.remNum);
-      // setTotalSubImp(data.invoice.subTotal);
-      // setTaxImp(data.invoice.tax);
+      setInvNumImp(data.invoice.invNum);
+      setTotalSubImp(data.invoice.subTotal);
+      setTaxImp(data.invoice.tax);
       setTotalImp(data.invoice.total);
-      setRecNum('');
-      setRecDat('');
-      setNumval(' ');
-      setAmountval(0);
+      // setDesval('');
+      // setDesVal('');
+      // setRecNum('');
+      // setRecDat('');
+      // setNumval(' ');
+      // setAmountval(0);
       //navigate(`/order/${data.order._id}`);
-    } catch (err) {
-      // dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
+  } catch (error: any) {
+    // Capturar errores HTTP u otros
+    if (error.response) {
+      console.error('Error de backend:', error.response.data);
+      alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);
+    } else if (error.request) {
+      console.error('No hubo respuesta del servidor', error.request);
+      alert('No hubo respuesta del servidor. Verifica tu conexión.');
+    } else {
+      console.error('Error inesperado', error.message);
+      alert('Error inesperado al guardar.');
     }
+          setIsloading(false);
+
+  }
   };
 
 
   const unloadpayment = async () => {
-    if (window.confirm('Are you fill all Dates?')) {
+    if (window.confirm('Faltan Completar Datos')) {
     }
   };
 
+  /////////////////////////////////////////////
+
+
   const clearitems = () => {
-    // ctxDispatch({ type: 'INVOICE_CLEAR' });
-    // dispatch({ type: 'CREATE_SUCCESS' });
-    removeCartProduct;
-    setValueeR("");
-    localStorage.removeItem('cart');
-    localStorage.removeItem('receiptItems');
+    inputSupRef.current?.focus()
+    createParam();
+    // setValueeR({});
+    setCodComt("");
+    setCodSupt("");
+    setRemNum("");
+    setInvNum("");
     setShowInvoice(false);
   };
+
+
+
+
 
   return (
     // <>
     //   <main>
     <AdminLayoutMenu 
-        title={`Remitos`} 
-        subTitle={'Mantenimiento de Remitos'}
+        title={`Entredas`} 
+        subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
     >
 
     {!showInvoice ? (
-    <Box>
-      <Box p={2} mb={2}>
+      <Box>
+      <Box border={1} p={2} borderRadius={2}>
+
         <Grid container>
           <Grid item md={4}>
                 <Typography variant="h1"></Typography>
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">REMITO DE VENTA</Typography>
+                    <Typography variant="h1">REMITO DE COMPRA</Typography>
           </Grid>
         </Grid>
 
-        <Grid container spacing={2}>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              inputRef={input2Ref}
-              label="Codigo Cliente"
-              placeholder="Codigo Cliente"
-              value={codCust}
-              onChange={(e) => setCodCust(e.target.value)}
-              onKeyDown={(e) => ayudaCus(e)}
-              required
+
+        <Grid container spacing={2} mt={0}>
+            <BuscaSup
+            codSup={codSup}
+            setCodSup={setCodSup}
+            codSupt={codSupt}
+            setCodSupt={setCodSupt}
+            nameSup={nameSup}
+            setNameSup={setNameSup}
+            nextRef={input3Ref}
+            inputRef={inputSupRef} 
             />
-          </Grid>
-          <Grid item md={1} display="flex" alignItems="center">
-            <Button
-              onClick={handleShowCus}
-              variant="contained"
-              startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
-            >
-              Buscar
-            </Button>
-          </Grid>
-          <Grid item md={8}>
-            <Typography variant="h6">{name}</Typography>
-          </Grid>
+
         </Grid>
 
-        <Grid container spacing={2} mt={2}>
+
+
+        <Grid container spacing={2} mt={0}>
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               type="number"
-              inputRef={input6Ref}
+              inputRef={input3Ref}
               label="Remito N°"
               placeholder="Remito N°"
               value={remNum}
-              onChange={(e) => setRemNum(+e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
+              onChange={(e) => setRemNum(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && input4Ref.current?.focus()}
               required
             />
           </Grid>
           <Grid item md={2}>
             <TextField
               fullWidth
-              inputRef={input9Ref}
+              size="small"
+              inputRef={input4Ref}
               type="date"
               label="Fecha Remito"
               value={remDat}
@@ -489,6 +635,7 @@ export const Remits = () => {
           <Grid item md={2}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input5Ref}
               type="date"
               label="Fecha Vencimiento"
@@ -498,9 +645,10 @@ export const Remits = () => {
               required
             />
           </Grid>
-          <Grid item md={6}>
+          <Grid item md={4}>
             <TextField
               fullWidth
+              size="small"
               inputRef={input7Ref}
               label="Observaciones"
               placeholder="Observaciones"
@@ -510,6 +658,8 @@ export const Remits = () => {
             />
           </Grid>
         </Grid>
+
+
       </Box>
 
           {/* <Grid item md={1} display="flex" alignItems="center">
@@ -524,6 +674,7 @@ export const Remits = () => {
           </Grid>
  */}
 
+      <Box border={1} p={2} borderRadius={2} mt={1}>
       <Box border={1} p={2} borderRadius={2}>
         <Grid container spacing={2}>
           <Grid item md={4}>
@@ -532,11 +683,10 @@ export const Remits = () => {
               variant="contained"
               sx={{ bgcolor: 'yellow', color: 'black' }}
               onClick={placeCancelInvoiceHandler}
-              disabled={cart.length === 0 || !remDat || !codCus}
+              disabled={cart.length === 0 }
             >
               CANCELA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
           </Grid>
 
           <Grid item md={4}>
@@ -546,20 +696,24 @@ export const Remits = () => {
               sx={{ bgcolor: 'yellow', color: 'black' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
-              disabled={cart.length === 0 || !remDat || !codCus}
+              disabled={cart.length === 0 || !remNum || !remDat || !codSup || isloading}
             >
-              GRABA REMITO
+              GRABA ENTRADA
             </Button>
-            {/* {isLoaded && <FullScreenLoading />} */}
+            {isloading && <FullScreenLoading />}
           </Grid>
 
           <Grid item md={4}>
-            <Typography variant="h5">Total: ${amountval.toFixed(2)}</Typography>
+            <Typography variant="h5" sx={{ textAlign: 'right' }}>Total: ${amountval.toFixed(2)}</Typography>
           </Grid>
         </Grid>
+      </Box>
+
                 {/* This is our table form */}
                 <article>
-                  <TableForm
+                  <TableFormFacBuy
+                    terminado={terminado}
+                    setTerminado={setTerminado}
                     input0Ref={input0Ref}
                     input8Ref={input8Ref}
                     codPro={codPro}
@@ -588,47 +742,6 @@ export const Remits = () => {
                 </article>
 
 
-                <Dialog
-                  open={showCus}
-                  onClose={() => setShowCus(false)}
-                  fullWidth
-                  maxWidth="sm"
-                >
-                  <DialogTitle>Elija un Cliente</DialogTitle>
-                  <DialogContent>
-                    <FormControl fullWidth margin="normal">
-                      <InputLabel id="select-client-label">Clientes</InputLabel>
-                      <Select
-                        labelId="select-client-label"
-                        value=""
-                        onChange={(e) => handleChange(e)}
-                      >
-                        {customers.map((elemento) => (
-                          <MenuItem key={elemento._id} value={elemento._id}>
-                            {elemento.nameCus}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <TextField
-                      label="Cliente"
-                      fullWidth
-                      value={name}
-                      disabled
-                      margin="normal"
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={submitHandlerCus}
-                      disabled={!name}
-                      variant="contained"
-                    >
-                      Continuar
-                    </Button>
-                  </DialogActions>
-                </Dialog>
 
 
       </Box>
@@ -640,7 +753,7 @@ export const Remits = () => {
               content={() => componentRef.current}
             />
 
-            <Button onClick={() => clearitems()}>Nuevo Remito</Button>
+            <Button onClick={() => clearitems()}>Nuevo Entrada</Button>
 
             {/* Invoice Preview */}
 
@@ -652,7 +765,7 @@ export const Remits = () => {
         <div className="card-header bg-dark text-white text-center"></div>
         <div className="card-body">
           
-        <div className="card-header text-black text-center">REMITO</div>
+        <div className="card-header text-black text-center">TRABAJO</div>
         <div className="row">
             <div className="col-md-6">
               <p><strong>{userInfo.nameCon}</strong></p>
@@ -661,7 +774,7 @@ export const Remits = () => {
               <p><strong>Condición frente al IVA:</strong> {config.ivaCondition}</p>
             </div>
             <div className="col-md-6 ">
-              <p><strong>REMITO</strong></p>
+              <p><strong>TRABAJO</strong></p>
               <p><strong>Punto de Venta:</strong> {config.salePoint}    
               <strong>     Comp. Nro:</strong> {remNumImp}</p>
               <p><strong>Fecha de Emision:</strong> {remDat}</p>

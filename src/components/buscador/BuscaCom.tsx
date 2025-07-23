@@ -41,8 +41,7 @@ inputRef,
 }) => {
 
 
-console.log(codCom);
-
+void comprob, codCom;
   
     const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)

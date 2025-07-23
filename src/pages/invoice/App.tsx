@@ -14,7 +14,7 @@ import {
   Checkbox,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICartProduct, IComprobante, ICustomer, IInstrumento, IInvoice, IReceipt, IValue } from '../../interfaces';
+import { IComprobante, ICustomer, IInstrumento, IInvoice, IReceipt, IValue } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -133,8 +133,6 @@ export const App = () => {
     // }
 
 
-  const input1Ref = useRef<HTMLInputElement>(null);
-  const input2Ref = useRef<HTMLInputElement>(null);
   const input3Ref = useRef<HTMLInputElement>(null);
   const input4Ref = useRef<HTMLInputElement>(null);
   const input5Ref = useRef<HTMLInputElement>(null);
@@ -144,12 +142,6 @@ export const App = () => {
   const input0Ref = useRef<HTMLInputElement>(null);
   const input11Ref = useRef<HTMLInputElement>(null);
   const input12Ref = useRef<HTMLInputElement>(null);
-  const input13Ref = useRef<HTMLInputElement>(null);
-  const input14Ref = useRef<HTMLInputElement>(null);
-  const input15Ref = useRef<HTMLInputElement>(null);
-  
-  const input20Ref = useRef<HTMLInputElement>(null);
-  const input21Ref = useRef<HTMLInputElement>(null);
   const inputCusRef = useRef<HTMLInputElement>(null);
   const inputComRef = useRef<HTMLInputElement>(null);
   const inputValRef = useRef<HTMLInputElement>(null);
@@ -183,20 +175,9 @@ export const App = () => {
   const [codValt, setCodValt] = useState('');
   const [codValo, setCodValo] = useState('');
   const [codval, setCodval] = useState('');
-  const [nameVal, setNameVal] = useState('');
-  const [codPart, setCodPart] = useState('');
-  const [codPar, setCodPar] = useState('');
-  const [namePar, setNamePar] = useState('');
   const [userObj, setUserObj] = useState<ICustomer>();
   const [invNum, setInvNum] = useState("");
   const [remNum, setRemNum] = useState("");
-  const [libNum, setLibNum] = useState("");
-  const [folNum, setFolNum] = useState("");
-  const [asiNum, setAsiNum] = useState("");
-  const [asiDat, setAsiDat] = useState("");
-  const [escNum, setEscNum] = useState("");
-  const [asieNum, setAsieNum] = useState("");
-  const [asieDat, setAsieDat] = useState("");
   const [remNumImp, setRemNumImp] = useState('');
   const [invDat, setInvDat] = useState(getTodayInGMT3());
   const [remDat, setRemDat] = useState(getTodayInGMT3());
@@ -207,7 +188,6 @@ export const App = () => {
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
-  const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
   const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
@@ -245,10 +225,19 @@ export const App = () => {
     date: "",
 
   };
-console.log(instrumento);
 
 
-
+void instrumento,
+codValo,
+setUserObj,
+setRemNumImp,
+setRemDat,
+setInstrumento,
+setCustomers,
+valuees,
+totalSubImp,
+taxImp,
+invNumImp;
 
   const [modalOpenCus, setModalOpenCus] = useState(false);
   const [modalOpenIns, setModalOpenIns] = useState(false);
@@ -793,7 +782,7 @@ const handleClickOutside = (e: MouseEvent) => {
               variant="contained"
               sx={{ bgcolor: 'yellow', color: 'black' }}
               onClick={placeCancelInvoiceHandler}
-              disabled={cart.length === 0 || !remDat || !codCus}
+              disabled={cart.length === 0}
             >
               CANCELA
             </Button>
@@ -806,7 +795,7 @@ const handleClickOutside = (e: MouseEvent) => {
               sx={{ bgcolor: 'yellow', color: 'black' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
-              disabled={cart.length === 0 || !codCus || isloading}
+              disabled={cart.length === 0 || !codCom || !codCus || !invDat || isloading}
             >
               GRABA ENTRADA
             </Button>

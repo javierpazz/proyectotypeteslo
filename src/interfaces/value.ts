@@ -4,8 +4,8 @@ export interface IValue {
     desVal: string;
   
     // TODO: agregar createdAt y updatedAt
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 
 
 }

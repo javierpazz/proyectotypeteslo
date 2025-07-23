@@ -37,8 +37,7 @@ inputRef,
 }) => {
 
 
-console.log(codPar);
-
+void  codPar;
   // const [codPar, setCodPar] = useState('');
   const [partes, setPartes] = useState<IParte[]>([]);
 

@@ -36,8 +36,7 @@ nextRef,
 inputRef,
 }) => {
 
-
-console.log(codCon);
+void  codCon;
 
   // const [codUse, setCodUse] = useState('');
   const [configuraciones, setConfiguracions] = useState<IConfiguracion[]>([]);

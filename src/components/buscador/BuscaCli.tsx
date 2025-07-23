@@ -37,7 +37,7 @@ inputRef,
 }) => {
 
 
-  console.log(codCus);
+void  codCus;
 
   // const [codCus, setCodCus] = useState('');
   const [customers, setCustomers] = useState<ICustomer[]>([]);

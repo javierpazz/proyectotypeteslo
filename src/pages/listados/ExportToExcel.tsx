@@ -2,7 +2,26 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
 // export default function exportToExcel(cuentas) {
-export const exportToExcel = (cuentas) => {
+
+interface Movimiento {
+  fecha: string;
+  compDes: string;
+  compNum: number;
+  descripcion: string;
+  total: number;
+  totalBuy: number;
+  saldoAcumulado: number;
+}
+
+interface Cuenta {
+  id_client: string;
+  nombreCliente: string;
+  movimientos: Movimiento[];  // <-- Aquí agregás movimientos
+  saldoTotal: number;
+}
+
+
+export const exportToExcel = (cuentas: Cuenta[]) => {  
       const wb = XLSX.utils.book_new();
     
       // 1. Crear hojas por cliente

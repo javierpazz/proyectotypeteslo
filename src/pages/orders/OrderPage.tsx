@@ -34,7 +34,7 @@ const OrderI:IOrder = {
     id_client : "",
     id_config : "",
     codConNum : 0,
-    codSup : '0',
+    supplier : '0',
     remNum : 0,
     remDat : "",
     invNum : 0,
@@ -58,7 +58,6 @@ export const OrderPage = () => {
  const [order, setOrder] = useState(OrderI);
  const params = useParams();
  const { id } = params;
- console.log(id);
 
 //  useEffect(() => {
 //     if ( !user ) {
@@ -85,7 +84,7 @@ export const OrderPage = () => {
                 id_client      : resp.data.id_client,
                 id_config      : resp.data.id_config,
                 codConNum       : resp.data.codConNum,
-                codSup      : resp.data.codSup,
+                supplier      : resp.data.supplier,
                 remNum      : resp.data.remNum,
                 remDat      : resp.data.remDat,
                 invNum      : resp.data.invNum,
@@ -101,7 +100,6 @@ export const OrderPage = () => {
              });
      
         } catch (error) {
-          console.log(error)
           
         }
        }

@@ -14,6 +14,7 @@ export const AdminNavbarMenu = () => {
   const [anchorElSales, setAnchorElSales] = useState<null | HTMLElement>(null);
   const [anchorElBuys, setAnchorElBuys] = useState<null | HTMLElement>(null);
   const [anchorElCash, setAnchorElCash] = useState<null | HTMLElement>(null);
+  const [anchorElStocks, setAnchorElStocks] = useState<null | HTMLElement>(null);
   const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
   const [anchorElConfi, setAnchorElConfi] = useState<null | HTMLElement>(null);
   const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
@@ -215,7 +216,7 @@ const { user} = useContext(  AuthContext );
         </Menu>
 
         {/* Stocks Ptos Venta */}
-        {/* <Button
+        <Button
           color="primary"
           onClick={handleOpen(setAnchorElStocks)}
         >
@@ -235,7 +236,7 @@ const { user} = useContext(  AuthContext );
             <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElStocks)}>
               Informes
             </MenuItem>
-        </Menu> */}
+        </Menu> 
 
         {/* Admin */}
         <Button

@@ -15,14 +15,14 @@ import {
 } from '@mui/material';
 
 
-import { IComprobante, IConfiguracion, ICustomer,  IEncargado,  IReceipt, ISupplier } from '../../interfaces';
+import {  IConfiguracion, IEncargado,  IReceiptB} from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from "react-to-print";
 
 
-const ReceiptI:IReceipt = {
+const ReceiptI:IReceiptB = {
     _id : '',
     user: '',
     id_client: "",
@@ -59,30 +59,6 @@ export const AppCajIngCon = () => {
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-
-const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
-
-
-
-  // const [nameCus, setNameCus] = useState('');
-  // const [nameCon, setNameCon] = useState('');
-  // const [namePar, setNamePar] = useState('');
-  // const [nameIns, setNameIns] = useState('');
-  // const [nameUse, setNameUse] = useState('');
 
 
 
@@ -114,7 +90,7 @@ const config = {
 useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IReceipt>(`/api/receipts/${ id }`);
+            const resp = await stutzApi.get<IReceiptB>(`/api/receipts/${ id }`);
             setReceipt(resp.data);
             //     _id: resp.data._id,
             //     user: resp.data.user,

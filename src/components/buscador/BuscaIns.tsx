@@ -37,8 +37,7 @@ inputRef,
 }) => {
 
 
-console.log(codIns);
-
+void  codIns, inputRef;
   // const [codUse, setCodUse] = useState('');
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
 

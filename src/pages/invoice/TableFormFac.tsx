@@ -70,18 +70,18 @@ export const TableFormFac: React.FC<TableFormProps> = ({
   // isPaying
 }) => {
 
-  console.log(terminado)
+  void terminado;
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: '649f9b05c4416622ac833792',
-    image: '1740176-00-A_0_2000.jpg',
+    image: '',
     price: 1,
     porIva: 21,
-    medPro: "unidad",
+    medPro: "",
     size: "M",
-    slug: 'mens_chill_crew_neck_sweatshirt',
-    title: 'mens_chill_crew_neck_sweatshirt',
+    slug: '',
+    title: '',
     gender: 'men',
     quantity: 1,
   })
@@ -106,9 +106,7 @@ export const TableFormFac: React.FC<TableFormProps> = ({
   const [miStock, setMiStock] = useState(0);
   // const [showPro, setShowPro] = useState(false);
   const [codProd, setCodProd] = useState('');
-  const [medPro, setMedPro] = useState('');
   // const [venDat, setVenDat] = useState(getTodayInGMT3());
-  const [observ, setObserv] = useState('');
 
   useEffect(() => {
     input8Ref.current.focus()
@@ -193,12 +191,6 @@ export const TableFormFac: React.FC<TableFormProps> = ({
           input8Ref.current.focus()
     }
   };
-  };
-  const terminadoSiNo = (itemInv: ICartProduct) => {
-    input8Ref.current.focus()
-    itemInv.terminado=!itemInv.terminado;
-    addProductToCartEsc( itemInv as ICartProduct )
-    checkterminado();
   };
 
   const removeItemHandler = (itemInv: ICartProduct) => {
@@ -312,7 +304,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
         const linea = cart.find(p => p._id === productRow!._id);
         if (linea) {
-              setObserv(linea.observ!);
+              setQuantity(linea.quantity!);
               setPrice(linea.price);
               }
 
@@ -339,6 +331,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
     setCodPro(selectedProduct!._id);
     setCodProd(product.codigoPro);
     setDesPro(product.title);
+    setPrice(product.price);
     input8Ref.current.focus()
 
     setModalOpen(false);
@@ -397,14 +390,6 @@ const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
 
 
 
-const stockControlFromNumber = (value: number) => {
-  if (value > stock) {
-    toast.error('Este Producto no tiene stock');
-  } else if (stock - value <= miStock) {
-    toast.error('Este Producto tiene Minimo Stock');
-  }
-  setQuantity(value.toString());
-};
 
 
   return (

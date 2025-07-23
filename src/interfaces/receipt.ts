@@ -7,6 +7,7 @@ export interface IReceipt {
     codCon?: IConfiguracion | string;
     id_encarg?: IEncargado | string;
     codSup?: ISupplier | string;
+    codEnc?: IEncargado | string;
     receiptItems: IReceiptItems[];
 
     subTotal     : number;

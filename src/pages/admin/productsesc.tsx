@@ -64,7 +64,9 @@ const columns:GridColDef[] = [
         try {
           const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
           setProducts(resp.data);
-        //   console.log(resp.data);
+          console.log("Escri");
+          console.log(resp.data);
+          console.log("Escri");
         } catch (error) {
           console.log({error})
         }

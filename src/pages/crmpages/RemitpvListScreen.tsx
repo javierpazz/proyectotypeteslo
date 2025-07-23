@@ -39,20 +39,9 @@ export const RemitpvListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codCom = userInfo.filtro.codCom;
-  const codIns = userInfo.filtro.codIns;
   const codCus = userInfo.filtro.codCus;
-  const codPar = userInfo.filtro.codPar;
-  // const codSup = userInfo.filtro.codSup;
-  const codPro = userInfo.filtro.codPro;
-  // const codVal = userInfo.filtro.codVal;
-  // const codCon2 = userInfo.filtro.codCon2;
-  // const codEnc = userInfo.filtro.codEnc;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
-  const estado = userInfo.filtro.estado;
-  const registro = userInfo.filtro.registro;
-  const obser = userInfo.filtro.obser;
       
     
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
@@ -63,7 +52,6 @@ export const RemitpvListScreen = () => {
       try {
           setIsloading(true);
           const resp = await stutzApi.get(`/api/invoices/searchmovS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`);
-          console.log(resp.data)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 

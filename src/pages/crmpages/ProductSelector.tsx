@@ -54,7 +54,7 @@ export const ProductSelector: FC<ProductSelectorProps> = ({ onSelectPro, product
 
   return (
     <div style={{ padding: '10px' }}>
-      <label htmlFor="codeInput">Código de Diligencia:</label>
+      <label htmlFor="codeInput">Código de Producto:</label>
       <input
         id="codeInput"
         ref={inputRef}

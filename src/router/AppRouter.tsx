@@ -26,15 +26,29 @@ import { Order } from '../pages/admin/orders/Order';
 
 
 import { App } from '../pages/invoice/App';
-// import { AppBuy } from '../pages/crmpages/AppBuy';
-// import { AppRem } from '../pages/crmpages/AppRem';
-// import { AppRemBuy } from '../pages/crmpages/AppRemBuy';
-// import { AppRempv } from '../pages/crmpages/AppRempv';
-// import { AppBuyRempv } from '../pages/crmpages/AppBuyRempv';
-// import { AppRec } from '../pages/crmpages/AppRec';
-// import { AppBuyRec } from '../pages/crmpages/AppBuyRec';
-// import { AppCajIng } from '../pages/crmpages/AppCajIng';
-// import { AppCajEgr } from '../pages/crmpages/AppCajEgr';
+import { AppBuy } from '../pages/invoice/AppBuy';
+import { AppRem } from '../pages/invoice/AppRem';
+import { AppRemBuy } from '../pages/invoice/AppRemBuy';
+import { AppRempv } from '../pages/invoice/AppRempv';
+import { AppRemBuypv } from '../pages/invoice/AppRemBuypv';
+import { AppRec } from '../pages/invoice/AppRec';
+import { AppRecBuy } from '../pages/invoice/AppRecBuy';
+import { AppCajIng } from '../pages/invoice/AppCajIng';
+import { AppCajEgr } from '../pages/invoice/AppCajEgr';
+
+import { ProductListPrint } from '../pages/listados/ProductListPrint';
+import { CajaIngEgrListScreen } from '../pages/listados/CajaIngEgrListScreen';
+import { IngEgrListScreen } from '../pages/listados/IngEgrListScreen';
+import { CtaCusListScreen } from '../pages/listados/CtaCusListScreen';
+import { CtaSupListScreen } from '../pages/listados/CtaSupListScreen';
+import { CusProListScreen } from '../pages/listados/CusProListScreen';
+import { SupProListScreen } from '../pages/listados/SupProListScreen';
+import { ProCusListScreen } from '../pages/listados/ProCusListScreen';
+import { ProSupListScreen } from '../pages/listados/ProSupListScreen';
+import { ProiyeListScreen } from '../pages/listados/ProiyeListScreen';
+
+
+
 
 import { AppCon } from '../pages/crmpages/AppCon';
 import { AppBuyCon } from '../pages/crmpages/AppBuyCon';
@@ -62,7 +76,6 @@ import {RemitpvListScreen} from '../pages/crmpages/RemitpvListScreen';
 import {InvoiceBuyListScreen} from '../pages/crmpages/InvoiceBuyListScreen';
 import {RemitBuyListScreen} from '../pages/crmpages/RemitBuyListScreen';
 import {RemitBuypvListScreen} from '../pages/crmpages/RemitBuypvListScreen';
-import {Remits} from '../pages/invoice/Remits';
 import {MesaEntrada} from '../pages/invoice/MesaEntrada';
 import {MesaEntradaAct} from '../pages/invoice/MesaEntradaAct';
 import {MesaEntradaVal} from '../pages/invoice/MesaEntradaVal';
@@ -161,6 +174,27 @@ export const AppRouter = () => {
                             <Route path="/salepoint" element={ <SalePointScreen /> }/>
 
                             <Route path="/admin/invoicer" element={ <App />  }/>
+                            <Route path="/admin/remiter" element={ <AppRem />  }/>
+                            <Route path="/admin/remiterpv" element={ <AppRempv />  }/>
+                            <Route path="/admin/invoicerBuy" element={ <AppBuy />  }/>
+                            <Route path="/admin/remiterBuy" element={ <AppRemBuy />  }/>
+                            <Route path="/admin/remiterBuypv" element={ <AppRemBuypv />  }/>
+                            <Route path="/admin/invoicerRec" element={ <AppRec />  }/>
+                            <Route path="/admin/invoicerBuyRec" element={ <AppRecBuy />  }/>
+                            <Route path="/admin/invoicerCajIng" element={ <AppCajIng />  }/>
+                            <Route path="/admin/invoicerCajEgr" element={ <AppCajEgr />  }/>
+
+                            <Route path="/admin/productsList" element={<ProductListPrint /> }/>
+                            <Route path="/admin/invoicesCajIngEgr" element={ <CajaIngEgrListScreen /> } />
+                            <Route path="/admin/informe/IngEgr" element={ <IngEgrListScreen /> } />
+                            <Route path="/admin/informe/ctacus" element={ <CtaCusListScreen /> } />
+                            <Route path="/admin/informe/ctasup" element={ <CtaSupListScreen /> } />
+                            <Route path="/admin/informe/cuspro" element={ <CusProListScreen /> } />
+                            <Route path="/admin/informe/suppro" element={ <SupProListScreen /> } />
+                            <Route path="/admin/informe/procus" element={ <ProCusListScreen /> } />
+                            <Route path="/admin/informe/prosup" element={ <ProSupListScreen /> } />
+                            <Route path="/admin/informe/proiye" element={ <ProiyeListScreen /> } />
+
 
 
                             <Route path="/admin/invoicerRemCon/:id" element={ <AppRemCon />  }/>
@@ -186,7 +220,7 @@ export const AppRouter = () => {
                             <Route path="/admin/invoicesRec" element={ <ReceiptListScreen /> } />
                             <Route path="/admin/invoicesBuyRec" element={ <ReceiptBuyListScreen /> } />
                             <Route path="/admin/remitsBuypv" element={ <RemitBuypvListScreen /> } />
-                            <Route path="/admin/remiter" element={ <Remits /> } />
+
                             <Route path="/admin/mesaentrada" element={ <MesaEntrada /> } />
                             <Route path="/admin/mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
                             <Route path="/admin/mesaentradaVal/:id" element={ <MesaEntradaVal /> } />

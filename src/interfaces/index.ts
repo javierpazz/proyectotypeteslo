@@ -6,6 +6,7 @@ export * from './dashboard';
 export * from './order';
 export * from './invoice';
 export * from './receipt';
+export * from './receiptB';
 export * from './products';
 export * from './user';
 

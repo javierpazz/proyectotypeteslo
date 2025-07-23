@@ -59,8 +59,8 @@ export const UserAdminPage = () => {
     const [isSaving, setIsSaving] = useState(false);
 
 ////////fg/fg/f/g/////////
-
 const [defaultValues, setDefaultValues] = useState({});
+void defaultValues;
 const [user, setUser] = useState(userI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
@@ -95,7 +95,6 @@ const loadProduct = async() => {
         userI.role='client'
     } else {
 
-        console.log("defaultValues");
         const resp = await stutzApi.get<IUser>(`/api/tes/admin/users/${ id }`);
         userI._id=resp.data._id,
         userI.name=resp.data.name
@@ -108,7 +107,6 @@ const loadProduct = async() => {
         userI.role=resp.data.role
     }
   } catch (error) {
-    console.log(error)
     
   }
   setDefaultValues(userI); // Set default values
@@ -166,7 +164,6 @@ const loadProduct = async() => {
 
 
         } catch (error) {
-            console.log(error);
             setIsSaving(false);
         }
 

@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
 
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
-import { Button, Chip, Grid, Box } from '@mui/material'
+import { Button, Grid, Box } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -40,19 +40,9 @@ export const InvoiceListScreen = () => {
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
   const codCom = userInfo.filtro.codCom;
-  const codIns = userInfo.filtro.codIns;
   const codCus = userInfo.filtro.codCus;
-  const codPar = userInfo.filtro.codPar;
-  // const codSup = userInfo.filtro.codSup;
-  const codPro = userInfo.filtro.codPro;
-  // const codVal = userInfo.filtro.codVal;
-  // const codCon2 = userInfo.filtro.codCon2;
-  // const codEnc = userInfo.filtro.codEnc;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
-  const estado = userInfo.filtro.estado;
-  const registro = userInfo.filtro.registro;
-  const obser = userInfo.filtro.obser;
       
     
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
@@ -63,7 +53,6 @@ export const InvoiceListScreen = () => {
       try {
           setIsloading(true);
           const resp = await stutzApi.get(`/api/invoices/searchinvS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&comprobante=${codCom}`);
-          console.log(resp.data)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 

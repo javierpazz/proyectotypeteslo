@@ -3,9 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Button,
-  Card,
-  CardContent,
-  CardHeader,
   Box,
   Typography,
   Grid,
@@ -20,6 +17,7 @@ import {
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { BuscaSup, BuscaCli, BuscaPro, BuscaCom, BuscaCon, BuscaUse, BuscaEnc, BuscaVal } from '../../components/buscador';
+import { IComprobante } from '../../interfaces';
 
 
 
@@ -55,7 +53,6 @@ export const FiltroCrm = () => {
   const inputSupRef = useRef<HTMLInputElement>(null);
   const inputProRef = useRef<HTMLInputElement>(null);
   const inputCusRef = useRef<HTMLInputElement>(null);
-  const inputParRef = useRef<HTMLInputElement>(null);
   const inputEncRef = useRef<HTMLInputElement>(null);
   const inputValRef = useRef<HTMLInputElement>(null);
 
@@ -72,6 +69,7 @@ export const FiltroCrm = () => {
   const [codCom, setCodCom] = useState('');
   const [codComt, setCodComt] = useState('');
   const [nameCom, setNameCom] = useState('');
+  const [comprob, setComprob] = useState<IComprobante>();
   const [codCon, setCodCon] = useState('');
   const [codCont, setCodCont] = useState('');
   const [nameCon, setNameCon] = useState('');
@@ -84,7 +82,6 @@ export const FiltroCrm = () => {
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
   const [codPar, setCodPar] = useState('');
-  const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
 
   const [firstDat, setFirstDat] = useState(getTodayInGMT3());
@@ -109,14 +106,14 @@ export const FiltroCrm = () => {
   
 
 
-console.log(codCom,
+void codCom,
 nameCom,
 codSup,
 nameSup,
 codEnc,
 nameEnc,
 codVal,
-desVal,);
+desVal;
 
 
 
@@ -334,13 +331,13 @@ desVal,);
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">FILTROS</Typography>
+                    <Typography variant="h1">FILTROS - INFORMES</Typography>
           </Grid>
         </Grid>
    <Grid container spacing={2} mt={0}>
       <Grid item xs={12} md={4}>
             <FormControl fullWidth>
-              <InputLabel id="informe-label">Informe</InputLabel>
+              <InputLabel id="informe-label">Informes</InputLabel>
               <Select
                 labelId="informe-label"
                 id="informe-select"
@@ -349,17 +346,17 @@ desVal,);
               size="small"
                 onChange={handleChange}
               >
-                <MenuItem value="/admin/invoicesCajIngEgr">Caja</MenuItem>
-                <MenuItem value="/admin/informe/IngEgr">Caja Control Ingresos y Retiros Por Encargado</MenuItem>
-                <MenuItem value="/admin/informe/ctacus">Cta Cte Clientes</MenuItem>
-                <MenuItem value="/admin/informe/ctasup">Cta Cte Proveedores</MenuItem>
-                <MenuItem value="/admin/informe/cuspro">Clientes - Productos Vendidos</MenuItem>
-                <MenuItem value="/admin/informe/suppro">Proveedores - Productos Comprados</MenuItem>
-                <MenuItem value="/admin/informe/procus">Productos - Clientes a los que Vendimos</MenuItem>
-                <MenuItem value="/admin/informe/prosup">Productos - Proveedores a los que Compramos</MenuItem>
-                <MenuItem value="/admin/informe/proiye">Productos Ingresos / Egresos</MenuItem>
-                <MenuItem value="/admin/informe/listaprecio">Productos Lista de Precios</MenuItem>
-                <MenuItem value="/admin/informe/stockminimo">Productos con Stock Mínimo</MenuItem>
+                <MenuItem value="/admin/invoicesCajIngEgr">1.- Caja</MenuItem>
+                <MenuItem value="/admin/informe/IngEgr">2.- Caja Control Ingresos y Retiros Por Encargado</MenuItem>
+                <MenuItem value="/admin/informe/ctacus">3.- Cta Cte Clientes</MenuItem>
+                <MenuItem value="/admin/informe/ctasup">4.- Cta Cte Proveedores</MenuItem>
+                <MenuItem value="/admin/informe/cuspro">5.- Clientes - Productos Vendidos</MenuItem>
+                <MenuItem value="/admin/informe/suppro">6.- Proveedores - Productos Comprados</MenuItem>
+                <MenuItem value="/admin/informe/procus">7.- Productos - Clientes a los que Vendimos</MenuItem>
+                <MenuItem value="/admin/informe/prosup">8.- Productos - Proveedores a los que Compramos</MenuItem>
+                <MenuItem value="/admin/informe/proiye">9.- Productos Ingresos / Egresos</MenuItem>
+                <MenuItem value="/admin/productsList">10.- Productos Lista de Precios</MenuItem>
+                <MenuItem value="/admin/productsList">11.- Productos con Stock Mínimo</MenuItem>
               </Select>
             </FormControl>
            </Grid>
@@ -547,6 +544,8 @@ desVal,);
             setCodComt={setCodComt}
             nameCom={nameCom}
             setNameCom={setNameCom}
+            comprob={comprob}
+            setComprob={setComprob}
             nextRef={inputCusRef}
             inputRef={inputComRef} 
             />
