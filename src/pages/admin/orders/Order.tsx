@@ -6,10 +6,10 @@ import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material'
 
 import { ShopLayout } from '../../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../../components/cart';
-import { IOrder } from '../../../interfaces';
+import { IInvoice, IOrder } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 
-const OrderI:IOrder = {
+const OrderI:IInvoice = {
     _id : '',
     user: '',
     orderItems: [],
@@ -31,8 +31,8 @@ const OrderI:IOrder = {
     tax          : 0,
     total        : 0,
     totalBuy : 0,
-    id_client : "",
-    id_config : "",
+    codCus : "",
+    codCon : "",
     codConNum : 0,
     codSup : '0',
     remNum : 0,
@@ -81,10 +81,10 @@ export const Order = () => {
                 tax          : resp.data.tax,
                 total        : resp.data.total,
                 totalBuy     : resp.data.totalBuy,
-                id_client    : resp.data.id_client,
-                id_config      : resp.data.id_config,
+                codCus    : resp.data.id_client,
+                codCon      : resp.data.id_config,
                 codConNum       : resp.data.codConNum,
-                codSup      : resp.data.codSup,
+                codSup      : resp.data.supplier,
                 remNum      : resp.data.remNum,
                 remDat      : resp.data.remDat,
                 invNum      : resp.data.invNum,

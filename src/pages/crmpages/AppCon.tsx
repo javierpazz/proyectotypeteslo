@@ -210,7 +210,7 @@ useEffect(() => {
         <>
         <Box mt={2} display="flex" gap={2} flexWrap="wrap">
           <Button variant="contained" color="primary" onClick={reactToPrintFn}>IMPRIME</Button>
-          <Button variant="outlined" color="secondary" onClick={clearitems}>CANCELA</Button>
+          <Button variant="outlined" color="secondary" onClick={clearitems}>VOLVER</Button>
         </Box>
       <Box ref={contentRef} p={3}>
 

@@ -123,7 +123,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
     }else{
       // setProducto(instRow);
       setCodPro(instRow._id);
-      setCodProt(instRow.codPro);
+      setCodProt(instRow.codigoPro);
       setDesPro(instRow.title);
       };
   };
@@ -131,7 +131,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
   const handleSelectPro = (producto: IProduct) => {
 
     setCodPro(producto._id);
-    setCodProt(producto.codPro);
+    setCodProt(producto.codigoPro);
     setDesPro(producto.title);
 
     setModalOpenPro(false);

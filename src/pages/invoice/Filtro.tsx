@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -15,12 +15,25 @@ import {
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { BuscaPar, BuscaCli, BuscaProEsc, BuscaIns, BuscaCon, BuscaUse } from '../../components/buscador';
+import { AuthContext } from '../../../context';
 
 
 
 export const Filtro = () => {
 
-  const navigate = useNavigate();
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/loginadm?redirect=/admin/filtro');
+        }
+      }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
+
+
+
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
@@ -136,12 +149,12 @@ desVal,);
     lastDat : lastDat,
     codCus : codCus,
     codPar : codPar,
-    // codSup : codSup,
+    codSup : codSup,
     codPro : codPro,
-    // codEnc : codEnc,
-    // codCom : codCom,
+    codEnc : codEnc,
+    codCom : codCom,
     codIns : codIns,
-    // codVal : codVal,
+    codVal : codVal,
     codCon : codCon,
     codUse : codUse,
     nameCus : nameCus,

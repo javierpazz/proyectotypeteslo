@@ -72,7 +72,7 @@ export const ProductsFac = () => {
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IProduct[]>(`/api/products/admin?id_config=${userInfo.codCon}`);
+          const resp = await stutzApi.get<IProduct[]>(`/api/products/admin/tes?id_config=${userInfo.codCon}`);
           setProducts(resp.data);
           console.log("fact");
           console.log(resp.data);
@@ -131,20 +131,24 @@ export const ProductsFac = () => {
         subTitle={'Mantenimiento de Productos'}
         icon={ <CategoryOutlined /> }
     >
+
+
+
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
+        <NavLink to='/admin/precios?redirect=/admin/productsfac' >
+            <Button
+                color="secondary"
+            >
+                Modifica  Precios
+            </Button>
+            </NavLink>            
         <NavLink to='/admin/productsList?redirect=/admin/productsfac' >
             <Button
-                startIcon={ <AddOutlined /> }
                 color="secondary"
             >
                 Lista
             </Button>
             </NavLink>            
-        </Box>
-
-
-
-        <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
         <NavLink to='/admin/productsfac/productfac/new' >
             <Button
                 startIcon={ <AddOutlined /> }

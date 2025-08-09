@@ -42,8 +42,8 @@ const productI: FormData =
           _id: '',
           codPro: '',
           codigoPro: '',
-          description: "diligencia",
-          medPro: "unidad",
+          description: "",
+          medPro: "",
           porIva: 0,
           images: ['img1.jpg','img2.jpg'],
           inStock: 0,
@@ -384,7 +384,7 @@ useEffect(() => {
                         setCodSupt={setCodSupt}
                         nameSup={nameSup}
                         setNameSup={setNameSup}
-                        // nextRef={inputProRef}
+                        nextRef={input1Ref}
                         inputRef={inputSupRef} 
                         />
 

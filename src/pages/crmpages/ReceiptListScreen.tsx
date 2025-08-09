@@ -69,7 +69,7 @@ const unapplyReceipt = async (row: any) => {
       `/api/invoices/${row.recNum}/unapplyrecS`,
       {
         recNum: row.recNum,
-        customer: row.id_client._id,
+        customer: row.id_client,
       },
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -86,6 +86,8 @@ const unapplyReceipt = async (row: any) => {
 
 const prodeleteReceipt = (row: any) => {
   if (window.confirm('Esta seguro de Borrar')) {
+      // console.log(row)
+
       deleteReceipt(row);
       //dr
       unapplyReceipt(row);
@@ -176,6 +178,7 @@ const columns:GridColDef[] = [
         recDat: recibo.recDat ? formatDateNoTZ(recibo.recDat) : '',
         notes: recibo.notes,
         desVal: recibo.desval,
+        id_client  : (recibo.id_client as ICustomer)?._id ?? '',
         nameCus  : (recibo.id_client as ICustomer)?.nameCus ?? '',
         nameUse  : (recibo.user as IUser)?.name ?? '',
         nameCon  : (recibo.id_config as IConfiguracion)?.name ?? '',

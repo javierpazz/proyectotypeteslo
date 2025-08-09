@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -18,12 +18,22 @@ import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { BuscaSup, BuscaCli, BuscaPro, BuscaCom, BuscaCon, BuscaUse, BuscaEnc, BuscaVal } from '../../components/buscador';
 import { IComprobante } from '../../interfaces';
+import { AuthContext } from '../../../context';
 
 
 
 export const FiltroCrm = () => {
 
-  const navigate = useNavigate();
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/loginadm?redirect=/admin/filtrocrm');
+        }
+      }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';

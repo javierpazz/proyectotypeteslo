@@ -220,6 +220,8 @@ const columns:GridColDef[] = [
         recNum    : invoice.recNum,
         recDat: invoice.recDat ? formatDateNoTZ(invoice.recDat) : '',
         notes: invoice.notes,
+        isHaber: invoice.isHaber,
+        orderItems: invoice.orderItems,
         nameSup  : (invoice.supplier as ISupplier)?.name ?? '',
         nameUse  : (invoice.user as IUser)?.name ?? '',
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
@@ -233,7 +235,9 @@ const columns:GridColDef[] = [
         updatedAt: invoice.updatedAt!.substring(0, 10),
     }));
 
-
+    console.log("rows")
+    console.log(rows)
+    console.log("rows")
 
   const parametros = async () => {
     navigate('/admin/filtrocrm?redirect=/admin/invoices');

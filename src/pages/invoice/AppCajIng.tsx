@@ -326,7 +326,7 @@ const handleClickOutside = (e: MouseEvent) => {
     try {
       setIsloading(true);
       // const { data } = await stutzApi.post(
-      await stutzApi.post(
+      const { data } = await stutzApi.post(
         `/api/receipts/caja`,
         {
           receiptItems: receiptB.receiptItems,
@@ -354,6 +354,7 @@ const handleClickOutside = (e: MouseEvent) => {
         }
       );
       setIsloading(false);
+      navigate(`/admin/invoicerCajIngCon/${data.receipt._id}?redirect=/admin/invoicerCajIng`);
 
   } catch (error: any) {
     if (error.response) {
@@ -549,96 +550,6 @@ const handleClickOutside = (e: MouseEvent) => {
     </Box>
         ) : (
           <>
-            <TypedReactToPrint
-              trigger={() => <Button type="button">Print / Download</Button>}
-              content={() => componentRef.current}
-            />
-
-            <Button onClick={() => clearitems()}>Nuevo Entrada</Button>
-
-            {/* Invoice Preview */}
-
-            <div ref={componentRef} className="p-5">
-              <Header handlePrint={handlePrint} />
-
-              <div className="container mt-4">
-      <div className="card border-dark">
-        <div className="card-header bg-dark text-white text-center"></div>
-        <div className="card-body">
-          
-        <div className="card-header text-black text-center">TRABAJO</div>
-        <div className="row">
-            <div className="col-md-6">
-              <p><strong>{userInfo.nameCon}</strong></p>
-              <p><strong>Razon Social:</strong> {userInfo.nameCon}</p>
-              <p><strong>Domicilio Comercial:</strong> {config.address}</p>
-              <p><strong>Condición frente al IVA:</strong> {config.ivaCondition}</p>
-            </div>
-            <div className="col-md-6 ">
-              <p><strong>TRABAJO</strong></p>
-              <p><strong>Punto de Venta:</strong> {config.salePoint}    
-              <strong>     Comp. Nro:</strong> {remNumImp}</p>
-              <p><strong>Fecha de Emision:</strong> {remDat}</p>
-              <p><strong>CUIT:</strong> {config.cuit}</p>
-              <p><strong>Ingresos Brutos:</strong> {config.ib}</p>
-              <p><strong>Fecha de Inicio de Actividades:</strong> {config.feciniact}</p>
-            </div>
-          </div>
-                    <hr />
-            <div className="row">
-              <div className="col-md-6">
-                <p><strong>CUIT:</strong> {userObj!.cuit}</p>
-                <p><strong>Condición IVA:</strong> {userObj!.coniva}</p>
-              </div>
-              <div className="col-md-6">
-                <p><strong>Apellido y Nombre / Razon Social:</strong> {userObj!.nameCus}</p>
-                <p><strong>Dirección:</strong> {userObj!.domcomer}</p>
-              </div>
-          </div>
-
-          </div>
-          { true &&
-          (
-            <div>
-              <table className="table table-bordered mt-3">
-                <thead className="table-dark text-white">
-                  <tr>
-                    <th>#</th>
-                    <th>Descripción</th>
-                    <th className="text-end">Cantidad</th>
-                    <th className="text-end">Unidad</th>
-                    <th className="text-end">Precio</th>
-                    <th className="text-end">Subtotal</th>
-                    <th className="text-end">IVA (%)</th>
-                    <th className="text-end">Subtotal c/IVA</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {receipt.map((item, index) => (
-                    <tr key={item._id}>
-                      <td>{index + 1}</td>
-                      <td>{item.desval}</td>
-                      <td className="text-end">${(item.amountval).toFixed(2)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="text-end">
-                {/* <p><strong>Subtotal:</strong> ${totalSubImp}</p>
-                <p><strong>IVA:</strong> ${taxImp}</p> */}
-                <h5><strong>Total:</strong> ${totalImp}</h5>
-              </div>
-            </div>
-          )}
-
-
-      </div>
-    </div>
-
-
-
-
-            </div>
           </>
         )}
 

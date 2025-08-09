@@ -52,6 +52,7 @@ export const ReceiptBuyListScreen = () => {
       try {
           setIsloading(true);
           const resp = await stutzApi.get(`/api/receipts/searchrecB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
+          console.log(resp.data)
           setIsloading(false);
           setrecibos(resp.data.receipts);
 
@@ -68,7 +69,7 @@ const unapplyReceipt = async (row: any) => {
       `/api/invoices/${row.recNum}/unapplyrecB`,
       {
         recNum: row.recNum,
-        supplier: row.supplier._id,
+        supplier: row.supplier,
       },
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -170,6 +171,7 @@ const columns:GridColDef[] = [
         recDat: recibo.recDat ? formatDateNoTZ(recibo.recDat) : '',
         notes: recibo.notes,
         desVal: recibo.desval,
+        supplier  : (recibo.supplier as ISupplier)?._id ?? '',
         nameSup  : (recibo.supplier as ISupplier)?.name ?? '',
         nameUse  : (recibo.user as IUser)?.name ?? '',
         nameCon  : (recibo.id_config as IConfiguracion)?.name ?? '',

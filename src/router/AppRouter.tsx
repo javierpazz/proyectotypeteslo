@@ -37,6 +37,7 @@ import { AppCajIng } from '../pages/invoice/AppCajIng';
 import { AppCajEgr } from '../pages/invoice/AppCajEgr';
 
 import { ProductListPrint } from '../pages/listados/ProductListPrint';
+import { Precios } from '../pages/invoice/Precios.tsx';
 import { CajaIngEgrListScreen } from '../pages/listados/CajaIngEgrListScreen';
 import { IngEgrListScreen } from '../pages/listados/IngEgrListScreen';
 import { CtaCusListScreen } from '../pages/listados/CtaCusListScreen';
@@ -185,6 +186,7 @@ export const AppRouter = () => {
                             <Route path="/admin/invoicerCajEgr" element={ <AppCajEgr />  }/>
 
                             <Route path="/admin/productsList" element={<ProductListPrint /> }/>
+                            <Route path="/admin/precios" element={<Precios /> }/>
                             <Route path="/admin/invoicesCajIngEgr" element={ <CajaIngEgrListScreen /> } />
                             <Route path="/admin/informe/IngEgr" element={ <IngEgrListScreen /> } />
                             <Route path="/admin/informe/ctacus" element={ <CtaCusListScreen /> } />

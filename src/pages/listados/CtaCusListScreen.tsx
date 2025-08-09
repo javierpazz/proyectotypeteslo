@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { stutzApi } from '../../../api';
 import { AdminLayoutMenuList } from '../../components/layouts';
 import {
@@ -44,9 +44,6 @@ export const CtaCusListScreen = () => {
 
 
   const navigate = useNavigate();
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
-  const page = sp.get('page') || 1;
 
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
@@ -212,7 +209,7 @@ export const CtaCusListScreen = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {cuenta.movimientos.map((mov: any, index: number) => (
+                        {cuenta.movimientos.map((index: number) => (
                           <TableRow key={index} hover>
                           </TableRow>
                         ))}

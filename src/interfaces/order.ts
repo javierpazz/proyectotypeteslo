@@ -37,6 +37,7 @@ export interface IOrder {
     isHaber?    : boolean;
     geRem?    : boolean;
     salbuy?    : string;
+    ordYes?    : string;
 
     libNum? : number;
     folNum? : number;

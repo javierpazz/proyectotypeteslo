@@ -9,71 +9,73 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ISupplier } from '../../interfaces';
+import { IProduct } from '../../interfaces';
 
 
 type BuscaFormProps = {
-  codSup: any;
-  setCodSup: any;
-  codSupt: any;
-  setCodSupt: any;
-  nameSup: any;
-  setNameSup: any;
+  codPro2: any;
+  setCodPro2: any;
+  codProt2: any;
+  setCodProt2: any;
+  desPro2: any;
+  setDesPro2: any;
   nextRef?: React.RefObject<HTMLInputElement>; // <<< opcional
   inputRef?: React.RefObject<HTMLInputElement>
 };
 
 
 
-export const BuscaSup: React.FC<BuscaFormProps> = ({
-codSup,
-setCodSup,
-codSupt,
-setCodSupt,
-nameSup,
-setNameSup,
+export const BuscaPro2: React.FC<BuscaFormProps> = ({
+codPro2,
+setCodPro2,
+codProt2,
+setCodProt2,
+desPro2,
+setDesPro2,
 nextRef,
 inputRef,
 }) => {
 
-
-void  codSup;
+void  codPro2;
 
   // const [codUse, setCodUse] = useState('');
-  const [suppliers, setSuppliers] = useState<ISupplier[]>([]);
-
-  const [modalOpenSup, setModalOpenSup] = useState(false);
+  const [productos, setProductos] = useState<IProduct[]>([]);
+  const [modalOpenPro, setModalOpenPro] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  
+    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
 
   // Cerrar con Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setModalOpenSup(false);
+        setModalOpenPro(false);
       }
     };
 
-    if (modalOpenSup) {
+    if (modalOpenPro) {
       document.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [modalOpenSup]);
+  }, [modalOpenPro]);
 
 
 const handleClickOutside = (e: MouseEvent) => {
   if (modalRef.current && e.target instanceof Node && !modalRef.current.contains(e.target)) {
-    setModalOpenSup(false);
+    setModalOpenPro(false);
   }
 };
 
 
 
   useEffect(() => {
-    if (modalOpenSup) {
+    if (modalOpenPro) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -81,69 +83,69 @@ const handleClickOutside = (e: MouseEvent) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [modalOpenSup]);
-/////////////////consulta supplier
+  }, [modalOpenPro]);
+/////////////////consulta producto
 
-const handleShowSup = () => {
-    setModalOpenSup(true);
-    // const instRow = suppliers.find((row) => row.codIns === codInst);
+const handleShowPro = () => {
+    setModalOpenPro(true);
+    // const instRow = productos.find((row) => row.codPro === codProt);
     // if (instRow) {
     // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
     // };
   };
 
   
-  // const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   e.key === "Tab" && buscarPorCodIns(codInst);
-  //   e.key === "Enter" && buscarPorCodIns(codInst);
-  //   e.key === "F2" && handleShowIns();
+  // const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   e.key === "Enter" && buscarPorCodPro(codProt);
+  //   e.key === "F2" && handleShowPro();
+  //   e.key === "Tab" && buscarPorCodPro(codProt);
   // };
-const ayudaSup = (e: React.KeyboardEvent<HTMLDivElement>) => {
+const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
   if (e.key === "Enter" || e.key === "Tab") {
     e.preventDefault();
-    buscarPorCodSup(codSupt);
+    buscarPorCodPro(codProt2);
     nextRef?.current?.focus(); // <<< si está definida, enfoca el siguiente campo
   }
   if (e.key === "F2") {
     e.preventDefault();
-    handleShowSup();
+    handleShowPro();
   }
 };
   
 
-  const buscarPorCodSup = (codSupt: string) => {
-    const instRow = suppliers.find((row) => row.codSup === codSupt);
+  const buscarPorCodPro = (codPro2t: string) => {
+    // const instRow = productos.find((row) => row.codPro === codProt);
+    const instRow = productos.find((row) => (row.codPro === codPro2t || row.codigoPro === codPro2t));
     if (!instRow) {
-        setCodSup('');
-        setCodSupt('');
-        setNameSup('Elija Proveedor');
+        setCodPro2('');
+        setCodProt2('');
+        setDesPro2('Elija Producto');
     }else{
-      // setSupplier(instRow);
-      setCodSup(instRow._id);
-      setCodSupt(instRow.codSup);
-      setNameSup(instRow.name);
+      // setProducto(instRow);
+      setCodPro2(instRow._id);
+      setCodProt2(instRow.codigoPro);
+      setDesPro2(instRow.title);
       };
   };
 
-  const handleSelectSup = (supplier: ISupplier) => {
+  const handleSelectPro = (producto: IProduct) => {
 
-    setCodSup(supplier._id);
-    setCodSupt(supplier.codSup);
-    setNameSup(supplier.name);
+    setCodPro2(producto._id);
+    setCodProt2(producto.codigoPro);
+    setDesPro2(producto.title);
 
-    setModalOpenSup(false);
+    setModalOpenPro(false);
   };
 
-/////////////////consulta supplier
+/////////////////consulta producto
 
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const { data } = await stutzApi.get(`/api/tes/admin/suppliers`);
-        const { data } = await stutzApi.get(`/api/suppliers`);
-        setSuppliers(data);
+        const { data } = await stutzApi.get(`/api/products/xpv?id_config=${userInfo.codCon}`);
+        setProductos(data);
         setFiltered(data);
       } catch (err) {}
     };
@@ -152,27 +154,25 @@ const ayudaSup = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
   const [search, setSearch] = useState('');
-  const [filtered, setFiltered] = useState(suppliers);
+  const [filtered, setFiltered] = useState(productos);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const inputRef1 = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   
 useEffect(() => {
-  if (modalOpenSup) {
+  if (modalOpenPro) {
     setTimeout(() => {
       inputRef1?.current?.focus();
     }, 100); // pequeño delay para esperar que el input esté renderizado
   }
-}, [modalOpenSup]);
-
-
+}, [modalOpenPro]);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toUpperCase();
     setSearch(value);
-    const result = suppliers.filter(p =>
-      p.codSup.includes(value) || p.name.toLowerCase().includes(value.toLowerCase())
+    const result = productos.filter(p =>
+      p.codPro.includes(value) || p.title.toLowerCase().includes(value.toLowerCase())
     );
     setFiltered(result);
     setHighlightedIndex(0); // Reset al buscar
@@ -186,7 +186,7 @@ useEffect(() => {
     } else if (e.key === 'ArrowUp') {
       setHighlightedIndex(prev => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter') {
-      handleSelectSup(filtered[highlightedIndex]);
+      handleSelectPro(filtered[highlightedIndex]);
     }
   };
 
@@ -216,20 +216,18 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codSupt === '' ? 'Proveedor' : ''}
-              placeholder="Proveedor"
-              // variant="filled"
-              sx={{ mb: 1 }}
-              value={codSupt}
-              onChange={(e) => setCodSupt(e.target.value)}
-              onKeyDown={(e) => ayudaSup(e)}
+              label={codProt2 === '' ? 'Producto' : ''}
+              placeholder="Producto"
+              value={codProt2}
+              onChange={(e) => setCodProt2(e.target.value)}
+              onKeyDown={(e) => ayudaPro(e)}
               required
               autoComplete="off"
             />
           </Grid>
           <Grid item md={1} display="flex" alignItems="center">
             <Button
-              onClick={handleShowSup}
+              onClick={handleShowPro}
               variant="contained"
               startIcon={<BiFileFind />}
               sx={{ bgcolor: 'yellow', color: 'black' }}
@@ -238,18 +236,18 @@ useEffect(() => {
             </Button>
           </Grid>
           <Grid item md={3}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameSup}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameSup}
-      </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              title={desPro2}
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {desPro2}
+            </Typography>
           </Grid>
 
  
@@ -257,7 +255,7 @@ useEffect(() => {
 
 
 
-        <Modal open={modalOpenSup} onClose={() => setModalOpenSup(false)}>
+        <Modal open={modalOpenPro} onClose={() => setModalOpenPro(false)}>
           <Box
             ref={modalRef}
             sx={{
@@ -273,10 +271,10 @@ useEffect(() => {
             }}
           >
             <Box display="flex" justifyContent="flex-end">
-              <Button onClick={() => setModalOpenSup(false)}>X</Button>
+              <Button onClick={() => setModalOpenPro(false)}>X</Button>
             </Box>
     <div style={{ padding: '10px' }}>
-      <label htmlFor="codeInput">Código de Proveedor:</label>
+      <label htmlFor="codeInput">Código de Producto:</label>
       <input
         id="codeInput"
         ref={inputRef1}
@@ -301,8 +299,8 @@ useEffect(() => {
         >
           {filtered.map((p, index) => (
             <li
-              key={p.codSup}
-              onClick={() => handleSelectSup(p)}
+              key={p.codPro}
+              onClick={() => handleSelectPro(p)}
               style={{
                 padding: '6px',
                 cursor: 'pointer',
@@ -310,7 +308,7 @@ useEffect(() => {
                 backgroundColor: index === highlightedIndex ? '#cce5ff' : '#fff'
               }}
             >
-              <strong>{p.codSup}</strong> - {p.name}
+              <strong>{p.codPro}</strong> - {p.title}
             </li>
           ))}
         </ul>

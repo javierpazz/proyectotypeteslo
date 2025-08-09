@@ -102,6 +102,14 @@ const groupByCategory = (products: IProduct[]): GroupedByCategory => {
   const categories = [...new Set(products.map(p => p.category))];
   const suppliers = [...new Set(products.map(p => p.supplier))];
 
+void
+setId_config,
+setSupplierFilter,
+suppliers,
+grouped;
+
+
+
   return (
 
 
@@ -125,7 +133,7 @@ const groupByCategory = (products: IProduct[]): GroupedByCategory => {
           ))}
         </select>
 
-        <label style={{ marginLeft: '1rem' }}>Proovedor: </label>
+        {/* <label style={{ marginLeft: '1rem' }}>Proovedor: </label> */}
 
 
         <label style={{ marginLeft: '1rem' }}>

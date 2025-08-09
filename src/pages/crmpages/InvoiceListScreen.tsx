@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link as MuiLink } from '@mui/material';
+import { Chip, Link as MuiLink } from '@mui/material';
 
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
 import { Button, Grid, Box } from '@mui/material'
@@ -63,75 +63,99 @@ export const InvoiceListScreen = () => {
   }, [ ]);
 
 //do
-// const controlStockHandler = async (row:any) => {
-//   row.orderItems.map((item:any) => stockHandler({ item }));
-// };
+const controlStockHandler = async (row:any) => {
 
-// const stockHandler = async (item:any) => {
-// try {
-//   await stutzApi.put(
-//     `/api/products/upstock/${item.item._id}`,
-//     {
-//       quantitys: item.item.quantity,
-//     },
-//     {
-//       headers: {
-//         authorization: `Bearer ${userInfo.token}`,
-//       },
-//     }
-//   );
-// } catch (err) {
-// }
-// };
+  if (row.isHaber) {
+    row.orderItems.map((item:any) => stockHandlerM({ item }))
+    } else {
+      row.orderItems.map((item:any) => stockHandlerL({ item }))
+    };
+  // invoice.orderItems.map((item) => stockHandler({ item }));
+};
+
+const stockHandlerL = async (item:any) => {
+try {
+  await stutzApi.put(
+    `/api/products/downstock/${item.item._id}`,
+    {
+      quantitys: item.item.quantity,
+    },
+    {
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+  );
+} catch (err) {
+}
+};
+const stockHandlerM = async (item:any) => {
+  try {
+    await stutzApi.put(
+      `/api/products/upstock/${item.item._id}`,
+      {
+        quantitys: item.item.quantity,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+  } catch (err) {
+  }
+  
+  };
+  
 
 //do
 
 
 
-  // const noDelInvoice = async () => {
-  //   if (window.confirm('Este Comprobante tiene un Recibo, Debe primero eliminarlo para continuar'))
-  //   {
-  //   }
-  // };
+  const noDelInvoice = async () => {
+    if (window.confirm('Este Comprobante tiene un Recibo, Debe primero eliminarlo para continuar'))
+    {
+    }
+  };
   
 
 
-  // const deleteHandler = async (row:any) => {
-  //   if (window.confirm('Esta seguro de Borrar?')) {
-  //   if (row.recNum) {
-  //     noDelInvoice();
-  //   } else {
-  //     if (!row.ordYes) {
-  //       //do
-  //       controlStockHandler(row);
-  //       try {
-  //         await stutzApi.delete(`/api/orders/${row.id}`, {
-  //           headers: { Authorization: `Bearer ${userInfo.token}` },
-  //         });
-  //       } catch (err) {
-  //       }
+  const deleteHandler = async (row:any) => {
+    if (window.confirm('Esta seguro de Borrar?')) {
+    if (row.recNum) {
+      noDelInvoice();
+    } else {
+      if (!row.ordYes) {
+        //do
+        controlStockHandler(row);
+        try {
+          await stutzApi.delete(`/api/orders/${row.id}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          });
+        } catch (err) {
+        }
 
-  //       //do
-  //     }
-  //     else {
-  //             try {
-  //               await stutzApi.put(
-  //                 `/api/invoices/${row.id}/deleteinvoice`,
-  //                 {
-  //                   remNum: null,
-  //                   invNum: null,
-  //                 },
-  //                 {
-  //                   headers: { Authorization: `Bearer ${userInfo.token}` },
-  //                 }
-  //               );
-  //             } catch (err) {
-  //             }
+        //do
+      }
+      else {
+              try {
+                await stutzApi.put(
+                  `/api/invoices/${row.id}/deleteinvoice`,
+                  {
+                    remNum: null,
+                    invNum: null,
+                  },
+                  {
+                    headers: { Authorization: `Bearer ${userInfo.token}` },
+                  }
+                );
+              } catch (err) {
+              }
             
-  //         }
-  //   }
-  // }
-  // };
+          }
+    }
+  }
+  };
 
 
 const columns:GridColDef[] = [
@@ -169,19 +193,19 @@ const columns:GridColDef[] = [
     { field: 'nameCon', headerName: 'Punto Venta', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
     { field: 'nameUse', headerName: 'Usuario', width: 200 },
-            //     {
-            //   field: 'check',
-            //   headerName: 'Acción',
-            //   renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-            //     if (true) return null;
-            //     return (
-            //       <Chip variant='outlined' label="Eliminar" color="error"
-            //       onClick={() => deleteHandler(row)}
-            //       />
-            //     )
+                {
+              field: 'check',
+              headerName: 'Acción',
+              renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (user?.role !== 'admin') return null;
+                return (
+                  <Chip variant='outlined' label="Eliminar" color="error"
+                  onClick={() => deleteHandler(row)}
+                  />
+                )
                 
-            //   }
-            // },            
+              }
+            },            
     { field: 'createdAt', headerName: 'Creada en', width: 100 },
     { field: 'updatedAt', headerName: 'Modificada en', width: 100 },
 
@@ -209,6 +233,9 @@ const columns:GridColDef[] = [
         recNum    : invoice.recNum,
         recDat: invoice.recDat ? formatDateNoTZ(invoice.recDat) : '',
         notes: invoice.notes,
+        ordYes: invoice.ordYes,
+        isHaber: invoice.isHaber,
+        orderItems: invoice.orderItems,
         nameCus  : (invoice.id_client as ICustomer).nameCus,
         nameUse  : (invoice.user as IUser)?.name ?? '',
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
