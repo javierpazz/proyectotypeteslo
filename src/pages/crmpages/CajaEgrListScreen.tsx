@@ -31,6 +31,9 @@ export const CajaEgrListScreen = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/reciptspv');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
@@ -65,6 +68,7 @@ export const CajaEgrListScreen = () => {
 const prodeleteReceipt = (row:any) => {
   if (window.confirm('Are you sure to delete?')) {
       deleteReceipt(row);
+      window.location.reload();
 
     }
   };

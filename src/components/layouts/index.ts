@@ -5,5 +5,6 @@ export * from './AdminLayoutMenu';
 export * from './AdminLayoutMenuList';
 
 export * from './ShopLayout';
+export * from './ShopLayoutInv';
 export * from './AuthLayout';
 

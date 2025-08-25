@@ -56,7 +56,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/partes');
+        navigate('/auth/loginadm?redirect=/admin/partes');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -67,7 +70,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IParte[]>('/api/tes/admin/partes');
+          const resp = await stutzApi.get<IParte[]>('/api/tes/partes/admin');
           setPartes(resp.data);
         } catch (error) {
           console.log({error})
@@ -95,7 +98,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/partes/${id}`);
+        await stutzApi.delete(`/api/tes/partes/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

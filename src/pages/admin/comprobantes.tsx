@@ -57,7 +57,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/comprobantes');
+        navigate('/auth/loginadm?redirect=/admin/comprobantes');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG

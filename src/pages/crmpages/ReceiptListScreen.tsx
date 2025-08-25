@@ -31,6 +31,9 @@ export const ReceiptListScreen = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoicesRec');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
@@ -93,6 +96,7 @@ const prodeleteReceipt = (row: any) => {
       unapplyReceipt(row);
       // buscar todas loock at the invoices that have a receipt and modify de numRec by nul
       //dr
+      window.location.reload();
 
     }
   };

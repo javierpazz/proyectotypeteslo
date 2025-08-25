@@ -35,7 +35,10 @@ export const ValorAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/valores');
+        navigate('/auth/loginadm?redirect=/admin/valores');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -77,7 +80,7 @@ const loadProduct = async() => {
         valorI.codVal= "",
         valorI.desVal= ""
     } else {
-        const resp = await stutzApi.get<IValue>(`/api/tes/admin/valores/${ id }`);
+        const resp = await stutzApi.get<IValue>(`/api/tes/valores/admin/${ id }`);
         valorI._id=resp.data._id,
         valorI.codVal=resp.data.codVal,
         valorI.desVal=resp.data.desVal
@@ -120,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/valores', form)
+                await stutzApi.patch('/api/tes/valores/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/valores', form)
+                await stutzApi.post('/api/tes/valores/admin', form)
             }
 
             if ( !form._id ) {

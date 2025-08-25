@@ -31,6 +31,9 @@ export const InvoiceListScreen = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoices');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
@@ -132,6 +135,7 @@ const stockHandlerM = async (item:any) => {
           await stutzApi.delete(`/api/orders/${row.id}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
+      window.location.reload();
         } catch (err) {
         }
 

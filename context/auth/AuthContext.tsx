@@ -11,7 +11,7 @@ interface ContextProps {
     
     loginUser: (email: string, password: string) => Promise<boolean>;
     loginUserAdm: (email: string, password: string) => Promise<boolean>;
-    registerUser: (name: string, email: string, password: string) => Promise<{ hasError: boolean; message?: string; }>;
+    registerUser: (name: string, email: string, password: string, punto: string) => Promise<{ hasError: boolean; message?: string; }>;
     registerUserAdm: (name: string, email: string, password: string) => Promise<{ hasError: boolean; message?: string; }>;
     logout: () => void;
 }

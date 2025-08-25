@@ -75,6 +75,9 @@ export const AppRempvCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/remitspv');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import {  CategoryOutlined, LoginOutlined, VpnKeyOutlined } from "@mui/icons-material"
+import {  AccountCircleOutlined, CategoryOutlined, ConfirmationNumberOutlined, LoginOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { AuthContext, UiContext } from "../../../context";
 
 
@@ -56,7 +56,7 @@ export const SideMenu = () => {
                     isLoggedIn && (
                         <>
 
-                {/* <ListItem button>
+                <ListItem button>
                     <ListItemIcon>
                         <AccountCircleOutlined/>
                     </ListItemIcon>
@@ -70,7 +70,7 @@ export const SideMenu = () => {
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Mis Ordenes'} />
-                </ListItem> */}
+                </ListItem>
                 </>
                     )
                 }

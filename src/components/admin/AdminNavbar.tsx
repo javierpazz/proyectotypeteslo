@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 
 import { AppBar, Box, Button, Link, Toolbar, Typography } from '@mui/material';
+import foto from '../../assets/escribania.jpg';
 
 
 import { UiContext } from '../../../context';
@@ -12,7 +13,19 @@ export const AdminNavbar = () => {
     
 
     return (
-        <AppBar>
+        <>
+            <div
+                    >
+
+        <AppBar
+                                 style={{
+                        backgroundImage: `url(${foto})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundAttachment: 'fixed',
+                        // minHeight: '100vh',
+                        }}
+>
             <Toolbar>
                 <NavLink to="/">
                     <Link display='flex' alignItems='center'>
@@ -29,5 +42,7 @@ export const AdminNavbar = () => {
 
             </Toolbar>
         </AppBar>
+            </div> 
+        </>
     )
 }

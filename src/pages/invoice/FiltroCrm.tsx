@@ -32,6 +32,9 @@ export const FiltroCrm = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/filtrocrm');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
   const { search } = useLocation();

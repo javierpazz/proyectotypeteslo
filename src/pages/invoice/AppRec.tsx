@@ -1,9 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import {Header} from './Header';
 // import { toast } from 'react-toastify';
 import {TableFormRec} from './TableFormRec';
 import { AuthContext, ReceiptContext } from '../../../context';
-import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
@@ -12,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICustomer, IInstrumento, IReceipt, IValue } from '../../interfaces';
+import { ICustomer, IReceipt, IValue } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -34,6 +32,9 @@ export const AppRec = () => {
     useEffect(() => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoicerRec');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -115,9 +116,6 @@ export const AppRec = () => {
   const [codVal, setCodVal] = useState('');
   const [codValo, setCodValo] = useState('');
   const [codval, setCodval] = useState('');
-  const [userObj, setUserObj] = useState<ICustomer>();
-  const [remNumImp, setRemNumImp] = useState('');
-  const [remDat, setRemDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState("");
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   const [desval, setDesval] = useState('');
@@ -125,7 +123,6 @@ export const AppRec = () => {
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
-  const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
   const [notes, setNotes] = useState('');
@@ -133,37 +130,10 @@ export const AppRec = () => {
   const [amountTotVal, setAmountTotVal] = useState(0);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
   const [showInvoice, setShowInvoice] = useState(false);
 
   const [isloading, setIsloading] = useState(false);
-  const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
-void
-codComt,
-codValo,
-codval,
-setUserObj,
-setRemNumImp,
-setRemDat,
-valueeR,
-setInstrumento,
-setCustomers,
-valuees,
-setTotalImp,
-instrumento;
-
 
 
 
@@ -171,6 +141,13 @@ instrumento;
   const [modalOpenIns, setModalOpenIns] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
+void
+codComt,
+codValo,
+codval,
+valueeR,
+setCustomers,
+valuees;
 
   // Cerrar con Escape
   useEffect(() => {
@@ -222,12 +199,6 @@ const handleClickOutside = (e: MouseEvent) => {
 
 
 
-  const componentRef = useRef<HTMLDivElement | null>(null);
-  const TypedReactToPrint = ReactToPrint as unknown as React.FC<any>;
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   useEffect(() => {
     const calculateAmountval = () => {
@@ -513,7 +484,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={placeReceiptHandler}
               disabled={receipt.length === 0 || !codCus || !recDat || isloading}
             >
-              GRABA ENTRADA
+              GRABA RECIBO
             </Button>
             {isloading && <FullScreenLoading />}
           </Grid>

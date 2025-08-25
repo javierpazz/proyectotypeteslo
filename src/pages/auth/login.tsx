@@ -31,6 +31,38 @@ export const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false);
 
+  const filtro = {
+    // firstDat : getTodayInGMT3(),
+    // lastDat : getTodayInGMT3(),
+    firstDat : "0001-01-01",
+    lastDat : "3000-01-01",
+    codCus : '',
+    codPar : '',
+    codSup : '',
+    codPro : '',
+    codEnc : '',
+    codCom : '',
+    codIns : '',
+    codVal : '',
+    codCon : '',
+    codUse : '',
+    nameCus : 'Todos',
+    nameCon : 'Todos',
+    nameUse : 'Todos',
+    nameSup : 'Todos',
+    desPro : 'Todos',
+    nameIns : 'Todos',
+    namePar : 'Todos',
+    nameCom : 'Todos',
+    desVal : 'Todos',
+    nameEnc : 'Todos',
+    order : 'newest',
+    estado : 'TOD',
+    registro : 'TOD',
+    obser : '',
+  };
+
+
 
     const onLoginUser = async({email, password}: FormData) => {
         setShowError(false);
@@ -52,6 +84,21 @@ export const Login = () => {
             return;
         }        
     
+        const punto = localStorage.getItem('punto');
+        const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+        ? JSON.parse(localStorage.getItem('userInfo')!)
+        : {};
+
+        console.log('punto')
+        console.log(punto)
+        console.log(userInfo)
+        console.log('punto')
+          userInfo.filtro = filtro;
+          userInfo.codCon = punto;
+          userInfo.user = userInfo.user;
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+
         // Todo: navegar a la pantalla que el usuario estaba
         // navigate('/salepoint');
         navigate(redirect || '/');

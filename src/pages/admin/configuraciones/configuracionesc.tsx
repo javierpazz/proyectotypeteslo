@@ -54,7 +54,10 @@ export const ConfiguracionEscAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/configuracionesesc');
+        navigate('/auth/loginadm?redirect=/admin/configuracionesesc');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -106,7 +109,7 @@ const loadProduct = async() => {
         configuracionI.numIntCaj= 0
         configuracionI.numIntMov= 0
     } else {
-        const resp = await stutzApi.get<IConfiguracion>(`/api/tes/admin/configuraciones/${ id }`);
+        const resp = await stutzApi.get<IConfiguracion>(`/api/tes/configurations/admin/${ id }`);
         configuracionI._id=resp.data._id,
         configuracionI.codCon=resp.data.codCon,
         configuracionI.name=resp.data.name
@@ -158,10 +161,11 @@ const loadProduct = async() => {
         
         setIsSaving(true);
         try {
+            console.log(form)
             if (form._id){
-                await stutzApi.put('/api/tes/admin/configuraciones', form)
+                await stutzApi.patch('/api/tes/configurations/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/configuraciones', form)
+                await stutzApi.post('/api/tes/configurations/admin', form)
             }
 
             if ( !form._id ) {

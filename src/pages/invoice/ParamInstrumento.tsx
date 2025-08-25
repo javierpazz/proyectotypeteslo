@@ -42,6 +42,9 @@ export const ParamInstrumento = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/mesaen/paraminstrumento');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 

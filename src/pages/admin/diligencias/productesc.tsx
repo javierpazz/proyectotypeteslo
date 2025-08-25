@@ -63,7 +63,10 @@ export const ProductEscAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productsesc');
+        navigate('/auth/loginadm?redirect=/admin/productsesc');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -108,7 +111,8 @@ const loadProduct = async() => {
         productI.createdAt= '',
         productI.updatedAt= ''
     } else {
-        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ title!.toString() }`);
+        // const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ title!.toString() }`);
+        const resp = await stutzApi.get<IProduct>(`/api/tes/products/admin/${ title!.toString() }`);
         productI._id=resp.data._id,
         productI.codPro=resp.data.codPro,
         productI.codigoPro=resp.data.codigoPro,
@@ -157,9 +161,11 @@ const loadProduct = async() => {
 
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/productsesc', form)
+                // await stutzApi.patch('/api/tes/productsesc/admin', form)
+                await stutzApi.patch('/api/tes/products/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/productsesc', form)
+                // await stutzApi.post('/api/tes/productsesc/admin', form)
+                await stutzApi.post('/api/tes/products/admin', form)
             }
             // console.log(data);
 

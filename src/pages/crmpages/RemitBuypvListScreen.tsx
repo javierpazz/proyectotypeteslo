@@ -31,6 +31,9 @@ export const RemitBuypvListScreen = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/remitsBuypv');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
@@ -92,6 +95,7 @@ try {
         await stutzApi.delete(`/api/invoices/${row.id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
+      window.location.reload();
       } catch (err) {
       }
     }

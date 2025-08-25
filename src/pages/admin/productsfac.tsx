@@ -59,7 +59,10 @@ export const ProductsFac = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productosfac');
+        navigate('/auth/loginadm?redirect=/admin/productosfac');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG

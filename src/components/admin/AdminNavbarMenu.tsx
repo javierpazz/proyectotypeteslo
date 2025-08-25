@@ -2,6 +2,7 @@ import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AuthContext, UiContext } from '../../../context';
+import foto from '../../assets/escribania.jpg';
 
 // export default function AdminNavBar() {
 export const AdminNavbarMenu = () => {
@@ -35,12 +36,23 @@ export const AdminNavbarMenu = () => {
 ////////////////////FGFGFGFG
 const { user} = useContext(  AuthContext );      
 ////////////////////FGFGFGFG
-
+console.log("user")
+console.log(user)
+console.log("user")
 // TODO
 
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="primary"
+                             style={{
+                        backgroundImage: `url(${foto})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundAttachment: 'fixed',
+                        // minHeight: '100vh',
+                        }}
+
+    >
       {/* <Toolbar sx={{ justifyContent: 'flex-end' }}> */}
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Usuario cliente */}

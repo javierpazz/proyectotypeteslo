@@ -57,7 +57,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/customers');
+        navigate('/auth/loginadm?redirect=/admin/customers');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -68,7 +71,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<ICustomer[]>('/api/tes/admin/customers');
+          const resp = await stutzApi.get<ICustomer[]>('/api/tes/customers/admin');
           setCustomers(resp.data);
         } catch (error) {
           console.log({error})
@@ -96,7 +99,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/customers/${id}`);
+        await stutzApi.delete(`/api/tes/customers/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

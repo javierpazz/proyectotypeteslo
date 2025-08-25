@@ -57,6 +57,9 @@ export const AppRecCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoices');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 

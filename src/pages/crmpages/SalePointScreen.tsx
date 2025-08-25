@@ -77,7 +77,8 @@ export const SalePointScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await stutzApi.get(`/api/configurations/admin`, {
+        // const result = await stutzApi.get(`/api/tes/configurations/admin`, {
+        const result = await stutzApi.get(`/api/tes/configurations`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         
@@ -133,7 +134,7 @@ const handleChange = (event: SelectChangeEvent<string>) => {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
     };
     // navigate('/admin/dashboard');
-    navigate('/admin/entradas');
+    navigate('/factura');
     window.location.reload();
   };
   

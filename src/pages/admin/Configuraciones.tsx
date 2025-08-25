@@ -58,6 +58,9 @@ const columns:GridColDef[] = [
         if (!user && !isLoading) {
         navigate('/auth/login?redirect=/admin/configuraciones');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
@@ -66,7 +69,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/admin/configuraciones');
+          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/configurations/admin');
           setConfiguraciones(resp.data);
         } catch (error) {
           console.log({error})

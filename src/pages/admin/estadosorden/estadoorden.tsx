@@ -35,7 +35,10 @@ export const EstadoordenAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/estadosorden');
+        navigate('/auth/loginadm?redirect=/admin/estadosorden');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -77,7 +80,7 @@ const loadProduct = async() => {
         estadoordenI.note= "",
         estadoordenI.name= ""
     } else {
-        const resp = await stutzApi.get<IEstadoOrden>(`/api/tes/admin/estadosorden/${ id }`);
+        const resp = await stutzApi.get<IEstadoOrden>(`/api/tes/estadosorden/admin/${ id }`);
         estadoordenI._id=resp.data._id,
         estadoordenI.note=resp.data.note,
         estadoordenI.name=resp.data.name
@@ -120,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/estadosorden', form)
+                await stutzApi.patch('/api/tes/estadosorden/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/estadosorden', form)
+                await stutzApi.post('/api/tes/estadosorden/admin', form)
             }
 
             if ( !form._id ) {

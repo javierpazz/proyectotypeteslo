@@ -57,6 +57,9 @@ export const AppCajIngCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoicesCajIng');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 

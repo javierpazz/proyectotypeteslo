@@ -18,9 +18,42 @@ type FormData = {
 export const Register = () => {
     const navigate = useNavigate();
     const { registerUser } = useContext( AuthContext );
+    const [punto, setPunto] = useState(localStorage.getItem('punto'));
 
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
+
+  const filtro = {
+    // firstDat : getTodayInGMT3(),
+    // lastDat : getTodayInGMT3(),
+    firstDat : "0001-01-01",
+    lastDat : "3000-01-01",
+    codCus : '',
+    codPar : '',
+    codSup : '',
+    codPro : '',
+    codEnc : '',
+    codCom : '',
+    codIns : '',
+    codVal : '',
+    codCon : '',
+    codUse : '',
+    nameCus : 'Todos',
+    nameCon : 'Todos',
+    nameUse : 'Todos',
+    nameSup : 'Todos',
+    desPro : 'Todos',
+    nameIns : 'Todos',
+    namePar : 'Todos',
+    nameCom : 'Todos',
+    desVal : 'Todos',
+    nameEnc : 'Todos',
+    order : 'newest',
+    estado : 'TOD',
+    registro : 'TOD',
+    obser : '',
+  };
 
     const [showError, setShowError] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState('');
@@ -28,7 +61,7 @@ export const Register = () => {
 
     const onRegisterForm = async({name, email, password}: FormData) => {
         setShowError(false);
-        const { hasError, message } = await registerUser(name, email, password);
+        const { hasError, message } = await registerUser(name, email, password, punto!);
         
         // try {
         //     const {data} = await stutzApi.post('/user/register', {name, email, password});
@@ -47,7 +80,23 @@ export const Register = () => {
             setTimeout(() => setShowError(false), 3000);
             return;
         }
+
+        const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+        ? JSON.parse(localStorage.getItem('userInfo')!)
+        : {};
         
+        console.log('punto')
+        console.log(punto)
+        console.log(userInfo)
+        console.log('punto')
+          userInfo.filtro = filtro;
+          userInfo.codCon = punto;
+          userInfo.user = userInfo.user;
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+
+
+
         // Todo: navegar a la pantalla que el usuario estaba
         navigate ("/");
 

@@ -29,6 +29,10 @@ export const Filtro = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/filtro');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
+
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 

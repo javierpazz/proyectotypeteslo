@@ -58,7 +58,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/configuraciones');
+        navigate('/auth/loginadm?redirect=/admin/configuraciones');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -68,7 +71,9 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/admin/configuraciones');
+        //   const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/admin/configuraciones');
+          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/configurations/admin');
+          
           setConfiguraciones(resp.data);
         } catch (error) {
           console.log({error})
@@ -97,7 +102,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/configuraciones/${id}`);
+        await stutzApi.delete(`/api/tes/configurations/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

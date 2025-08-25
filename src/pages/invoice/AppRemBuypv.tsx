@@ -1,9 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import {Header} from './Header';
 // import { toast } from 'react-toastify';
 import {TableFormFacBuy} from './TableFormFacBuy';
 import { AuthContext, CartContext, ReceiptContext } from '../../../context';
-import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
@@ -12,7 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICustomer, IInstrumento, IInvoice, IReceipt, IValue } from '../../interfaces';
+import { ICustomer, IInvoice, IReceipt, IValue } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -34,6 +32,9 @@ export const AppRemBuypv = () => {
     useEffect(() => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/remiterBuypv');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
@@ -165,11 +166,9 @@ export const AppRemBuypv = () => {
   const [codVal, setCodVal] = useState('');
   const [codValo, setCodValo] = useState('');
   const [codval, setCodval] = useState('');
-  const [userObj, setUserObj] = useState<ICustomer>();
   const [movpvNum, setMovpvNum]= useState("");
   const [movpvDat, setMovpvDat] = useState(getTodayInGMT3());
   const [invNum, setInvNum] = useState("");
-  const [remNumImp, setRemNumImp] = useState('');
   const [invDat, setInvDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState(0);
   const [recDat, setRecDat] = useState(getTodayInGMT3());
@@ -178,7 +177,6 @@ export const AppRemBuypv = () => {
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
-  const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
   const [codPro, setCodPro] = useState('');
@@ -193,56 +191,33 @@ export const AppRemBuypv = () => {
   const [amountval, setAmountval] = useState(0);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
   const [showInvoice, setShowInvoice] = useState(false);
   const [geRem, setGeRem] = useState(false);
-  const [totalSubImp, setTotalSubImp] = useState(0);
-  const [taxImp, setTaxImp] = useState(0);
-  const [invNumImp, setInvNumImp] = useState(0);
-
+  
   const [isPaying, setIsPaying] = useState(false);
   const [isloading, setIsloading] = useState(false);
-  const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
-void
-codComt,
-codValo,
-codval,
-setUserObj,
-setRemNumImp,
-valueeR,
-setInstrumento,
-setCustomers,
-valuees,
-setTotalImp,
-codVal,
-invNum,
-setRecNum,
-setRecDat,
-totalSubImp,
-taxImp,
-invNumImp,
-setCodCom,
-setInvDat,
-setGeRem,
-instrumento;
-
+  
 
 
   const [modalOpenCus, setModalOpenCus] = useState(false);
   const [modalOpenIns, setModalOpenIns] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+
+void
+codComt,
+codValo,
+codval,
+valueeR,
+setCustomers,
+valuees,
+codVal,
+invNum,
+setRecNum,
+setRecDat,
+setCodCom,
+setInvDat,
+setGeRem;
 
 
   // Cerrar con Escape
@@ -294,13 +269,6 @@ const handleClickOutside = (e: MouseEvent) => {
 /////////////////consulta instrumento
 
 
-
-  const componentRef = useRef<HTMLDivElement | null>(null);
-  const TypedReactToPrint = ReactToPrint as unknown as React.FC<any>;
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   useEffect(() => {
     const calculateAmountval = () => {
@@ -513,17 +481,6 @@ const handleClickOutside = (e: MouseEvent) => {
       setIsloading(false);
 
       setIsPaying(false);
-      setInvNumImp(data.invoice.invNum);
-      setTotalSubImp(data.invoice.subTotal);
-      setTaxImp(data.invoice.tax);
-      setTotalImp(data.invoice.total);
-      // setDesval('');
-      // setDesVal('');
-      // setRecNum('');
-      // setRecDat('');
-      // setNumval(' ');
-      // setAmountval(0);
-      //navigate(`/order/${data.order._id}`);
       navigate(`/admin/invoicerBuyRempvCon/${data.invoice._id}?redirect=/admin/remiterbuypv`);
     } catch (error: any) {
     // Capturar errores HTTP u otros
@@ -700,7 +657,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={placeInvoiceHandler}
               disabled={cart.length === 0 || !movpvNum || !movpvDat || !codCon || isloading}
             >
-              GRABA ENTRADA
+              GRABA RECEPCION
             </Button>
             {isloading && <FullScreenLoading />}
           </Grid>

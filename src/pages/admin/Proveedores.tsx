@@ -55,7 +55,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/proveedores');
+        navigate('/auth/loginadm?redirect=/admin/proveedores');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -65,7 +68,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<ISupplier[]>('/api/tes/admin/proveedores');
+          const resp = await stutzApi.get<ISupplier[]>('/api/tes/proveedores/admin');
           setProveedores(resp.data);
         } catch (error) {
           console.log({error})
@@ -93,7 +96,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/proveedores/${id}`);
+        await stutzApi.delete(`/api/tes/proveedores/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

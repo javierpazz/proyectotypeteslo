@@ -47,7 +47,10 @@ export const UserAdminPage = () => {
 
     useEffect(() => {
         if (!user1 && !isLoading) {
-        navigate('/auth/login?redirect=/admin/users');
+        navigate('/auth/loginadm?redirect=/admin/users');
+        }
+        if (user1?.role === "client" ) {
+        navigate('/');
         }
     }, [user1, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -95,7 +98,7 @@ const loadProduct = async() => {
         userI.role='client'
     } else {
 
-        const resp = await stutzApi.get<IUser>(`/api/tes/admin/users/${ id }`);
+        const resp = await stutzApi.get<IUser>(`/api/tes/users/admin/${ id }`);
         userI._id=resp.data._id,
         userI.name=resp.data.name
         userI.email=resp.data.email
@@ -149,9 +152,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/users', form)
+                await stutzApi.patch('/api/tes/users/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/users', form)
+                await stutzApi.post('/api/tes/users/admin', form)
             }
 
             if ( !form._id ) {

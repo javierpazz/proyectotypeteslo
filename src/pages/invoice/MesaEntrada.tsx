@@ -39,6 +39,9 @@ export const MesaEntrada = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/mesaentrada');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
     

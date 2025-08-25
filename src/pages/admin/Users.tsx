@@ -19,17 +19,20 @@ export const Users = () => {
 
 
     ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user : user1, isLoading } = useContext(AuthContext);
     const [ userRole, setUserRole ] = useState("");
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/users');
+        if (!user1 && !isLoading) {
+        navigate('/auth/loginadm?redirect=/admin/users');
         }
-        setUserRole(user!.role);
-    }, [user, isLoading, navigate]);
+        if (user1?.role === "client" ) {
+        navigate('/');
+        }
+        setUserRole(user1!.role);
+    }, [user1, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
     const [ users, setUsers ] = useState<IUser[]>([]);
@@ -38,7 +41,7 @@ export const Users = () => {
     // const { data, error } = useSWR<IUser[]>('/api/admin/users');
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IUser[]>('/api/tes/admin/users');
+          const resp = await stutzApi.get<IUser[]>('/api/tes/users/admin');
           setUsers(resp.data);
         //   console.log(resp.data);
         } catch (error) {
@@ -65,7 +68,7 @@ export const Users = () => {
 
         try {
             
-            await stutzApi.put('/api/tes/admin/users', {  userId, role: newRole });
+            await stutzApi.put('/api/tes/users/admin', {  userId, role: newRole });
 
         } catch (error) {
             setUsers( previosUsers );
@@ -181,13 +184,14 @@ export const Users = () => {
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/users/${id}`);
+        await stutzApi.delete(`/api/tes/users/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }
     }
   };
 
+    if ( !users ) return (<></>);
 
   return (
     <AdminLayoutMenuList 

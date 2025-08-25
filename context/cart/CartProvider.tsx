@@ -14,6 +14,9 @@ export interface CartState {
     tax: number;
     total: number;
     shippingAddress?: ShippingAddress;
+    id_config: string;
+    id_client: string;
+
 }
 
 
@@ -31,7 +34,9 @@ const CART_INITIAL_STATE: CartState = {
     subTotal: 0,
     tax: 0,
     total: 0,
-    shippingAddress: undefined
+    shippingAddress: undefined,
+    id_config: "",
+    id_client: ""
 }
 
 
@@ -257,6 +262,8 @@ export const CartProvider:FC<Props> = ({ children }) => {
             subTotal: state.subTotal,
             tax: state.tax,
             total: state.total,
+            id_config: localStorage.getItem('punto')!,
+            id_client: localStorage.getItem('cliente')!,
             isPaid: false,
             totalBuy: 0,
             shippingPrice: 0,

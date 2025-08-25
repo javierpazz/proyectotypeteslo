@@ -51,7 +51,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/encargados');
+        navigate('/auth/loginadm?redirect=/admin/encargados');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -61,7 +64,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IEncargado[]>('/api/tes/admin/encargados');
+          const resp = await stutzApi.get<IEncargado[]>('/api/tes/encargados/admin');
           setEncargados(resp.data);
         } catch (error) {
           console.log({error})
@@ -85,7 +88,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/encargados/${id}`);
+        await stutzApi.delete(`/api/tes/encargados/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

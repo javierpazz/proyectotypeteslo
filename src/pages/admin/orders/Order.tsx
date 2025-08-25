@@ -1,5 +1,5 @@
-import {  useState, useEffect } from 'react';
-import {  useParams } from 'react-router-dom';
+import {  useState, useEffect, useContext } from 'react';
+import {  useNavigate, useParams } from 'react-router-dom';
 
 import {  Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
 import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
@@ -8,6 +8,7 @@ import { ShopLayout } from '../../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../../components/cart';
 import { IInvoice, IOrder } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
+import { AuthContext } from '../../../../context';
 
 const OrderI:IInvoice = {
     _id : '',
@@ -52,7 +53,7 @@ const OrderI:IInvoice = {
 
 export const Order = () => {
 
-
+    const navigate = useNavigate()
     
 //  const { user } = useContext(  AuthContext );
  const [order, setOrder] = useState(OrderI);
@@ -64,6 +65,20 @@ export const Order = () => {
 //         navigate (`/auth/login?p=/orders/${ id }`);
 //     }
 //     }, [])
+
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    
+    useEffect(() => {
+        if (!user && !isLoading) {
+            // navigate('/auth/loginadm?redirect=/admin/instrumentos');
+            navigate (`/auth/loginadm?p=/orders/${ id }`);
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
 
  useEffect(() => {
     const loadProduct = async() => {
@@ -110,7 +125,13 @@ export const Order = () => {
 
     const { shippingAddress } = order;
 //////
- 
+
+  const generaInv = async () => {
+    navigate(`/admin/invoicerord/${id}?redirect=/admin/orders`);
+  };
+
+
+
 //   if ( !order ) {
 //     navigate (`/orders/history`);
 //     }
@@ -145,6 +166,32 @@ export const Order = () => {
 
     )
 }
+
+{
+    (order.invNum! > 0)
+    ? (
+
+        
+                <Chip 
+                    sx={{ my: 2 }}
+                    label={`Facturada ${order.codConNum}-${order.invNum}`}
+                    variant='outlined'
+                    color="success"
+                    icon={ <CreditScoreOutlined /> }
+                />
+    ):(
+                <Chip 
+                    sx={{ my: 2 }}
+                    label="Facturar"
+                    variant='outlined'
+                    color="error"
+                    onClick={generaInv}
+                    icon={ <CreditCardOffOutlined /> }
+                />
+
+    )
+}
+
 
         <Grid container>
             <Grid item xs={ 12 } sm={ 7 }>

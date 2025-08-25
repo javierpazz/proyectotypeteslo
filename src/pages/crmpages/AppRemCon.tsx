@@ -75,6 +75,9 @@ export const AppRemCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/remits');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 
@@ -97,18 +100,18 @@ export const AppRemCon = () => {
 //  const { user } = useContext(  AuthContext );
  const [invoice, setInvoice] = useState(OrderI);
  const params = useParams();
- const { id } = params;
+ const {id} = params;
 
 //  useEffect(() => {
 //     if ( !user ) {
-//         navigate (`/auth/login?p=/orders/${ id }`);
+//         navigate (`/auth/login?p=/orders/${id}`);
 //     }
 //     }, [])
 
  useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+            const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${id}`);
             setInvoice({
                 _id: resp.data._id,
                 user: resp.data.user,
@@ -178,6 +181,12 @@ useEffect(() => {
 
 
 
+  const generaInv = async () => {
+    navigate(`/admin/invoicerrem/${id}?redirect=/admin/remits`);
+  };
+
+
+
   return (
     <>
       {/* <Helmet>
@@ -205,6 +214,12 @@ useEffect(() => {
         <>
         <Box mt={2} display="flex" gap={2} flexWrap="wrap">
           <Button variant="contained" color="primary" onClick={reactToPrintFn}>IMPRIME</Button>
+          <Button 
+            variant="contained"
+            color="primary"
+            disabled={invoice.invNum !== 0}
+            onClick={generaInv}>GENERA COMPROBANTE
+          </Button>
           <Button variant="outlined" color="secondary" onClick={clearitems}>VOLVER</Button>
         </Box>
       <Box ref={contentRef} p={3}>

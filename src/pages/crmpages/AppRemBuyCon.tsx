@@ -75,6 +75,9 @@ export const AppRemBuyCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/remitsBuy');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 

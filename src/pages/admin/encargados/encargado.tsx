@@ -35,7 +35,10 @@ export const EncargadoAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/encargados');
+        navigate('/auth/loginadm?redirect=/admin/encargados');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -77,7 +80,7 @@ const loadProduct = async() => {
         encargadoI.codEnc= "",
         encargadoI.name= ""
     } else {
-        const resp = await stutzApi.get<IEncargado>(`/api/tes/admin/encargados/${ id }`);
+        const resp = await stutzApi.get<IEncargado>(`/api/tes/encargados/admin/${ id }`);
         encargadoI._id=resp.data._id,
         encargadoI.codEnc=resp.data.codEnc,
         encargadoI.name=resp.data.name
@@ -120,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/encargados', form)
+                await stutzApi.patch('/api/tes/encargados/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/encargados', form)
+                await stutzApi.post('/api/tes/encargados/admin', form)
             }
 
             if ( !form._id ) {

@@ -10,6 +10,7 @@ interface ContextProps {
     tax: number;
     total: number;
     shippingAddress?: ShippingAddress,
+    id_config: string,
     // Methods
     addProductToCart: (product: ICartProduct) => void;
     addProductToCartEsc: (product: ICartProduct) => void;

@@ -44,7 +44,10 @@ export const ParteAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/partes');
+        navigate('/auth/loginadm?redirect=/admin/partes');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -90,7 +93,7 @@ const loadProduct = async() => {
         parteI.cuit= "",
         parteI.coniva= ""
     } else {
-        const resp = await stutzApi.get<IParte>(`/api/tes/admin/partes/${ id }`);
+        const resp = await stutzApi.get<IParte>(`/api/tes/partes/admin/${ id }`);
         parteI._id=resp.data._id,
         parteI.codPar=resp.data.codPar,
         parteI.name=resp.data.name,
@@ -137,9 +140,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/partes', form)
+                await stutzApi.patch('/api/tes/partes/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/partes', form)
+                await stutzApi.post('/api/tes/partes/admin', form)
             }
 
             if ( !form._id ) {

@@ -76,7 +76,10 @@ export const ProductFacAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productsfac');
+        navigate('/auth/loginadm?redirect=/admin/productsfac');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -111,6 +114,9 @@ useEffect(() => {
       if (title === 'new') {
         setProduct(productI);
         reset(productI);
+            setCodSup('');
+            setCodSupt('');
+            setNameSup('Elija Proveedor');        
       } else {
         const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${title}`);
         const cleanData: FormData = {
@@ -120,8 +126,17 @@ useEffect(() => {
         };
         setProduct(cleanData);
         reset(cleanData);
-
-      }
+            // Inicializar estados de BuscaSup
+            if (typeof data.supplier !== 'string' && data.supplier) {
+                setCodSup(data.supplier._id);
+                setCodSupt(data.supplier.codSup || '');
+                setNameSup(data.supplier.name || '');
+            } else {
+                setCodSup('');
+                setCodSupt('');
+                setNameSup('Elija Proveedor');
+            }
+            }
     } catch (error) {
       console.error('Error loading product:', error);
     }
@@ -209,7 +224,7 @@ useEffect(() => {
                             sx={{ mb: 1 }}
                             { ...register('codigoPro', {
                                 required: 'Este campo es requerido',
-                                minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                minLength: { value: 1, message: 'Mínimo 1 caracter' }
                             })}
                             error={ !!errors.codigoPro }
                             helperText={ errors.codigoPro?.message }
@@ -221,7 +236,7 @@ useEffect(() => {
                             sx={{ mb: 1 }}
                             { ...register('codPro', {
                                 required: 'Este campo es requerido',
-                                minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                minLength: { value: 1, message: 'Mínimo 1 caracter' }
                             })}
                             error={ !!errors.codPro }
                             helperText={ errors.codPro?.message }
@@ -234,7 +249,7 @@ useEffect(() => {
                                 sx={{ mb: 1 }}
                                 { ...register('title', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
                                 })}
                                 error={ !!errors.title }
                                 helperText={ errors.title?.message }
@@ -247,7 +262,7 @@ useEffect(() => {
                                 sx={{ mb: 1 }}
                                 { ...register('medPro', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
                                 })}
                                 error={ !!errors.medPro }
                                 helperText={ errors.medPro?.message }
@@ -259,7 +274,7 @@ useEffect(() => {
                                 sx={{ mb: 1 }}
                                 { ...register('description', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
                                 })}
                                 error={ !!errors.description }
                                 helperText={ errors.description?.message }
@@ -272,7 +287,7 @@ useEffect(() => {
                                 sx={{ mb: 1 }}
                                 { ...register('category', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
                                 })}
                                 error={ !!errors.category }
                                 helperText={ errors.category?.message }
@@ -288,7 +303,7 @@ useEffect(() => {
                                 sx={{ mb: 1 }}
                                 { ...register('brand', {
                                     required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
                                 })}
                                 error={ !!errors.brand }
                                 helperText={ errors.brand?.message }

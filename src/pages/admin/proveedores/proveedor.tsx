@@ -44,7 +44,10 @@ export const ProveedorAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/proveedores');
+        navigate('/auth/loginadm?redirect=/admin/proveedores');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -90,7 +93,7 @@ const loadProduct = async() => {
         supplierI.cuit= ""
         supplierI.coniva= ""
     } else {
-        const resp = await stutzApi.get<ISupplier>(`/api/tes/admin/proveedores/${ id }`);
+        const resp = await stutzApi.get<ISupplier>(`/api/tes/proveedores/admin/${ id }`);
         supplierI._id=resp.data._id,
         supplierI.codSup=resp.data.codSup,
         supplierI.name=resp.data.name
@@ -137,9 +140,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/proveedores', form)
+                await stutzApi.patch('/api/tes/proveedores/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/proveedores', form)
+                await stutzApi.post('/api/tes/proveedores/admin', form)
             }
 
             if ( !form._id ) {

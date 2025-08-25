@@ -55,7 +55,10 @@ export const Instrumentos = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/instrumentos');
+        navigate('/auth/loginadm?redirect=/admin/instrumentos');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -66,7 +69,7 @@ export const Instrumentos = () => {
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IInstrumento[]>('/api/tes/admin/instrumentos');
+          const resp = await stutzApi.get<IInstrumento[]>('/api/tes/instrumentos/admin');
           setInstrumentos(resp.data);
         } catch (error) {
           console.log({error})
@@ -91,7 +94,7 @@ export const Instrumentos = () => {
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/admin/instrumentos/${id}`);
+        await stutzApi.delete(`/api/tes/instrumentos/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

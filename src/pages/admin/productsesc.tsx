@@ -52,7 +52,10 @@ const columns:GridColDef[] = [
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/productosesc');
+        navigate('/auth/loginadm?redirect=/admin/productosesc');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -62,7 +65,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
+          const resp = await stutzApi.get<IProduct[]>('/api/tes/products/admin');
           setProducts(resp.data);
           console.log("Escri");
           console.log(resp.data);
@@ -97,7 +100,8 @@ const columns:GridColDef[] = [
     if (window.confirm('Esta Seguro de Eliminar?')) {
         console.log(id)
         try {
-        await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
+        // await stutzApi.delete(`/api/tes/productsesc/admin/${id}`);
+        await stutzApi.delete(`/api/tes/products/admin/${id}`);
         window.location.reload();
     } catch (err) {
       }

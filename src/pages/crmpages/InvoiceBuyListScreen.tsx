@@ -31,6 +31,9 @@ export const InvoiceBuyListScreen = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoicesBuy');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
@@ -127,6 +130,8 @@ const noDelInvoice = async () => {
         await stutzApi.delete(`/api/invoices/${row.id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
+      window.location.reload();
+
       } catch (err) {
       }
       }

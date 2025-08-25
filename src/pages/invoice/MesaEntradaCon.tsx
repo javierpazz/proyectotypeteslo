@@ -75,6 +75,9 @@ export const MesaEntradaCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/mesaentradaCon');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 
@@ -199,6 +202,11 @@ useEffect(() => {
   };
 
 
+  const generaInv = async () => {
+    navigate(`/admin/invoicerins/${id}?redirect=/admin/entradas`);
+  };
+
+
   return (
     <>
       {/* <Helmet>
@@ -228,6 +236,12 @@ useEffect(() => {
   <Button variant="contained" color="primary" onClick={reactToPrintFn}>IMPRIME</Button>
   <Button variant="contained" color="secondary" onClick={actualiza}>ACTUALIZA</Button>
   <Button variant="contained" color="secondary" onClick={valoriza}>VALORIZA</Button>
+          <Button 
+            variant="contained"
+            color="primary"
+            disabled={invoice.invNum !== 0}
+            onClick={generaInv}>GENERA COMPROBANTE
+          </Button>
   {/* <Button variant="outlined" color="success">EXCEL</Button> */}
   {/* <Button variant="outlined" color="error">BORRA ENTRADA</Button> */}
   <Button variant="outlined" color="secondary" onClick={clearitems}>CANCELA</Button>

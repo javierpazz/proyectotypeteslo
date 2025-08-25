@@ -35,7 +35,10 @@ export const InstrumentoAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/instrumentos');
+        navigate('/auth/loginadm?redirect=/admin/instrumentos');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -77,7 +80,7 @@ const loadProduct = async() => {
         instrumentoI.codIns= "",
         instrumentoI.name= ""
     } else {
-        const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
+        const resp = await stutzApi.get<IInstrumento>(`/api/tes/instrumentos/admin/${ id }`);
         instrumentoI._id=resp.data._id,
         instrumentoI.codIns=resp.data.codIns,
         instrumentoI.name=resp.data.name
@@ -120,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/instrumentos', form)
+                await stutzApi.patch('/api/tes/instrumentos/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/instrumentos', form)
+                await stutzApi.post('/api/tes/instrumentos/admin', form)
             }
 
             if ( !form._id ) {

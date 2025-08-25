@@ -23,11 +23,22 @@ export const AdminLayoutMenu:FC<Props> = ({ children, title, subTitle, icon }) =
 
         <SideMenu />
 
-        <main style={{
+        {/* <main style={{
             // margin: '80px auto',
-            maxWidth: '1440px',
-            padding: '0px 30px'
-        }}>
+            // maxWidth: '1440px',
+            // padding: '0px 30px'
+        }}> */}
+
+        <main
+            style={{
+            backgroundColor: '#dedbdbff', // gris
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            minHeight: '100vh', // opcional, para ocupar toda la pantalla
+            }}
+        >
+
 
             {/* <Box display="flex" flexDirection='column'>
                 <Typography variant='h1' component='h1'>

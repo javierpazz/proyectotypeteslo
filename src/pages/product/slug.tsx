@@ -144,13 +144,13 @@ const onAddProduct = () => {
              
                 
                 />
-                <SizeSelector 
+                {/* <SizeSelector 
                   // selectedSize={ product.sizes[2] } 
                   sizes={ product.sizes as ISize[]}
                   selectedSize={ tempCartProduct.size }
                   onSelectedSize={selectedSize}
 
-                />
+                /> */}
               </Box>
   
   

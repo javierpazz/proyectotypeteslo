@@ -29,13 +29,18 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer( authReducer, AUTH_INITIAL_STATE );
 
+/////pasar moongose    useEffect(() => {
+/////pasar moongose        checkToken();
+/////pasar moongose    }, [])
     useEffect(() => {
         checkToken();
     }, [])
 
     const checkToken = async() => {
 
-        if ( !Cookies.get('token') ) {
+/////pasar moongose        // if ( !Cookies.get('token') ) {
+        if ( !localStorage.getItem('userInfo') ) {
+            console.log("cukies")
             dispatch({ type: '[Auth] - Logout' });
             return;
         }
@@ -84,8 +89,16 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     }
 
 
-    const registerUser = async( name: string, email: string, password: string ): Promise<{hasError: boolean; message?: string}> => {
+    const registerUser = async( name: string, email: string, password: string, punto: string ): Promise<{hasError: boolean; message?: string}> => {
         try {
+
+/////pasar moongose            await stutzApi.post(`/api/customers/signup`,
+/////pasar moongose            {
+/////pasar moongose            nameCus: name,
+/////pasar moongose            emailCus: email,
+/////pasar moongose            punto
+/////pasar moongose            });
+
             const { data } = await stutzApi.post('api/tes/user/register', { name, email, password });
             const { token, user } = data;
             Cookies.set('token', token );
@@ -135,8 +148,15 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     }
     
     const logout = () => {
+
+        localStorage.removeItem('punto');
+        localStorage.removeItem('puntonum');
+        localStorage.removeItem('nameCon');
+        localStorage.removeItem('userInfo');
+
         Cookies.remove('token');
         Cookies.remove('cart');
+        Cookies.remove('receipt');
         // router.reload();
         navigate('/')
         window.location.reload();

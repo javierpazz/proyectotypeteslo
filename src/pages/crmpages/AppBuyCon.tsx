@@ -76,6 +76,9 @@ export const AppBuyCon = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoicesBuy');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 

@@ -13,7 +13,9 @@ import { CartPage } from '../pages/cart/CartPage';
 import {Men} from './../pages/category/Men';
 import {Women} from './../pages/category/Women';
 import {Kid} from './../pages/category/Kid';
-import { Stutz } from '../pages/Stutz';
+import { Invoice } from '../pages/Invoice.tsx';
+import { Ecommerce } from '../pages/Ecommerce.tsx';
+import { Blanco } from '../pages/Blanco';
 // import { AuthContext } from '../../context';
 import {OrderPage} from '../pages/orders/OrderPage';
 import { Dashboard } from '../pages/admin/Dashboard';
@@ -23,8 +25,11 @@ import { ProductAdminPage } from '../pages/admin/products/product';
 import { Orders } from '../pages/admin/Orders';
 import { Order } from '../pages/admin/orders/Order';
 
+  
 
-
+import { AppInvOrd } from '../pages/invoice/AppInvOrd';
+import { AppInvRem } from '../pages/invoice/AppInvRem';
+import { AppInvIns } from '../pages/invoice/AppInvIns';
 import { App } from '../pages/invoice/App';
 import { AppBuy } from '../pages/invoice/AppBuy';
 import { AppRem } from '../pages/invoice/AppRem';
@@ -123,19 +128,19 @@ import { stutzApi } from '../../api';
 export const AppRouter = () => {
 
 
-  useEffect(() => {
-    const cargado = localStorage.getItem('punto');
-    if (!cargado) {
+//   useEffect(() => {
+//     const cargado = localStorage.getItem('punto');
+//     if (!cargado) {
 
-    const fetchData = async () => {
-      const { data } = await stutzApi.get(`/api/configurations/`);
-      localStorage.setItem('punto', data[0]._id);
-      localStorage.setItem('puntonum', data[0].codCon);
-      localStorage.setItem('nameCon', data[0].name);
-    }
-    fetchData();
-    }
-  }, []);
+//     const fetchData = async () => {
+//       const { data } = await stutzApi.get(`/api/configurations/`);
+//       localStorage.setItem('punto', data[0]._id);
+//       localStorage.setItem('puntonum', data[0].codCon);
+//       localStorage.setItem('nameCon', data[0].name);
+//     }
+//     fetchData();
+//     }
+//   }, []);
 
 
 
@@ -159,7 +164,9 @@ export const AppRouter = () => {
                     )
                     : (
                         <> */}
-                            <Route path="/" element={ <Stutz /> } />
+                            <Route path="/" element={ <Invoice /> } />
+                            {/* <Route path="/" element={ <Ecommerce /> } /> */}
+                            <Route path="/factura" element={ <Blanco /> } />
                             <Route path="/category/men" element={ <Men /> } />
                             <Route path="/category/women" element={ <Women /> } />
                             <Route path="/category/kid" element={ <Kid /> } />
@@ -174,6 +181,9 @@ export const AppRouter = () => {
 
                             <Route path="/salepoint" element={ <SalePointScreen /> }/>
 
+                            <Route path="/admin/invoicerord/:id" element={ <AppInvOrd />  }/>
+                            <Route path="/admin/invoicerrem/:id" element={ <AppInvRem />  }/>
+                            <Route path="/admin/invoicerins/:id" element={ <AppInvIns />  }/>
                             <Route path="/admin/invoicer" element={ <App />  }/>
                             <Route path="/admin/remiter" element={ <AppRem />  }/>
                             <Route path="/admin/remiterpv" element={ <AppRempv />  }/>

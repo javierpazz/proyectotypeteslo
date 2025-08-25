@@ -44,7 +44,10 @@ export const CustomerAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/customers');
+        navigate('/auth/loginadm?redirect=/admin/customers');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
@@ -90,7 +93,7 @@ const loadProduct = async() => {
         customerI.cuit= ""
         customerI.coniva= ""
     } else {
-        const resp = await stutzApi.get<ICustomer>(`/api/tes/admin/customers/${ id }`);
+        const resp = await stutzApi.get<ICustomer>(`/api/tes/customers/admin/${ id }`);
         customerI._id=resp.data._id,
         customerI.codCus=resp.data.codCus,
         customerI.nameCus=resp.data.nameCus
@@ -137,9 +140,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.put('/api/tes/admin/customers', form)
+                await stutzApi.patch('/api/tes/customers/admin', form)
             }else{
-                await stutzApi.post('/api/tes/admin/customers', form)
+                await stutzApi.post('/api/tes/customers/admin', form)
             }
 
             if ( !form._id ) {

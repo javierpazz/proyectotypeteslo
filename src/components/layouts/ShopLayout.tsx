@@ -20,16 +20,6 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
   return (
     <>
 
-        <div
-            style={{
-            backgroundImage: `url(${foto})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-            minHeight: '100vh',
-            }}
-        >
-
         <div>
             <title>{ title }</title>
 
@@ -65,8 +55,6 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
         <footer>
             {/* TODO: mi custom footer */}
         </footer>
-
-            </div> 
     </>
   )
 }

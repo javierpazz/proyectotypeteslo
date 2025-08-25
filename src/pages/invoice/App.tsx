@@ -1,9 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import {Header} from './Header';
 // import { toast } from 'react-toastify';
 import {TableFormFac} from './TableFormFac';
 import { AuthContext, CartContext, ReceiptContext } from '../../../context';
-import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
@@ -14,12 +12,12 @@ import {
   Checkbox,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { IComprobante, ICustomer, IInstrumento, IInvoice, IReceipt, IValue } from '../../interfaces';
+import { IComprobante, ICustomer, IInvoice, IReceipt, IValue } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
-import { BuscaCom, BuscaCli, BuscaVal } from '../../components/buscador';
+import { BuscaCom, BuscaCli, BuscaValInv } from '../../components/buscador';
 
 // const getError = (error:any) => {
 //   return error.response && error.response.data.message
@@ -32,12 +30,15 @@ export const App = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
-
     useEffect(() => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/invoicer');
         }
-    }, [user, isLoading, navigate]);
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
+
+      }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
     
 
@@ -147,12 +148,9 @@ export const App = () => {
   const inputValRef = useRef<HTMLInputElement>(null);
 
 
-  const codConNum = userInfo.configurationObj.codCon;
-  // const id_config = userInfo.codCon;
-  // const [isHaber, setIsHaber] = useState();
-  // const [noDisc, setNoDisc] = useState(false);
-  // const [toDisc, setToDisc] = useState(true);
-  // const [itDisc, setItDisc] = useState(false);
+  // const codConNum = userInfo.configurationObj.codCon;
+const codConNum = userInfo?.configurationObj?.codCon ?? 0;
+
 
   const getTodayInGMT3 = () => {
     const now = new Date();
@@ -175,10 +173,8 @@ export const App = () => {
   const [codValt, setCodValt] = useState('');
   const [codValo, setCodValo] = useState('');
   const [codval, setCodval] = useState('');
-  const [userObj, setUserObj] = useState<ICustomer>();
   const [invNum, setInvNum] = useState("");
   const [remNum, setRemNum] = useState("");
-  const [remNumImp, setRemNumImp] = useState('');
   const [invDat, setInvDat] = useState(getTodayInGMT3());
   const [remDat, setRemDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState(0);
@@ -188,7 +184,6 @@ export const App = () => {
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
-  const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
   const [codPro, setCodPro] = useState('');
@@ -203,46 +198,24 @@ export const App = () => {
   const [amountval, setAmountval] = useState(0);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
   const [showInvoice, setShowInvoice] = useState(false);
   const [geRem, setGeRem] = useState(false);
-  const [totalSubImp, setTotalSubImp] = useState(0);
-  const [taxImp, setTaxImp] = useState(0);
-  const [invNumImp, setInvNumImp] = useState(0);
 
   const [isPaying, setIsPaying] = useState(false);
   const [isloading, setIsloading] = useState(false);
-  const config = {
-    salePoint: userInfo.configurationObj.codCon,
-    name: userInfo.configurationObj.name,
-    cuit: userInfo.configurationObj.cuit,
-    address: userInfo.configurationObj.domcomer,
-    ivaCondition: userInfo.configurationObj.coniva,
-    ib: userInfo.configurationObj.ib,
-    feciniact: userInfo.configurationObj.feciniact,
-    invoiceNumber: "",
-    date: "",
-
-  };
 
 
-void instrumento,
-codValo,
-setUserObj,
-setRemNumImp,
-setRemDat,
-setInstrumento,
-setCustomers,
-valuees,
-totalSubImp,
-taxImp,
-invNumImp;
 
   const [modalOpenCus, setModalOpenCus] = useState(false);
   const [modalOpenIns, setModalOpenIns] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
+void 
+  codValo,
+  setRemDat,
+  setCustomers,
+  valuees;
 
   // Cerrar con Escape
   useEffect(() => {
@@ -294,12 +267,7 @@ const handleClickOutside = (e: MouseEvent) => {
 
 
 
-  const componentRef = useRef<HTMLDivElement | null>(null);
-  const TypedReactToPrint = ReactToPrint as unknown as React.FC<any>;
 
-  const handlePrint = () => {
-    window.print();
-  };
 
   useEffect(() => {
     const calculateAmountval = () => {
@@ -365,11 +333,11 @@ const handleClickOutside = (e: MouseEvent) => {
 
   const placeInvoiceHandler = async () => {
       if (window.confirm('Esta seguro de Grabar?')) {
-      if (isPaying && (!recNum || !recDat || !desVal)) {
+      if (!isPaying && ( !recDat || !desVal)) {
         unloadpayment();
       } else {
         
-        if (remDat && codCus) {
+        if (invDat && codCus) {
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
           invoice.subTotal = round2(
             cart.reduce((a, c) => a + c.quantity * c.price, 0)
@@ -397,9 +365,9 @@ const handleClickOutside = (e: MouseEvent) => {
           invoice.codSup = undefined;
           invoice.remNum = +remNum;
           invoice.remDat = remDat;
-          invoice.dueDat = dueDat;
           invoice.invNum = +invNum;
           invoice.invDat = invDat;
+          invoice.dueDat = dueDat;
           invoice.recNum = 0;
           // invoice.recDat = null;
           invoice.recDat = undefined;
@@ -469,17 +437,10 @@ const handleClickOutside = (e: MouseEvent) => {
       setIsloading(false);
 
       setIsPaying(false);
-      setInvNumImp(data.invoice.invNum);
-      setTotalSubImp(data.invoice.subTotal);
-      setTaxImp(data.invoice.tax);
-      setTotalImp(data.invoice.total);
-      // setDesval('');
-      // setDesVal('');
-      // setRecNum('');
-      // setRecDat('');
-      // setNumval(' ');
-      // setAmountval(0);
-      //navigate(`/order/${data.order._id}`);
+      // setInvNumImp(data.invoice.invNum);
+      // setTotalSubImp(data.invoice.subTotal);
+      // setTaxImp(data.invoice.tax);
+      // setTotalImp(data.invoice.total);
       navigate(`/admin/invoicerCon/${data.invoice._id}?redirect=/admin/invoicer`);
 
     } catch (error: any) {
@@ -693,13 +654,17 @@ const handleClickOutside = (e: MouseEvent) => {
 
       <Box border={1} p={2} borderRadius={2} mt={1}>
         <Grid container spacing={2} >
-            <BuscaVal
+            <BuscaValInv
             codVal={codVal}
             setCodVal={setCodVal}
+            valueeR={valueeR}
+            setValueeR={setValueeR}
             codValt={codValt}
             setCodValt={setCodValt}
             desVal={desVal}
             setDesVal={setDesVal}
+            desval={desval}
+            setDesval={setDesval}
             nextRef={input12Ref}
             inputRef={inputValRef} 
             />
@@ -799,7 +764,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={placeInvoiceHandler}
               disabled={cart.length === 0 || !codCom || !codCus || !invDat || isloading}
             >
-              GRABA ENTRADA
+              GRABA COMPROBANTE
             </Button>
             {isloading && <FullScreenLoading />}
           </Grid>

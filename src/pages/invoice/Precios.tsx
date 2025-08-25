@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Button,
@@ -7,6 +7,10 @@ import {
   Typography,
   Grid,
   TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 import { AdminLayoutMenu } from '../../components/layouts';
@@ -27,12 +31,12 @@ export const Precios = () => {
         if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/precios');
         }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
 
 
 
@@ -40,7 +44,10 @@ export const Precios = () => {
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 
+
+    
   const [id_config, setId_config] = useState(userInfo.codCon);
+  const [punto, setPunto] = useState("inicio");
 
   const input9Ref = useRef<HTMLInputElement>(null);
   const inputSupRef = useRef<HTMLInputElement>(null);
@@ -65,8 +72,34 @@ export const Precios = () => {
   
   const [category, setCategory] = useState('');
   const [width] = useState(641);
+  const [categories, setCategories] = useState([]);
 
-  
+  useEffect(() => {
+    
+    if (punto==="inicio") {
+    if (id_config) {
+        setPunto(id_config); // <-- actualizamos el estado después de setItem
+    };
+    }
+  }, []);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        // const { data } = await axios.get(`${API}/api/products/categories?configuracion=${(localStorage.getItem('punto'))}`);
+        const { data } = await stutzApi.get(`/api/products/categories?configuracion=${punto}`);
+        setCategories(data);
+        console.log(data);
+      } catch (err) {
+      }
+    };
+    if (punto!=="inicio") {
+    fetchCategories();
+    }
+  }, [punto]);
+
+
 
   useEffect(() => {
     if (window.innerWidth < width) {
@@ -118,9 +151,8 @@ if (window.confirm('El porcentaje tiene que ser mayor a Cero')) {
 
 
 
-void 
-codSup,
-nameSup;
+void
+setId_config;
 
 
   return (
@@ -142,6 +174,8 @@ nameSup;
           </Grid>
         </Grid>
 
+
+
         <Grid container spacing={2} mt={0}>
 
 
@@ -156,7 +190,31 @@ nameSup;
             inputRef={inputSupRef} 
             />
 
+
               <Grid item md={6}>
+
+                  <FormControl fullWidth >
+                    <InputLabel id="Categoria">Categoria</InputLabel>
+                    <Select
+                      labelId="Categoria"
+                      id="category"
+                      size="small"
+                      value={category}
+                      label="Categoria"
+                      onChange={(e) => setCategory(e.target.value)}
+                      >
+                      <MenuItem value="">Todas</MenuItem>
+                      {categories.map((cat) => (
+                        <MenuItem key={cat} value={cat}>
+                          {cat}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+            </Grid>
+
+
+              {/* <Grid item md={6}>
                 <TextField
                   fullWidth
                   inputRef={inputCatRef}
@@ -167,7 +225,7 @@ nameSup;
                   onChange={(e) => setCategory(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && inputProRef.current?.focus()}
                 />
-              </Grid>
+              </Grid> */}
 
 
 
