@@ -111,8 +111,7 @@ const loadProduct = async() => {
         productI.createdAt= '',
         productI.updatedAt= ''
     } else {
-        // const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ title!.toString() }`);
-        const resp = await stutzApi.get<IProduct>(`/api/tes/products/admin/${ title!.toString() }`);
+        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ title!.toString() }`);
         productI._id=resp.data._id,
         productI.codPro=resp.data.codPro,
         productI.codigoPro=resp.data.codigoPro,
@@ -160,12 +159,12 @@ const loadProduct = async() => {
         
 
         try {
+            form.codigoPro = form.codPro;
+
             if (form._id){
-                // await stutzApi.patch('/api/tes/productsesc/admin', form)
-                await stutzApi.patch('/api/tes/products/admin', form)
+                await stutzApi.put('/api/tes/admin/productsesc', form)
             }else{
-                // await stutzApi.post('/api/tes/productsesc/admin', form)
-                await stutzApi.post('/api/tes/products/admin', form)
+                await stutzApi.post('/api/tes/admin/productsesc', form)
             }
             // console.log(data);
 
@@ -217,14 +216,15 @@ const loadProduct = async() => {
                             sx={{ mb: 1 }}
                             { ...register('codPro', {
                                 required: 'Este campo es requerido',
-                                minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                                minLength: { value: 1, message: 'Mínimo 1 caracter' }
                             })}
                             error={ !!errors.codPro }
                             helperText={ errors.codPro?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                             <TextField
-                                label="Título"
+                                label="Descripcion"
                                 variant="filled"
                                 fullWidth 
                                 sx={{ mb: 1 }}
@@ -234,6 +234,7 @@ const loadProduct = async() => {
                                 })}
                                 error={ !!errors.title }
                                 helperText={ errors.title?.message }
+                                InputLabelProps={{shrink: true}}
                             />
 
                         <TextField
@@ -245,12 +246,13 @@ const loadProduct = async() => {
                             sx={{ mb: 1 }}
                             { ...register('price', {
                                 required: 'Este campo es requerido',
-                                min: { value: 0, message: 'Mínimo de valor cero' }
+                                // min: { value: 0, message: 'Mínimo de valor cero' }
                             })}
                             error={ !!errors.price }
                             helperText={ errors.price?.message }
+                            InputLabelProps={{shrink: true}}
                         />
-                            <TextField
+                            {/* <TextField
                                 label="Codigo Barra"
                                 variant="filled"
                                 fullWidth 
@@ -261,8 +263,9 @@ const loadProduct = async() => {
                                 })}
                                 error={ !!errors.codigoPro }
                                 helperText={ errors.codigoPro?.message }
+                                InputLabelProps={{shrink: true}}
                             />
-    
+     */}
 
                         <Divider sx={{ my: 1 }} />
 

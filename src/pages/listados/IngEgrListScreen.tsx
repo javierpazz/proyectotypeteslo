@@ -20,6 +20,7 @@ import { AdminLayoutMenuList } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 
 interface Movimiento {
+  _uid: string;
   fecha: string;
   nameCus: string;
   nameCon: string;
@@ -152,8 +153,8 @@ export const IngEgrListScreen = () => {
         </TableHead>
 
         <TableBody>
-          {cuenta.movimientos.map((mov, index) => (
-            <TableRow key={index} hover>
+          {cuenta.movimientos.map((mov) => (
+            <TableRow key={mov._uid} hover>
               <TableCell>{mov.fecha?.substring(0, 10)}</TableCell>
               <TableCell>{mov.compDes}</TableCell>
               <TableCell align="right">{mov.compNum}</TableCell>

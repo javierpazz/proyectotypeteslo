@@ -150,7 +150,7 @@ const columns:GridColDef[] = [
               field: 'check',
               headerName: 'Acción',
               renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if (user?.role !== 'admin') return null;
+                if ((user?.role !== 'admin') && (user?._id !== row.userInv)) return null;
                 return (
                   <Chip variant='outlined' label="Eliminar" color="error"
                   onClick={() => prodeleteReceipt(row)}
@@ -185,6 +185,7 @@ const columns:GridColDef[] = [
         id_client  : (recibo.id_client as ICustomer)?._id ?? '',
         nameCus  : (recibo.id_client as ICustomer)?.nameCus ?? '',
         nameUse  : (recibo.user as IUser)?.name ?? '',
+        userInv: (recibo.user as IUser)._id,
         nameCon  : (recibo.id_config as IConfiguracion)?.name ?? '',
         nameEnc  : (recibo.id_encarg as IEncargado)?.name ?? '',
         total : recibo.total.toFixed(2),
@@ -309,7 +310,7 @@ const columns:GridColDef[] = [
               onClick={parametros}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               >
                   Filtro
               </Button>
@@ -321,7 +322,7 @@ const columns:GridColDef[] = [
               <div>
                 <Button
                 variant="contained"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
                 type="button"
                 onClick={createHandler}>
                   Crea Recibo

@@ -1,5 +1,16 @@
 import { IConfiguracion, ISupplier } from "./";
 
+export interface Ireview
+  {
+    _id?: string;  
+    name: string,
+    comment: string,
+    rating: number,
+    createdAt?: string;
+  }
+
+
+
 export interface IProduct {
     _id: string;
     codPro: string;
@@ -25,7 +36,7 @@ export interface IProduct {
     porIva: number;
     rating: number;
     numReviews: number;
-    // reviews: [reviewSchema],
+    reviews: Ireview[],
     tags: string[],
     type: IType;
     gender: 'men'|'women'|'kid'|'unisex'

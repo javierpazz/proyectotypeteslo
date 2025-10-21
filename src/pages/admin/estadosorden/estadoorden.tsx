@@ -80,7 +80,7 @@ const loadProduct = async() => {
         estadoordenI.note= "",
         estadoordenI.name= ""
     } else {
-        const resp = await stutzApi.get<IEstadoOrden>(`/api/tes/estadosorden/admin/${ id }`);
+        const resp = await stutzApi.get<IEstadoOrden>(`/api/tes/admin/estadosorden/${ id }`);
         estadoordenI._id=resp.data._id,
         estadoordenI.note=resp.data.note,
         estadoordenI.name=resp.data.name
@@ -123,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/estadosorden/admin', form)
+                await stutzApi.put('/api/tes/admin/estadosorden', form)
             }else{
-                await stutzApi.post('/api/tes/estadosorden/admin', form)
+                await stutzApi.post('/api/tes/admin/estadosorden', form)
             }
 
             if ( !form._id ) {
@@ -178,6 +178,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -192,6 +193,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.note }
                             helperText={ errors.note?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

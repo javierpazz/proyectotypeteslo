@@ -109,8 +109,8 @@ export const ProiyeListScreen = () => {
           </Typography>
 
           <Box sx={{ padding: 2, fontFamily: 'Arial, sans-serif' }}>
-            {cuentas.map((client) => (
-              <Box key={client.clientId} sx={{ marginBottom: 4 }}>
+            {cuentas.map((client, index) => (
+              <Box key={`client.clientId-${index}`} sx={{ marginBottom: 4 }}>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
                   {client.clientcodCus || 'Sin Codigo'} - {client.clientNameCus || 'Sin Nombre'}
                 </Typography>
@@ -130,7 +130,7 @@ export const ProiyeListScreen = () => {
 
                   <TableBody>
                     {client.products.map((product, index) => (
-                      <TableRow key={index} hover>
+                      <TableRow key={`${client.clientId}-${product.title}-${index}`} hover>
                         <TableCell colSpan={2}>{product.title}</TableCell>
                         <TableCell align="right">{product.totalIngreso.toFixed(2)}</TableCell>
                         <TableCell align="right">${product.totalMontoIngreso.toFixed(2)}</TableCell>

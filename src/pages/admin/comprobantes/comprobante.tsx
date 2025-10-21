@@ -98,7 +98,20 @@ export const ComprobanteAdminPage = () => {
     }
   };
 
+ const unload = async () => {
+    if (window.confirm('Solo puede tener un tipo de discriminacion')) {
+    }
+  };
+
+
   const onSubmit = async (form: FormData) => {
+    let cuantos = 0;
+    if (form.noDisc === true) cuantos = cuantos + 1;
+    if (form.itDisc === true) cuantos = cuantos + 1;
+    if (form.toDisc === true) cuantos = cuantos + 1;
+    if (cuantos > 1) {
+      unload();
+    } else {   
     setIsSaving(true);
     try {
     
@@ -114,6 +127,8 @@ export const ComprobanteAdminPage = () => {
       console.log(error);
       setIsSaving(false);
     }
+  }
+
   };
 
   return (
@@ -149,6 +164,7 @@ export const ComprobanteAdminPage = () => {
               })}
               error={!!errors.codCom}
               helperText={errors.codCom?.message}
+              InputLabelProps={{shrink: true}}
             />
 
             <TextField
@@ -163,6 +179,7 @@ export const ComprobanteAdminPage = () => {
               })}
               error={!!errors.nameCom}
               helperText={errors.nameCom?.message}
+              InputLabelProps={{shrink: true}}
             />
 
             <FormGroup>
@@ -227,6 +244,7 @@ export const ComprobanteAdminPage = () => {
               {...register('numInt')}
               error={!!errors.numInt}
               helperText={errors.numInt?.message}
+              InputLabelProps={{shrink: true}}
             />
           </Grid>
 

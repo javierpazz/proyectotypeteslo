@@ -96,6 +96,7 @@ export const ParamInstrumento = () => {
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
   const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [codPro, setCodPro] = useState('');
+  const [codigoPro, setCodigoPro] = useState('');
   const [desPro, setDesPro] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
@@ -142,6 +143,7 @@ export const ParamInstrumento = () => {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         setInstrumentos(data);
+        console.log(data)
       } catch (err) {}
     };
     fetchData();
@@ -382,7 +384,7 @@ const handleShowIns = () => {
               onClick={handleShowIns}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -399,7 +401,7 @@ const handleShowIns = () => {
               onClick={handleShowIns}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -412,7 +414,7 @@ const handleShowIns = () => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={placeCancelInvoiceHandler}
               disabled={ !codIns}
             >
@@ -424,7 +426,7 @@ const handleShowIns = () => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeInstrumentoHandler}
               disabled={ !codIns || isloading }
@@ -445,6 +447,8 @@ const handleShowIns = () => {
                     input8Ref={input8Ref}
                     codPro={codPro}
                     setCodPro={setCodPro}
+                    codigoPro={codigoPro}
+                    setCodigoPro={setCodigoPro}
                     desPro={desPro}
                     setDesPro={setDesPro}
                     quantity={quantity}

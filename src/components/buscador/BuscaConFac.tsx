@@ -217,7 +217,9 @@ const ayudaCon = (e: React.KeyboardEvent<HTMLDivElement>) => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codCont === '' ? 'P.Venta' : ''}
+              // label={codCont === '' ? 'P.Venta' : ''}
+              // placeholder="P.Venta"
+              label="P.Venta"
               placeholder="P.Venta"
               value={codCont}
               onChange={(e) => setCodCont(e.target.value)}
@@ -231,7 +233,7 @@ const ayudaCon = (e: React.KeyboardEvent<HTMLDivElement>) => {
               onClick={handleShowCon}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Grid, Card, CardActionArea, CardMedia, Box, Typography, Chip } from '@mui/material'
-
+import  Rating from '../Rating'
 import { IProduct } from '../../interfaces'
 
 interface Props {
@@ -64,6 +64,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
               <Typography fontWeight={700}>{ product.title }</Typography>
               <Typography fontWeight={500}>{ `$${product.price}` }</Typography>
           </Box>
+        <Rating rating={product.rating} numReviews={product.numReviews} />
       </Grid>
     )
 }

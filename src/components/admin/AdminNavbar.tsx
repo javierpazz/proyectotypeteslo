@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 
 import { AppBar, Box, Button, Link, Toolbar, Typography } from '@mui/material';
-import foto from '../../assets/escribania.jpg';
+import foto from '../../assets/fondo.jpg';
 
 
 import { UiContext } from '../../../context';

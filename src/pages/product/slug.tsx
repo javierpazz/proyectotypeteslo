@@ -1,15 +1,22 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Rating as MuiRating,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import { ShopLayout } from '../../components/layouts';
-import { ProductSlideshow, SizeSelector } from '../../components/products';
+import { ProductSlideshow } from '../../components/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
-import { ICartProduct, IProduct, ISize } from '../../interfaces';
+import { ICartProduct } from '../../interfaces';
 
 import stutzApi from '../../../api/stutzApi';
 import { FullScreenLoading } from '../../components/ui';
-import { CartContext } from '../../../context';
+import { AuthContext, CartContext } from '../../../context';
 
 
 const productI = 
@@ -28,6 +35,17 @@ const productI =
           title: "Men’s Chill Crew Neck Sweatshirt",
           type: 'shirts',
           gender: 'men',
+          rating: 0,
+          numReviews: 0,
+          reviews: [
+              {
+              _id: '',  
+              name: '',
+              comment: '',
+              rating: 0,
+              createdAt: ','
+            }
+          ],
           createdAt: '',
           updatedAt: '',
       
@@ -40,8 +58,20 @@ export const Slug = () => {
   const navigate = useNavigate();
   const {addProductToCart} =useContext(CartContext)
 
+    // let reviewsRef = useRef();
+    let reviewsRef = useRef<HTMLDivElement>(null);
+
+    const { user : userInfo } = useContext(AuthContext);
+    // const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState<number | null>(0);
+    const [comment, setComment] = useState('');
+    const [loadingCreateReview, setLoadingCreateReview] = useState(false);
+
+
+
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: '649f9b05c4416622ac833792',
+    codigoPro: '649f9b05c4416622ac833792',
     image: '1740176-00-A_0_2000.jpg',
     price: 1,
     porIva: 21,
@@ -74,11 +104,13 @@ const onAddProduct = () => {
 
   const loadProduct = async() => {
     try {
-      const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slug }`);
+      // const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slug }`);
+      const resp = await stutzApi.get(`/api/tes/products/${ slug }`);
       setProduct(resp.data);
 
       setTempCartProduct({
         _id: resp.data._id,
+        codigoPro: resp.data.codigoPro,
         image: resp.data.images[0],
         price: resp.data.price,
         porIva: resp.data.porIva,
@@ -95,13 +127,6 @@ const onAddProduct = () => {
     }
    }
  
-   const selectedSize = ( size: ISize ) => {
-    setTempCartProduct( currentProduct => ({
-      ...currentProduct,
-      size
-    }));
- 
-  }
 
   const onUpdateQuantity = ( quantity: number ) => {
     setTempCartProduct( currentProduct => ({
@@ -110,6 +135,35 @@ const onAddProduct = () => {
     }));
  
   }
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!comment || !rating) {
+        if (window.confirm('Please enter comment and rating')) {}
+      return;
+    }
+    try {
+        setLoadingCreateReview(true);
+        const { data } = await stutzApi.post(
+        `/api/products/${product._id}/reviews`,
+        { rating, comment, name: userInfo!.name },
+        {
+          headers: { Authorization: `Bearer ${userInfo!}` },
+        }
+      );
+        setLoadingCreateReview(false)
+        if (window.confirm('Review submitted successfully')) {}
+      product.reviews.unshift(data.review);
+      product.numReviews = data.numReviews;
+      product.rating = data.rating;
+      window.scrollTo({
+        behavior: 'smooth',
+        top: reviewsRef.current!.offsetTop,
+      });
+    } catch (error) {
+    }
+  };
+
 
 
   
@@ -185,7 +239,88 @@ const onAddProduct = () => {
   
   
         </Grid>
-  
+
+    <Box my={3}>
+      <Typography variant="h5" gutterBottom>
+        Calificaciones
+      </Typography>
+
+      {product.reviews.length === 0 ? (
+        <Typography color="text.secondary">No hay Calificación</Typography>
+      ) : (
+        <List>
+          {product.reviews.map((review) => (
+            <ListItem key={review._id} alignItems="flex-start" divider>
+              <ListItemText
+                primary={
+                  <>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {review.name}
+                    </Typography>
+                    <MuiRating value={review.rating} readOnly />
+                  </>
+                }
+                secondary={
+                  <>
+                    <Typography variant="body2" color="text.secondary">
+                      {review.createdAt!.substring(0, 10)}
+                    </Typography>
+                    <Typography>{review.comment}</Typography>
+                  </>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
+      )}
+
+      <Box mt={3}>
+        {userInfo ? (
+          <form onSubmit={submitHandler}>
+            <Typography variant="h6" gutterBottom>
+              Escriba una Calificación
+            </Typography>
+
+            <Box mb={2}>
+              <Typography component="legend">Rating</Typography>
+              <MuiRating
+                value={rating}
+                onChange={(_, newValue) => setRating(newValue)}
+              />
+            </Box>
+
+            <TextField
+              label="Comentario"
+              variant="outlined"
+              fullWidth
+              multiline
+              minRows={3}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={loadingCreateReview || !rating || !comment.trim()}
+            >
+              {loadingCreateReview ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Enviar"
+              )}
+            </Button>
+          </form>
+        ) : (
+          <Typography>
+            Por favor{" "}
+            <a href={`/signin?redirect=/product/${product.slug}`}>Inicie sesión</a>{" "}
+            para escribir una calificación.
+          </Typography>
+        )}
+      </Box>
+    </Box>  
       </ShopLayout>
     )
   }

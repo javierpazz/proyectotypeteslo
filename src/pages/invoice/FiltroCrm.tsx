@@ -378,7 +378,7 @@ desVal;
             <Button
               onClick={parametros}
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Generar Informe
             </Button>

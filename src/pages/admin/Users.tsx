@@ -19,20 +19,18 @@ export const Users = () => {
 
 
     ////////////////////FGFGFGFG
-    const { user : user1, isLoading } = useContext(AuthContext);
-    const [ userRole, setUserRole ] = useState("");
+    const { user, isLoading } = useContext(AuthContext);
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!user1 && !isLoading) {
+        if (!user && !isLoading) {
         navigate('/auth/loginadm?redirect=/admin/users');
         }
-        if (user1?.role === "client" ) {
+        if (user?.role === "client" ) {
         navigate('/');
         }
-        setUserRole(user1!.role);
-    }, [user1, isLoading, navigate]);
+    }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
     const [ users, setUsers ] = useState<IUser[]>([]);
@@ -41,7 +39,7 @@ export const Users = () => {
     // const { data, error } = useSWR<IUser[]>('/api/admin/users');
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IUser[]>('/api/tes/users/admin');
+          const resp = await stutzApi.get<IUser[]>('/api/tes/admin/users');
           setUsers(resp.data);
         //   console.log(resp.data);
         } catch (error) {
@@ -68,7 +66,7 @@ export const Users = () => {
 
         try {
             
-            await stutzApi.put('/api/tes/users/admin', {  userId, role: newRole });
+            await stutzApi.put('/api/tes/admin/users/role', {  userId, role: newRole });
 
         } catch (error) {
             setUsers( previosUsers );
@@ -120,7 +118,7 @@ export const Users = () => {
             headerName: 'Rol', 
             width: 300,
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
-                if (userRole !== 'admin') return null;
+                if (user?.role !== 'admin') return null;
                 return (
                     <Select
                     value={ row.role }
@@ -142,7 +140,7 @@ export const Users = () => {
             headerName: 'Activo', 
             width: 150,
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
-                if (userRole !== 'admin') return null;
+                if (user?.role !== 'admin') return null;
                 return (
                     <Select
                     value={ row.isActive }
@@ -161,7 +159,7 @@ export const Users = () => {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if (userRole !== 'admin') return null;
+                if (user?.role !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}
@@ -184,7 +182,7 @@ export const Users = () => {
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/users/admin/${id}`);
+        await stutzApi.delete(`/api/tes/admin/users/${id}`);
         window.location.reload();
     } catch (err) {
       }

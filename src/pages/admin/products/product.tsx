@@ -274,6 +274,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.title }
                             helperText={ errors.title?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -287,6 +288,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.description }
                             helperText={ errors.description?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -301,6 +303,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.inStock }
                             helperText={ errors.inStock?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         
                         <TextField
@@ -315,6 +318,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.price }
                             helperText={ errors.price?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <Divider sx={{ my: 1 }} />
@@ -388,6 +392,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.slug }
                             helperText={ errors.slug?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField

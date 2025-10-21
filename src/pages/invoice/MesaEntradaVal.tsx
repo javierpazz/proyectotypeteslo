@@ -25,7 +25,7 @@ import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
 import { BuscaPar } from '../../components/buscador';
 
@@ -50,6 +50,10 @@ export const MesaEntradaVal = () => {
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
+
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get('redirect');
+  const redirect = redirectInUrl ? redirectInUrl : '/';
 
         const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
@@ -100,7 +104,7 @@ export const MesaEntradaVal = () => {
             recDat : "",
             desVal : "",
             notes : "",
-            paymentMethod: 0,
+            paymentMethod: "",
 
         }              
 
@@ -206,6 +210,7 @@ export const MesaEntradaVal = () => {
   const [codIns, setCodIns] = useState('');
   const [codInst, setCodInst] = useState('');
   const [nameIns, setNameIns] = useState('');
+  const [publicoIns, setPublicoIns] = useState(true);
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
@@ -231,6 +236,7 @@ export const MesaEntradaVal = () => {
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [codPro, setCodPro] = useState('');
+  const [codigoPro, setCodigoPro] = useState('');
   const [terminado, setTerminado] = useState(false);
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
   const [notes, setNotes] = useState('');
@@ -383,6 +389,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setCodIns('');
         setCodInst('');
         setNameIns('Elija Instrumento');
+        setPublicoIns(true);
     }else{
       // cargaParametros(instRow.orderItems)
       // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
@@ -390,6 +397,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
       setNameIns(instRow.name);
+      setPublicoIns(instRow.publico);
       input3Ref.current?.focus();
       };
   };
@@ -404,6 +412,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     setCodIns(instrumento._id);
     setCodInst(instrumento.codIns);
     setNameIns(instrumento.name);
+    setPublicoIns(instrumento.publico);
     // input8Ref.current.focus()
 
     setModalOpenIns(false);
@@ -612,7 +621,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   };
 
   const clearitems = () => {
-            navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
+            navigate(`/admin/entrada/${invoice._id}?redirect=${redirect}`);
   }
 
   return (
@@ -650,8 +659,10 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               fullWidth
               size="small"
               inputRef={input2Ref}
-              label={codInst === '' ? 'Código Instrumento' : ''}
-              placeholder="Codigo Instrumento"
+              // label={codInst === '' ? 'Código Instrumento' : ''}
+              // placeholder="Codigo Instrumento"
+              label="Instrumento"
+              placeholder="Instrumento"
               value={codInst}
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
@@ -664,7 +675,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               onClick={handleShowIns}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>
@@ -684,6 +695,59 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       </Typography>
           </Grid>
 
+          <Grid item md={4}>
+                    <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
+          </Grid>
+
+
+
+        </Grid>
+
+
+
+
+        <Grid container spacing={2} mt={0}>
+
+          <Grid item md={2}>
+            <TextField
+              fullWidth
+              size="small"
+              inputRef={input3Ref}
+              // label={codCust === '' ? 'Código Cliente' : ''}
+              // placeholder="Codigo Cliente"
+              label="Cliente"
+              placeholder="Cliente"
+              value={codCust}
+              onChange={(e) => setCodCust(e.target.value)}
+              onKeyDown={(e) => ayudaCus(e)}
+              required
+              autoComplete="off"
+            />
+          </Grid>
+          <Grid item md={1} display="flex" alignItems="center">
+            <Button
+              onClick={handleShowCus}
+              variant="contained"
+              startIcon={<BiFileFind />}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
+            >
+              F2
+            </Button>
+          </Grid>
+          <Grid item md={4}>
+            <Typography
+              variant="h6"
+              noWrap
+              title={nameCus}
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {nameCus}
+            </Typography>
+          </Grid>
           <Grid item md={1}>
             <TextField
               fullWidth
@@ -738,54 +802,20 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             />
           </Grid>
 
-
-
         </Grid>
 
-
-
-
         <Grid container spacing={2} mt={0}>
-
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              inputRef={input3Ref}
-              label={codCust === '' ? 'Código Cliente' : ''}
-              placeholder="Codigo Cliente"
-              value={codCust}
-              onChange={(e) => setCodCust(e.target.value)}
-              onKeyDown={(e) => ayudaCus(e)}
-              required
-              autoComplete="off"
+            <BuscaPar
+            codPar={codPar}
+            setCodPar={setCodPar}
+            codPart={codPart}
+            setCodPart={setCodPart}
+            namePar={namePar}
+            setNamePar={setNamePar}
+            nextRef={input9Ref}
+            inputRef={inputParRef} 
             />
-          </Grid>
-          <Grid item md={1} display="flex" alignItems="center">
-            <Button
-              onClick={handleShowCus}
-              variant="contained"
-              startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
-            >
-              F2
-            </Button>
-          </Grid>
-          <Grid item md={3}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameCus}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameCus}
-      </Typography>
-          </Grid>
-          <Grid item md={1}>
+          <Grid item md={2}>
                 <Typography></Typography>
           </Grid>
           <Grid item md={1}>
@@ -828,19 +858,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               }}
             />
           </Grid>
-        </Grid>
-
-        <Grid container spacing={2} mt={0}>
-            <BuscaPar
-            codPar={codPar}
-            setCodPar={setCodPar}
-            codPart={codPart}
-            setCodPart={setCodPart}
-            namePar={namePar}
-            setNamePar={setNamePar}
-            nextRef={input6Ref}
-            inputRef={inputParRef} 
-            />
 
         </Grid>
 
@@ -857,10 +874,11 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               value={remNum}
               onChange={(e) => setRemNum(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
+              disabled={true}
+              // required
             />
           </Grid>
-          <Grid item md={2}>
+          <Grid item md={1.5}>
             <TextField
               fullWidth
               size="small"
@@ -873,7 +891,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               required
             />
           </Grid>
-          <Grid item md={2}>
+          <Grid item md={1.5}>
             <TextField
               fullWidth
               size="small"
@@ -906,7 +924,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               onClick={handleShowCus}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -920,7 +938,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={placeCancelInvoiceHandler}
               // disabled={cart.length === 0 || !remDat || !codCus}
             >
@@ -932,7 +950,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
               disabled={ !codCus || isloading}
@@ -958,6 +976,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
                     input8Ref={input8Ref}
                     codPro={codPro}
                     setCodPro={setCodPro}
+                    codigoPro={codigoPro}
+                    setCodigoPro={setCodigoPro}
                     desPro={desPro}
                     setDesPro={setDesPro}
                     quantity={quantity}

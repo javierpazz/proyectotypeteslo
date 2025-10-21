@@ -1,12 +1,10 @@
 import { useContext } from 'react';
 // import {  NavLink } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
-import { Link as MuiLink } from '@mui/material';
 
-import { AppBar,  Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar,  Box, Button, Toolbar } from '@mui/material';
 // import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import {  UiContext } from '../../../context';
-import foto from '../../assets/escribania.jpg';
+import foto from '../../assets/fondo.jpg';
 
 export const NavbarInv = () => {
 

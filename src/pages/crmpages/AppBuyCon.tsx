@@ -59,7 +59,7 @@ const OrderI:IOrder = {
     recDat : "",
     desVal : "",
     notes : "",
-    paymentMethod: 0,
+    paymentMethod: "",
 
     isPaid  : false,
     paidAt : '',
@@ -261,8 +261,10 @@ useEffect(() => {
               <TableHead>
                 <TableRow sx={{ backgroundColor: '#333' }}>
                   <TableCell sx={{ color: 'white' }}>#</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Codigo</TableCell>
                   <TableCell sx={{ color: 'white' }}>Descripción</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Cantidad</TableCell>
+                  <TableCell sx={{ color: 'white' }} align="right">Medida</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Precio</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Subtotal</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">IVA (%)</TableCell>
@@ -273,8 +275,10 @@ useEffect(() => {
                 {invoice.orderItems.map((item, index) => (
                   <TableRow key={item._id}>
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.codigoPro}</TableCell>
                     <TableCell>{item.title}</TableCell>
-                    <TableCell align="right">{item.quantity}</TableCell>
+                    <TableCell align="right">{item.quantity.toFixed(2)}</TableCell>
+                    <TableCell align="left">{item.medPro}</TableCell>
                     <TableCell align="right">${item.price.toFixed(2)}</TableCell>
                     <TableCell align="right">${(item.quantity * item.price).toFixed(2)}</TableCell>
                     <TableCell align="right">%{item.porIva}</TableCell>
@@ -300,8 +304,10 @@ useEffect(() => {
               <TableHead>
                 <TableRow sx={{ backgroundColor: '#333' }}>
                   <TableCell sx={{ color: 'white' }}>#</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Codigo</TableCell>
                   <TableCell sx={{ color: 'white' }}>Descripción</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Cantidad</TableCell>
+                  <TableCell sx={{ color: 'white' }} align="right">Medida</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Precio</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">IVA (%)</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Imp.IVA (%)</TableCell>
@@ -312,7 +318,10 @@ useEffect(() => {
                 {invoice.orderItems.map((item, index) => (
                   <TableRow key={item._id}>
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.codigoPro}</TableCell>
                     <TableCell>{item.title}</TableCell>
+                    <TableCell align="right">{item.quantity.toFixed(2)}</TableCell>
+                    <TableCell align="left">{item.medPro}</TableCell>
                     <TableCell align="right">{item.quantity}</TableCell>
                     <TableCell align="right">${item.price.toFixed(2)}</TableCell>
                     <TableCell align="right">%{item.porIva}</TableCell>
@@ -337,8 +346,10 @@ useEffect(() => {
               <TableHead>
                 <TableRow sx={{ backgroundColor: '#333' }}>
                   <TableCell sx={{ color: 'white' }}>#</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Codigo</TableCell>
                   <TableCell sx={{ color: 'white' }}>Descripción</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Cantidad</TableCell>
+                  <TableCell sx={{ color: 'white' }} align="right">Medida</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Precio</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">IVA (%)</TableCell>
                   <TableCell sx={{ color: 'white' }} align="right">Subtotal</TableCell>
@@ -348,7 +359,10 @@ useEffect(() => {
                 {invoice.orderItems.map((item, index) => (
                   <TableRow key={item._id}>
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.codigoPro}</TableCell>
                     <TableCell>{item.title}</TableCell>
+                    <TableCell align="right">{item.quantity.toFixed(2)}</TableCell>
+                    <TableCell align="left">{item.medPro}</TableCell>
                     <TableCell align="right">{item.quantity}</TableCell>
                     <TableCell align="right">
                       ${(item.quantity * item.price * (1 + item.porIva / 100)).toFixed(2)}

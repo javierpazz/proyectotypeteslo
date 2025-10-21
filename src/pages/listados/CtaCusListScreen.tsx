@@ -21,6 +21,7 @@ import { useReactToPrint } from 'react-to-print';
 import { exportToExcel } from './ExportToExcel';
 
 interface Movimiento {
+  _uid: string;
   fecha: string;
   nameUse: string;
   nameCon: string;
@@ -134,7 +135,7 @@ export const CtaCusListScreen = () => {
               </Typography>
 
               {cuentas.map((cuenta: any) => (
-                <Paper key={cuenta.id_client} sx={{ mb: 4, p: 2, borderRadius: 2, boxShadow: 2 }}>
+                <Paper key={cuenta.codCust} sx={{ mb: 4, p: 2, borderRadius: 2, boxShadow: 2 }}>
                   <Typography variant="h6" color="primary" fontWeight="bold" gutterBottom>
                     {cuenta.nombreCliente}
                   </Typography>
@@ -148,14 +149,14 @@ export const CtaCusListScreen = () => {
                           <TableCell align="right">Número</TableCell>
                           <TableCell>Usuario</TableCell>
                           <TableCell>Pto. Venta</TableCell>
-                          <TableCell align="right">Ingresos</TableCell>
-                          <TableCell align="right">Egresos</TableCell>
+                          <TableCell align="right">Debe</TableCell>
+                          <TableCell align="right">Haber</TableCell>
                           <TableCell align="right">Saldo Acumulado</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {cuenta.movimientos.map((mov: any, index: number) => (
-                          <TableRow key={index} hover>
+                        {cuenta.movimientos.map((mov: any) => (
+                          <TableRow key={mov._uid} hover>
                             <TableCell>{mov.fecha.substring(0, 10)}</TableCell>
                             <TableCell>{mov.compDes}</TableCell>
                             <TableCell align="right">{mov.compNum}</TableCell>
@@ -189,7 +190,7 @@ export const CtaCusListScreen = () => {
               </Typography>
 
               {cuentas.map((cuenta: any) => (
-                <Paper key={cuenta.id_client} sx={{ mb: 4, p: 2, borderRadius: 2, boxShadow: 2 }}>
+                <Paper key={cuenta.codCust} sx={{ mb: 4, p: 2, borderRadius: 2, boxShadow: 2 }}>
                   <Typography variant="h6" color="primary" fontWeight="bold" gutterBottom>
                     {cuenta.nombreCliente}
                   </Typography>
@@ -203,14 +204,14 @@ export const CtaCusListScreen = () => {
                           <TableCell align="right">Número</TableCell>
                           <TableCell>Usuario</TableCell>
                           <TableCell>Pto. Venta</TableCell>
-                          <TableCell align="right">Ingresos</TableCell>
-                          <TableCell align="right">Egresos</TableCell>
+                          <TableCell align="right">Debe</TableCell>
+                          <TableCell align="right">Haber</TableCell>
                           <TableCell align="right">Saldo Acumulado</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {cuenta.movimientos.map((index: number) => (
-                          <TableRow key={index} hover>
+                        {cuenta.movimientos.map((mov: any) => (
+                          <TableRow key={mov._uid} hover>
                           </TableRow>
                         ))}
                         <TableRow sx={{ backgroundColor: '#f5f5f5' }}>

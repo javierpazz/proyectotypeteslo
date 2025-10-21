@@ -58,7 +58,7 @@ const OrderI:IOrder = {
     recDat : "",
     desVal : "",
     notes : "",
-    paymentMethod: 0,
+    paymentMethod: "",
 
     isPaid  : false,
     paidAt : '',
@@ -193,17 +193,17 @@ useEffect(() => {
   const actualiza = () => {
     console.log(invoice._id)
       // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
-      navigate(`/admin/mesaentradaAct/${invoice._id}`);
+      navigate(`/admin/mesaentradaAct/${invoice._id}?redirect=${redirect}`);
   };
   const valoriza = () => {
     console.log(invoice._id)
       // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
-      navigate(`/admin/mesaentradaVal/${invoice._id}`);
+      navigate(`/admin/mesaentradaVal/${invoice._id}?redirect=${redirect}`);
   };
 
 
   const generaInv = async () => {
-    navigate(`/admin/invoicerins/${id}?redirect=/admin/entradas`);
+    navigate(`/admin/invoicerins/${id}??redirect=${redirect}`);
   };
 
 
@@ -276,6 +276,7 @@ useEffect(() => {
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
+              <TableCell>Codigo dil.</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Observaciones</TableCell>
               <TableCell>Estado</TableCell>
@@ -286,6 +287,7 @@ useEffect(() => {
             {invoice.orderItems.map((item, index) => (
               <TableRow key={item._id}>
                 <TableCell>{index + 1}</TableCell>
+                <TableCell>{item.codigoPro}</TableCell>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.observ}</TableCell>
                 <TableCell>

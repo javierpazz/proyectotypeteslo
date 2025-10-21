@@ -8,7 +8,7 @@ interface ProductSelectorProps {
 
 
 // export const ProductSelector = ( {onSelectPro,productss} ) => {
-export const ProductSelector: FC<ProductSelectorProps> = ({ onSelectPro, productss }) => {
+export const ProductSelectorEsc: FC<ProductSelectorProps> = ({ onSelectPro, productss }) => {
   const [search, setSearch] = useState('');
   const [filtered, setFiltered] = useState(productss);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
@@ -54,7 +54,7 @@ export const ProductSelector: FC<ProductSelectorProps> = ({ onSelectPro, product
 
   return (
     <div style={{ padding: '10px' }}>
-      <label htmlFor="codeInput">Código de Producto:</label>
+      <label htmlFor="codeInput">Código de Diligencia:</label>
       <input
         id="codeInput"
         ref={inputRef}

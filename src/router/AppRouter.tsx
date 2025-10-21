@@ -13,12 +13,14 @@ import { CartPage } from '../pages/cart/CartPage';
 import {Men} from './../pages/category/Men';
 import {Women} from './../pages/category/Women';
 import {Kid} from './../pages/category/Kid';
-import { Invoice } from '../pages/Invoice.tsx';
-import { Ecommerce } from '../pages/Ecommerce.tsx';
 import { Blanco } from '../pages/Blanco';
+// import { Ecommerce } from '../pages/Ecommerce.tsx';
+import { Invoice } from '../pages/Invoice.tsx';
+import { Escribania } from '../pages/Escribania.tsx';
 // import { AuthContext } from '../../context';
 import {OrderPage} from '../pages/orders/OrderPage';
 import { Dashboard } from '../pages/admin/Dashboard';
+import { Dashboard1 } from '../pages/admin/Dashboard1';
 import { Users } from '../pages/admin/Users';
 import { Products } from '../pages/admin/products';
 import { ProductAdminPage } from '../pages/admin/products/product';
@@ -121,8 +123,6 @@ import {EntradaListScreen} from '../pages/crmpages/EntradaListScreen';
 // import {EntradaNoRegSinTerListScreen} from '../pages/crmpages/EntradaNoRegSinTerListScreen';
 // import {EntradaNoProSinTerListScreen} from '../pages/crmpages/EntradaNoProSinTerListScreen';
 import {DiligenciaListScreen} from '../pages/crmpages/DiligenciaListScreen';
-import { useEffect } from 'react';
-import { stutzApi } from '../../api';
 
 
 export const AppRouter = () => {
@@ -164,15 +164,18 @@ export const AppRouter = () => {
                     )
                     : (
                         <> */}
-                            <Route path="/" element={ <Invoice /> } />
+                            <Route path="/" element={ <Blanco /> } />   
+                            {/* <Route path="/blanco" element={ <Blanco /> } /> */}
                             {/* <Route path="/" element={ <Ecommerce /> } /> */}
-                            <Route path="/factura" element={ <Blanco /> } />
+                            <Route path="/factura" element={ <Invoice /> } />
+                            <Route path="/escribania" element={ <Escribania /> } />
                             <Route path="/category/men" element={ <Men /> } />
                             <Route path="/category/women" element={ <Women /> } />
                             <Route path="/category/kid" element={ <Kid /> } />
                             <Route path="/checkout/address" element={ <Address /> } />
                             <Route path="/checkout/summary" element={ <Summary /> } />
-                            <Route path="/admin" element={ <Dashboard /> } />
+                            <Route path="/admin/dashboard" element={ <Dashboard /> } />
+                            <Route path="/admin/dashboard1" element={ <Dashboard1 /> } />
                             <Route path="/admin/users" element={ <Users /> } />
                             <Route path="/admin/products" element={ <Products /> } />
                             <Route path="/admin/products/product/:slugadm" element={ <ProductAdminPage /> } />

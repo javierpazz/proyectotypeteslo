@@ -19,6 +19,7 @@ import { AdminLayoutMenuList } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 
 interface Movimiento {
+  _uid: string;
   fecha: string;
   compDes: string;
   compNum: number;
@@ -29,6 +30,7 @@ interface Movimiento {
 }
 
 interface Cuenta {
+  _uid: string;
   id_client: string;
   nombreCliente: string;
   movimientos: Movimiento[];  // <-- Aquí agregás movimientos
@@ -112,7 +114,7 @@ export const CajaIngEgrListScreen = () => {
         </Typography>
 
         {cuentas.map((cuenta) => (
-          <Paper key={cuenta.id_client} sx={{ p: 2, mb: 3 }}>
+          <Paper key={cuenta._uid} sx={{ p: 2, mb: 3 }}>
             <Typography variant="h6" color="primary" gutterBottom>
               {cuenta.nombreCliente}
             </Typography>
@@ -130,8 +132,9 @@ export const CajaIngEgrListScreen = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cuenta.movimientos.map((mov, idx) => (
-                  <TableRow key={idx}>
+                {cuenta.movimientos.map((mov) => (
+                  // <TableRow key={`${idx}-${mov.co_uidmpNum}`}>
+                  <TableRow key={`${mov._uid}`}>
                     <TableCell>{mov.fecha.substring(0, 10)}</TableCell>
                     <TableCell>{mov.compDes}</TableCell>
                     <TableCell>{mov.compNum}</TableCell>

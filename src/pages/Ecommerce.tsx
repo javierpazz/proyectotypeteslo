@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/globals.css';
 
 import { ShopLayout } from '../components/layouts';
@@ -7,9 +8,26 @@ import stutzApi from '../../api/stutzApi';
 import { IProduct } from '../interfaces'
 import { ProductList } from '../components/products';
 import { Typography } from '@mui/material';
+import { AuthContext } from '../../context';
 
 export const Ecommerce = () => {
   const [products, setProducts] = useState<IProduct[]>()
+
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        // if ((!user && !isLoading)) {
+        // navigate('/');
+        // } else {
+        if ((user && !isLoading) && user?.role !== "client" ) {
+        navigate('/blanco');
+        }
+      // }
+      }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
+
 
 
   const filtro = {
@@ -49,10 +67,10 @@ export const Ecommerce = () => {
   const [codCon, setCodCon] = useState('');
   const [configurationObj, setConfigurationObj] = useState({});
   
-  const [configus, setConfigus] = useState([]);
   const [punto, setPunto] = useState(localStorage.getItem('punto'));
 
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+  void name, salePoint, codCon, configurationObj;
+    const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : {};
 
@@ -103,7 +121,7 @@ export const Ecommerce = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await stutzApi.get(`/api/tes/products?configuracion=${punto}`);
+        const result = await stutzApi.get(`/api/products?configuracion=${punto}`);
       setProducts(result.data);
       } catch (err) {
       }
@@ -117,7 +135,7 @@ export const Ecommerce = () => {
   useEffect(() => {
     const fetchCliente = async () => {
       try {
-        const result = await stutzApi.get(`/api/tes/customers/byemail/${userInfo.user.email}`);
+        const result = await stutzApi.get(`/api/customers/byemail/${userInfo.user.email}`);
         console.log(result.data)
         localStorage.setItem('cliente', result.data._id);
 
@@ -140,6 +158,7 @@ export const Ecommerce = () => {
 ///////////////////////
 
 
+      localStorage.setItem('modulo', 'ecom');
 
 
 

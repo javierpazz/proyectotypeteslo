@@ -213,7 +213,9 @@ useEffect(() => {
               fullWidth
               size="small"
               // inputRef={input2Ref}
-              label={codInst === '' ? 'Instrumento' : ''}
+              // label={codInst === '' ? 'Instrumento' : ''}
+              // placeholder="Instrumento"
+              label="Instrumento"
               placeholder="Instrumento"
               value={codInst}
               onChange={(e) => setCodInst(e.target.value)}
@@ -227,7 +229,7 @@ useEffect(() => {
               onClick={handleShowIns}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

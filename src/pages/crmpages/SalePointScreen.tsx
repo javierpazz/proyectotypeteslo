@@ -77,8 +77,7 @@ export const SalePointScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const result = await stutzApi.get(`/api/tes/configurations/admin`, {
-        const result = await stutzApi.get(`/api/tes/configurations`, {
+        const result = await stutzApi.get(`/api/configurations/admin`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         
@@ -134,8 +133,8 @@ const handleChange = (event: SelectChangeEvent<string>) => {
     localStorage.setItem('userInfo', JSON.stringify(userInfo));
     };
     // navigate('/admin/dashboard');
-    navigate('/factura');
-    window.location.reload();
+    navigate('/');
+    // window.location.reload();
   };
   
   // useEffect(() => {
@@ -148,12 +147,26 @@ const handleChange = (event: SelectChangeEvent<string>) => {
     <Container maxWidth="sm">
       <Box mt={4}>
         <Typography variant="h5" gutterBottom>
-          Elija Punto de Venta
+          {/* Elija Punto de Venta */}
+                {
+                (localStorage.getItem('modulo') === "escr") ?
+                'Elija Registro '
+                : 'Elija Punto Venta '
+                }
+
         </Typography>
         <Box component="form" onSubmit={submitHandler}>
 
           <FormControl fullWidth margin="normal">
-            <InputLabel id="select-label">Punto de Venta</InputLabel>
+            <InputLabel id="select-label">
+            {/* Punto de Venta */}
+                {
+                (localStorage.getItem('modulo') === "escr") ?
+                'Registro '
+                : 'Punto Venta '
+                }
+
+            </InputLabel>
             <Select
               labelId="select-label"
               value={codCon}

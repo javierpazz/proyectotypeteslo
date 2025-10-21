@@ -88,7 +88,7 @@ export const AppRemBuy = () => {
             recDat : "",
             desVal : "",
             notes : "",
-            paymentMethod: 0,
+            paymentMethod: "",
 
         }              
 
@@ -168,7 +168,7 @@ export const AppRemBuy = () => {
   const [codval, setCodval] = useState('');
   const [invNum, setInvNum] = useState("");
   const [remNum, setRemNum] = useState("");
-  const [invDat, setInvDat] = useState(getTodayInGMT3());
+  // const [invDat, setInvDat] = useState(getTodayInGMT3());
   const [remDat, setRemDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState(0);
   const [recDat, setRecDat] = useState(getTodayInGMT3());
@@ -180,6 +180,7 @@ export const AppRemBuy = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
   const [codPro, setCodPro] = useState('');
+  const [codigoPro, setCodigoPro] = useState('');
   const [terminado, setTerminado] = useState(false);
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
   const [notes, setNotes] = useState('');
@@ -215,7 +216,6 @@ invNum,
 setRecNum,
 setRecDat,
 setCodCom,
-setInvDat,
 setGeRem;
 
 
@@ -387,8 +387,8 @@ const handleClickOutside = (e: MouseEvent) => {
           invoice.remNum = +remNum;
           invoice.remDat = remDat;
           invoice.dueDat = dueDat;
-          invoice.invNum = +invNum;
-          invoice.invDat = invDat;
+          invoice.invNum = 0;
+          invoice.invDat = undefined;
           invoice.recNum = 0;
           // invoice.recDat = null;
         //   invoice.recDat = undefined;
@@ -628,7 +628,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={handleShowCus}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -642,7 +642,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={placeCancelInvoiceHandler}
               disabled={cart.length === 0 }
             >
@@ -654,7 +654,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
               disabled={cart.length === 0 || !remNum || !remDat || !codSup || isloading}
@@ -679,6 +679,8 @@ const handleClickOutside = (e: MouseEvent) => {
                     input8Ref={input8Ref}
                     codPro={codPro}
                     setCodPro={setCodPro}
+                    codigoPro={codigoPro}
+                    setCodigoPro={setCodigoPro}
                     desPro={desPro}
                     setDesPro={setDesPro}
                     quantity={quantity}

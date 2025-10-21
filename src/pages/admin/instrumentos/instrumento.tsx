@@ -2,9 +2,9 @@ import { useContext, useEffect, useRef, useState } from 'react';
 // import { GetServerSideProps } from 'next'
 // import { useRouter } from 'next/router';
 import {  useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
@@ -18,13 +18,14 @@ interface FormData {
     _id?       : string;
     codIns       : string;
     name       : string;
+    publico     : boolean;
 }
 const instrumentoI = 
       {
           _id: '',
           codIns: "",
           name: "",
-     
+          publico: true,
       }
 
 
@@ -59,7 +60,7 @@ const input1Ref = useRef<HTMLInputElement>(null);
 const params = useParams();
 const { id } = params;
 
-const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
+const { control, register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
     defaultValues: instrumento
 })
 
@@ -78,12 +79,14 @@ const loadProduct = async() => {
         // crear un instrumentoo
         instrumentoI._id= "",
         instrumentoI.codIns= "",
-        instrumentoI.name= ""
+        instrumentoI.name= "",
+        instrumentoI.publico= true
     } else {
-        const resp = await stutzApi.get<IInstrumento>(`/api/tes/instrumentos/admin/${ id }`);
+        const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
         instrumentoI._id=resp.data._id,
         instrumentoI.codIns=resp.data.codIns,
-        instrumentoI.name=resp.data.name
+        instrumentoI.name=resp.data.name,
+        instrumentoI.publico=resp.data.publico
     }
   } catch (error) {
     console.log(error)
@@ -123,9 +126,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/instrumentos/admin', form)
+                await stutzApi.put('/api/tes/admin/instrumentos', form)
             }else{
-                await stutzApi.post('/api/tes/instrumentos/admin', form)
+                await stutzApi.post('/api/tes/admin/instrumentos', form)
             }
 
             if ( !form._id ) {
@@ -178,6 +181,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codIns }
                             helperText={ errors.codIns?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -192,10 +196,20 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 
-
+                        <Controller
+                            name='publico'
+                            control={control}
+                            render={({ field }) => (
+                            <FormControlLabel
+                                control={<Checkbox {...field} checked={field.value} />}
+                                label='Instrumento Publico'
+                            />
+                            )}
+                        />
 
                     </Grid>
 

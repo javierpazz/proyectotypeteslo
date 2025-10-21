@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AttachMoneyOutlined, CreditCardOffOutlined, CreditCardOutlined, DashboardOutlined, GroupOutlined, CategoryOutlined, CancelPresentationOutlined, ProductionQuantityLimitsOutlined, AccessTimeOutlined } from '@mui/icons-material';
 
-import { AdminLayout } from '../../components/layouts'
+import { AdminLayoutMenu } from '../../components/layouts'
 import { Grid } from '@mui/material'
 import { SummaryTile } from '../../components/admin'
 import { DashboardSummaryResponse } from '../../interfaces';
 import { stutzApi } from '../../../api';
+import { AuthContext } from '../../../context';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -15,6 +17,28 @@ export const Dashboard = () => {
     // const { data, erro<DashboardSummaryResponse>r } = useSWR<DashboardSummaryResponse>('/api/admin/dashboard', {
     //     refreshInterval: 30 * 1000 // 30 segundos
     // });
+
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/loginadm?redirect=/');
+        }
+        if (user?.role === "client" ) {
+        if (window.confirm('Faltan Completar Datos')) {}
+        navigate('/');
+        }
+        if (user?.role === "user" ) {
+        if (window.confirm('Faltan Completar Datos')) {}
+        navigate('/');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
+
+
+
 
     const loadData = async() => {
         try {
@@ -67,7 +91,7 @@ export const Dashboard = () => {
 
 
   return (
-    <AdminLayout
+    <AdminLayoutMenu
         title='Dashboard'
         subTitle='Estadisticas generales'
         icon={ <DashboardOutlined /> }
@@ -126,6 +150,6 @@ export const Dashboard = () => {
         </Grid>
 
 
-    </AdminLayout>
+    </AdminLayoutMenu>
   )
 }

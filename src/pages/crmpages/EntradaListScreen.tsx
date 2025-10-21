@@ -66,6 +66,7 @@ export const EntradaListScreen = () => {
       try {
           setIsloading(true);
           const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          console.log(resp)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 
@@ -98,6 +99,8 @@ export const EntradaListScreen = () => {
     
     //   }
 
+// 👉 Calculás el total
+const totalGeneral = invoices.reduce((acc, inv) => acc + inv.total, 0);
 
 
 const columns:GridColDef[] = [
@@ -107,7 +110,8 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
                     <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
-                     underline='always'>
+                    color= "secondary"
+                    underline='always'>
                          { row.remNum}
                     </MuiLink>
                 )
@@ -138,6 +142,20 @@ const columns:GridColDef[] = [
     },
     { field: 'nameCus', headerName: 'Cliente', width: 200 },
     { field: 'nameIns', headerName: 'Instrumento', width: 200 },
+        {
+            field: 'publico',
+            headerName: 'INSTRUMETO',
+            width: 120,
+            renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                return row.publico
+                    ? (
+                        <>PUBLICO</>
+                    )
+                    : (
+                        <>PRIVADO</>
+                        )
+            }
+        },
     { field: 'namePar', headerName: 'Parte', width: 200 },
     { field: 'nameCon', headerName: 'Registro', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
@@ -148,14 +166,20 @@ const columns:GridColDef[] = [
     { field: 'escNum', headerName: 'Nro Instrum.', width: 100 },
     { field: 'asieNum', headerName: 'Asiento ', width: 100 },
     { field: 'asieDat', headerName: 'Fecha Publico', width: 120 },
-    { field: 'total', headerName: 'Monto total', width: 100 },
+    // { field: 'total', headerName: 'Monto total', width: 100 },
+    { field: 'total',
+      headerName: 'Monto total',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
     { field: 'nameUse', headerName: 'Usuario', width: 200 },
     {
       field: 'check2',
       headerName: 'Actualiza',
       renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
         return (
-          <MuiLink component={RouterLink}  to={`/admin/mesaentradaAct/${row.id}?redirect=/admin/entradas`}>
+          <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaAct/${row.id}?redirect=/admin/entradas`}>
                     { "Actualiza"}
                     </MuiLink>
                 )
@@ -167,7 +191,7 @@ const columns:GridColDef[] = [
               renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
                 return (
                   // <MuiLink to={`/admin/invoices/invoice/${ row.id }`}>
-                  <MuiLink component={RouterLink}  to={`/admin/mesaentradaVal/${row.id}?redirect=/admin/entradas`}>
+                  <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaVal/${row.id}?redirect=/admin/entradas`}>
                     { "Valoriza"}
                     </MuiLink>
                 )
@@ -177,7 +201,7 @@ const columns:GridColDef[] = [
               field: 'check',
               headerName: 'Acción',
               renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if (user?.role !== 'admin') return null;
+                if ((user?.role !== 'admin') && (user?._id !== row.userInv)) return null;
                 return (
                   <Chip variant='outlined' label="Eliminar" color="error"
                   onClick={() => deleteHandler(row.id)}
@@ -231,10 +255,13 @@ const columns:GridColDef[] = [
         notes: invoice.notes,
         nameCus  : (invoice.id_client as ICustomer).nameCus,
         nameUse  : (invoice.user as IUser).name,
+        userInv: (invoice.user as IUser)._id,
         nameIns  : (invoice.id_instru as IInstrumento).name,
+        publico  : (invoice.id_instru as IInstrumento).publico,
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
-        total : invoice.total,
+        // total : invoice.total,
+        total : invoice.total.toFixed(2),
         isPaid: invoice.isPaid,
         noProducts: invoice.numberOfItems,
         createdAt: invoice.createdAt!.substring(0, 10),
@@ -394,7 +421,7 @@ const columns:GridColDef[] = [
               onClick={parametros}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Filtro
             </Button>
@@ -402,6 +429,11 @@ const columns:GridColDef[] = [
         <Button variant="outlined" color="success" onClick={exportToExcel}>
           Excel
         </Button>
+          <Grid item xs={12}>
+            <Box mt={2} textAlign="right" fontWeight="bold">
+              a Cobrar: {totalGeneral.toFixed(2)}
+            </Box>
+          </Grid>
             </Box>
         {
           isloading

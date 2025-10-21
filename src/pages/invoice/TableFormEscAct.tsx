@@ -14,10 +14,11 @@ import {
   TextField,
   Typography,
   Modal,
-  IconButton
+  IconButton,
+  Checkbox
 } from '@mui/material';
 import { ICartProduct, IProduct } from '../../interfaces';
-import {ProductSelector} from '../../../src/pages/crmpages/ProductSelector';
+import {ProductSelectorEsc} from '../../../src/pages/crmpages/ProductSelectorEsc';
 import { CartContext } from '../../../context';
 import { stutzApi } from '../../../api';
 import { BiFileFind } from 'react-icons/bi';
@@ -29,6 +30,8 @@ type TableFormProps = {
   input8Ref: any;
   codPro: any;
   setCodPro: any;
+  codigoPro: any;
+  setCodigoPro: any;
   desPro: any;
   setDesPro: any;
   quantity: any;
@@ -56,6 +59,8 @@ export const TableFormEscAct: React.FC<TableFormProps> = ({
   input8Ref,
   codPro,
   setCodPro,
+  codigoPro,
+  setCodigoPro,
   desPro,
   setDesPro,
   quantity,
@@ -123,6 +128,7 @@ export const TableFormEscAct: React.FC<TableFormProps> = ({
 //   const [medPro, setMedPro] = useState('');
   const [venDat, setVenDat] = useState(getTodayInGMT3());
   const [observ, setObserv] = useState('');
+  const [termi, setTermi] = useState(false);
 
   
 useEffect(() => {
@@ -176,6 +182,7 @@ useEffect(() => {
         // });
         const cartProduct: ICartProduct = {
           _id: codPro,
+          codigoPro: codigoPro,
           image: productR.images[0],
           price: price,
           porIva: porIva,
@@ -187,7 +194,7 @@ useEffect(() => {
           quantity : quantity,
             venDat: venDat,
             observ: observ,
-            terminado: false,
+            terminado: termi,
         };
           
           addProductToCartEsc( cartProduct as ICartProduct );
@@ -202,9 +209,11 @@ useEffect(() => {
   };
 
   const removeItemHandler = (itemInv: ICartProduct) => {
+      if (window.confirm('Esta seguro de Borrar?')) {
     input8Ref.current.focus()
     // ctxDispatch({ type: 'INVOICE_REMOVE_ITEM', payload: itemInv });
-  removeCartProduct( itemInv as ICartProduct )
+    removeCartProduct( itemInv as ICartProduct )
+      }
   };
 
   // Edit function
@@ -242,8 +251,9 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
     if (!productRow) {
         setCodPro('');
+        setCodigoPro('');
         setCodProd('');
-        setDesPro('Elija un Producto');
+        setDesPro('Elija un Diligencia');
         // setVenDat('');
         setObserv('');
         setQuantity(0);
@@ -256,6 +266,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
+        setCodigoPro(productRow.codigoPro);
         setCodProd(productRow.codPro);
         setDesPro(productRow.title);
         // setVenDat('');
@@ -289,6 +300,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
               setObserv(linea.observ!);
               setVenDat(linea.venDat!);
               setPrice(linea.price);
+              setTermi(linea.terminado!);
               }
 
   };
@@ -376,9 +388,11 @@ const handleClickOutside = (e: MouseEvent) => {
             <Grid item md={1}>
               <TextField
                 inputRef={input8Ref}
+                // label="Diligencia"
                 label="Diligencia"
+                placeholder="Diligencia"
                 fullWidth
-              size="small"
+                size="small"
                 value={codProd}
                 onChange={(e) => setCodProd(e.target.value)}
                 onKeyDown={(e) => ayudaPro(e)}
@@ -393,7 +407,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 startIcon={<BiFileFind />}
                 onClick={handleShowPro}
                 title="Buscador"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               >
                 F2
               </Button>
@@ -404,7 +418,7 @@ const handleClickOutside = (e: MouseEvent) => {
                   <Typography variant="h6">{desPro}</Typography>
             </Grid>
 
-          <Grid item md={2}>
+          <Grid item md={1.5}>
             <TextField
               fullWidth
               size="small"
@@ -417,7 +431,7 @@ const handleClickOutside = (e: MouseEvent) => {
               required
             />
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3.5}>
             <TextField
               fullWidth
               size="small"
@@ -440,7 +454,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 variant="contained"
                 color="warning"
                 fullWidth
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
                 onClick={() => addToCartHandler(productR as IProduct)}
               >
                 {isEditing ? 'Editing Row Item' : 'Agrega'}
@@ -467,7 +481,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Box display="flex" justifyContent="flex-end">
               <Button onClick={() => setModalOpen(false)}>X</Button>
             </Box>
-            <ProductSelector onSelectPro={handleSelect} productss={productss} />
+            <ProductSelectorEsc onSelectPro={handleSelect} productss={productss} />
           </Box>
         </Modal>
 
@@ -476,7 +490,7 @@ const handleClickOutside = (e: MouseEvent) => {
         <table width="100%" className="mb-10">
           <thead>
             <tr>
-              {/* <th>Codigo Producto</th> */}
+              <th>Codigo dil.</th>
               <th>Descripción</th>
               <th>Observaciones</th>
               <th>Vence</th>
@@ -488,27 +502,39 @@ const handleClickOutside = (e: MouseEvent) => {
           <tbody>
             {cart.map((itemInv) => (
               <tr key={itemInv._id}>
-                {/* <td>{itemInv._id}</td> */}
+                <td>{itemInv.codigoPro}</td>
                 <td>{itemInv.title}</td>
                 <td>{itemInv.observ}</td>
-                <td style={{ textAlign: 'center' }}>{itemInv.venDat}</td>
+                <td style={{ textAlign: 'center' }}>{itemInv.venDat?.substring(0, 10)}</td>
                 {/* <td >{(itemInv.quantity * itemInv.price).toFixed(2)}</td> */}
-                <td style={{ textAlign: 'center' }}>{itemInv.terminado == true ? 'Si' : 'No'}</td>
-                {/* <td>
-                  <IconButton onClick={() => removeItemHandler(itemInv)} color="error">
-                    Elimina
-                  </IconButton>
-                </td> */}
+                {/* <td style={{ textAlign: 'center' }}>{itemInv.terminado == true ? 'Si' : 'No'}</td>
                 <td style={{ textAlign: 'left' }}>
                   <IconButton
                     color="error"
                     onClick={() => removeItemHandler(itemInv)}
-                    // disabled={isPaying}
                   >
                     <AiOutlineDelete className="text-red-500 font-bold text-xl" />
                   </IconButton>
                   <IconButton onClick={() => terminadoSiNo(itemInv)} color="secondary">
                     {itemInv.terminado == true ? 'Activar' : 'Terminar'}
+                  </IconButton> */}
+
+                <td style={{ textAlign: 'center' }}>
+                  <Checkbox
+                    checked={itemInv.terminado}
+                    onChange={() => terminadoSiNo(itemInv)}
+                    color="success"
+                  />
+                  {itemInv.terminado == true ? 'Si' : 'No'}
+                </td>
+                <td style={{ textAlign: 'center' }} >
+                  <IconButton
+                                     
+                    color="error"
+                    onClick={() => removeItemHandler(itemInv)}
+                    // disabled={isPaying}
+                  >
+                    <AiOutlineDelete className="text-red-500 font-bold text-xl" />
                   </IconButton>
                 </td>
               </tr>

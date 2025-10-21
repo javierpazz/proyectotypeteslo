@@ -63,8 +63,9 @@ interface IOrderUnwiund {
     recDat?       : string;
     desVal?       : string;
     notes?       : string;
-    paymentMethod: number;
+    paymentMethod: string;
     instruName? : string;
+    instruPublico? : string;
     customName? : string;
     userName? : string;
     parteName? : string;
@@ -91,7 +92,8 @@ const columns:GridColDef[] = [
         width: 100,
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                     color= "secondary"
                      underline='always'>
                          { row.remNum}
                     </MuiLink>
@@ -108,13 +110,13 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.terminado
                 ? (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
                      underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
                   )
                 : (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
                      underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
                     </MuiLink>
@@ -128,13 +130,13 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.dilterminado
                 ? (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
                      underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
                   )
                 : (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
                      underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
                     </MuiLink>
@@ -143,10 +145,30 @@ const columns:GridColDef[] = [
     },
     { field: 'customName', headerName: 'Cliente', width: 200 },
     { field: 'instruName', headerName: 'Instrumento', width: 200 },
+        {
+            field: 'publico',
+            headerName: 'INSTRUMETO',
+            width: 120,
+            renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                return row.publico
+                    ? (
+                        <>PUBLICO</>
+                    )
+                    : (
+                        <>PRIVADO</>
+                        )
+            }
+        },
     { field: 'parteName', headerName: 'Parte', width: 200 },
     { field: 'configName', headerName: 'Registro', width: 200 },
     { field: 'namePro', headerName: 'Diligencia', width: 200 },
-    { field: 'valor', headerName: 'Valor Dil.', width: 200 },
+    // { field: 'valor', headerName: 'Valor Dil.', width: 200 },
+    { field: 'valor',
+      headerName: 'Valor Dil.',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
     { field: 'observ', headerName: 'Observaciones', width: 250 },
     { field: 'libNum', headerName: 'Libro', width: 100 },
     { field: 'folNum', headerName: 'Folio', width: 100 },
@@ -156,13 +178,19 @@ const columns:GridColDef[] = [
     { field: 'asieNum', headerName: 'Asiento ', width: 100 },
     { field: 'asieDat', headerName: 'Fecha Publico', width: 100 },
     { field: 'userName', headerName: 'Usuario', width: 200 },
-    { field: 'total', headerName: 'Monto total', width: 100 },
+    // { field: 'total', headerName: 'Monto total', width: 100 },
+    { field: 'total',
+      headerName: 'Monto total',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
     {
         field: 'check2',
         headerName: 'Actualiza',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <MuiLink component={RouterLink}  to={`/admin/mesaentradaAct/${row.punteid}?redirect=/admin/entradas`}>
+                    <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaAct/${row.punteid}?redirect=/admin/diligencias`}>
                     { "Actualiza"}
                     </MuiLink>
                 )
@@ -174,7 +202,7 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
                     // <NavLink to={`/admin/invoices/invoice/${ row.id }`}>
-                    <MuiLink component={RouterLink}  to={`/admin/mesaentradaVal/${row.punteid}?redirect=/admin/entradas`}>
+                    <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaVal/${row.punteid}?redirect=/admin/diligencias`}>
                     { "Valoriza"}
                     </MuiLink>
                 )
@@ -243,9 +271,9 @@ export const DiligenciaListScreen = () => {
         // });
         //   const resp = await stutzApi.get('/api/invoices/diligencias');
           const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          console.log(resp.data.invoices)
           setInvoices(resp.data.invoices);
           setIsloading(false);
-          console.log(resp.data.invoices)
         } catch (error) {
           console.log({error})
         }
@@ -269,6 +297,7 @@ export const DiligenciaListScreen = () => {
         id    : (invoice.orderItems._id+invoice._id),
         punteid : invoice._id,
         instruName : invoice.instruName,
+        publico : invoice.instruPublico,
         customName : invoice.customName,
         userName : invoice.userName,
         parteName : invoice.parteName,
@@ -295,9 +324,10 @@ export const DiligenciaListScreen = () => {
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         dilterminado  : invoice.orderItems.terminado,
-        valor  : invoice.orderItems.price*(1+(invoice.orderItems.porIva/100)),
+        valor  : (invoice.orderItems.price*(1+(invoice.orderItems.porIva/100))).toFixed(2),
         // namePro  : invoice.orderItems.title as any,
-        total : invoice.total,
+        // total : invoice.total,
+        total : invoice.total.toFixed(2),
         isPaid: invoice.isPaid,
         noProducts: invoice.numberOfItems,
         createdAt: invoice.createdAt!.substring(0, 10),
@@ -433,7 +463,11 @@ export const DiligenciaListScreen = () => {
     saveAs(blob, 'Diligencias.xlsx');
   };
 
+
+
     if ( !invoices ) return (<></>);
+// 👉 Calculás el total
+const totalGeneral = invoices.reduce((acc, inv) => acc + (inv.orderItems.price*(1+(inv.orderItems.porIva/100))), 0);
 
   return (
     <AdminLayoutMenuList
@@ -447,7 +481,7 @@ export const DiligenciaListScreen = () => {
               onClick={parametros}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Filtro
             </Button>
@@ -455,6 +489,12 @@ export const DiligenciaListScreen = () => {
         <Button variant="outlined" color="success" onClick={exportToExcel}>
           Excel
         </Button>
+          <Grid item xs={12}>
+            <Box mt={2} textAlign="right" fontWeight="bold">
+              a Cobrar: {totalGeneral.toFixed(2)}
+            </Box>
+          </Grid>
+
             </Box>
 
         {

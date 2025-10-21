@@ -2,6 +2,7 @@ import { ISize } from './';
 
 export interface ICartProduct {
     _id: string;
+    codigoPro: string;
     image: string;
     price: number;
     porIva: number;

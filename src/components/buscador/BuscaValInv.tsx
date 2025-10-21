@@ -45,7 +45,7 @@ inputRef,
 }) => {
 
 
-void  codVal;
+void  codVal,valueeR,desval;
 
   // const [codUse, setCodUse] = useState('');
   const [values, setValues] = useState<IValue[]>([]);
@@ -247,7 +247,9 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codValt === '' ? 'Value' : ''}
+              // label={codValt === '' ? 'Value' : ''}
+              // placeholder="Value"
+              label="Value"
               placeholder="Value"
               value={codValt}
               onChange={(e) => setCodValt(e.target.value)}
@@ -261,7 +263,7 @@ useEffect(() => {
               onClick={handleShowVal}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

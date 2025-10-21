@@ -1,11 +1,12 @@
 import { useContext, useState } from 'react';
 // import NextLink from 'next/link';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Box, Button, Chip, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Chip, Grid, TextField, Typography, IconButton, InputAdornment, } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { ErrorOutline, Visibility, VisibilityOff } from '@mui/icons-material';
+
 import { AuthLayout } from '../../components/layouts'
 import { validations } from '../../utils';
-import { ErrorOutline } from '@mui/icons-material';
 import { AuthContext } from '../../../context';
 
 type FormData = {
@@ -23,6 +24,7 @@ export const Register = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
+  void setPunto;
 
   const filtro = {
     // firstDat : getTodayInGMT3(),
@@ -57,6 +59,13 @@ export const Register = () => {
 
     const [showError, setShowError] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // 👈 new state
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
 
 
     const onRegisterForm = async({name, email, password}: FormData) => {
@@ -145,7 +154,7 @@ export const Register = () => {
                     
                     />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <TextField label="Contraseña" type='password' variant="filled" fullWidth
                                 { ...register('password', {
                                     required: 'Este campo es requerido',
@@ -154,7 +163,34 @@ export const Register = () => {
                                 error={ !!errors.password }
                                 helperText={ errors.password?.message }
                     />
-                </Grid>
+                </Grid> */}
+            <Grid item xs={12}>
+              <TextField
+                label="Contraseña"
+                type={showPassword ? 'text' : 'password'} // 👈 toggle type
+                variant="filled"
+                fullWidth
+                {...register('password', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                InputProps={{
+                  endAdornment: ( // 👇 icon to show/hide password
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
 
                 <Grid item xs={12}>
                     <Button type="submit" color="secondary" className='circular-btn' size='large' fullWidth>

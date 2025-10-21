@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react';
 import { Navbar, SideMenu } from '../ui';
-import foto from '../../assets/escribania.jpg';
 
 
 

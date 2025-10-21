@@ -52,8 +52,10 @@ export const SideMenu = () => {
                     />
                 </ListItem> */}
 
+
                 {
-                    isLoggedIn && (
+                    // (isLoggedIn && (localStorage.getItem('modulo') === "ecom")) && (
+                    (isLoggedIn && (user!.role === "client")) && (
                         <>
 
                 <ListItem button>
@@ -64,7 +66,7 @@ export const SideMenu = () => {
                 </ListItem>
 
                 <ListItem button 
-                onClick={ () => navigateTo('/orders/history') }
+                // onClick={ () => navigateTo('/orders/history') }
                 >
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
@@ -119,6 +121,8 @@ export const SideMenu = () => {
                        )
                        : (
                 <>
+                {
+                (localStorage.getItem('modulo') === "ecom") &&
                 <ListItem 
                 button
                 onClick={ () => navigateTo(`/auth/login`) }
@@ -128,6 +132,8 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Ingresar'} />
                 </ListItem>
+                }
+
                 <ListItem 
                 button
                 onClick={ () => navigateTo(`/auth/loginadm`) }
@@ -135,7 +141,7 @@ export const SideMenu = () => {
                     <ListItemIcon>
                         <VpnKeyOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Log In'} />
+                    <ListItemText primary={'Log In (Admin)'} />
                 </ListItem>
 
                 </>   
@@ -145,14 +151,23 @@ export const SideMenu = () => {
 
                 {/* Admin */}
                 {
-                    user?.role === 'admin' && (
+                    (user?.role === 'admin' || user?.role === 'user') && (
                         <>
 
                 <Divider />
                 <ListSubheader>Admin Panel</ListSubheader>
 
                 <ListItem button
-                onClick={ () => navigateTo('/admin/entradas') }>
+                onClick={ () => navigateTo('/factura') }>
+                    <ListItemIcon>
+                        <CategoryOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Comercio'} />
+                </ListItem>
+
+
+                <ListItem button
+                onClick={ () => navigateTo('/escribania') }>
                     <ListItemIcon>
                         <CategoryOutlined/>
                     </ListItemIcon>

@@ -38,8 +38,8 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
     const checkToken = async() => {
 
-/////pasar moongose        // if ( !Cookies.get('token') ) {
-        if ( !localStorage.getItem('userInfo') ) {
+        if ( !Cookies.get('token') ) {
+        // if ( !localStorage.getItem('userInfo') ) {
             console.log("cukies")
             dispatch({ type: '[Auth] - Logout' });
             return;
@@ -90,6 +90,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
 
     const registerUser = async( name: string, email: string, password: string, punto: string ): Promise<{hasError: boolean; message?: string}> => {
+        void punto;
         try {
 
 /////pasar moongose            await stutzApi.post(`/api/customers/signup`,

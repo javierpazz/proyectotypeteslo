@@ -59,7 +59,7 @@ const OrderI:IOrder = {
     recDat : "",
     desVal : "",
     notes : "",
-    paymentMethod: 0,
+    paymentMethod: "",
 
     isPaid  : false,
     paidAt : '',
@@ -136,7 +136,7 @@ export const AppInvIns = () => {
             recDat : "",
             desVal : "",
             notes : "",
-            paymentMethod: 0,
+            paymentMethod: "",
 
         }              
 
@@ -521,7 +521,7 @@ const handleClickOutside = (e: MouseEvent) => {
     const receiptAux = receiptB;
     try {
       setIsloading(true);
-      const { data } = await stutzApi.put(
+      await stutzApi.put(
         `/api/invoices/${id}/geninvRem`,
         {invoiceAux, receiptAux },
         // {invoiceAux },
@@ -742,7 +742,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={Paying}
               disabled={
                cart.length === 0 ||
@@ -760,7 +760,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               COBRANDO
             </Button>
@@ -769,7 +769,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               CUENTA CORRIENTE
             </Button>
@@ -787,7 +787,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={handleShowCus}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -801,7 +801,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={placeCancelInvoiceHandler}
               // disabled={cart.length === 0}
             >
@@ -813,7 +813,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
               disabled={ !codCom  || !invDat || isloading}

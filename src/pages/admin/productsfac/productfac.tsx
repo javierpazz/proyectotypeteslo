@@ -35,7 +35,7 @@ interface FormData {
     gender     : string;
     brand     : string;
     id_config: string;
-    supplier: string;
+    supplier: string | null;
 }
 const productI: FormData = 
       {
@@ -60,7 +60,7 @@ const productI: FormData =
         //   createdAt: '',
         //   updatedAt: '',
           id_config: "",
-          supplier: "",
+          supplier: null,
           
       }
 
@@ -119,6 +119,9 @@ useEffect(() => {
             setNameSup('Elija Proveedor');        
       } else {
         const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${title}`);
+        console.log("data")
+        console.log(data)
+        console.log("data")
         const cleanData: FormData = {
         ...data,
         id_config: typeof data.id_config === 'string' ? data.id_config : data.id_config?._id || '',
@@ -166,8 +169,8 @@ useEffect(() => {
         try {
 
             form.id_config = userInfo.codCon;
-            form.supplier = codSup;
-
+            // form.supplier = codSup;
+            if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
             if (form._id){
                 await stutzApi.put('/api/tes/admin/productsfac', form)
             }else{
@@ -228,6 +231,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.codigoPro }
                             helperText={ errors.codigoPro?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         <TextField
                             label="Codigo Barra"
@@ -240,6 +244,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.codPro }
                             helperText={ errors.codPro?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                             <TextField
@@ -253,6 +258,7 @@ useEffect(() => {
                                 })}
                                 error={ !!errors.title }
                                 helperText={ errors.title?.message }
+                                InputLabelProps={{shrink: true}}
                             />
 
                             <TextField
@@ -266,6 +272,7 @@ useEffect(() => {
                                 })}
                                 error={ !!errors.medPro }
                                 helperText={ errors.medPro?.message }
+                                InputLabelProps={{shrink: true}}
                             />
                             <TextField
                                 label="Descripcion"
@@ -278,6 +285,7 @@ useEffect(() => {
                                 })}
                                 error={ !!errors.description }
                                 helperText={ errors.description?.message }
+                                InputLabelProps={{shrink: true}}
                             />
 
                             <TextField
@@ -291,6 +299,7 @@ useEffect(() => {
                                 })}
                                 error={ !!errors.category }
                                 helperText={ errors.category?.message }
+                                InputLabelProps={{shrink: true}}
                             />
                     </Grid>
 
@@ -307,6 +316,7 @@ useEffect(() => {
                                 })}
                                 error={ !!errors.brand }
                                 helperText={ errors.brand?.message }
+                                InputLabelProps={{shrink: true}}
                             />
 
                         <TextField
@@ -322,6 +332,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.price }
                             helperText={ errors.price?.message }
+                            InputLabelProps={{shrink: true}}
                         />
     
                         <TextField
@@ -337,6 +348,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.priceBuy }
                             helperText={ errors.priceBuy?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -352,6 +364,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.inStock }
                             helperText={ errors.inStock?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -367,6 +380,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.minStock }
                             helperText={ errors.minStock?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -382,6 +396,7 @@ useEffect(() => {
                             })}
                             error={ !!errors.porIva }
                             helperText={ errors.porIva?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         {/* <Divider sx={{ my: 1 }} /> */}

@@ -1,10 +1,9 @@
 import { useContext, useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { Input, InputAdornment, Link as MuiLink } from '@mui/material';
+import { Input, InputAdornment } from '@mui/material';
 
 // import { AppBar,  Box, Button, Toolbar, Typography } from '@mui/material';
-import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
+import { AppBar, Badge, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { CartContext, UiContext } from '../../../context';
 import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 
@@ -15,7 +14,6 @@ export const Navbar = () => {
   : null;
 console.log(nameCon)
     const navigate = useNavigate();
-    const  {pathname} = useLocation();
 
 
         const { toggleSideMenu } = useContext( UiContext );

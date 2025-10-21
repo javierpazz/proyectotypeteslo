@@ -80,7 +80,7 @@ const loadProduct = async() => {
         encargadoI.codEnc= "",
         encargadoI.name= ""
     } else {
-        const resp = await stutzApi.get<IEncargado>(`/api/tes/encargados/admin/${ id }`);
+        const resp = await stutzApi.get<IEncargado>(`/api/tes/admin/encargados/${ id }`);
         encargadoI._id=resp.data._id,
         encargadoI.codEnc=resp.data.codEnc,
         encargadoI.name=resp.data.name
@@ -123,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/encargados/admin', form)
+                await stutzApi.put('/api/tes/admin/encargados', form)
             }else{
-                await stutzApi.post('/api/tes/encargados/admin', form)
+                await stutzApi.post('/api/tes/admin/encargados', form)
             }
 
             if ( !form._id ) {
@@ -178,6 +178,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codEnc }
                             helperText={ errors.codEnc?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -192,6 +193,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

@@ -93,7 +93,7 @@ const loadProduct = async() => {
         customerI.cuit= ""
         customerI.coniva= ""
     } else {
-        const resp = await stutzApi.get<ICustomer>(`/api/tes/customers/admin/${ id }`);
+        const resp = await stutzApi.get<ICustomer>(`/api/tes/admin/customers/${ id }`);
         customerI._id=resp.data._id,
         customerI.codCus=resp.data.codCus,
         customerI.nameCus=resp.data.nameCus
@@ -140,9 +140,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/customers/admin', form)
+                await stutzApi.put('/api/tes/admin/customers', form)
             }else{
-                await stutzApi.post('/api/tes/customers/admin', form)
+                await stutzApi.post('/api/tes/admin/customers', form)
             }
 
             if ( !form._id ) {
@@ -196,6 +196,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codCus }
                             helperText={ errors.codCus?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -210,6 +211,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.nameCus }
                             helperText={ errors.nameCus?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -219,11 +221,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('emailCus', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.emailCus }
                             helperText={ errors.emailCus?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -233,11 +236,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('domcomer', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.domcomer }
                             helperText={ errors.domcomer?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -247,11 +251,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('cuit', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.cuit }
                             helperText={ errors.cuit?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -261,11 +266,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('coniva', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.coniva }
                             helperText={ errors.coniva?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

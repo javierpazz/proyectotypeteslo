@@ -2,7 +2,7 @@ import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AuthContext, UiContext } from '../../../context';
-import foto from '../../assets/escribania.jpg';
+import foto from '../../assets/fondo.jpg';
 
 // export default function AdminNavBar() {
 export const AdminNavbarMenu = () => {
@@ -10,7 +10,7 @@ export const AdminNavbarMenu = () => {
     const { toggleSideMenu } = useContext( UiContext );
 
     // Estados para cada menú desplegable
-  const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
+  // const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [anchorElSales, setAnchorElSales] = useState<null | HTMLElement>(null);
   const [anchorElBuys, setAnchorElBuys] = useState<null | HTMLElement>(null);
@@ -18,7 +18,7 @@ export const AdminNavbarMenu = () => {
   const [anchorElStocks, setAnchorElStocks] = useState<null | HTMLElement>(null);
   const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
   const [anchorElConfi, setAnchorElConfi] = useState<null | HTMLElement>(null);
-  const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
+  // const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
 
   // // Funciones para abrir menú
   // const handleOpen = (setter) => (event) => setter(event.currentTarget);
@@ -36,9 +36,7 @@ export const AdminNavbarMenu = () => {
 ////////////////////FGFGFGFG
 const { user} = useContext(  AuthContext );      
 ////////////////////FGFGFGFG
-console.log("user")
-console.log(user)
-console.log("user")
+
 // TODO
 
 
@@ -72,9 +70,9 @@ console.log("user")
               )}
             </Button>
         <Menu
-          anchorEl={anchorElEscri}
-          open={Boolean(anchorElEscri)}
-          onClose={handleClose(setAnchorElEscri)}
+          anchorEl={anchorElUser}
+          open={Boolean(anchorElUser)}
+          onClose={handleClose(setAnchorElUser)}
         >
         </Menu>
 
@@ -109,7 +107,7 @@ console.log("user")
 
         <div style={{ display: 'flex' }}>
         {/* Ventas */}
-        <Button
+        {/* <Button
           color="primary"
           onClick={handleOpen(setAnchorElEscri)}
         >
@@ -120,21 +118,6 @@ console.log("user")
           open={Boolean(anchorElEscri)}
           onClose={handleClose(setAnchorElEscri)}
         >
-          {/* <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfi)}>
-            Registros
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
-            Instrumentos
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfi)}>
-            Diligencias
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/paraminstrumento" onClick={handleClose(setAnchorElEscri)}>
-            Parametriza Instrumentos
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/partes" onClick={handleClose(setAnchorElConfi)}>
-            Partes
-          </MenuItem> */}
           <MenuItem component={Link} to="/admin/mesaentrada" onClick={handleClose(setAnchorElEscri)}>
             Mesa de Entrada
           </MenuItem>
@@ -147,7 +130,7 @@ console.log("user")
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
              Entradas sin Facturar (Sin Hacer)
           </MenuItem>
-        </Menu>
+        </Menu> */}
 
         {/* Ventas */}
         <Button
@@ -266,6 +249,9 @@ console.log("user")
           <MenuItem component={Link} to="/admin/dashboard" onClick={handleClose(setAnchorElAdmin)}>
             Dashboard
           </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboard1" onClick={handleClose(setAnchorElAdmin)}>
+            Charts
+          </MenuItem>
           <MenuItem component={Link} to="/admin/remits" onClick={handleClose(setAnchorElAdmin)}>
             Remitos de Venta
           </MenuItem>
@@ -329,7 +315,7 @@ console.log("user")
           <MenuItem component={Link} to="/admin/valores" onClick={handleClose(setAnchorElConfi)}>
             Valores
           </MenuItem>
-          <MenuItem component={Link} to="/admin/comprobantes" onClick={handleClose(setAnchorElEscri)}>
+          <MenuItem component={Link} to="/admin/comprobantes" onClick={handleClose(setAnchorElConfi)}>
             Comprobantes
           </MenuItem>
           <MenuItem component={Link} to="/admin/configuraciones" onClick={handleClose(setAnchorElConfi)}>
@@ -355,7 +341,7 @@ console.log("user")
         </Menu>
 
         {/* configuracion */}
-        <Button
+        {/* <Button
           color="primary"
           onClick={handleOpen(setAnchorElConfiEsc)}
         >
@@ -373,7 +359,7 @@ console.log("user")
           <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfiEsc)}>
             Registros
           </MenuItem>
-          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
+          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElConfiEsc)}>
             Instrumentos
           </MenuItem>
           <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfiEsc)}>
@@ -392,7 +378,7 @@ console.log("user")
             Usuarios
           </MenuItem>
 
-        </Menu>
+        </Menu> */}
                 <Button
                     color="primary"
                     onClick={ toggleSideMenu }>

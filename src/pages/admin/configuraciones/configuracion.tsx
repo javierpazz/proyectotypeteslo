@@ -109,7 +109,7 @@ const loadProduct = async() => {
         configuracionI.numIntCaj= 0
         configuracionI.numIntMov= 0
     } else {
-        const resp = await stutzApi.get<IConfiguracion>(`/api/tes/configurations/admin/${ id }`);
+        const resp = await stutzApi.get<IConfiguracion>(`/api/tes/admin/configuraciones/${ id }`);
         configuracionI._id=resp.data._id,
         configuracionI.codCon=resp.data.codCon,
         configuracionI.name=resp.data.name
@@ -162,9 +162,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/configurations/admin', form)
+                await stutzApi.put('/api/tes/admin/configuraciones', form)
             }else{
-                await stutzApi.post('/api/tes/configurations/admin', form)
+                await stutzApi.post('/api/tes/admin/configuraciones', form)
             }
 
             if ( !form._id ) {
@@ -218,6 +218,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codCon }
                             helperText={ errors.codCon?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -232,6 +233,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 
@@ -247,6 +249,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.domcomer }
                             helperText={ errors.domcomer?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -261,6 +264,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.cuit }
                             helperText={ errors.cuit?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -275,6 +279,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.coniva }
                             helperText={ errors.coniva?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -289,6 +294,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.ib }
                             helperText={ errors.ib?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         <TextField
                             label="Fecha Inicio Actividades"
@@ -302,6 +308,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.feciniact }
                             helperText={ errors.feciniact?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

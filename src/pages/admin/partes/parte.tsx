@@ -93,7 +93,7 @@ const loadProduct = async() => {
         parteI.cuit= "",
         parteI.coniva= ""
     } else {
-        const resp = await stutzApi.get<IParte>(`/api/tes/partes/admin/${ id }`);
+        const resp = await stutzApi.get<IParte>(`/api/tes/admin/partes/${ id }`);
         parteI._id=resp.data._id,
         parteI.codPar=resp.data.codPar,
         parteI.name=resp.data.name,
@@ -140,9 +140,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/partes/admin', form)
+                await stutzApi.put('/api/tes/admin/partes', form)
             }else{
-                await stutzApi.post('/api/tes/partes/admin', form)
+                await stutzApi.post('/api/tes/admin/partes', form)
             }
 
             if ( !form._id ) {
@@ -196,6 +196,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codPar }
                             helperText={ errors.codPar?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -210,6 +211,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -219,11 +221,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('email', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.email }
                             helperText={ errors.email?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -233,11 +236,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('domcomer', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.domcomer }
                             helperText={ errors.domcomer?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -247,11 +251,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('cuit', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.cuit }
                             helperText={ errors.cuit?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -261,11 +266,12 @@ const loadProduct = async() => {
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('coniva', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.coniva }
                             helperText={ errors.coniva?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

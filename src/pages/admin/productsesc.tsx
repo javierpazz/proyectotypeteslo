@@ -20,7 +20,7 @@ const columns:GridColDef[] = [
     { field: 'codPro', headerName: 'Codigo' },
     { 
         field: 'title', 
-        headerName: 'Title', 
+        headerName: 'Descripcion', 
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
@@ -31,8 +31,15 @@ const columns:GridColDef[] = [
             )
         }
     },
-    { field: 'price', headerName: 'Valor' },
-        {
+    // { field: 'price', headerName: 'Valor' },
+    { field: 'price',
+      headerName: 'Valor',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
+
+    {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
@@ -65,7 +72,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IProduct[]>('/api/tes/products/admin');
+          const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
           setProducts(resp.data);
           console.log("Escri");
           console.log(resp.data);
@@ -91,7 +98,7 @@ const columns:GridColDef[] = [
         // gender: product.gender,
         // // category: product.category,
         // inStock: product.inStock,
-        price: product.price,
+        price: product.price.toFixed(2),
         // sizes: product.sizes.join(', '),
         // slug: product.slug,
     }));
@@ -100,8 +107,7 @@ const columns:GridColDef[] = [
     if (window.confirm('Esta Seguro de Eliminar?')) {
         console.log(id)
         try {
-        // await stutzApi.delete(`/api/tes/productsesc/admin/${id}`);
-        await stutzApi.delete(`/api/tes/products/admin/${id}`);
+        await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
         window.location.reload();
     } catch (err) {
       }

@@ -93,7 +93,7 @@ const loadProduct = async() => {
         supplierI.cuit= ""
         supplierI.coniva= ""
     } else {
-        const resp = await stutzApi.get<ISupplier>(`/api/tes/proveedores/admin/${ id }`);
+        const resp = await stutzApi.get<ISupplier>(`/api/tes/admin/proveedores/${ id }`);
         supplierI._id=resp.data._id,
         supplierI.codSup=resp.data.codSup,
         supplierI.name=resp.data.name
@@ -140,9 +140,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/proveedores/admin', form)
+                await stutzApi.put('/api/tes/admin/proveedores', form)
             }else{
-                await stutzApi.post('/api/tes/proveedores/admin', form)
+                await stutzApi.post('/api/tes/admin/proveedores', form)
             }
 
             if ( !form._id ) {
@@ -195,6 +195,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codSup }
                             helperText={ errors.codSup?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -209,6 +210,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         <TextField
                             label="Email"
@@ -222,6 +224,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.email }
                             helperText={ errors.email?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         <TextField
                             label="Domicilio Comercias"
@@ -235,6 +238,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.domcomer }
                             helperText={ errors.domcomer?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         <TextField
                             label="CUIT"
@@ -248,6 +252,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.cuit }
                             helperText={ errors.cuit?.message }
+                            InputLabelProps={{shrink: true}}
                         />
                         <TextField
                             label="Condicion IVA"
@@ -261,6 +266,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.coniva }
                             helperText={ errors.coniva?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

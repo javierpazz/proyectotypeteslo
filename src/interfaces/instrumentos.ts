@@ -4,6 +4,8 @@ export interface IInstrumento {
     _id: string;
     codIns: string;
     name: string;
+    publico     : boolean;
+
     orderItems: IOrderItem[];
 
     // TODO: agregar createdAt y updatedAt

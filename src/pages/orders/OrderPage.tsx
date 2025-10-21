@@ -43,7 +43,7 @@ const OrderI:IOrder = {
     recDat : "",
     desVal : "",
     notes : "",
-    paymentMethod: 0,
+    paymentMethod: "",
 
     isPaid  : false,
     paidAt : '',

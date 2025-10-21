@@ -64,7 +64,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IValue[]>('/api/tes/valores/admin');
+          const resp = await stutzApi.get<IValue[]>('/api/tes/admin/valores');
           setProveedores(resp.data);
         } catch (error) {
           console.log({error})
@@ -88,7 +88,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/valores/admin/${id}`);
+        await stutzApi.delete(`/api/tes/admin/valores/${id}`);
         window.location.reload();
     } catch (err) {
       }

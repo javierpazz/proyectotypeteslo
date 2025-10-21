@@ -44,7 +44,7 @@ const OrderI:IInvoice = {
     recDat : "",
     desVal : "",
     notes : "",
-    paymentMethod: 0,
+    paymentMethod: "",
 
     isPaid  : false,
     paidAt : '',
@@ -184,9 +184,9 @@ export const Order = () => {
                     sx={{ my: 2 }}
                     label="Facturar"
                     variant='outlined'
-                    color="error"
+                    color="success"
                     onClick={generaInv}
-                    icon={ <CreditCardOffOutlined /> }
+                    // icon={ <CreditCardOffOutlined /> }
                 />
 
     )

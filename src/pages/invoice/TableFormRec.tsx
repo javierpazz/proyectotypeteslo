@@ -272,7 +272,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 startIcon={<BiFileFind />}
                 onClick={handleShowVal}
                 title="Buscador"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               >
                 F2
               </Button>
@@ -326,7 +326,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 color="warning"
                 fullWidth
               size="small"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
                 onClick={() => addToCartHandler(valueeR as IValue)}
               >
                 {isEditing ? 'Editing Row Item' : 'Agrega'}

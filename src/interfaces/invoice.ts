@@ -31,7 +31,7 @@ export interface IInvoice {
     recDat?       : string;
     desVal?       : string;
     notes?       : string;
-    paymentMethod: number;
+    paymentMethod: string;
     isHaber?    : boolean;
     geRem?    : boolean;
     salbuy?    : string;

@@ -34,6 +34,21 @@ export const Instrumentos = () => {
             }
         },
         {
+            field: 'publico',
+            headerName: 'INSTRUMETO',
+            width: 120,
+            renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                return row.publico
+                    ? (
+                        <>PUBLICO</>
+                    )
+                    : (
+                        <>PRIVADO</>
+                        )
+            }
+        },
+
+        {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
@@ -69,7 +84,7 @@ export const Instrumentos = () => {
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IInstrumento[]>('/api/tes/instrumentos/admin');
+          const resp = await stutzApi.get<IInstrumento[]>('/api/tes/admin/instrumentos');
           setInstrumentos(resp.data);
         } catch (error) {
           console.log({error})
@@ -89,12 +104,13 @@ export const Instrumentos = () => {
         id: instrumentos._id,
         codIns: instrumentos.codIns,
         name: instrumentos.name,
+        publico: instrumentos.publico,
     }));
 
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/instrumentos/admin/${id}`);
+        await stutzApi.delete(`/api/tes/admin/instrumentos/${id}`);
         window.location.reload();
     } catch (err) {
       }

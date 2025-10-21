@@ -80,7 +80,7 @@ const loadProduct = async() => {
         valorI.codVal= "",
         valorI.desVal= ""
     } else {
-        const resp = await stutzApi.get<IValue>(`/api/tes/valores/admin/${ id }`);
+        const resp = await stutzApi.get<IValue>(`/api/tes/admin/valores/${ id }`);
         valorI._id=resp.data._id,
         valorI.codVal=resp.data.codVal,
         valorI.desVal=resp.data.desVal
@@ -123,9 +123,9 @@ const loadProduct = async() => {
         setIsSaving(true);
         try {
             if (form._id){
-                await stutzApi.patch('/api/tes/valores/admin', form)
+                await stutzApi.put('/api/tes/admin/valores', form)
             }else{
-                await stutzApi.post('/api/tes/valores/admin', form)
+                await stutzApi.post('/api/tes/admin/valores', form)
             }
 
             if ( !form._id ) {
@@ -178,6 +178,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.codVal }
                             helperText={ errors.codVal?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -192,6 +193,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.desVal }
                             helperText={ errors.desVal?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
 

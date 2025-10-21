@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react';
 // import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {   useNavigate } from 'react-router-dom';
-import { Box, Button, Chip, Grid, TextField, Typography } from '@mui/material';
-import { ErrorOutline } from '@mui/icons-material';
+import { Box, Button, Chip, Grid, TextField, Typography, IconButton, InputAdornment, } from '@mui/material';
+import { ErrorOutline, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../components/layouts'
-import { AuthContext } from '../../../context';
+import { AuthContext, UiContext } from '../../../context';
 import { validations } from '../../utils';
 
 type FormData = {
@@ -27,10 +27,17 @@ export const LoginAdm = () => {
 
     const navigate = useNavigate();
     const { loginUserAdm } = useContext( AuthContext );
+    const { toggleSideMenu } = useContext( UiContext );
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false); // 👈 new state
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
     const onLoginUser = async({email, password}: FormData) => {
         setShowError(false);
@@ -51,7 +58,10 @@ export const LoginAdm = () => {
             setTimeout(() => setShowError(false), 3000);
             return;
         }        
-    
+
+        //Activa sidemenu
+        toggleSideMenu();
+
         // Todo: navegar a la pantalla que el usuario estaba
         navigate('/salepoint');
         // navigate(redirect || '/');
@@ -91,7 +101,7 @@ export const LoginAdm = () => {
                     helperText={ errors.email?.message }
         />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <TextField label="Contraseña" type='password' variant="filled" fullWidth
                                 { ...register('password', {
                                     required: 'Este campo es requerido',
@@ -101,7 +111,37 @@ export const LoginAdm = () => {
                                 helperText={ errors.password?.message }
                     
                     />
-                </Grid>
+                </Grid> */}
+
+            <Grid item xs={12}>
+              <TextField
+                label="Contraseña"
+                type={showPassword ? 'text' : 'password'} // 👈 toggle type
+                variant="filled"
+                fullWidth
+                {...register('password', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                InputProps={{
+                  endAdornment: ( // 👇 icon to show/hide password
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+
+
 
                 <Grid item xs={12}>
                     <Button type="submit"

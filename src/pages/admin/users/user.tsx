@@ -4,13 +4,15 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField, IconButton, InputAdornment, } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
 import {  IUser  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
+import { FullScreenLoading } from '../../../components/ui';
 
 interface FormData {
     _id?       : string;
@@ -22,6 +24,7 @@ interface FormData {
     passwordNue    : string,
     passwordConNue    : string,
     role        :string,
+    puede: boolean,
 }
 
 
@@ -37,6 +40,7 @@ const userI =
         passwordNue: "",
         passwordConNue: "",
         role:'client',
+        puede: false,
       }
 
 
@@ -71,6 +75,25 @@ const input1Ref = useRef<HTMLInputElement>(null);
 const params = useParams();
 const { id } = params;
 
+  const [showPassword, setShowPassword] = useState(false); // 👈 new state
+  const [showPasswordN, setShowPasswordN] = useState(false); // 👈 new state
+  const [showPasswordCN, setShowPasswordCN] = useState(false); // 👈 new state
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const handleClickShowPasswordN = () => setShowPasswordN(!showPasswordN);
+  const handleMouseDownPasswordN = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const handleClickShowPasswordCN = () => setShowPasswordCN(!showPasswordCN);
+  const handleMouseDownPasswordCN = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+
+
 const { register, handleSubmit, formState:{ errors }, reset } = useForm<FormData>({
     defaultValues: user
 })
@@ -95,10 +118,10 @@ const loadProduct = async() => {
         userI.password= "",
         userI.passwordNue= "",
         userI.passwordConNue= "",
-        userI.role='client'
+        userI.role='user'
     } else {
 
-        const resp = await stutzApi.get<IUser>(`/api/tes/users/admin/${ id }`);
+        const resp = await stutzApi.get<IUser>(`/api/tes/admin/users/${ id }`);
         userI._id=resp.data._id,
         userI.name=resp.data.name
         userI.email=resp.data.email
@@ -151,10 +174,13 @@ const loadProduct = async() => {
 
         setIsSaving(true);
         try {
+
+            (user1!.role === 'admin') ? form.puede = true : form.puede = false;
+
             if (form._id){
-                await stutzApi.patch('/api/tes/users/admin', form)
+                await stutzApi.put('/api/tes/admin/users', form)
             }else{
-                await stutzApi.post('/api/tes/users/admin', form)
+                await stutzApi.post('/api/tes/admin/users', form)
             }
 
             if ( !form._id ) {
@@ -171,6 +197,8 @@ const loadProduct = async() => {
         }
 
     }
+    if (isLoading) return <FullScreenLoading/>; 
+    
 
     return (
         <AdminLayoutMenuList 
@@ -207,6 +235,7 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.name }
                             helperText={ errors.name?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
                         <TextField
@@ -221,22 +250,25 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.email }
                             helperText={ errors.email?.message }
+                            InputLabelProps={{shrink: true}}
                         />
 
-                        <TextField
+                        {/* <TextField
                             label="Password"
                             variant="filled"
                             fullWidth 
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('password', {
-                                required: 'Este campo es requerido',
+                                // required: 'Este campo es requerido',
+                                required: (user1!.role !== 'admin') ? 'Este campo es requerido' : false,    
                                 minLength: { value: 1, message: 'Mínimo 1 caracteres' }
                             })}
                             error={ !!errors.password }
                             helperText={ errors.password?.message }
-                        />
-                        <TextField
+                            InputLabelProps={{shrink: true}}
+                        /> */}
+                        {/* <TextField
                             label="Nuevo Password"
                             variant="filled"
                             fullWidth 
@@ -245,8 +277,9 @@ const loadProduct = async() => {
                             { ...register('passwordNue', )}
                             error={ !!errors.passwordNue }
                             helperText={ errors.passwordNue?.message }
-                        />
-                        <TextField
+                            InputLabelProps={{shrink: true}}
+                        /> */}
+                        {/* <TextField
                             label="Confirma Nuevo Password"
                             variant="filled"
                             fullWidth 
@@ -255,9 +288,92 @@ const loadProduct = async() => {
                             { ...register('passwordConNue', )}
                             error={ !!errors.passwordConNue }
                             helperText={ errors.passwordConNue?.message }
+                            InputLabelProps={{shrink: true}}
                         />
+ */}
+
+              <TextField
+                label="Contraseña"
+                type={showPassword ? 'text' : 'password'} // 👈 toggle type
+                variant="filled"
+                fullWidth
+                sx={{ mb: 1 }}
+                {...register('password', {
+                  required: (user1!.role !== 'admin') ? 'Este campo es requerido' : false,    
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                InputProps={{
+                  endAdornment: ( // 👇 icon to show/hide password
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
 
+              <TextField
+                label="Nuevo Password"
+                type={showPasswordN ? 'text' : 'password'} // 👈 toggle type
+                variant="filled"
+                fullWidth
+                sx={{ mb: 1 }}
+                {...register('passwordNue', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                })}
+                error={!!errors.passwordNue}
+                helperText={errors.passwordNue?.message}
+                InputProps={{
+                  endAdornment: ( // 👇 icon to show/hide password
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowPasswordN}
+                        onMouseDown={handleMouseDownPasswordN}
+                        edge="end"
+                      >
+                        {showPasswordN ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+
+              <TextField
+                label="Confirma Nuevo Password"
+                type={showPasswordCN ? 'text' : 'password'} // 👈 toggle type
+                variant="filled"
+                fullWidth
+                sx={{ mb: 1 }}
+                {...register('passwordConNue', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                })}
+                error={!!errors.passwordConNue}
+                helperText={errors.passwordConNue?.message}
+                InputProps={{
+                  endAdornment: ( // 👇 icon to show/hide password
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleClickShowPasswordCN}
+                        onMouseDown={handleMouseDownPasswordCN}
+                        edge="end"
+                      >
+                        {showPasswordCN ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
 
 
 

@@ -25,6 +25,8 @@ type TableFormProps = {
   input8Ref: any;
   codPro: any;
   setCodPro: any;
+  codigoPro: any;
+  setCodigoPro: any;
   desPro: any;
   setDesPro: any;
   quantity: any;
@@ -53,6 +55,8 @@ export const TableFormFacBuy: React.FC<TableFormProps> = ({
   input8Ref,
   codPro,
   setCodPro,
+  codigoPro,
+  setCodigoPro,
   desPro,
   setDesPro,
   quantity,
@@ -76,6 +80,7 @@ export const TableFormFacBuy: React.FC<TableFormProps> = ({
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: '649f9b05c4416622ac833792',
+    codigoPro: '',
     image: '',
     price: 1,
     porIva: 21,
@@ -173,6 +178,7 @@ export const TableFormFacBuy: React.FC<TableFormProps> = ({
         // });
         const cartProduct: ICartProduct = {
           _id: codPro,
+          codigoPro: codigoPro,
           image: productR.images[0],
           price: price,
           porIva: porIva,
@@ -236,6 +242,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
     if (!productRow) {
         setCodPro('');
+        setCodigoPro('');
         setCodProd('');
         setDesPro('Elija un Producto');
         // setVenDat('');
@@ -250,6 +257,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
+        setCodigoPro(productRow.codigoPro);
         setCodProd(productRow.codPro);
         setDesPro(productRow.title);
         // setVenDat('');
@@ -275,6 +283,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
         const newProduct: ICartProduct = {
           _id: productRow._id,
+          codigoPro: productRow.codigoPro,
           image: productRow.images[0],
           price: productRow.price,
           porIva: productRow.porIva,
@@ -422,7 +431,7 @@ const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
                 startIcon={<BiFileFind />}
                 onClick={handleShowPro}
                 title="Buscador"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               >
                 F2
               </Button>
@@ -492,7 +501,7 @@ const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
                 color="warning"
                 fullWidth
               size="small"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
                 onClick={() => addToCartHandler(productR as IProduct)}
               >
                 {isEditing ? 'Editing Row Item' : 'Agrega'}
@@ -542,7 +551,7 @@ const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
           <tbody>
             {cart.map((itemInv) => (
               <tr key={itemInv._id}>
-                <td>{itemInv._id}</td>
+                <td>{itemInv.codigoPro}</td>
                 <td>{itemInv.title}</td>
                 <td style={{ textAlign: 'right' }}>{(itemInv.quantity.toFixed(2))}</td>
                 <td>{itemInv.medPro}</td>

@@ -216,8 +216,10 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codUser === '' ? 'Usuario' : ''}
-              placeholder=" Usuario"
+              // label={codUser === '' ? 'Usuario' : ''}
+              // placeholder=" Usuario"
+              label="Usuario"
+              placeholder="Usuario"
               value={codUser}
               onChange={(e) => setCodUset(e.target.value)}
               onKeyDown={(e) => ayudaUse(e)}
@@ -231,7 +233,7 @@ useEffect(() => {
               onClick={handleShowUse}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

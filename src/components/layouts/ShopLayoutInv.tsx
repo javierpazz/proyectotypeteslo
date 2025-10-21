@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { NavbarInv, SideMenu } from '../ui';
-import foto from '../../assets/escribania.jpg';
+import foto from '../../assets/fondo.jpg';
 
 
 
@@ -54,9 +54,9 @@ export const ShopLayoutInv:FC<Props> = ({ children, title, pageDescription, imag
         <SideMenu />
 
         <main style={{
-            margin: '80px auto',
-            maxWidth: '1440px',
-            padding: '0px 30px'
+            // margin: '80px auto',
+            // maxWidth: '1440px',
+            // padding: '0px 30px'
         }}>
             { children }
         </main>

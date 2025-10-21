@@ -216,14 +216,16 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codSupt === '' ? 'Proveedor' : ''}
+              // label={codSupt === '' ? 'Proveedor' : ''}
+              // placeholder="Proveedor"
+              label="Proveedor"
               placeholder="Proveedor"
               // variant="filled"
               sx={{ mb: 1 }}
               value={codSupt}
               onChange={(e) => setCodSupt(e.target.value)}
               onKeyDown={(e) => ayudaSup(e)}
-              required
+              // required
               autoComplete="off"
             />
           </Grid>
@@ -232,7 +234,7 @@ useEffect(() => {
               onClick={handleShowSup}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

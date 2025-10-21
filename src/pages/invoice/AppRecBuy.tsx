@@ -454,7 +454,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={handleShowCus}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -468,7 +468,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={placeCancelInvoiceHandler}
               disabled={receipt.length === 0 }
             >
@@ -480,7 +480,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeReceiptHandler}
               disabled={receipt.length === 0 || !codSup || !recDat || isloading}

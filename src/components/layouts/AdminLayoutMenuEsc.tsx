@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
 import { AdminNavbarMenu, AdminNavbarMenuEsc } from '../admin';
-
 import { SideMenu } from '../ui';
+import foto from '../../assets/fondo.jpg';
 
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const AdminLayoutMenu:FC<Props> = ({ children, title, subTitle, icon }) => {
+export const AdminLayoutMenuEsc:FC<Props> = ({ children, title, subTitle, icon }) => {
     console.log(title,subTitle, icon)
   return (
     <>
@@ -33,12 +33,19 @@ export const AdminLayoutMenu:FC<Props> = ({ children, title, subTitle, icon }) =
         }}> */}
 
         <main
+            // style={{
+            // backgroundColor: '#dedbdbff', // gris
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
+            // backgroundAttachment: 'fixed',
+            // minHeight: '100vh', // opcional, para ocupar toda la pantalla
+            // }}
             style={{
-            backgroundColor: '#dedbdbff', // gris
+            backgroundImage: `url(${foto})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed',
-            minHeight: '100vh', // opcional, para ocupar toda la pantalla
+            minHeight: '100vh',
             }}
         >
 

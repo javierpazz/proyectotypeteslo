@@ -87,7 +87,7 @@ export const AppRempv = () => {
             recDat : "",
             desVal : "",
             notes : "",
-            paymentMethod: 0,
+            paymentMethod: "",
 
         }              
 
@@ -134,6 +134,7 @@ export const AppRempv = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
   const [codPro, setCodPro] = useState('');
+  const [codigoPro, setCodigoPro] = useState('');
   const [terminado, setTerminado] = useState(false);
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
   const [notes, setNotes] = useState('');
@@ -575,7 +576,7 @@ const handleClickOutside = (e: MouseEvent) => {
               onClick={handleShowCus}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               Buscar
             </Button>
@@ -589,7 +590,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={placeCancelInvoiceHandler}
               disabled={cart.length === 0 }
             >
@@ -601,7 +602,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
               disabled={cart.length === 0 || !codCon || !movpvDat || isloading}
@@ -626,6 +627,8 @@ const handleClickOutside = (e: MouseEvent) => {
                     input8Ref={input8Ref}
                     codPro={codPro}
                     setCodPro={setCodPro}
+                    codigoPro={codigoPro}
+                    setCodigoPro={setCodigoPro}
                     desPro={desPro}
                     setDesPro={setDesPro}
                     quantity={quantity}

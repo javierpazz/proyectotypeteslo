@@ -226,7 +226,9 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codComt === '' ? 'Comprobante' : ''}
+              // label={codComt === '' ? 'Comprobante' : ''}
+              // placeholder="Comprobante"
+              label="Comprobante"
               placeholder="Comprobante"
               value={codComt}
               onChange={(e) => setCodComt(e.target.value)}
@@ -240,7 +242,7 @@ useEffect(() => {
               onClick={handleShowCom}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

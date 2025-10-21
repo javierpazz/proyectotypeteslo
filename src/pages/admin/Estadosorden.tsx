@@ -64,7 +64,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IEstadoOrden[]>('/api/tes/estadosorden/admin');
+          const resp = await stutzApi.get<IEstadoOrden[]>('/api/tes/admin/estadosorden');
           setEncargados(resp.data);
         } catch (error) {
           console.log({error})
@@ -88,7 +88,7 @@ const columns:GridColDef[] = [
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
-        await stutzApi.delete(`/api/tes/estadosorden/admin/${id}`);
+        await stutzApi.delete(`/api/tes/admin/estadosorden/${id}`);
         window.location.reload();
     } catch (err) {
       }

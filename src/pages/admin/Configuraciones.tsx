@@ -38,6 +38,7 @@ const columns:GridColDef[] = [
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if ((user?.role !== 'admin') && (user?._id !== row.userInv)) return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}
@@ -69,7 +70,7 @@ const columns:GridColDef[] = [
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/configurations/admin');
+          const resp = await stutzApi.get<IConfiguracion[]>('/api/tes/admin/configuraciones');
           setConfiguraciones(resp.data);
         } catch (error) {
           console.log({error})

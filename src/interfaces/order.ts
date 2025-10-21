@@ -6,7 +6,7 @@ export interface IOrder {
     user?: IUser | string;
     id_client?: ICustomer | string;
     id_instru?: IInstrumento | string;
-    id_parte?: IParte | string | undefined;
+    id_parte?: IParte | string | undefined | null;
     id_config?: IConfiguracion | string;
     id_config2?: IConfiguracion | string;
     codCom?: IComprobante | string;
@@ -33,7 +33,7 @@ export interface IOrder {
     recDat?       : string;
     desVal?       : string;
     notes?       : string;
-    paymentMethod: number;
+    paymentMethod: string;
     isHaber?    : boolean;
     geRem?    : boolean;
     salbuy?    : string;
@@ -63,6 +63,7 @@ export interface IOrder {
 
 export interface IOrderItem {
     _id      : string;
+    codigoPro: string;
     title    : string;
     size     : ISize;
     quantity : number;

@@ -24,7 +24,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { CategoryOutlined } from '@mui/icons-material';
 import { useReactToPrint } from 'react-to-print';
-import { exportToExcel } from './ExportToExcel';
+// import { exportToExcel } from './ExportToExcel';
 
 
 interface Movimiento {
@@ -40,11 +40,9 @@ interface Movimiento {
 }
 
 interface Cuenta {
-  id_client: string;
+  
   codSupp: string;
   nombreSupplier: string;
-  codCust: string;
-  nombreCliente: string;
   movimientos: Movimiento[];  // <-- Aquí agregás movimientos
   saldoTotal: number;
 }
@@ -114,7 +112,7 @@ export const CtaSupListScreen = () => {
                   🖨️ Ver Filtros
                 </button> 
                 <button onClick={reactToPrintFn}>🖨️ Print</button>
-                <button onClick={() => exportToExcel(cuentas)}>📤 Exporta a Excel</button>
+                {/* <button onClick={() => exportToExcel(cuentas)}>📤 Exporta a Excel</button> */}
 
             <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
               <FormControlLabel
@@ -143,7 +141,7 @@ export const CtaSupListScreen = () => {
       </Typography>
 
       {cuentas.map((cuenta) => (
-        <Paper key={cuenta.id_client} elevation={3}>
+        <Paper key={cuenta.codSupp} elevation={3}>
           {isDet ? (
             <Accordion defaultExpanded>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -161,8 +159,8 @@ export const CtaSupListScreen = () => {
                         <TableCell>Número</TableCell>
                         <TableCell>Usuario</TableCell>
                         <TableCell>Pto. Venta</TableCell>
-                        <TableCell align="right">Haber</TableCell>
                         <TableCell align="right">Debe</TableCell>
+                        <TableCell align="right">Haber</TableCell>
                         <TableCell align="right">Saldo Acumulado</TableCell>
                       </TableRow>
                     </TableHead>
@@ -183,14 +181,14 @@ export const CtaSupListScreen = () => {
                       ))}
                     </TableBody>
                     <TableFooter>
-                      <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                        <TableCell colSpan={7} sx={{ fontWeight: 'bold' }}>
-                          Saldo Total
-                        </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: 'bold' }}>
-                          ${cuenta.saldoTotal.toFixed(2)}
-                        </TableCell>
-                      </TableRow>
+                        <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                          <TableCell colSpan={7} align="right" sx={{ fontWeight: 'bold' }}>
+                            Saldo Total
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontWeight: 'bold' }}>
+                            ${cuenta.saldoTotal.toFixed(2)}
+                          </TableCell>
+                        </TableRow>
                     </TableFooter>
                   </Table>
                 </TableContainer>
@@ -206,20 +204,20 @@ export const CtaSupListScreen = () => {
                     <TableCell>Número</TableCell>
                     <TableCell>Usuario</TableCell>
                     <TableCell>Pto. Venta</TableCell>
-                    <TableCell align="right">Haber</TableCell>
                     <TableCell align="right">Debe</TableCell>
+                    <TableCell align="right">Haber</TableCell>
                     <TableCell align="right">Saldo Acumulado</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableFooter>
-                  <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                    <TableCell colSpan={7}>
-                      {cuenta.codSupp} - {cuenta.nombreSupplier}
-                    </TableCell>
-                    <TableCell align="right" sx={{ fontWeight: 'bold' }}>
-                      ${cuenta.saldoTotal.toFixed(2)}
-                    </TableCell>
-                  </TableRow>
+                        <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                          <TableCell colSpan={7} align="right" sx={{ fontWeight: 'bold' }}>
+                            Saldo Total
+                          </TableCell>
+                          <TableCell align="right" sx={{ fontWeight: 'bold' }}>
+                            ${cuenta.saldoTotal.toFixed(2)}
+                          </TableCell>
+                        </TableRow>
                 </TableFooter>
               </Table>
             </TableContainer>

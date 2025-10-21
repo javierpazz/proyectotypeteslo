@@ -56,6 +56,7 @@ export const InvoiceListScreen = () => {
       try {
           setIsloading(true);
           const resp = await stutzApi.get(`/api/invoices/searchinvS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&comprobante=${codCom}`);
+console.log(resp.data.invoices)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 
@@ -201,7 +202,7 @@ const columns:GridColDef[] = [
               field: 'check',
               headerName: 'Acción',
               renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if (user?.role !== 'admin') return null;
+                if ((user?.role !== 'admin') && (user?._id !== row.userInv)) return null;
                 return (
                   <Chip variant='outlined' label="Eliminar" color="error"
                   onClick={() => deleteHandler(row)}
@@ -240,8 +241,9 @@ const columns:GridColDef[] = [
         ordYes: invoice.ordYes,
         isHaber: invoice.isHaber,
         orderItems: invoice.orderItems,
-        nameCus  : (invoice.id_client as ICustomer).nameCus,
+        nameCus  : invoice.id_client ? (invoice.id_client as ICustomer).nameCus : '',
         nameUse  : (invoice.user as IUser)?.name ?? '',
+        userInv: (invoice.user as IUser)._id,
         nameIns  : (invoice.id_instru as IInstrumento)?.name ?? '',
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
@@ -412,7 +414,7 @@ const columns:GridColDef[] = [
               onClick={parametros}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               >
                   Filtro
               </Button>
@@ -425,7 +427,7 @@ const columns:GridColDef[] = [
           <div>
             <Button
              variant="contained"
-             sx={{ bgcolor: 'yellow', color: 'black' }}
+             sx={{  bgcolor: 'secondary.main' , color: 'white' }}
              type="button"
              onClick={createHandler}>
               Crea Comprobante Venta

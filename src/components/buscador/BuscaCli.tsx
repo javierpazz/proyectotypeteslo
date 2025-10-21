@@ -217,8 +217,10 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codCust === '' ? 'Cliente' : ''}
-              placeholder=" Cliente"
+              // label={codCust === '' ? 'Cliente' : ''}
+              // placeholder=" Cliente"
+              label="Cliente"
+              placeholder="Cliente"
               value={codCust}
               onChange={(e) => setCodCust(e.target.value)}
               onKeyDown={(e) => ayudaCus(e)}
@@ -231,7 +233,8 @@ useEffect(() => {
               onClick={handleShowCus}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              // sx={{  bgcolor: 'secondary.main' , color: 'white' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

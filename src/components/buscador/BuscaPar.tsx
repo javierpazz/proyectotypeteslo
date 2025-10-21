@@ -217,8 +217,10 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codPart === '' ? 'Parte' : ''}
-              placeholder=" Parte"
+              // label={codPart === '' ? 'Parte' : ''}
+              // placeholder=" Parte"
+              label="Parte"
+              placeholder="Parte"
               value={codPart}
               onChange={(e) => setCodPart(e.target.value)}
               onKeyDown={(e) => ayudaPar(e)}
@@ -231,7 +233,7 @@ useEffect(() => {
               onClick={handleShowPar}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

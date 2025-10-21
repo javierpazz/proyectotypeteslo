@@ -13,7 +13,7 @@ import {
   IconButton
 } from '@mui/material';
 import { ICartProduct, IProduct } from '../../interfaces';
-import {ProductSelector} from '../../../src/pages/crmpages/ProductSelector';
+import {ProductSelectorEsc} from '../../../src/pages/crmpages/ProductSelectorEsc';
 import { CartContext } from '../../../context';
 import { stutzApi } from '../../../api';
 
@@ -22,6 +22,8 @@ type TableFormProps = {
   input8Ref: any;
   codPro: any;
   setCodPro: any;
+  codigoPro: any;
+  setCodigoPro: any;
   desPro: any;
   setDesPro: any;
   quantity: any;
@@ -48,6 +50,8 @@ export const TableFormEscPar: React.FC<TableFormProps> = ({
   input8Ref,
   codPro,
   setCodPro,
+  codigoPro,
+  setCodigoPro,
   desPro,
   setDesPro,
   quantity,
@@ -124,6 +128,7 @@ export const TableFormEscPar: React.FC<TableFormProps> = ({
         // });
         const cartProduct: ICartProduct = {
           _id: codPro,
+          codigoPro: codigoPro,
           image: productR.images[0],
           price: price,
           porIva: porIva,
@@ -145,9 +150,11 @@ export const TableFormEscPar: React.FC<TableFormProps> = ({
   };
 
   const removeItemHandler = (itemInv: ICartProduct) => {
-    input8Ref.current.focus()
-    // ctxDispatch({ type: 'INVOICE_REMOVE_ITEM', payload: itemInv });
-  removeCartProduct( itemInv as ICartProduct )
+      if (window.confirm('Esta seguro de Borrar?')) {
+        input8Ref.current.focus()
+          // ctxDispatch({ type: 'INVOICE_REMOVE_ITEM', payload: itemInv });
+        removeCartProduct( itemInv as ICartProduct )
+      }
   };
 
   // Edit function
@@ -182,11 +189,13 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       input10Ref.current?.focus();
     } else {
     const productRow = productss.find((row) => (row.codPro === codProd || row.codigoPro === codProd));
+        console.log(productRow)
 
     if (!productRow) {
         setCodPro('');
+        setCodigoPro('');
         setCodProd('');
-        setDesPro('Elija un Producto');
+        setDesPro('Elija un Diligencia');
         // setVenDat('');
         setObserv('');
         setQuantity(0);
@@ -197,6 +206,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       }else{
         setProductR(productRow);
         setCodPro(productRow._id);
+        setCodigoPro(productRow.codigoPro);
         setCodProd(productRow.codPro);
         setDesPro(productRow.title);
         // setVenDat('');
@@ -287,7 +297,9 @@ const handleClickOutside = (e: MouseEvent) => {
             <Grid item md={1}>
               <TextField
                 inputRef={input8Ref}
+                // label="Diligencia"
                 label="Diligencia"
+                placeholder="Diligencia"
                 fullWidth
                 value={codProd}
                 onChange={(e) => setCodProd(e.target.value)}
@@ -303,7 +315,7 @@ const handleClickOutside = (e: MouseEvent) => {
                 startIcon={<BiFileFind />}
                 onClick={handleShowPro}
                 title="Buscador"
-                sx={{ bgcolor: 'yellow', color: 'black' }}
+                sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               >
                 Buscar
               </Button>
@@ -375,7 +387,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Box display="flex" justifyContent="flex-end">
               <Button onClick={() => setModalOpen(false)}>X</Button>
             </Box>
-            <ProductSelector onSelectPro={handleSelect} productss={productss} />
+            <ProductSelectorEsc onSelectPro={handleSelect} productss={productss} />
           </Box>
         </Modal>
 

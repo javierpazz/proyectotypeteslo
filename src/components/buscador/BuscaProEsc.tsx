@@ -217,7 +217,9 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codProt === '' ? 'Diligencia' : ''}
+              // label={codProt === '' ? 'Diligencia' : ''}
+              // placeholder="Diligencia"
+              label="Diligencia"
               placeholder="Diligencia"
               value={codProt}
               onChange={(e) => setCodProt(e.target.value)}
@@ -231,7 +233,7 @@ useEffect(() => {
               onClick={handleShowPro}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>
@@ -309,7 +311,7 @@ useEffect(() => {
                 backgroundColor: index === highlightedIndex ? '#cce5ff' : '#fff'
               }}
             >
-              <strong>{p.codPro}</strong> - {p.title}
+              <strong>{p.codigoPro}</strong> - {p.title}
             </li>
           ))}
         </ul>

@@ -214,7 +214,9 @@ useEffect(() => {
               size="small"
               // inputRef={input2Ref}
               inputRef={inputRef}   // <-- asignar ref aquí
-              label={codEnct === '' ? 'Encargado' : ''}
+              // label={codEnct === '' ? 'Encargado' : ''}
+              // placeholder="Encargado"
+              label="Encargado"
               placeholder="Encargado"
               value={codEnct}
               onChange={(e) => setCodEnct(e.target.value)}
@@ -228,7 +230,7 @@ useEffect(() => {
               onClick={handleShowEnc}
               variant="contained"
               startIcon={<BiFileFind />}
-              sx={{ bgcolor: 'yellow', color: 'black' }}
+              sx={{  bgcolor: 'secondary.main' , color: 'white' }}
             >
               F2
             </Button>

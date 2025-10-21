@@ -6,7 +6,7 @@ import { CategoryOutlined } from "@mui/icons-material";
 import foto from '../assets/fondo.jpg';
 
 
-export const Invoice = () => {
+export const Escribania = () => {
 
 
     ////////////////////FGFGFGFG
@@ -20,8 +20,9 @@ export const Invoice = () => {
       }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
+      localStorage.setItem('modulo', 'escr');
 
-      localStorage.setItem('modulo', 'invo');
+
 
 
 

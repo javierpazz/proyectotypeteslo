@@ -75,6 +75,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
     
     useEffect(() => {
       Cookie.set('cart', JSON.stringify( state.cart ));
+      localStorage.setItem('cart', JSON.stringify( state.cart ));
     }, [state.cart]);
 
 
@@ -276,7 +277,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             recDat: "",
             desVal: "",
             notes: "",
-            paymentMethod: 0,
+            paymentMethod: "",
         }
         // console.log(body);
 
