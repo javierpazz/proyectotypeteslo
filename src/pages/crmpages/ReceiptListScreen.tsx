@@ -136,7 +136,7 @@ const columns:GridColDef[] = [
     
     { field: 'nameCus', headerName: 'Cliente', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
-    { field: 'desval', headerName: 'VALOR', width: 100 },
+    { field: 'desVal', headerName: 'VALOR', width: 100 },
     { field: 'total',
       headerName: 'Importe',
       width: 100,

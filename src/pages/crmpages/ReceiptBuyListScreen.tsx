@@ -130,7 +130,7 @@ const columns:GridColDef[] = [
     
     { field: 'nameSup', headerName: 'Proveedor', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
-    { field: 'desval', headerName: 'VALOR', width: 100 },
+    { field: 'desVal', headerName: 'VALOR', width: 100 },
     { field: 'totalBuy',
       headerName: 'Importe',
       width: 100,
