@@ -337,7 +337,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
   const handleSelect = (product: IProduct) => {
     setSelectedProduct(product);
 
-    setCodPro(selectedProduct!._id);
+    setCodPro(product!._id);
     setCodProd(product.codigoPro);
     setDesPro(product.title);
     setPrice(product.price);

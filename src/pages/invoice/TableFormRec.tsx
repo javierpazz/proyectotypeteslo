@@ -190,7 +190,7 @@ const ayudaVal = (e: React.KeyboardEvent<HTMLDivElement>) => {
   const handleSelect = (value: IValue) => {
     setSelectedValue(value);
 
-    setCodVal(selectedValue!._id);
+    setCodVal(value!._id);
     setCodValo(value.codVal);
     setDesVal(value.desVal);
     input8Ref.current.focus()

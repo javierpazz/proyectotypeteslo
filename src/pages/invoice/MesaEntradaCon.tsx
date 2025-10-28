@@ -123,6 +123,7 @@ export const MesaEntradaCon = () => {
     const loadProduct = async() => {
         try {
             const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+          console.log(resp)
             setInvoice({
                 _id: resp.data._id,
                 user: resp.data.user,
