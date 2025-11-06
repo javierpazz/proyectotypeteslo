@@ -21,7 +21,7 @@ export interface IOrder {
     total        : number;
     totalBuy     : number;
     shippingPrice: number;
-    codConNum    : number;
+    codConNum    : string;
     remNum?       : number;
     remDat?       : string;
     movpvNum?       : number;

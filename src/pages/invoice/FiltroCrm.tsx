@@ -16,7 +16,7 @@ import {
 
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
-import { BuscaSup, BuscaCli, BuscaPro, BuscaCom, BuscaCon, BuscaUse, BuscaEnc, BuscaVal } from '../../components/buscador';
+import { BuscaSup, BuscaCli, BuscaPro, BuscaCom, BuscaConFac, BuscaUse, BuscaEnc, BuscaVal } from '../../components/buscador';
 import { IComprobante } from '../../interfaces';
 import { AuthContext } from '../../../context';
 
@@ -526,7 +526,7 @@ desVal;
 
         <Grid container spacing={2} mt={0}>
 
-            <BuscaCon
+            <BuscaConFac
             codCon={codCon}
             setCodCon={setCodCon}
             codCont={codCont}

@@ -94,7 +94,7 @@ const [codPro, ] = useState('');
 const [defaultValues, setDefaultValues] = useState({});
 const [product, setProduct] = useState(productI);
     const params = useParams();
-    const { slugadm } = params;
+    const { title } = params;
     const [codSup, setCodSup] = useState('');
     const [codSupt, setCodSupt] = useState('');
     const [nameSup, setNameSup] = useState('');
@@ -114,7 +114,7 @@ const loadProduct = async() => {
     console.log(defaultValues);
     try {
 
-        if ( slugadm === 'new' ) {
+        if ( title === 'new' ) {
         setProduct(productI);
         reset(productI);
             setCodSup('');
@@ -122,20 +122,22 @@ const loadProduct = async() => {
             setNameSup('Elija Proveedor');        
     } else {
         // const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
-        const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${slugadm}`);
-        productI._id=data._id,
-        productI.description=data.description,
-        productI.images=data.images,
-        productI.inStock=data.inStock,
-        productI.price=data.price,
-        productI.sizes=data.sizes,
-        productI.slug=data.slug,
-        productI.tags=data.tags,
-        productI.title=data.title,
-        productI.category=data.category,
-        productI.gender=data.gender,
+        // productI._id=resp.data._id,
+        // productI.description=resp.data.description,
+        // productI.images=resp.data.images,
+        // productI.inStock=resp.data.inStock,
+        // productI.price=resp.data.price,
+        // productI.sizes=resp.data.sizes,
+        // productI.slug=resp.data.slug,
+        // productI.tags=resp.data.tags,
+        // productI.title=resp.data.title,
+        // productI.category=resp.data.category,
+        // productI.gender=resp.data.gender,
+        // productI.createdAt=resp.data.createdAt,
+        // productI.updatedAt=resp.data.updatedAt
 
 /////
+        const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${title}`);
         console.log("data")
         console.log(data)
         console.log("data")
@@ -259,9 +261,9 @@ const loadProduct = async() => {
             form.id_config = userInfo.codCon;
             // if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
             if (form._id){
-                await stutzApi.put('/api/tes/admin/products', form)
+                await stutzApi.put('/api/tes/admin/productsfac', form)
             }else{
-                await stutzApi.post('/api/tes/admin/products', form)
+                await stutzApi.post('/api/tes/admin/productsfac', form)
             }
             // console.log(data);
 

@@ -89,7 +89,7 @@ export const ProductFacAdminPage = () => {
 
     const [product, setProduct] = useState(productI);
     const params = useParams();
-    const { title } = params;
+    const { slugadm } = params;
     const input1Ref = useRef<HTMLInputElement>(null);
 
     const [codSup, setCodSup] = useState('');
@@ -111,14 +111,14 @@ useEffect(() => {
 
   const loadProduct = async () => {
     try {
-      if (title === 'new') {
+      if (slugadm === 'new') {
         setProduct(productI);
         reset(productI);
             setCodSup('');
             setCodSupt('');
             setNameSup('Elija Proveedor');        
       } else {
-        const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${title}`);
+        const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${slugadm}`);
         console.log("data")
         console.log(data)
         console.log("data")

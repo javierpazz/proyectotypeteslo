@@ -268,7 +268,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             isPaid: false,
             totalBuy: 0,
             shippingPrice: 0,
-            codConNum: 0,
+            codConNum: "",
             remNum: 0,
             remDat: "",
             invNum: 0,

@@ -74,7 +74,7 @@ export const ProductEscAdminPage = () => {
 const [defaultValues, setDefaultValues] = useState({});
 const [product, setProduct] = useState(productI);
 const params = useParams();
-const { title } = params;
+const { slugadm  } = params;
 const input1Ref = useRef<HTMLInputElement>(null);
 
 const { register, handleSubmit, formState:{ errors }, setValue, watch, reset } = useForm<FormData>({
@@ -92,7 +92,7 @@ const loadProduct = async() => {
     console.log(defaultValues);
     try {
 
-        if ( title === 'new' ) {
+        if ( slugadm === 'new' ) {
         // crear un producto
         productI._id= "",
         productI.codPro = '',
@@ -111,7 +111,7 @@ const loadProduct = async() => {
         productI.createdAt= '',
         productI.updatedAt= ''
     } else {
-        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ title!.toString() }`);
+        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
         productI._id=resp.data._id,
         productI.codPro=resp.data.codPro,
         productI.codigoPro=resp.data.codigoPro,

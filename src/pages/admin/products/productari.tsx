@@ -16,54 +16,38 @@ const ValidCategories  = ['shirts','pants','hoodies','hats']
 const validGender = ['men','women','kid','unisex']
 const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
 
+
 interface FormData {
     _id?       : string;
-    codPro     : string;
-    codigoPro? : string;
+    description: string;
     images     : string[];
     inStock    : number;
-    minStock    : number;
     price      : number;
-    priceBuy   : number;
-    porIva   : number;
-    description: string;
     sizes      : string[];
     slug       : string;
     tags       : string[];
     title      : string;
-    medPro      : string;
     category   : string;
     gender     : string;
-    brand     : string;
-    id_config: string;
-    supplier: string | null;
 }
-const productI: FormData = 
+const productI = 
       {
           _id: '',
-          codPro: '',
-          codigoPro: '',
           description: "",
-          medPro: "",
-          porIva: 0,
           images: ['img1.jpg','img2.jpg'],
           inStock: 0,
-          minStock: 0,
           price: 0,
-          priceBuy: 0,
           sizes: ['XS'],
           slug: "",
           tags: ['sweatshirt'],
           title: "",
           category: '',
-          gender: 'kid',
-          brand: '',
-        //   createdAt: '',
-        //   updatedAt: '',
-          id_config: "",
-          supplier: null,
-          
+          gender: '',
+          createdAt: '',
+          updatedAt: '',
+      
       }
+
 
 export const ProductAdminPage = () => {
 
@@ -85,20 +69,11 @@ export const ProductAdminPage = () => {
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo')!)
-    : null;
 
-
-const [codPro, ] = useState('');
 const [defaultValues, setDefaultValues] = useState({});
 const [product, setProduct] = useState(productI);
-    const params = useParams();
-    const { slugadm } = params;
-    const [codSup, setCodSup] = useState('');
-    const [codSupt, setCodSupt] = useState('');
-    const [nameSup, setNameSup] = useState('');
-    const inputSupRef = useRef<HTMLInputElement>(null);
+const params = useParams();
+const { slugadm } = params;
 
 const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
     defaultValues: product
@@ -115,49 +90,36 @@ const loadProduct = async() => {
     try {
 
         if ( slugadm === 'new' ) {
-        setProduct(productI);
-        reset(productI);
-            setCodSup('');
-            setCodSupt('');
-            setNameSup('Elija Proveedor');        
+        // crear un producto
+        productI._id= "",
+        productI.description= "",
+        productI.images= ['img1.jpg','img2.jpg'],
+        productI.inStock= 0,
+        productI.price= 0,
+        productI.sizes= ['XS'],
+        productI.slug= "",
+        productI.tags= ['sweatshirt'],
+        productI.title= "",
+        productI.category= '',
+        productI.gender= '',
+        productI.createdAt= '',
+        productI.updatedAt= ''
     } else {
-        // const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
-        const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${slugadm}`);
-        productI._id=data._id,
-        productI.description=data.description,
-        productI.images=data.images,
-        productI.inStock=data.inStock,
-        productI.price=data.price,
-        productI.sizes=data.sizes,
-        productI.slug=data.slug,
-        productI.tags=data.tags,
-        productI.title=data.title,
-        productI.category=data.category,
-        productI.gender=data.gender,
-
-/////
-        console.log("data")
-        console.log(data)
-        console.log("data")
-        const cleanData: FormData = {
-        ...data,
-        id_config: typeof data.id_config === 'string' ? data.id_config : data.id_config?._id || '',
-        supplier: typeof data.supplier === 'string' ? data.supplier : data.supplier?._id || '',
-        };
-        setProduct(cleanData);
-        reset(cleanData);
-            // Inicializar estados de BuscaSup
-            if (typeof data.supplier !== 'string' && data.supplier) {
-                setCodSup(data.supplier._id);
-                setCodSupt(data.supplier.codSup || '');
-                setNameSup(data.supplier.name || '');
-            } else {
-                setCodSup('');
-                setCodSupt('');
-                setNameSup('Elija Proveedor');
-            }
-            }
-/////
+        const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
+        productI._id=resp.data._id,
+        productI.description=resp.data.description,
+        productI.images=resp.data.images,
+        productI.inStock=resp.data.inStock,
+        productI.price=resp.data.price,
+        productI.sizes=resp.data.sizes,
+        productI.slug=resp.data.slug,
+        productI.tags=resp.data.tags,
+        productI.title=resp.data.title,
+        productI.category=resp.data.category,
+        productI.gender=resp.data.gender,
+        productI.createdAt=resp.data.createdAt,
+        productI.updatedAt=resp.data.updatedAt
+    }
   } catch (error) {
     console.log(error)
     
@@ -256,8 +218,6 @@ const loadProduct = async() => {
         setIsSaving(true);
 
         try {
-            form.id_config = userInfo.codCon;
-            // if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
             if (form._id){
                 await stutzApi.put('/api/tes/admin/products', form)
             }else{
@@ -303,111 +263,37 @@ const loadProduct = async() => {
                     {/* Data */}
                     <Grid item xs={12} sm={ 6 }>
 
-                            <TextField
-                                label="Título"
-                                variant="filled"
-                                fullWidth 
-                                sx={{ mb: 1 }}
-                                { ...register('title', {
-                                    required: 'Este campo es requerido',
-                                    minLength: { value: 2, message: 'Mínimo 2 caracteres' }
-                                })}
-                                error={ !!errors.title }
-                                helperText={ errors.title?.message }
-                                InputLabelProps={{shrink: true}}
-                            />
-
                         <TextField
-                            // inputRef={input1Ref}
-                            label="Codigo"
+                            label="Título"
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('codigoPro', {
+                            { ...register('title', {
                                 required: 'Este campo es requerido',
-                                minLength: { value: 1, message: 'Mínimo 1 caracter' }
+                                minLength: { value: 2, message: 'Mínimo 2 caracteres' }
                             })}
-                            error={ !!errors.codigoPro }
-                            helperText={ errors.codigoPro?.message }
+                            error={ !!errors.title }
+                            helperText={ errors.title?.message }
                             InputLabelProps={{shrink: true}}
                         />
+
                         <TextField
-                            label="Codigo Barra"
+                            label="Descripción"
                             variant="filled"
                             fullWidth 
+                            multiline
                             sx={{ mb: 1 }}
-                            { ...register('codPro', {
+                            { ...register('description', {
                                 required: 'Este campo es requerido',
-                                minLength: { value: 1, message: 'Mínimo 1 caracter' }        
                             })}
-                            error={ !!errors.codPro }
-                            helperText={ errors.codPro?.message }
+                            error={ !!errors.description }
+                            helperText={ errors.description?.message }
                             InputLabelProps={{shrink: true}}
                         />
-                            <TextField
-                                label="Unidad de Media"
-                                variant="filled"
-                                fullWidth 
-                                sx={{ mb: 1 }}
-                                { ...register('medPro', {
-                                    required: 'Este campo es requerido',
-                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
-                                })}
-                                error={ !!errors.medPro }
-                                helperText={ errors.medPro?.message }
-                                InputLabelProps={{shrink: true}}
-                            />
-                            <TextField
-                                label="Descripcion"
-                                variant="filled"
-                                fullWidth 
-                                sx={{ mb: 1 }}
-                                { ...register('description', {
-                                    required: 'Este campo es requerido',
-                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
-                                })}
-                                error={ !!errors.description }
-                                helperText={ errors.description?.message }
-                                InputLabelProps={{shrink: true}}
-                            />
-
 
                         <TextField
-                            label="Precio"
+                            label="Inventario"
                             type='number'
-                            inputProps={{ step: '0.01' }} 
-                            variant="filled"
-                            fullWidth 
-                            sx={{ mb: 1 }}
-                            { ...register('price', {
-                                required: 'Este campo es requerido',
-                                min: { value: 0, message: 'Mínimo de valor cero' }
-                            })}
-                            error={ !!errors.price }
-                            helperText={ errors.price?.message }
-                            InputLabelProps={{shrink: true}}
-                        />
-    
-                        <TextField
-                            label="Precio Costo"
-                            type='number'
-                            inputProps={{ step: '0.01' }} 
-                            variant="filled"
-                            fullWidth 
-                            sx={{ mb: 1 }}
-                            { ...register('priceBuy', {
-                                required: 'Este campo es requerido',
-                                min: { value: 0, message: 'Mínimo de valor cero' }
-                            })}
-                            error={ !!errors.priceBuy }
-                            helperText={ errors.priceBuy?.message }
-                            InputLabelProps={{shrink: true}}
-                        />
-
-                        <TextField
-                            label="En Stock"
-                            type='number'
-                            inputProps={{ step: '0.01' }} 
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
@@ -419,36 +305,19 @@ const loadProduct = async() => {
                             helperText={ errors.inStock?.message }
                             InputLabelProps={{shrink: true}}
                         />
-
+                        
                         <TextField
-                            label="Stock Minimo"
+                            label="Precio"
                             type='number'
-                            inputProps={{ step: '0.01' }} 
                             variant="filled"
                             fullWidth 
                             sx={{ mb: 1 }}
-                            { ...register('minStock', {
+                            { ...register('price', {
                                 required: 'Este campo es requerido',
                                 min: { value: 0, message: 'Mínimo de valor cero' }
                             })}
-                            error={ !!errors.minStock }
-                            helperText={ errors.minStock?.message }
-                            InputLabelProps={{shrink: true}}
-                        />
-
-                        <TextField
-                            label="% IVA"
-                            type='number'
-                            inputProps={{ step: '0.01' }} 
-                            variant="filled"
-                            fullWidth 
-                            sx={{ mb: 1 }}
-                            { ...register('porIva', {
-                                required: 'Este campo es requerido',
-                                min: { value: 0, message: 'Mínimo de valor cero' }
-                            })}
-                            error={ !!errors.porIva }
-                            helperText={ errors.porIva?.message }
+                            error={ !!errors.price }
+                            helperText={ errors.price?.message }
                             InputLabelProps={{shrink: true}}
                         />
 

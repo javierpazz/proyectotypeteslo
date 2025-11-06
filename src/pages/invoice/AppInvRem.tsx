@@ -402,7 +402,8 @@ const handleClickOutside = (e: MouseEvent) => {
         // });
         const { data } = await stutzApi.get(`/api/valuees`);
         setValuees(data);
-        const valores1 = data.find((row:any) => row.codVal === "1");
+        // const valores1 = data.find((row:any) => row.codVal === "1");
+        const valores1 = data[0];
         setValueeR(valores1);
         setCodval(valores1._id);
         setCodValo(valores1.codVal);
@@ -573,7 +574,7 @@ const handleClickOutside = (e: MouseEvent) => {
       setRecNum(0);
       setRecDat('');
       setNumval(' ');
-      setAmountval(0);
+      // setAmountval(0);
       setDesval(valueeR!.desVal);
       setDesVal(valueeR!.desVal);
       setRecDat(invDat);
@@ -587,7 +588,7 @@ const handleClickOutside = (e: MouseEvent) => {
       setRecNum(0);
       setRecDat('');
       setNumval(' ');
-      setAmountval(0);
+      // setAmountval(0);
       input8Ref.current?.focus()
 
     }
@@ -744,12 +745,12 @@ const handleClickOutside = (e: MouseEvent) => {
               variant="contained"
               sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               onClick={Paying}
-              disabled={
-               cart.length === 0 ||
-                  // !invNum ||
-                  !invDat ||
-                  !codCus
-              }
+              // disabled={
+              //  cart.length === 0 ||
+              //     // !invNum ||
+              //     !invDat ||
+              //     !codCus
+              // }
             >
             {!isPaying ? 'No Cargar Cobro' : 'Carga Cobro'}
             </Button>

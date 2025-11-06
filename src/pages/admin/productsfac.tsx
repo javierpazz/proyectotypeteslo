@@ -26,7 +26,7 @@ export const ProductsFac = () => {
         headerAlign: 'center',
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <MuiLink component={RouterLink} to={`/admin/productsfac/productfac/${row.title}`}
+                <MuiLink component={RouterLink} to={`/admin/productsfac/productfac/${row.slug}`}
                 underline='always'>
                         { row.title}
                 </MuiLink>
@@ -100,6 +100,7 @@ export const ProductsFac = () => {
         codPro: product.codPro,
         codigoPro: product.codigoPro,
         title: product.title,
+        slug: product.slug,
         medPro: product.medPro,
         gender: product.gender,
         category: product.category,
@@ -120,7 +121,20 @@ export const ProductsFac = () => {
         try {
         await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
         window.location.reload();
-    } catch (err) {
+    } catch (error: any) {
+///////
+    if (error.response) {
+      console.error('Error de backend:', error.response.data);
+      alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);
+    } else if (error.request) {
+      console.error('No hubo respuesta del servidor', error.request);
+      alert('No hubo respuesta del servidor. Verifica tu conexión.');
+    } else {
+      console.error('Error inesperado', error.message);
+      alert('Error inesperado al guardar.');
+    }
+///////
+
       }
     }
   };

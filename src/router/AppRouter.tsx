@@ -14,7 +14,7 @@ import {Men} from './../pages/category/Men';
 import {Women} from './../pages/category/Women';
 import {Kid} from './../pages/category/Kid';
 import { Blanco } from '../pages/Blanco';
-// import { Ecommerce } from '../pages/Ecommerce.tsx';
+import { Ecommerce } from '../pages/Ecommerce.tsx';
 import { Invoice } from '../pages/Invoice.tsx';
 import { Escribania } from '../pages/Escribania.tsx';
 // import { AuthContext } from '../../context';
@@ -164,9 +164,9 @@ export const AppRouter = () => {
                     )
                     : (
                         <> */}
-                            <Route path="/" element={ <Blanco /> } />   
-                            {/* <Route path="/blanco" element={ <Blanco /> } /> */}
-                            {/* <Route path="/" element={ <Ecommerce /> } /> */}
+                            {/* <Route path="/" element={ <Blanco /> } />    */}
+                            <Route path="/blanco" element={ <Blanco /> } />
+                            <Route path="/" element={ <Ecommerce /> } />
                             <Route path="/factura" element={ <Invoice /> } />
                             <Route path="/escribania" element={ <Escribania /> } />
                             <Route path="/category/men" element={ <Men /> } />
@@ -261,9 +261,9 @@ export const AppRouter = () => {
                             <Route path="/admin/estadosorden" element={ <Estadosorden /> } />
                             <Route path="/admin/estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
                             <Route path="/admin/productsesc" element={ <ProductsEsc /> } />
-                            <Route path="/admin/productsesc/productesc/:title" element={ <ProductEscAdminPage /> } />
+                            <Route path="/admin/productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
                             <Route path="/admin/productsfac" element={ <ProductsFac /> } />
-                            <Route path="/admin/productsfac/productfac/:title" element={ <ProductFacAdminPage /> } />
+                            <Route path="/admin/productsfac/productfac/:slugadm" element={ <ProductFacAdminPage /> } />
                             <Route path="/admin/comprobantes" element={ <Comprobantes /> } />
                             <Route path="/admin/configuraciones" element={ <Configuraciones /> } />
                             <Route path="/admin/configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
