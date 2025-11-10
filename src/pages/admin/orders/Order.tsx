@@ -34,7 +34,7 @@ const OrderI:IInvoice = {
     totalBuy : 0,
     codCus : "",
     codCon : "",
-    codConNum : 0,
+    codConNum : "",
     codSup : '0',
     remNum : 0,
     remDat : "",
@@ -84,6 +84,7 @@ export const Order = () => {
     const loadProduct = async() => {
         try {
             const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+            console.log(resp)
             setOrder({
                 _id: resp.data._id,
                 user: resp.data.user,

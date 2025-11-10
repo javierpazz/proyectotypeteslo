@@ -253,6 +253,10 @@ export const CartProvider:FC<Props> = ({ children }) => {
 
     const createOrder = async ():Promise<{ hasError: boolean; message: string; }> => {
 
+        const userInfo = localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
+
         const body: IOrder = {
             orderItems: state.cart.map( p => ({
                 ...p,
@@ -265,6 +269,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             total: state.total,
             id_config: localStorage.getItem('punto')!,
             id_client: localStorage.getItem('cliente')!,
+            user: userInfo.user._id,
             isPaid: false,
             totalBuy: 0,
             shippingPrice: 0,

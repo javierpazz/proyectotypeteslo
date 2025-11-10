@@ -97,7 +97,7 @@ useEffect(() => {
 
 
 const columns:GridColDef[] = [
-    { field: 'id', headerName: 'Orden ID', width: 200,
+    { field: 'id', headerName: 'Orden ID', width: 300,
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
                     <NavLink to={`/admin/orders/order/${ row.id }`}>
