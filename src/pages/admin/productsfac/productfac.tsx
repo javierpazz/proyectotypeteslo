@@ -4,7 +4,7 @@ import {  useContext, useEffect, useRef, useState } from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, Chip, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
@@ -52,7 +52,7 @@ const productI: FormData =
           priceBuy: 0,
           sizes: ['XS'],
           slug: "",
-          tags: ['sweatshirt'],
+          tags: [''],
           title: "",
           category: '',
           gender: 'kid',
@@ -68,6 +68,7 @@ const productI: FormData =
 export const ProductFacAdminPage = () => {
 
     // const router = useRouter();
+    const [ newTagValue, setNewTagValue ] = useState('');
     const [isSaving, setIsSaving] = useState(false);
 
     ////////////////////FGFGFGFG
@@ -99,7 +100,7 @@ export const ProductFacAdminPage = () => {
 
 
 
-const { register, handleSubmit, formState:{ errors }, setValue, watch, reset } = useForm<FormData>({
+const { register, handleSubmit, formState:{ errors },getValues, setValue, watch, reset } = useForm<FormData>({
     defaultValues: product
 })
 
@@ -193,6 +194,24 @@ useEffect(() => {
         }
 
     }
+    const onNewTag = () => {
+        const newTag = newTagValue.trim().toLocaleLowerCase();
+        setNewTagValue('');
+        const currentTags = getValues('tags');
+
+        if ( currentTags.includes(newTag) ) {
+            return;
+        }
+
+        currentTags.push(newTag);
+    }
+
+    const onDeleteTag = ( tag: string ) => {
+        const updatedTags = getValues('tags').filter( t => t !== tag );
+        setValue('tags', updatedTags, { shouldValidate: true });
+    }
+
+
 
     return (
         <AdminLayoutMenuList 
@@ -212,6 +231,21 @@ useEffect(() => {
                         Guardar
                     </Button>
                 </Box>
+
+                <Grid container spacing={2} >
+
+                        <BuscaSup
+                        codSup={codSup}
+                        setCodSup={setCodSup}
+                        codSupt={codSupt}
+                        setCodSupt={setCodSupt}
+                        nameSup={nameSup}
+                        setNameSup={setNameSup}
+                        nextRef={input1Ref}
+                        inputRef={inputSupRef} 
+                        />
+
+                    </Grid>
 
 
                 <Grid container spacing={2}>
@@ -401,25 +435,43 @@ useEffect(() => {
 
                         {/* <Divider sx={{ my: 1 }} /> */}
 
+                        <TextField
+                            label="Etiquetas"
+                            variant="filled"
+                            fullWidth 
+                            sx={{ mb: 1 }}
+                            helperText="Presiona [spacebar] para agregar"
+                            value={ newTagValue }
+                            onChange={ ({ target }) => setNewTagValue(target.value) }
+                            onKeyUp={ ({ code })=> code === 'Space' ? onNewTag() : undefined }
+                            />
+                        
+                        <Box sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            listStyle: 'none',
+                            p: 0,
+                            m: 0,
+                        }}
+                        component="ul">
+                            {
+                                getValues('tags').map((tag) => {
+                                    
+                                    return (
+                                        <Chip
+                                        key={tag}
+                                        label={tag}
+                                        onDelete={ () => onDeleteTag(tag)}
+                                        color="primary"
+                                        size='small'
+                                        sx={{ ml: 1, mt: 1}}
+                                        />
+                                    );
+                                })}
+                        </Box>
                     </Grid>
 
                     </Grid>
-
-                <Grid container spacing={2} >
-
-                        <BuscaSup
-                        codSup={codSup}
-                        setCodSup={setCodSup}
-                        codSupt={codSupt}
-                        setCodSupt={setCodSupt}
-                        nameSup={nameSup}
-                        setNameSup={setNameSup}
-                        nextRef={input1Ref}
-                        inputRef={inputSupRef} 
-                        />
-
-                    </Grid>
-
 
 
             </form>

@@ -2,9 +2,9 @@ import {  useState, useEffect, useContext } from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 
 import {  Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/material';
-import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
+import { CreditCardOffOutlined, CreditScoreOutlined, DriveFileRenameOutline } from '@mui/icons-material';
 
-import { ShopLayout } from '../../../components/layouts/ShopLayout';
+import { AdminLayoutMenu } from '../../../components/layouts';
 import { CartList, OrderSummary } from '../../../components/cart';
 import { IInvoice, IOrder } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
@@ -141,8 +141,12 @@ export const Order = () => {
 //     }
 
   return (
-    <ShopLayout title='Resumen de la orden 123671523' pageDescription={'Resumen de la orden'}>
-        <Typography variant='h1' component='h1'>Orden: {order._id} </Typography>
+        <AdminLayoutMenu 
+            title={'Usuario'} 
+            subTitle={`Order: ${order._id}`}
+            icon={ <DriveFileRenameOutline /> }
+        >
+        {/* <Typography variant='h1' component='h1'>Orden: {order._id} </Typography> */}
 
 {
     order.isPaid
@@ -260,7 +264,7 @@ export const Order = () => {
         </Grid>
 
 
-    </ShopLayout>
+    </AdminLayoutMenu>
   )
 }
 

@@ -7,14 +7,15 @@ import { useForm } from 'react-hook-form';
 import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 
-import { AdminLayout } from '../../../components/layouts'
+import { AdminLayoutMenuList } from '../../../components/layouts'
 import {  IProduct  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
+import { BuscaSup } from '../../../components/buscador';
 
-const ValidCategories  = ['shirts','pants','hoodies','hats']
-const validGender = ['men','women','kid','unisex']
-const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
+// const ValidCategories  = ['shirts','pants','hoodies','hats']
+// const validGender = ['men','women','kid','unisex']
+// const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
 
 interface FormData {
     _id?       : string;
@@ -53,7 +54,7 @@ const productI: FormData =
           priceBuy: 0,
           sizes: ['XS'],
           slug: "",
-          tags: ['sweatshirt'],
+          tags: [''],
           title: "",
           category: '',
           gender: 'kid',
@@ -90,15 +91,17 @@ export const ProductAdminPage = () => {
     : null;
 
 
-const [codPro, ] = useState('');
-const [defaultValues, setDefaultValues] = useState({});
-const [product, setProduct] = useState(productI);
+    const [codPro, ] = useState('');
+    const [defaultValues, setDefaultValues] = useState({});
+    const [product, setProduct] = useState(productI);
     const params = useParams();
     const { slugadm } = params;
     const [codSup, setCodSup] = useState('');
     const [codSupt, setCodSupt] = useState('');
     const [nameSup, setNameSup] = useState('');
     const inputSupRef = useRef<HTMLInputElement>(null);
+    const input1Ref = useRef<HTMLInputElement>(null);
+
 
 const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
     defaultValues: product
@@ -106,6 +109,7 @@ const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch
 
 
 useEffect(() => {
+  input1Ref.current?.focus()
   loadProduct()
  }, [])
 
@@ -123,17 +127,17 @@ const loadProduct = async() => {
     } else {
         // const resp = await stutzApi.get<IProduct>(`/api/tes/products/${ slugadm!.toString() }`);
         const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${slugadm}`);
-        productI._id=data._id,
-        productI.description=data.description,
-        productI.images=data.images,
-        productI.inStock=data.inStock,
-        productI.price=data.price,
-        productI.sizes=data.sizes,
-        productI.slug=data.slug,
-        productI.tags=data.tags,
-        productI.title=data.title,
-        productI.category=data.category,
-        productI.gender=data.gender,
+        // productI._id=data._id,
+        // productI.description=data.description,
+        // productI.images=data.images,
+        // productI.inStock=data.inStock,
+        // productI.price=data.price,
+        // productI.sizes=data.sizes,
+        // productI.slug=data.slug,
+        // productI.tags=data.tags,
+        // productI.title=data.title,
+        // productI.category=data.category,
+        // productI.gender=data.gender,
 
 /////
         console.log("data")
@@ -162,9 +166,6 @@ const loadProduct = async() => {
     console.log(error)
     
   }
-  setDefaultValues(productI); // Set default values
-  reset(productI); // Populate the form
-  setProduct(productI);
  }
 
 
@@ -257,7 +258,7 @@ const loadProduct = async() => {
 
         try {
             form.id_config = userInfo.codCon;
-            // if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
+            if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
             if (form._id){
                 await stutzApi.put('/api/tes/admin/products', form)
             }else{
@@ -271,6 +272,7 @@ const loadProduct = async() => {
             } else {
                 setIsSaving(false)
             }
+            navigate(`/admin/products`);
 
 
         } catch (error) {
@@ -281,7 +283,7 @@ const loadProduct = async() => {
     }
 
     return (
-        <AdminLayout 
+        <AdminLayoutMenuList 
             title={'Producto'} 
             subTitle={`Editando: ${ productI.title }`}
             icon={ <DriveFileRenameOutline /> }
@@ -298,6 +300,22 @@ const loadProduct = async() => {
                         Guardar
                     </Button>
                 </Box>
+                <Grid container spacing={2} >
+
+                        <BuscaSup
+                        codSup={codSup}
+                        setCodSup={setCodSup}
+                        codSupt={codSupt}
+                        setCodSupt={setCodSupt}
+                        nameSup={nameSup}
+                        setNameSup={setNameSup}
+                        nextRef={input1Ref}
+                        inputRef={inputSupRef} 
+                        />
+
+                    </Grid>
+
+
 
                 <Grid container spacing={2}>
                     {/* Data */}
@@ -370,7 +388,108 @@ const loadProduct = async() => {
                                 helperText={ errors.description?.message }
                                 InputLabelProps={{shrink: true}}
                             />
+                            <TextField
+                                label="Categoria"
+                                variant="filled"
+                                fullWidth 
+                                sx={{ mb: 1 }}
+                                { ...register('category', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
+                                })}
+                                error={ !!errors.category }
+                                helperText={ errors.category?.message }
+                                InputLabelProps={{shrink: true}}
+                            />
+                            <TextField
+                                label="Marca"
+                                variant="filled"
+                                fullWidth 
+                                sx={{ mb: 1 }}
+                                { ...register('brand', {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 1, message: 'Mínimo 1 caracter' }
+                                })}
+                                error={ !!errors.brand }
+                                helperText={ errors.brand?.message }
+                                InputLabelProps={{shrink: true}}
+                            />
 
+
+
+                        <Divider sx={{ my: 1 }} />
+
+                        {/* <FormControl sx={{ mb: 1 }}>
+                            <FormLabel>Tipo</FormLabel>
+                            <RadioGroup
+                                row
+                                value={ getValues('category') }
+                                onChange={ ({ target })=> setValue('category', target.value, { shouldValidate: true }) }
+                            >
+                                {
+                                    ValidCategories.map( option => (
+                                        <FormControlLabel 
+                                            key={ option }
+                                            value={ option }
+                                            control={ <Radio color='secondary' /> }
+                                            label={ capitalize(option) }
+                                        />
+                                    ))
+                                }
+                            </RadioGroup>
+                        </FormControl> */}
+
+                        {/* <FormControl sx={{ mb: 1 }}>
+                            <FormLabel>Género</FormLabel>
+                            <RadioGroup
+                                row
+                                value={ getValues('gender') }
+                                onChange={ ({ target })=> setValue('gender', target.value, { shouldValidate: true }) }
+                            >
+                                {
+                                    validGender.map( option => (
+                                        <FormControlLabel 
+                                            key={ option }
+                                            value={ option }
+                                            control={ <Radio color='secondary' /> }
+                                            label={ capitalize(option) }
+                                        />
+                                    ))
+                                }
+                            </RadioGroup>
+                        </FormControl> */}
+
+                        {/* <FormGroup>
+                            <FormLabel>Tallas</FormLabel>
+                            {
+                                validSizes.map(size => (
+                                    <FormControlLabel
+                                        key={size}
+                                        control={ <Checkbox checked={ getValues('sizes').includes(size) } />} 
+                                        label={ size } 
+                                        onChange={ () => onChangeSize( size )  }
+                                    />
+                                ))
+                            }
+                        </FormGroup> */}
+
+                    </Grid>
+
+                    {/* Tags e imagenes */}
+                    <Grid item xs={12} sm={ 6 }>
+                        <TextField
+                            label="Slug - URL"
+                            variant="filled"
+                            fullWidth
+                            sx={{ mb: 1 }}
+                            { ...register('slug', {
+                                required: 'Este campo es requerido',
+                                validate: (val) => val.trim().includes(' ') ? 'No puede tener espacios en blanco':undefined
+                            })}
+                            error={ !!errors.slug }
+                            helperText={ errors.slug?.message }
+                            InputLabelProps={{shrink: true}}
+                        />
 
                         <TextField
                             label="Precio"
@@ -449,80 +568,6 @@ const loadProduct = async() => {
                             })}
                             error={ !!errors.porIva }
                             helperText={ errors.porIva?.message }
-                            InputLabelProps={{shrink: true}}
-                        />
-
-                        <Divider sx={{ my: 1 }} />
-
-                        <FormControl sx={{ mb: 1 }}>
-                            <FormLabel>Tipo</FormLabel>
-                            <RadioGroup
-                                row
-                                value={ getValues('category') }
-                                onChange={ ({ target })=> setValue('category', target.value, { shouldValidate: true }) }
-                            >
-                                {
-                                    ValidCategories.map( option => (
-                                        <FormControlLabel 
-                                            key={ option }
-                                            value={ option }
-                                            control={ <Radio color='secondary' /> }
-                                            label={ capitalize(option) }
-                                        />
-                                    ))
-                                }
-                            </RadioGroup>
-                        </FormControl>
-
-                        <FormControl sx={{ mb: 1 }}>
-                            <FormLabel>Género</FormLabel>
-                            <RadioGroup
-                                row
-                                value={ getValues('gender') }
-                                onChange={ ({ target })=> setValue('gender', target.value, { shouldValidate: true }) }
-                            >
-                                {
-                                    validGender.map( option => (
-                                        <FormControlLabel 
-                                            key={ option }
-                                            value={ option }
-                                            control={ <Radio color='secondary' /> }
-                                            label={ capitalize(option) }
-                                        />
-                                    ))
-                                }
-                            </RadioGroup>
-                        </FormControl>
-
-                        <FormGroup>
-                            <FormLabel>Tallas</FormLabel>
-                            {
-                                validSizes.map(size => (
-                                    <FormControlLabel
-                                        key={size}
-                                        control={ <Checkbox checked={ getValues('sizes').includes(size) } />} 
-                                        label={ size } 
-                                        onChange={ () => onChangeSize( size )  }
-                                    />
-                                ))
-                            }
-                        </FormGroup>
-
-                    </Grid>
-
-                    {/* Tags e imagenes */}
-                    <Grid item xs={12} sm={ 6 }>
-                        <TextField
-                            label="Slug - URL"
-                            variant="filled"
-                            fullWidth
-                            sx={{ mb: 1 }}
-                            { ...register('slug', {
-                                required: 'Este campo es requerido',
-                                validate: (val) => val.trim().includes(' ') ? 'No puede tener espacios en blanco':undefined
-                            })}
-                            error={ !!errors.slug }
-                            helperText={ errors.slug?.message }
                             InputLabelProps={{shrink: true}}
                         />
 
@@ -623,7 +668,7 @@ const loadProduct = async() => {
 
                 </Grid>
             </form>
-        </AdminLayout>
+        </AdminLayoutMenuList>
     )
 }
 

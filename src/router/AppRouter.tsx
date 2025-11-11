@@ -113,6 +113,8 @@ import { ConfiguracionEscAdminPage } from '../pages/admin/configuraciones/config
 import { Partes } from '../pages/admin/Partes';
 import { ParteAdminPage } from '../pages/admin/partes/parte';
 import { UserAdminPage } from '../pages/admin/users/user';
+import { UserPerfilPage } from '../pages/admin/users/perfil';
+import { UserPerfilAdmPage } from '../pages/admin/users/perfiladm';
 import { Filtro } from '../pages/invoice/Filtro';
 import { FiltroCrm } from '../pages/invoice/FiltroCrm';
 
@@ -273,6 +275,8 @@ export const AppRouter = () => {
                             <Route path="/admin/partes/parte/:id" element={ <ParteAdminPage /> } />
                             <Route path="/admin/users" element={ <Users /> } />
                             <Route path="/admin/users/user/:id" element={ <UserAdminPage /> } />
+                            <Route path="/admin/profile/:id" element={ <UserPerfilPage /> } />
+                            <Route path="/admin/profileadm" element={ <UserPerfilAdmPage /> } />
                             <Route path="/admin/filtro" element={ <Filtro /> } />
                             <Route path="/admin/filtrocrm" element={ <FiltroCrm /> } />
 
