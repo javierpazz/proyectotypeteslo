@@ -122,6 +122,7 @@ export const Ecommerce = () => {
     const fetchData = async () => {
       try {
         const result = await stutzApi.get(`/api/products?configuracion=${punto}`);
+        console.log(result.data)
       setProducts(result.data);
       } catch (err) {
       }
@@ -136,7 +137,6 @@ export const Ecommerce = () => {
     const fetchCliente = async () => {
       try {
         const result = await stutzApi.get(`/api/customers/byemail/${userInfo.user.email}`);
-        console.log(result.data)
         localStorage.setItem('cliente', result.data._id);
 
       } catch (err) {

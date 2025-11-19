@@ -19,7 +19,7 @@ export interface IInvoice {
     total        : number;
     totalBuy     : number;
     shippingPrice: number;
-    codConNum    : string;
+    codConNum    : number;
     remNum?       : number;
     remDat?       : string;
     movpvNum?       : number;

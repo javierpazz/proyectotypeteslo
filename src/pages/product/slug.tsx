@@ -315,7 +315,7 @@ const onAddProduct = () => {
         ) : (
           <Typography>
             Por favor{" "}
-            <a href={`/signin?redirect=/product/${product.slug}`}>Inicie sesión</a>{" "}
+            <a href={`/auth/login?redirect=/product/${product.slug}`}>Inicie sesión</a>{" "}
             para escribir una calificación.
           </Typography>
         )}

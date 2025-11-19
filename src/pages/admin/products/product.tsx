@@ -47,7 +47,7 @@ const productI: FormData =
           description: "",
           medPro: "",
           porIva: 0,
-          images: ['img1.jpg','img2.jpg'],
+          images: [],
           inStock: 0,
           minStock: 0,
           price: 0,
@@ -229,9 +229,10 @@ const loadProduct = async() => {
                 const formData = new FormData();
                 formData.append('file', file);
                 const { data } = await stutzApi.post<{ message: string}>('/api/tes/admin/upload', formData, {
+                // const { data } = await stutzApi.post<{ message: string}>('/api/files/product', formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                   });
-                  console.log(data)
+                  console.log(data.message)
                 setValue('images', [...getValues('images'), data.message], { shouldValidate: true });
             }
 
@@ -259,12 +260,12 @@ const loadProduct = async() => {
         try {
             form.id_config = userInfo.codCon;
             if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
+            console.log(form);
             if (form._id){
                 await stutzApi.put('/api/tes/admin/products', form)
             }else{
                 await stutzApi.post('/api/tes/admin/products', form)
             }
-            // console.log(data);
 
             if ( !form._id ) {
                 // router.replace(`/admin/products/product/${ form.slug }`);

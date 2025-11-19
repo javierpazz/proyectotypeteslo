@@ -14,7 +14,7 @@ import {Men} from './../pages/category/Men';
 import {Women} from './../pages/category/Women';
 import {Kid} from './../pages/category/Kid';
 import { Blanco } from '../pages/Blanco';
-import { Ecommerce } from '../pages/Ecommerce.tsx';
+// import { Ecommerce } from '../pages/Ecommerce.tsx';
 import { Invoice } from '../pages/Invoice.tsx';
 import { Escribania } from '../pages/Escribania.tsx';
 // import { AuthContext } from '../../context';
@@ -166,9 +166,9 @@ export const AppRouter = () => {
                     )
                     : (
                         <> */}
-                            {/* <Route path="/" element={ <Blanco /> } />    */}
+                            <Route path="/" element={ <Blanco /> } />   
                             <Route path="/blanco" element={ <Blanco /> } />
-                            <Route path="/" element={ <Ecommerce /> } />
+                            {/* <Route path="/" element={ <Ecommerce /> } /> */}
                             <Route path="/factura" element={ <Invoice /> } />
                             <Route path="/escribania" element={ <Escribania /> } />
                             <Route path="/category/men" element={ <Men /> } />

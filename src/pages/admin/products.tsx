@@ -3,7 +3,7 @@ import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button, CardMedia, Grid, Link } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
-import { AdminLayout } from '../../components/layouts'
+import { AdminLayoutMenuList } from '../../components/layouts'
 import { IProduct  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -16,14 +16,18 @@ const columns:GridColDef[] = [
         headerName: 'Foto',
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <a href={ `/product/${ row.slug }` } target="_blank" rel="noreferrer">
+                // <a href={ `/admin/products/product/${ row.slug }` } target="_blank" rel="noreferrer">
+                <NavLink to={`/admin/products/product/${row.slug}`}>
+                    <Link underline='always'>
                     <CardMedia 
                         component='img'
                         alt={ row.title }
                         className='fadeIn'
                         image={ row.img }
                     />
-                </a>
+                    </Link>
+                </NavLink>
+                // </a>
             )
         }
     },
@@ -104,12 +108,26 @@ export const Products = () => {
 
 
   return (
-    <AdminLayout 
+    <AdminLayoutMenuList 
         title={`Productos (${ products?.length })`} 
         subTitle={'Mantenimiento de productos'}
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
+        <NavLink to='/admin/precios?redirect=/admin/productsfac' >
+            <Button
+                color="secondary"
+            >
+                Modifica  Precios
+            </Button>
+            </NavLink>            
+        <NavLink to='/admin/productsList?redirect=/admin/productsfac' >
+            <Button
+                color="secondary"
+            >
+                Lista
+            </Button>
+            </NavLink>            
         <NavLink to='/admin/products/product/new' >
             <Button
                 startIcon={ <AddOutlined /> }
@@ -135,6 +153,6 @@ export const Products = () => {
             </Grid>
         </Grid>
         
-    </AdminLayout>
+    </AdminLayoutMenuList>
   )
 }

@@ -281,7 +281,7 @@ setId_config;
             <Grid item md={4}>
               <TextField
                 inputRef={input9Ref}
-                label="Cantidad"
+                label="Porcentaje "
                 type="number"
                 fullWidth
               size="small"
