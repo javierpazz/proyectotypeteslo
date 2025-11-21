@@ -45,13 +45,28 @@ export const ProductCard: FC<Props> = ({ product }) => {
                             )
                         }
 
-                        <CardMedia 
+                        {/* <CardMedia 
                             component='img'
                             className='fadeIn'
                             image={ productImage }
                             alt={ product.title }
                             onLoad={ () => setIsImageLoaded(true) }
-                        />
+                        /> */}
+
+                            <CardMedia
+                            component="img"
+                            className="fadeIn"
+                            image={productImage}
+                            alt={product.title}
+                            onLoad={() => setIsImageLoaded(true)}
+                            sx={{
+                                height: 250,          // altura fija (ajustala a gusto)
+                                objectFit: 'cover',   // recorta la imagen sin deformarla
+                                width: '100%',        // ocupa todo el ancho del card
+                                display: 'block'
+                            }}
+                            />
+
                     </CardActionArea>
                 {/* </Link> */}
 

@@ -92,17 +92,20 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     const registerUser = async( name: string, email: string, password: string, punto: string ): Promise<{hasError: boolean; message?: string}> => {
         void punto;
         try {
-
-/////pasar moongose            await stutzApi.post(`/api/customers/signup`,
-/////pasar moongose            {
-/////pasar moongose            nameCus: name,
-/////pasar moongose            emailCus: email,
-/////pasar moongose            punto
-/////pasar moongose            });
+            // crea customer
+            await stutzApi.post(`/api/customers/signup`,
+                {
+                    nameCus: name,
+                    emailCus: email,
+                    punto
+                });
+            // crea customer
 
             const { data } = await stutzApi.post('api/tes/user/register', { name, email, password });
             const { token, user } = data;
+            console.log(user)
             Cookies.set('token', token );
+            localStorage.setItem('userInfo', JSON.stringify(data));
             dispatch({ type: '[Auth] - Login', payload: user });
             return {
                 hasError: false
