@@ -121,7 +121,8 @@ export const Ecommerce = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await stutzApi.get(`/api/products?configuracion=${punto}`);
+        // const result = await stutzApi.get(`/api/products?configuracion=${punto}`);
+        const result = await stutzApi.get(`/api/products/eco`);
         console.log(result.data)
       setProducts(result.data);
       } catch (err) {

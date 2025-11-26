@@ -74,7 +74,6 @@ export const TableFormFac: React.FC<TableFormProps> = ({
   // isPaying
 }) => {
 
-  void terminado;
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
@@ -345,6 +344,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
     setModalOpen(false);
   };
+  void terminado, selectedProduct;
 
   // Cerrar con Escape
   useEffect(() => {

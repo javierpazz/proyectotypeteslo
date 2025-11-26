@@ -55,7 +55,6 @@ export const TableFormRec: React.FC<TableFormProps> = ({
     numval: "",
     amountval: 0,
   })
-void input0Ref, tempReceiptCart;
   
   const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
   const input9Ref = useRef<HTMLInputElement>(null);
@@ -236,6 +235,7 @@ const handleClickOutside = (e: MouseEvent) => {
   }, [modalOpen]);
 
 
+void input0Ref, tempReceiptCart, selectedValue;
 
 
 

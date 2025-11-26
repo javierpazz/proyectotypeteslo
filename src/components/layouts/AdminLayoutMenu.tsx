@@ -12,8 +12,7 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const AdminLayoutMenu:FC<Props> = ({ children, title, subTitle, icon }) => {
-    console.log(title,subTitle, icon)
+export const AdminLayoutMenu:FC<Props> = ({ children }) => {
   return (
     <>
 

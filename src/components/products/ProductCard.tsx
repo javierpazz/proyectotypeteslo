@@ -59,12 +59,21 @@ export const ProductCard: FC<Props> = ({ product }) => {
                             image={productImage}
                             alt={product.title}
                             onLoad={() => setIsImageLoaded(true)}
+                            // sx={{
+                            //     height: 250,          // altura fija (ajustala a gusto)
+                            //     objectFit: 'cover',   // recorta la imagen sin deformarla
+                            //     width: '100%',        // ocupa todo el ancho del card
+                            //     display: 'block'
+                            // }}
                             sx={{
-                                height: 250,          // altura fija (ajustala a gusto)
-                                objectFit: 'cover',   // recorta la imagen sin deformarla
-                                width: '100%',        // ocupa todo el ancho del card
-                                display: 'block'
-                            }}
+                                    height: 250,             // altura fija
+                                    width: '100%',
+                                    objectFit: 'contain',    // 🔥 NO recorta, ajusta proporcional
+                                    backgroundColor: '#f5f5f5', // opcional: agrega un fondo para rellenar
+                                    padding: 1,              // opcional: separa un poco la imagen
+                                    display: 'block'
+                                }}
+
                             />
 
                     </CardActionArea>

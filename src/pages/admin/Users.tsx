@@ -87,7 +87,6 @@ export const Users = () => {
         setUsers(updatedUsers);
 
         try {
-            
             await stutzApi.put('/api/tes/admin/users/isActive', {  userId, isActive: newisActive });
 
         } catch (error) {

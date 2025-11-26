@@ -4,7 +4,7 @@ import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
+import { Box, Button,  Card, CardActions, CardMedia, Chip, Divider, FormLabel, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
@@ -91,8 +91,7 @@ export const ProductAdminPage = () => {
     : null;
 
 
-    const [codPro, ] = useState('');
-    const [defaultValues, setDefaultValues] = useState({});
+    const [defaultValues ] = useState({});
     const [product, setProduct] = useState(productI);
     const params = useParams();
     const { slugadm } = params;
@@ -188,15 +187,15 @@ const loadProduct = async() => {
 
 
 
-    const onChangeSize = ( size: string ) => {
-        const currentSizes = getValues('sizes');
-        if ( currentSizes.includes( size ) ) {
-            return setValue('sizes', currentSizes.filter( s => s !== size ), { shouldValidate: true } );
-        }
+    // const onChangeSize = ( size: string ) => {
+    //     const currentSizes = getValues('sizes');
+    //     if ( currentSizes.includes( size ) ) {
+    //         return setValue('sizes', currentSizes.filter( s => s !== size ), { shouldValidate: true } );
+    //     }
 
-        setValue('sizes', [ ...currentSizes, size ], { shouldValidate: true });
+    //     setValue('sizes', [ ...currentSizes, size ], { shouldValidate: true });
 
-    }
+    // }
 
 
     const onNewTag = () => {

@@ -34,7 +34,7 @@ const OrderI:IInvoice = {
     totalBuy : 0,
     codCus : "",
     codCon : "",
-    codConNum : "",
+    codConNum : 0,
     codSup : '0',
     remNum : 0,
     remDat : "",

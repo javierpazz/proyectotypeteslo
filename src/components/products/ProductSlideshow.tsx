@@ -12,18 +12,30 @@ export const ProductSlideshow: FC<Props> = ({ images }) => {
   return (
     <Slide
         easing="ease"
-        duration={ 7000 }
+        duration={ 2000 }
         indicators
     >
         {
             images.map( image =>  {
                 return (
                     <div className={ styles['each-slide'] } key={ image }>
-                        <div style={{
-                            backgroundImage: `url(${ image })`,
-                            backgroundSize: 'cover'
+                        {/* <div style={{
+                            // backgroundImage: `url(${ image })`,
+                            // backgroundSize: 'cover'
+                            backgroundImage: `url(${image})`,
+                            backgroundSize: 'contain',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                            height: '500px',
+                            backgroundColor: '#f5f5f5'
                         }}>
-                        </div>
+                        </div> */}
+                        <img
+                            src={image}
+                            alt="product"
+                            className={styles.image}
+                        />
+
                     </div>
                 )
 

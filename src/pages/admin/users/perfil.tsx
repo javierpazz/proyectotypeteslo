@@ -5,7 +5,7 @@ import {  useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { Box, Button, Grid, TextField, IconButton, InputAdornment, } from '@mui/material';
-import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
+import {  SaveOutlined } from '@mui/icons-material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { ShopLayout } from '../../../components/layouts'

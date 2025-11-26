@@ -12,7 +12,6 @@ export const Navbar = () => {
   const nameCon = typeof window !== 'undefined' && localStorage.getItem('nameCon')
   ? localStorage.getItem('nameCon')
   : null;
-console.log(nameCon)
     const navigate = useNavigate();
 
 
@@ -47,6 +46,8 @@ console.log(nameCon)
 
                         <NavLink to="/" >
                                 <Typography variant='h6'>{nameCon}</Typography>
+                        </NavLink>
+                        <NavLink to="/" >
                                 <Typography sx={{ ml: 0.5 }}>Shop</Typography>
                         </NavLink>
 

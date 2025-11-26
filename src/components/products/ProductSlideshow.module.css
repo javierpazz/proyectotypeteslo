@@ -1,9 +1,19 @@
-
-
-.each-slide > div {
+/* .each-slide > div {
     display: flex;
     justify-content: center;
     background-size: contain;
     background-position: center;
     height: 650px;
+} */
+ .each-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.image {
+  width: 100%;
+  max-height: 500px;   /* 🔥 controla el tamaño pero sin recortar */
+  object-fit: contain; /* 🔥 NO se corta nunca */
 }

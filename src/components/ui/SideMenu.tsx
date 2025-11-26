@@ -1,7 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import {  AccountCircleOutlined, CategoryOutlined, ConfirmationNumberOutlined, LoginOutlined, VpnKeyOutlined } from "@mui/icons-material"
+import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
+import {  AccountCircleOutlined, CategoryOutlined, ConfirmationNumberOutlined, LoginOutlined, SearchOutlined, VpnKeyOutlined } from "@mui/icons-material"
 import { AuthContext, UiContext } from "../../../context";
 
 
@@ -11,6 +11,7 @@ export const SideMenu = () => {
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
     const { user, isLoggedIn, logout } = useContext(  AuthContext );
 
+    const [searchTerm, setSearchTerm] = useState('');
 
 
     const navigateTo = ( url: string ) => {
@@ -18,6 +19,11 @@ export const SideMenu = () => {
           navigate(url);
 
     //router.push(url);
+    }
+
+        const onSearchTerm = () => {
+        if( searchTerm.trim().length === 0 ) return;
+        navigateTo(`/search/${ searchTerm }`);
     }
 
 
@@ -32,7 +38,12 @@ export const SideMenu = () => {
             
             <List>
 
-                {/* <ListItem>
+                {
+                    // (isLoggedIn && (localStorage.getItem('modulo') === "ecom")) && (
+                    (!isLoggedIn || (user!.role === "client")) && (
+                        <>
+
+                <ListItem>
                     <Input
                         autoFocus
                         value={searchTerm}
@@ -50,8 +61,9 @@ export const SideMenu = () => {
                             </InputAdornment>
                         }
                     />
-                </ListItem> */}
-
+                </ListItem>
+                </>)
+                }
 
                 {
                     // (isLoggedIn && (localStorage.getItem('modulo') === "ecom")) && (

@@ -40,7 +40,6 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
         if ( !Cookies.get('token') ) {
         // if ( !localStorage.getItem('userInfo') ) {
-            console.log("cukies")
             dispatch({ type: '[Auth] - Logout' });
             return;
         }
@@ -103,7 +102,6 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
             const { data } = await stutzApi.post('api/tes/user/register', { name, email, password });
             const { token, user } = data;
-            console.log(user)
             Cookies.set('token', token );
             localStorage.setItem('userInfo', JSON.stringify(data));
             dispatch({ type: '[Auth] - Login', payload: user });

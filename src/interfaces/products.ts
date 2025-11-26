@@ -19,6 +19,7 @@ export interface IProduct {
     title: string;
     medPro: string;
     slug: string;
+    ecoActive: boolean;
     images: string[];
     image1: string ;
     image2:  string;

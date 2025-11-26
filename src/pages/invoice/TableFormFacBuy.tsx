@@ -74,7 +74,6 @@ export const TableFormFacBuy: React.FC<TableFormProps> = ({
   // isPaying
 }) => {
 
-  void terminado;
 
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
@@ -363,6 +362,8 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [modalOpen]);
+
+  void terminado, selectedProduct
 
 
 const handleClickOutside = (e: MouseEvent) => {

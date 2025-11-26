@@ -28,6 +28,7 @@ interface FormData {
     title      : string;
     category   : string;
     gender     : string;
+    id_config: string;
 }
 const productI = 
       {
@@ -46,6 +47,7 @@ const productI =
           title: "",
           category: '',
           gender: 'kid',
+          id_config: "",
           createdAt: '',
           updatedAt: '',
       
@@ -70,7 +72,9 @@ export const ProductEscAdminPage = () => {
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
-
+  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo')!)
+    : null;
 const [defaultValues, setDefaultValues] = useState({});
 const [product, setProduct] = useState(productI);
 const params = useParams();
@@ -160,6 +164,7 @@ const loadProduct = async() => {
 
         try {
             form.codigoPro = form.codPro;
+            form.id_config = userInfo.codCon;
 
             if (form._id){
                 await stutzApi.put('/api/tes/admin/productsesc', form)

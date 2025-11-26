@@ -33,7 +33,7 @@ const OrderI:IOrder = {
     totalBuy : 0,
     id_client : "",
     id_config : "",
-    codConNum : "",
+    codConNum : 0,
     supplier : '0',
     remNum : 0,
     remDat : "",

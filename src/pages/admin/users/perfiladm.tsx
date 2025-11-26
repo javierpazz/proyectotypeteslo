@@ -9,7 +9,6 @@ import { DriveFileRenameOutline, SaveOutlined } from '@mui/icons-material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
-import {  IUser  } from '../../../interfaces';
 import { stutzApi } from '../../../../api';
 import { AuthContext } from '../../../../context';
 import { FullScreenLoading } from '../../../components/ui';
