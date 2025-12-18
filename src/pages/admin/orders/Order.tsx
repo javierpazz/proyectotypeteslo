@@ -14,7 +14,7 @@ const OrderI:IInvoice = {
     _id : '',
     user: '',
     orderItems: [],
-    shippingAddress: {
+    orderAddress: {
         firstName: '',
         lastName : '',
         address  : '',
@@ -89,7 +89,7 @@ export const Order = () => {
                 _id: resp.data._id,
                 user: resp.data.user,
                 orderItems: resp.data.orderItems,
-                shippingAddress: resp.data.shippingAddress,
+                orderAddress: resp.data.orderAddress,
             //    paymentResult: '',
                 shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,
@@ -124,7 +124,7 @@ export const Order = () => {
          loadProduct()
         }, [id])
 
-    const { shippingAddress } = order;
+    const { orderAddress } = order;
 //////
 
   const generaInv = async () => {
@@ -213,11 +213,11 @@ export const Order = () => {
                         </Box>
 
                         
-                        <Typography>{ shippingAddress.firstName } { shippingAddress.lastName }</Typography>
-                        <Typography>{ shippingAddress.address } { shippingAddress.address2 ? `, ${ shippingAddress.address2 }`: '' }</Typography>
-                        <Typography>{ shippingAddress.city }, { shippingAddress.zip }</Typography>
-                        <Typography>{ shippingAddress.country }</Typography>
-                        <Typography>{ shippingAddress.phone }</Typography>
+                        <Typography>{ orderAddress.firstName } { orderAddress.lastName }</Typography>
+                        <Typography>{ orderAddress.address } { orderAddress.address2 ? `, ${ orderAddress.address2 }`: '' }</Typography>
+                        <Typography>{ orderAddress.city }, { orderAddress.zip }</Typography>
+                        <Typography>{ orderAddress.country }</Typography>
+                        <Typography>{ orderAddress.phone }</Typography>
 
                         <Divider sx={{ my:1 }} />
 

@@ -13,7 +13,7 @@ const OrderI:IOrder = {
     _id : '',
     user: '',
     orderItems: [],
-    shippingAddress: {
+    orderAddress: {
         firstName: '',
         lastName : '',
         address  : '',
@@ -26,6 +26,7 @@ const OrderI:IOrder = {
 //    paymentResult: '',
 
     numberOfItems: 0,
+    itemsInOrder: 0,
     shippingPrice : 0,
     subTotal     : 0,
     tax          : 0,
@@ -73,10 +74,11 @@ export const OrderPage = () => {
                 _id: resp.data._id,
                 user: resp.data.user,
                 orderItems: resp.data.orderItems,
-                shippingAddress: resp.data.shippingAddress,
+                orderAddress: resp.data.orderAddress,
             //    paymentResult: '',
                 shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,
+                itemsInOrder: resp.data.itemsInOrder,
                 subTotal     : resp.data.subTotal,
                 tax          : resp.data.tax,
                 total        : resp.data.total,
@@ -106,7 +108,7 @@ export const OrderPage = () => {
          loadProduct()
         }, [id])
 
-    const { shippingAddress } = order;
+    const { orderAddress } = order;
 //////
  
 //   if ( !order ) {
@@ -159,18 +161,18 @@ export const OrderPage = () => {
                         </Box>
 
                         
-                        <Typography>{ shippingAddress.firstName } { shippingAddress.lastName }</Typography>
-                        <Typography>{ shippingAddress.address } { shippingAddress.address2 ? `, ${ shippingAddress.address2 }`: '' }</Typography>
-                        <Typography>{ shippingAddress.city }, { shippingAddress.zip }</Typography>
-                        <Typography>{ shippingAddress.country }</Typography>
-                        <Typography>{ shippingAddress.phone }</Typography>
+                        <Typography>{ orderAddress.firstName } { orderAddress.lastName }</Typography>
+                        <Typography>{ orderAddress.address } { orderAddress.address2 ? `, ${ orderAddress.address2 }`: '' }</Typography>
+                        <Typography>{ orderAddress.city }, { orderAddress.zip }</Typography>
+                        <Typography>{ orderAddress.country }</Typography>
+                        <Typography>{ orderAddress.phone }</Typography>
 
                         <Divider sx={{ my:1 }} />
 
 
                         <OrderSummary 
                             orderValues={{
-                                numberOfItems: order.numberOfItems,
+                                numberOfItems: order.itemsInOrder,
                                 subTotal: order.subTotal,
                                 total: order.total,
                                 tax: order.tax,

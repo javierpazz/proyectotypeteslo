@@ -12,10 +12,11 @@ export interface IOrder {
     codCom?: IComprobante | string;
     supplier?: ISupplier | string;
     orderItems: IOrderItem[];
-    shippingAddress: ShippingAddress;
+    orderAddress: OrderAddress;
     paymentResult?: string;
 
     numberOfItems: number;
+    itemsInOrder: number;
     subTotal     : number;
     tax          : number;
     total        : number;
@@ -80,7 +81,7 @@ export interface IOrderItem {
 }
 
 
-export interface ShippingAddress {
+export interface OrderAddress {
     firstName: string;
     lastName : string;
     address  : string;

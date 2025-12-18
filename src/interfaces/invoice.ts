@@ -1,4 +1,4 @@
-import { IConfiguracion, ICustomer, ISupplier, IUser, IComprobante, IOrderItem, ShippingAddress } from './';
+import { IConfiguracion, ICustomer, ISupplier, IUser, IComprobante, IOrderItem, OrderAddress } from './';
 
 export interface IInvoice {
 
@@ -10,7 +10,7 @@ export interface IInvoice {
     codCom?: IComprobante | string;
     codSup?: ISupplier | string;
     orderItems: IOrderItem[];
-    shippingAddress: ShippingAddress;
+    orderAddress: OrderAddress;
     paymentResult?: string;
 
     numberOfItems: number;
