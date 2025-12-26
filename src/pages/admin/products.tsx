@@ -188,7 +188,7 @@ export const Products = () => {
         //   const resp = await stutzApi.get<IProduct[]>('/api/tes/admin/products');
           const resp = await stutzApi.get<IProduct[]>(`/api/products/admin/tes?id_config=${userInfo.codCon}`);
           setProducts(resp.data);
-        //   console.log(resp.data);
+          console.log(resp.data);
         } catch (error) {
           console.log({error})
         }
@@ -216,6 +216,7 @@ export const Products = () => {
     //     slug: product.slug,
     // }));
     const rows = products.map( product => ({
+        img: product.images[0],
         id: product._id,
         codPro: product.codPro,
         codigoPro: product.codigoPro,

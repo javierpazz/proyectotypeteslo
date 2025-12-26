@@ -13,6 +13,7 @@ export * from './user';
 export * from './configuracion';
 export * from './customer';
 export * from './supplier';
+export * from './category';
 export * from './instrumentos';
 export * from './value';
 export * from './encargado';

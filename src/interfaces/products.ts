@@ -1,4 +1,4 @@
-import { IConfiguracion, ISupplier } from "./";
+import { IConfiguracion, ISupplier, ICategory } from "./";
 
 export interface Ireview
   {
@@ -28,6 +28,7 @@ export interface IProduct {
     category: string;
     id_config?: IConfiguracion | string;
     supplier?: ISupplier | string;
+    categoryId?: ICategory | string;
     id_category: string;
     description: string;
     price: number;

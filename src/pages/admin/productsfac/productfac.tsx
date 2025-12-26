@@ -36,6 +36,7 @@ interface FormData {
     brand     : string;
     id_config: string;
     supplier: string | null;
+    categoryId: string | null;
 }
 const productI: FormData = 
       {
@@ -61,6 +62,7 @@ const productI: FormData =
         //   updatedAt: '',
           id_config: "",
           supplier: null,
+          categoryId: null,
           
       }
 
@@ -127,6 +129,7 @@ useEffect(() => {
         ...data,
         id_config: typeof data.id_config === 'string' ? data.id_config : data.id_config?._id || '',
         supplier: typeof data.supplier === 'string' ? data.supplier : data.supplier?._id || '',
+        categoryId: typeof data.categoryId === 'string' ? data.categoryId : data.categoryId?._id || '',
         };
         setProduct(cleanData);
         reset(cleanData);
@@ -172,6 +175,7 @@ useEffect(() => {
             form.id_config = userInfo.codCon;
             // form.supplier = codSup;
             if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
+            form.categoryId = null;
             if (form._id){
                 await stutzApi.put('/api/tes/admin/productsfac', form)
             }else{

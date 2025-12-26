@@ -291,6 +291,10 @@ export const CartProvider:FC<Props> = ({ children }) => {
         try {
             const {data} = await stutzApi.post('/api/tes/orders', body)
             dispatch({ type: '[Cart] - Order complete' });
+        console.log("message")
+        console.log(data)
+        console.log("message")
+
             return {
                 hasError: false,
                 message: data._id!
