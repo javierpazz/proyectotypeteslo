@@ -26,7 +26,7 @@ const OrderI:IOrder = {
     _id : '',
     user: '',
     orderItems: [],
-    shippingAddress: {
+    orderAddress: {
         firstName: '',
         lastName : '',
         address  : '',
@@ -103,7 +103,7 @@ export const AppInvOrd = () => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: {
+            orderAddress: {
               firstName: "",
               lastName: "",
               address: "",
@@ -262,7 +262,7 @@ useEffect(() => {
                 _id: resp.data._id,
                 user: resp.data.user,
                 orderItems: resp.data.orderItems,
-                shippingAddress: resp.data.shippingAddress,
+                orderAddress: resp.data.orderAddress,
             //    paymentResult: '',
                 shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,

@@ -94,7 +94,8 @@ export const Ecommerce = () => {
     const fetchConfi = async () => {
       try {
         const { data } = await stutzApi.get(`/api/configurations/`);
-        const conf = data[0];
+        // const conf = data[0];
+        const conf = data.find((item : any) => item.codCon === "0001");
         // localStorage.setItem('punto', conf._id);
         // localStorage.setItem('puntonum', conf.codCon);
         // localStorage.setItem('nameCon', conf.name);

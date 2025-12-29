@@ -9,13 +9,13 @@ interface ContextProps {
     subTotal: number;
     // tax: number;
     total: number;
-    // shippingAddress?: ShippingAddress,
+    // orderAddress?: orderAddress,
     // Methods
     addProductToReceipt: (product: IReceiptCart) => void;
     updateReceiptQuantity: (product: IReceiptCart) => void;
     removeReceiptProduct: (product: IReceiptCart) => void;
     removeReceipt: () => void;
-    // updateAddress: (address: ShippingAddress) => void;
+    // updateAddress: (address: orderAddress) => void;
 
     //Orders
     createReceipt: () => Promise<{ hasError: boolean; message: string; }>;

@@ -54,7 +54,7 @@ export const AppRem = () => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: {
+            orderAddress: {
               firstName: "",
               lastName: "",
               address: "",
@@ -404,7 +404,7 @@ const handleClickOutside = (e: MouseEvent) => {
         `/api/invoices/rem`,
         {
           orderItems: invoice.orderItems,
-          shippingAddress: invoice.shippingAddress,
+          orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

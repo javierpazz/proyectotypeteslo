@@ -26,7 +26,7 @@ const OrderI:IOrder = {
     _id : '',
     user: '',
     orderItems: [],
-    shippingAddress: {
+    orderAddress: {
         firstName: '',
         lastName : '',
         address  : '',
@@ -128,7 +128,7 @@ export const MesaEntradaCon = () => {
                 _id: resp.data._id,
                 user: resp.data.user,
                 orderItems: resp.data.orderItems,
-                shippingAddress: resp.data.shippingAddress,
+                orderAddress: resp.data.orderAddress,
             //    paymentResult: '',
                 shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,

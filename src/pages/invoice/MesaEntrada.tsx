@@ -60,7 +60,7 @@ export const MesaEntrada = () => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: {
+            orderAddress: {
               firstName: "",
               lastName: "",
               address: "",
@@ -504,7 +504,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
         {
           orderItems: invoice.orderItems,
-          shippingAddress: invoice.shippingAddress,
+          orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

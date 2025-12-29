@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { Typography, Grid, Chip } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 import { useEffect, useState, useContext } from "react";
@@ -128,7 +128,8 @@ const userInfo = localStorage.getItem('userInfo')
                     columns={ columns }
                     initialState={{
                         pagination: { 
-                          paginationModel: { pageSize: 5 } 
+                          // paginationModel: { pageSize: 5 } 
+                          paginationModel: { pageSize: 10, page: 0 },
                         },
                       }}
                       pageSizeOptions={[5, 10, 25]}                />

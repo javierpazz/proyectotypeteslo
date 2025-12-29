@@ -13,7 +13,8 @@ export interface IInvoice {
     orderAddress: OrderAddress;
     paymentResult?: string;
 
-    numberOfItems: number;
+    numberOfItems?: number;
+    itemsInOrder?: number;
     subTotal     : number;
     tax          : number;
     total        : number;

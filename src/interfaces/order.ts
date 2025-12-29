@@ -5,9 +5,11 @@ export interface IOrder {
     _id? : string;
     user?: IUser | string;
     id_client?: ICustomer | string;
+    codCus?: ICustomer | string;
     id_instru?: IInstrumento | string;
     id_parte?: IParte | string | undefined | null;
     id_config?: IConfiguracion | string;
+    codCon?: IConfiguracion | string;
     id_config2?: IConfiguracion | string;
     codCom?: IComprobante | string;
     supplier?: ISupplier | string;
@@ -15,8 +17,8 @@ export interface IOrder {
     orderAddress: OrderAddress;
     paymentResult?: string;
 
-    numberOfItems: number;
-    itemsInOrder: number;
+    numberOfItems?: number;
+    itemsInOrder?: number;
     subTotal     : number;
     tax          : number;
     total        : number;

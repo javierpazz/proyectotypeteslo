@@ -153,7 +153,7 @@ export const OrderPage = () => {
             <Grid item xs={ 12 } sm={ 5 }>
                 <Card className='summary-card'>
                     <CardContent>
-                        <Typography variant='h2'>Resumen ({ order.numberOfItems } { order.numberOfItems > 1 ? 'productos': 'producto'})</Typography>
+                        <Typography variant='h2'>Resumen ({ order.numberOfItems } { order.numberOfItems! > 1 ? 'productos': 'producto'})</Typography>
                         <Divider sx={{ my:1 }} />
 
                         <Box display='flex' justifyContent='space-between'>
@@ -172,7 +172,7 @@ export const OrderPage = () => {
 
                         <OrderSummary 
                             orderValues={{
-                                numberOfItems: order.itemsInOrder,
+                                numberOfItems: order.itemsInOrder!,
                                 subTotal: order.subTotal,
                                 total: order.total,
                                 tax: order.tax,

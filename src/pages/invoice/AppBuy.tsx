@@ -55,7 +55,7 @@ export const AppBuy = () => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: {
+            orderAddress: {
               firstName: "",
               lastName: "",
               address: "",

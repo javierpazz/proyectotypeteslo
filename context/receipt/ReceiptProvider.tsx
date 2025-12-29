@@ -13,7 +13,7 @@ export interface ReceiptState {
     subTotal: number;
     // tax: number;
     total: number;
-    // shippingAddress?: ShippingAddress;
+    // orderAddress?: orderAddress;
 }
 
 
@@ -31,7 +31,7 @@ const RECEIPT_INITIAL_STATE: ReceiptState = {
     subTotal: 0,
     // tax: 0,
     total: 0,
-    // shippingAddress: undefined
+    // orderAddress: undefined
 }
 
 

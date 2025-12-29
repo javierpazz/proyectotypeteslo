@@ -1,7 +1,7 @@
 import { FC, ReactNode, useEffect, useReducer } from 'react';
 import Cookie from 'js-cookie';
 import axios from 'axios';
-import { ICartProduct, IOrder, ShippingAddress } from '../../src/interfaces';
+import { ICartProduct, IOrder, OrderAddress } from '../../src/interfaces';
 import { CartContext, cartReducer } from './';
 import { stutzApi } from '../../api';
 // import { getEnvVariables } from '../../helpers';
@@ -13,7 +13,7 @@ export interface CartState {
     subTotal: number;
     tax: number;
     total: number;
-    shippingAddress?: ShippingAddress;
+    orderAddress?: OrderAddress;
     id_config: string;
     id_client: string;
 
@@ -34,7 +34,7 @@ const CART_INITIAL_STATE: CartState = {
     subTotal: 0,
     tax: 0,
     total: 0,
-    shippingAddress: undefined,
+    orderAddress: undefined,
     id_config: "",
     id_client: ""
 }
@@ -238,7 +238,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             dispatch({ type: '[Cart] - LoadCart from cookies | storage', payload: [] });
     }
 
-    const updateAddress = ( address: ShippingAddress ) => {
+    const updateAddress = ( address: OrderAddress ) => {
         Cookie.set('firstName',address.firstName);
         Cookie.set('lastName',address.lastName);
         Cookie.set('address',address.address);
@@ -262,13 +262,13 @@ export const CartProvider:FC<Props> = ({ children }) => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: state.shippingAddress!,
+            orderAddress: state.orderAddress!,
             numberOfItems: state.numberOfItems,
             subTotal: state.subTotal,
             tax: state.tax,
             total: state.total,
-            id_config: localStorage.getItem('punto')!,
-            id_client: localStorage.getItem('cliente')!,
+            codCon: localStorage.getItem('punto')!,
+            codCus: localStorage.getItem('cliente')!,
             user: userInfo.user._id,
             isPaid: false,
             totalBuy: 0,

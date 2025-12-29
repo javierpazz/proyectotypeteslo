@@ -14,7 +14,7 @@ export const Summary = () => {
  
  
     const navigate = useNavigate();
-    const { shippingAddress, numberOfItems, createOrder } = useContext( CartContext );
+    const { orderAddress, numberOfItems, createOrder } = useContext( CartContext );
 
     const [isPosting, setIsPosting] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -33,12 +33,12 @@ export const Summary = () => {
     }
 
 
-    if ( !shippingAddress ) {
+    if ( !orderAddress ) {
         return <></>;
     }
 
     
-    const { firstName, lastName, address, address2 = '', city, country, phone, zip } = shippingAddress;
+    const { firstName, lastName, address, address2 = '', city, country, phone, zip } = orderAddress;
 
 
   return (

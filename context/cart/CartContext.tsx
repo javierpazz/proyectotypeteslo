@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { ICartProduct, ShippingAddress } from '../../src/interfaces';
+import { ICartProduct, OrderAddress } from '../../src/interfaces';
 
 
 interface ContextProps {
@@ -9,7 +9,7 @@ interface ContextProps {
     subTotal: number;
     tax: number;
     total: number;
-    shippingAddress?: ShippingAddress,
+    orderAddress?: OrderAddress,
     id_config: string,
     // Methods
     addProductToCart: (product: ICartProduct) => void;
@@ -19,7 +19,7 @@ interface ContextProps {
     updateCartQuantity: (product: ICartProduct) => void;
     removeCartProduct: (product: ICartProduct) => void;
     removeCart: () => void;
-    updateAddress: (address: ShippingAddress) => void;
+    updateAddress: (address: OrderAddress) => void;
 
     //Orders
     createOrder: () => Promise<{ hasError: boolean; message: string; }>;

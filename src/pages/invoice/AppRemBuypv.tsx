@@ -55,7 +55,7 @@ export const AppRemBuypv = () => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: {
+            orderAddress: {
               firstName: "",
               lastName: "",
               address: "",
@@ -448,7 +448,7 @@ const handleClickOutside = (e: MouseEvent) => {
         `/api/invoices/mov`,
         {
           orderItems: invoice.orderItems,
-          shippingAddress: invoice.shippingAddress,
+          orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

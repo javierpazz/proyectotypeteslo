@@ -69,7 +69,7 @@ export const MesaEntradaVal = () => {
                 ...p,
                 size: p.size!
             })),
-            shippingAddress: {
+            orderAddress: {
               firstName: "",
               lastName: "",
               address: "",
@@ -124,7 +124,7 @@ export const MesaEntradaVal = () => {
                   OrderI._id = resp.data._id;
                   OrderI.user = resp.data.user;
                   OrderI.orderItems = resp.data.orderItems;
-                  OrderI.shippingAddress = resp.data.shippingAddress;
+                  OrderI.orderAddress = resp.data.orderAddress;
               //    paymentResult: '';
                   OrderI.shippingPrice=  resp.data.shippingPrice;
                   OrderI.numberOfItems= resp.data.numberOfItems;
@@ -550,7 +550,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
         {
           orderItems: invoice.orderItems,
-          shippingAddress: invoice.shippingAddress,
+          orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

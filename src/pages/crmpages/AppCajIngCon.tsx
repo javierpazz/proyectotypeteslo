@@ -98,7 +98,7 @@ useEffect(() => {
             //     _id: resp.data._id,
             //     user: resp.data.user,
             //     orderItems: resp.data.orderItems,
-            //     shippingAddress: resp.data.shippingAddress,
+            //     orderAddress: resp.data.orderAddress,
             // //    paymentResult: '',
             //     shippingPrice:  resp.data.shippingPrice,
             //     numberOfItems: resp.data.numberOfItems,
