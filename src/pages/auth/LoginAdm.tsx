@@ -24,6 +24,7 @@ export const LoginAdm = () => {
 
 //////////////////ghghgh
 
+  const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
     const { loginUserAdm } = useContext( AuthContext );
@@ -51,9 +52,12 @@ export const LoginAdm = () => {
         //     setTimeout(() => setShowError(false), 3000);
         //     return;
         // }
-        const isValidLogin = await loginUserAdm( email, password );
+        // const isValidLogin = await loginUserAdm( email, password );
+        const {message = "", hasError } = await loginUserAdm( email, password );
 
-        if ( !isValidLogin ) {
+        // if ( !isValidLogin ) {
+        if ( hasError ) {
+            setErrorMessage(message);
             setShowError(true);
             setTimeout(() => setShowError(false), 3000);
             return;
@@ -81,7 +85,8 @@ export const LoginAdm = () => {
                     <Typography variant='h1' component="h1">Iniciar Sesión</Typography>
                 </Grid>
                 <Chip 
-                                label="No reconocemos ese usuario / contraseña"
+                                // label="No reconocemos ese usuario / contraseña"
+                                label = {errorMessage}
                                 color="error"
                                 icon={ <ErrorOutline /> }
                                 className="fadeIn"

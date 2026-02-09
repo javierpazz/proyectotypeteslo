@@ -57,22 +57,43 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     
 
 
-    const loginUser = async( email: string, password: string ): Promise<boolean> => {
-
+    const loginUser = async( email: string, password: string ): Promise<{hasError: boolean; message?: string}> => {
+        console.log("error")
+        
         try {
             const { data } = await stutzApi.post('api/tes/user/login', { email, password });
             const { token, user } = data;
             Cookies.set('token', token );
             localStorage.setItem('userInfo', JSON.stringify(data));
             dispatch({ type: '[Auth] - Login', payload: user });
-            return true;
-        } catch (error) {
-            return false;
+            return {
+                hasError: false,
+            };
+        // } catch (error) {
+        //     console.log(error!.AxiosError)
+        //     return false;
+        // }
+    }  catch (error) {
+        if (axios.isAxiosError(error)) {
+            // Aquí accedes exactamente a lo que responde tu API
+            const message = error.response?.data?.msg || "Error no esperado";
+            console.log("Mensaje del servidor:", message);
+            return {
+                hasError: true,
+                message,
+            }
+        } else {
+            console.log("Error genérico:", error);
+            return {
+                hasError: true,
+                message:  "Error no esperado",
+            }
         }
+    }
 
     }
 
-    const loginUserAdm = async( email: string, password: string ): Promise<boolean> => {
+    const loginUserAdm = async( email: string, password: string ): Promise<{hasError: boolean; message?: string}> => {
 
         try {
             const { data } = await stutzApi.post('api/tes/user/loginadm', { email, password });
@@ -80,10 +101,26 @@ export const AuthProvider:FC<Props> = ({ children }) => {
             Cookies.set('token', token );
             localStorage.setItem('userInfo', JSON.stringify(data));
             dispatch({ type: '[Auth] - Login', payload: user });
-            return true;
-        } catch (error) {
-            return false;
+            return {
+                hasError: false,
+            };
+    }  catch (error) {
+        if (axios.isAxiosError(error)) {
+            // Aquí accedes exactamente a lo que responde tu API
+            const message = error.response?.data?.msg || "Error no esperado";
+            console.log("Mensaje del servidor:", message);
+            return {
+                hasError: true,
+                message,
+            }
+        } else {
+            console.log("Error genérico:", error);
+            return {
+                hasError: true,
+                message:  "Error no esperado",
+            }
         }
+    }
 
     }
 

@@ -24,6 +24,7 @@ export const Login = () => {
 
 //////////////////ghghgh
 
+  const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
     const { loginUser } = useContext( AuthContext );
@@ -82,9 +83,12 @@ export const Login = () => {
         //     setTimeout(() => setShowError(false), 3000);
         //     return;
         // }
-        const isValidLogin = await loginUser( email, password );
+        // const isValidLogin = await loginUser( email, password );
+        const {message = "", hasError } = await loginUser( email, password );
 
-        if ( !isValidLogin ) {
+        // if ( !isValidLogin ) {
+        if ( hasError ) {
+            setErrorMessage(message);
             setShowError(true);
             setTimeout(() => setShowError(false), 3000);
             return;
@@ -124,7 +128,8 @@ export const Login = () => {
                     <Typography variant='h1' component="h1">Iniciar Sesión</Typography>
                 </Grid>
                 <Chip 
-                                label="No reconocemos ese usuario / contraseña"
+                                // label="No reconocemos ese usuario / contraseña"
+                                label = {errorMessage}
                                 color="error"
                                 icon={ <ErrorOutline /> }
                                 className="fadeIn"
