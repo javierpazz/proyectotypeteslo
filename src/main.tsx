@@ -1,5 +1,5 @@
-// import { BrowserRouter } from 'react-router-dom'
-import {  HashRouter  } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+// import {  HashRouter  } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 // import './index.css'
 import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -11,8 +11,8 @@ import { AppRouter } from './router/AppRouter'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
-    // <BrowserRouter>
-    <HashRouter>
+    <BrowserRouter>
+     {/* <HashRouter> */}
     <AuthProvider>
     <CartProvider>
     <ReceiptProvider>
@@ -26,8 +26,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </ReceiptProvider>
     </CartProvider>
     </AuthProvider>
-    </HashRouter>
+    {/* </HashRouter> */}
 
-    // </BrowserRouter>
+    </BrowserRouter>
   // </React.StrictMode>,
 )

@@ -22,6 +22,8 @@ import {OrderPage} from '../pages/orders/OrderPage';
 import { Dashboard } from '../pages/admin/Dashboard';
 import { Dashboard1 } from '../pages/admin/Dashboard1';
 import { Users } from '../pages/admin/Users';
+import { ForgetPassword } from '../pages/admin/users/forgetPassword';
+import { ResetPassword } from '../pages/admin/users/resetPassword';
 import { Products } from '../pages/admin/products';
 import { ProductAdminPage } from '../pages/admin/products/product';
 import { Orders } from '../pages/admin/Orders';
@@ -273,6 +275,8 @@ export const AppRouter = () => {
                             <Route path="/admin/configuraciones/configuracionesc/:id" element={ <ConfiguracionEscAdminPage /> } />
                             <Route path="/admin/partes" element={ <Partes /> } />
                             <Route path="/admin/partes/parte/:id" element={ <ParteAdminPage /> } />
+                            <Route path="/admin/users/forgetPasword" element={ <ForgetPassword /> } />
+                            <Route path="/reset-password/:token" element={ <ResetPassword /> } />
                             <Route path="/admin/users" element={ <Users /> } />
                             <Route path="/admin/users/user/:id" element={ <UserAdminPage /> } />
                             <Route path="/admin/profile/:id" element={ <UserPerfilPage /> } />

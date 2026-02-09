@@ -194,6 +194,9 @@ export const Login = () => {
                 </Grid>
 
                 <Grid item xs={12} display='flex' justifyContent='end'>
+                    <NavLink to="/admin/users/forgetPasword" >
+                            ¿Olvido su Password ?
+                    </NavLink>
                     <NavLink to="/auth/register" >
                             ¿No tienes cuenta?
                     </NavLink>
