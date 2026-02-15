@@ -99,19 +99,20 @@ export const Users = () => {
 
     const columns: GridColDef[] = [
         { field: 'email', headerName: 'Correo', width: 250 },
-        { 
-            field: 'name', 
-            headerName: 'Nombre completo', 
-            width: 250,
-            renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
-                return (
-                    <MuiLink component={RouterLink} to={`/admin/users/user/${row.id}`}
-                        underline='always'>
-                            { row.name}
-                    </MuiLink>
-                )
-            }
-        },
+        { field: 'name', headerName: 'Nombre completo', width: 250 },
+        // { 
+        //     field: 'name', 
+        //     headerName: 'Nombre completo', 
+        //     width: 250,
+        //     renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+        //         return (
+        //             <MuiLink component={RouterLink} to={`/admin/users/user/${row.id}`}
+        //                 underline='always'>
+        //                     { row.name}
+        //             </MuiLink>
+        //         )
+        //     }
+        // },
         {
             field: 'role', 
             headerName: 'Rol', 
@@ -125,11 +126,11 @@ export const Users = () => {
                     onChange={ ({ target }) => onRoleUpdated( row.id, target.value ) }
                     sx={{ width: '300px' }}
                     >
-                        <MenuItem value='admin'> Admin </MenuItem>
-                        <MenuItem value='user'> User </MenuItem>
-                        <MenuItem value='client'> Client </MenuItem>
-                        <MenuItem value='super-user'> Super User </MenuItem>
-                        <MenuItem value='SEO'> SEO </MenuItem>
+                        <MenuItem value='admin'> Administrador </MenuItem>
+                        <MenuItem value='user'> Usuario </MenuItem>
+                        <MenuItem value='client'> Cliente </MenuItem>
+                        {/* <MenuItem value='super-user'> Super User </MenuItem>
+                        <MenuItem value='SEO'> SEO </MenuItem> */}
                     </Select>
                 )
             }
@@ -154,19 +155,19 @@ export const Users = () => {
             }
         },
 
-    {
-            field: 'check',
-            headerName: 'Acción',
-            renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if (user?.role !== 'admin') return null;
-                return (
-                        <Chip variant='outlined' label="Eliminar" color="error"
-                        onClick={() => deleteHandler(row.id)}
-                        />
-                    )
+    // {
+    //         field: 'check',
+    //         headerName: 'Acción',
+    //         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+    //             if (user?.role !== 'admin') return null;
+    //             return (
+    //                     <Chip variant='outlined' label="Eliminar" color="error"
+    //                     onClick={() => deleteHandler(row.id)}
+    //                     />
+    //                 )
         
-            }
-        },
+    //         }
+    //     },
 
     ];
 
@@ -213,6 +214,7 @@ export const Users = () => {
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
+                disabled={user!.role !== "admin" }
             >
                 Crear Usuario
             </Button>

@@ -94,10 +94,6 @@ export const Register = () => {
         ? JSON.parse(localStorage.getItem('userInfo')!)
         : {};
         
-        console.log('punto')
-        console.log(punto)
-        console.log(userInfo)
-        console.log('punto')
           userInfo.filtro = filtro;
           userInfo.codCon = punto;
           userInfo.user = userInfo.user;
@@ -172,7 +168,7 @@ export const Register = () => {
                 fullWidth
                 {...register('password', {
                   required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}

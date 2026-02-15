@@ -8,7 +8,7 @@ export interface IUser {
     isAdmin    :boolean;
     isActive    :boolean;
     puede       :boolean;
-    tocken?: string;
+    resetTocken?: string;
     createdAt?: string;
     updatedAt?: string;
 }

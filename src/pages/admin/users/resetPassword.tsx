@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Chip, Grid, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { ErrorOutline, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
+import Cookies from 'js-cookie';
+
 import { AuthLayout } from '../../../components/layouts'
 import { AuthContext } from '../../../../context';
 import { validations } from '../../../utils';
@@ -20,6 +22,7 @@ export const ResetPassword = () => {
 
   console.log("token");
   console.log(token);
+  Cookies.set('token', token! );
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false);
@@ -44,8 +47,14 @@ export const ResetPassword = () => {
     // }, [navigate, userInfo, token]);
 
 
-    const onRecPassword = async({password}: FormData) => {
+    const onRecPassword = async({password,confirmpassword }: FormData) => {
         setShowError(false);
+        if (password !== confirmpassword) {
+            setShowError(true);
+          return;
+        } else {
+            setShowError(false);
+        }
         
         try {
             await stutzApi.post('/api/users/reset-password', {password,
@@ -73,7 +82,7 @@ export const ResetPassword = () => {
                     <Typography variant='h1' component="h1">Recuperar Password</Typography>
                 </Grid>
                 <Chip 
-                                label="No reconocemos ese usuario / contraseña"
+                                label="Password Incorrecto"
                                 color="error"
                                 icon={ <ErrorOutline /> }
                                 className="fadeIn"
@@ -88,7 +97,7 @@ export const ResetPassword = () => {
                 fullWidth
                 {...register('password', {
                   required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -115,7 +124,7 @@ export const ResetPassword = () => {
                 fullWidth
                 {...register('confirmpassword', {
                   required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.confirmpassword}
                 helperText={errors.confirmpassword?.message}

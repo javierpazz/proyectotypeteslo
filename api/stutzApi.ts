@@ -19,7 +19,8 @@ baseURL: "http://127.0.0.101:4000"
 
 stutzApi.interceptors.request.use(config => {
   const token = Cookies.get('token');
-
+console.log("resettoken")
+console.log(token)
   if (token && config.headers) {
     config.headers['x-token'] = token;
     config.headers['authorization'] = (`Bearer ${token}`);

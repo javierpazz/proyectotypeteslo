@@ -36,10 +36,10 @@ const userI =
           email: "",
         isAdmin: false,
         isActive: true,
-        password: "123456",
+        password: "Aa123456",
         passwordNue: "",
         passwordConNue: "",
-        role:'client',
+        role:'user',
         puede: false,
       }
 
@@ -292,7 +292,7 @@ const loadProduct = async() => {
                         />
  */}
 
-              <TextField
+              {/* <TextField
                 label="Contraseña"
                 type={showPassword ? 'text' : 'password'} // 👈 toggle type
                 variant="filled"
@@ -300,7 +300,7 @@ const loadProduct = async() => {
                 sx={{ mb: 1 }}
                 {...register('password', {
                   required: (user1!.role !== 'admin') ? 'Este campo es requerido' : false,    
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -317,7 +317,7 @@ const loadProduct = async() => {
                     </InputAdornment>
                   ),
                 }}
-              />
+              /> */}
 
 
               <TextField
@@ -328,7 +328,7 @@ const loadProduct = async() => {
                 sx={{ mb: 1 }}
                 {...register('passwordNue', {
                   required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.passwordNue}
                 helperText={errors.passwordNue?.message}
@@ -356,7 +356,7 @@ const loadProduct = async() => {
                 sx={{ mb: 1 }}
                 {...register('passwordConNue', {
                   required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.passwordConNue}
                 helperText={errors.passwordConNue?.message}

@@ -54,9 +54,9 @@ export const UserPerfilPage = () => {
         // navigate('/auth/loginadm?redirect=/admin/users');
         navigate('/auth/login');
         }
-        if (user1?.role !== "client" ) {
-        navigate('/');
-        }
+        // if (user1?.role !== "client" ) {
+        // navigate('/');
+        // }
     }, [user1, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
@@ -318,7 +318,7 @@ const loadProduct = async() => {
                 sx={{ mb: 1 }}
                 {...register('password', {
                   required: (user1!.role !== 'admin') ? 'Este campo es requerido' : false,    
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -345,8 +345,8 @@ const loadProduct = async() => {
                 fullWidth
                 sx={{ mb: 1 }}
                 {...register('passwordNue', {
-                  required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  // required: 'Este campo es requerido',
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.passwordNue}
                 helperText={errors.passwordNue?.message}
@@ -373,7 +373,7 @@ const loadProduct = async() => {
                 fullWidth
                 sx={{ mb: 1 }}
                 {...register('passwordConNue', {
-                  required: 'Este campo es requerido',
+                  // required: 'Este campo es requerido',
                   minLength: { value: 6, message: 'Mínimo 6 caracteres' },
                 })}
                 error={!!errors.passwordConNue}

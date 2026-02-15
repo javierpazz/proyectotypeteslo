@@ -77,6 +77,8 @@ export const ProductsFac = () => {
         try {
           const resp = await stutzApi.get<IProduct[]>(`/api/products/admin/tes?id_config=${userInfo.codCon}`);
           setProducts(resp.data);
+          console.log("codcon");
+          console.log(userInfo.codCon);
           console.log("fact");
           console.log(resp.data);
           console.log("fact");

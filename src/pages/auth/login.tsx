@@ -169,7 +169,7 @@ export const Login = () => {
                 fullWidth
                 {...register('password', {
                   required: 'Este campo es requerido',
-                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}

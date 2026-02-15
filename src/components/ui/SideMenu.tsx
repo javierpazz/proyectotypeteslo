@@ -76,7 +76,7 @@ export const SideMenu = () => {
                     <ListItemIcon>
                         <AccountCircleOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Perfil'} />
+                    <ListItemText primary={'Perfil Usuario'} />
                 </ListItem>
 
                 <ListItem button 
@@ -170,6 +170,15 @@ export const SideMenu = () => {
 
                 <Divider />
                 <ListSubheader>Admin Panel</ListSubheader>
+
+                <ListItem button
+                onClick={ () => navigateTo(`/admin/profile/${user?._id}`) }
+                >
+                    <ListItemIcon>
+                        <AccountCircleOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Perfil Usuario'} />
+                </ListItem>
 
                 <ListItem button
                 onClick={ () => navigateTo('/factura') }>

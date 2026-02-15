@@ -32,6 +32,7 @@ export const ForgetPassword = () => {
         try {
             await stutzApi.post('/api/users/forget-password', {email});
         } catch (error) {
+            console.log(error)
             setShowError(true);
             setTimeout(() => setShowError(false), 3000);
             return;
