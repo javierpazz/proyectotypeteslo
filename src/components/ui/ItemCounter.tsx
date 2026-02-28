@@ -6,12 +6,13 @@ import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 interface Props {
 currentValue: number;
 maxValue: number;
+unimed: string;
 
 updatedQuantity: (newValue:number) => void;
 
 }
 
-export const ItemCounter:FC<Props> = ({currentValue, updatedQuantity, maxValue}) => {
+export const ItemCounter:FC<Props> = ({currentValue, updatedQuantity, maxValue, unimed}) => {
 
   const addOrRemove = (value: number) => {
     if(value === -1 ) {
@@ -34,6 +35,8 @@ export const ItemCounter:FC<Props> = ({currentValue, updatedQuantity, maxValue})
         <IconButton  onClick={() => addOrRemove(+1) } >
             <AddCircleOutline />
         </IconButton>
+              <Typography component='h1'>{ unimed }</Typography>
+
     </Box>
   )
 }

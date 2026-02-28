@@ -33,6 +33,7 @@ const productI =
           slug: "mens_chill_crew_neck_sweatshirt",
           tags: ['sweatshirt'],
           title: "Men’s Chill Crew Neck Sweatshirt",
+          medPro: '',
           type: 'shirts',
           gender: 'men',
           rating: 0,
@@ -195,6 +196,7 @@ const onAddProduct = () => {
                 currentValue={tempCartProduct.quantity}
                 updatedQuantity={onUpdateQuantity}
                 maxValue={product.inStock > 10 ? 10 : product.inStock}
+                unimed={product.medPro}
              
                 
                 />

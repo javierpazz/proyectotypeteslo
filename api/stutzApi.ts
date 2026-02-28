@@ -6,7 +6,8 @@ const stutzApi = axios.create({
   // baseURL: "http://127.0.0.101:4000/api/tes"
   // baseURL: "http://127.0.0.101:4000" ip localhost
 /// esta era
-baseURL: "http://127.0.0.101:4000"
+// baseURL: "http://127.0.0.101:4000"
+baseURL: "https://backnestprismapostgres.onrender.com"
 // baseURL: "https://jpz-stutz.onrender.com"
 /// esta era
 
