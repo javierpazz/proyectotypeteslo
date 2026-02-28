@@ -75,14 +75,14 @@ const input1Ref = useRef<HTMLInputElement>(null);
 const params = useParams();
 const { id } = params;
 
-  const [showPassword, setShowPassword] = useState(false); // 👈 new state
+  // const [showPassword, setShowPassword] = useState(false); // 👈 new state
   const [showPasswordN, setShowPasswordN] = useState(false); // 👈 new state
   const [showPasswordCN, setShowPasswordCN] = useState(false); // 👈 new state
 
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+  // const handleClickShowPassword = () => setShowPassword(!showPassword);
+  // const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault();
+  // };
   const handleClickShowPasswordN = () => setShowPasswordN(!showPasswordN);
   const handleMouseDownPasswordN = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

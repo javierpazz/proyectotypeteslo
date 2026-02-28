@@ -2,9 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { AddOutlined, PeopleOutline } from '@mui/icons-material'
 
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
-import { Grid, Select, MenuItem, Box, Button, Chip } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import { Link as MuiLink } from '@mui/material';
+import { Grid, Select, MenuItem, Box, Button } from '@mui/material';
+// import { Link as RouterLink } from 'react-router-dom';
+// import { Link as MuiLink } from '@mui/material';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IUser } from '../../interfaces';
@@ -179,27 +179,27 @@ export const Users = () => {
         isActive: user.isActive
     }))
 
-    const deleteHandler = async (id : string) => {
-    if (window.confirm('Esta Seguro de Eliminar?')) {
-      try {
-        await stutzApi.delete(`/api/tes/admin/users/${id}`);
-        window.location.reload();
-    } catch (error: any) {
-///////
-    if (error.response) {
-      console.error('Error de backend:', error.response.data);
-      alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);
-    } else if (error.request) {
-      console.error('No hubo respuesta del servidor', error.request);
-      alert('No hubo respuesta del servidor. Verifica tu conexión.');
-    } else {
-      console.error('Error inesperado', error.message);
-      alert('Error inesperado al guardar.');
-    }
-///////
-      }
-    }
-  };
+//     const deleteHandler = async (id : string) => {
+//     if (window.confirm('Esta Seguro de Eliminar?')) {
+//       try {
+//         await stutzApi.delete(`/api/tes/admin/users/${id}`);
+//         window.location.reload();
+//     } catch (error: any) {
+// ///////
+//     if (error.response) {
+//       console.error('Error de backend:', error.response.data);
+//       alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);
+//     } else if (error.request) {
+//       console.error('No hubo respuesta del servidor', error.request);
+//       alert('No hubo respuesta del servidor. Verifica tu conexión.');
+//     } else {
+//       console.error('Error inesperado', error.message);
+//       alert('Error inesperado al guardar.');
+//     }
+// ///////
+//       }
+//     }
+//   };
 
     if ( !users ) return (<></>);
 

@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState} from 'react';
 // import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Chip, Grid, TextField, Typography } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../../components/layouts'
-import { AuthContext } from '../../../../context';
+// import { AuthContext } from '../../../../context';
 import { validations } from '../../../utils';
 import { stutzApi } from '../../../../api';
 

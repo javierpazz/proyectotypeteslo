@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 // import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Chip, Grid, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 
 import { AuthLayout } from '../../../components/layouts'
-import { AuthContext } from '../../../../context';
-import { validations } from '../../../utils';
+// import { AuthContext } from '../../../../context';
+// import { validations } from '../../../utils';
 import { stutzApi } from '../../../../api';
 
 type FormData = {
@@ -38,7 +38,7 @@ export const ResetPassword = () => {
         event.preventDefault();
     };
 
-    const { user : userInfo } = useContext(AuthContext);
+    // const { user : userInfo } = useContext(AuthContext);
 
     // useEffect(() => {
     //     if (userInfo || !token) {
