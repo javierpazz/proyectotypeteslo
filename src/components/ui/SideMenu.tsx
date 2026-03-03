@@ -40,7 +40,8 @@ export const SideMenu = () => {
 
                 {
                     // (isLoggedIn && (localStorage.getItem('modulo') === "ecom")) && (
-                    (!isLoggedIn || (user!.role === "client")) && (
+                    ((!isLoggedIn || (user!.role === "client")) && (localStorage.getItem('modulo') === "ecom"))
+                     && (
                         <>
 
                 <ListItem>

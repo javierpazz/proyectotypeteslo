@@ -13,15 +13,13 @@ baseURL: "https://backnestprismapostgres.onrender.com"
 
   // baseURL: "http://192.168.0.101:4000"
   // baseURL: "http://192.168.1.99:4000" ipfija mia cuarto
-  // baseURL: "http://192.168.0.100:4000" ipfija mia ofi
+  // baseURL: "http://192.168.0.101:4000" ipfija mia ofi
   // baseURL: "http://192.168.100.150:4000" ipfija pia
   // baseURL: "http://192.168.100.150:4000"
 });
 
 stutzApi.interceptors.request.use(config => {
   const token = Cookies.get('token');
-console.log("resettoken")
-console.log(token)
   if (token && config.headers) {
     config.headers['x-token'] = token;
     config.headers['authorization'] = (`Bearer ${token}`);

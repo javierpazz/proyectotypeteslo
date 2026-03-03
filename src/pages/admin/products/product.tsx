@@ -223,15 +223,13 @@ const loadProduct = async() => {
 
         try {
             
-            console.log( "file" );
             for( const file of target.files ) {
                 const formData = new FormData();
                 formData.append('file', file);
                 const { data } = await stutzApi.post<{ message: string}>('/api/tes/admin/upload', formData, {
-                // const { data } = await stutzApi.post<{ message: string}>('/api/files/product', formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                  });
-                  console.log(data.message)
+                    // const { data } = await stutzApi.post<{ message: string}>('/api/files/product', formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
                 setValue('images', [...getValues('images'), data.message], { shouldValidate: true });
             }
 
