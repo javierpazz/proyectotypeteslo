@@ -145,10 +145,6 @@ export const ProCusListScreen = () => {
                           <TableCell align="right" sx={{ fontWeight: 'bold' }}>
                             ${product.productTotalAmount.toFixed(2)}
                           </TableCell>
-                          <TableCell />
-                          <TableCell />
-                          <TableCell />
-                          <TableCell />
                         </TableRow>
                       </TableFooter>
                     </Table>

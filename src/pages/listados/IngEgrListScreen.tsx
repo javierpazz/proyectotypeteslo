@@ -121,7 +121,7 @@ export const IngEgrListScreen = () => {
 
 <Box p={4}>
   <Typography variant="h5" fontWeight={700} mb={3}>
-    2.- Consulta Ingresos / Retiros Caja - Total General: ${saldoTotalGeneral.toFixed(2)}
+    2.- Consulta Aportes / Retiros Caja - Total General: ${saldoTotalGeneral.toFixed(2)}
   </Typography>
 
   {cuentas.map((cuenta) => (

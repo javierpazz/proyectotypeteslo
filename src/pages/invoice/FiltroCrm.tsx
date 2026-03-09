@@ -360,7 +360,7 @@ desVal;
                 onChange={handleChange}
               >
                 <MenuItem value="/admin/invoicesCajIngEgr">1.- Caja</MenuItem>
-                <MenuItem value="/admin/informe/IngEgr">2.- Caja Control Ingresos y Retiros Por Encargado</MenuItem>
+                <MenuItem value="/admin/informe/IngEgr">2.- Caja Control Aportes y Retiros Por Encargado</MenuItem>
                 <MenuItem value="/admin/informe/ctacus">3.- Cta Cte Clientes</MenuItem>
                 <MenuItem value="/admin/informe/ctasup">4.- Cta Cte Proveedores</MenuItem>
                 <MenuItem value="/admin/informe/cuspro">5.- Clientes - Productos Vendidos</MenuItem>
@@ -440,7 +440,10 @@ desVal;
                     </Select>
                   </FormControl>
             </Grid>
-              <Grid item md={2}>
+
+
+
+              {/* <Grid item md={2}>
 
                   <FormControl fullWidth >
                     <InputLabel id="estado-label">Estados</InputLabel>
@@ -488,7 +491,7 @@ desVal;
                   onChange={(e) => setObser(e.target.value)}
                   // onKeyDown={(e) => e.key === "Enter" && input11Ref.current?.focus()}
                 />
-              </Grid>
+              </Grid> */}
 
 
 
