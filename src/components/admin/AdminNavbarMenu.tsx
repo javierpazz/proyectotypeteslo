@@ -233,12 +233,12 @@ const { user} = useContext(  AuthContext );
             </MenuItem>
         </Menu> 
 
-        {/* Admin */}
+        {/* Consultas */}
         <Button
           color="primary"
           onClick={handleOpen(setAnchorElAdmin)}
         >
-          Admin
+          Consultas
         </Button>
         <Menu
           anchorEl={anchorElAdmin}

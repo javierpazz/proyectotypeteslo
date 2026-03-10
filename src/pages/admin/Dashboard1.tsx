@@ -73,7 +73,9 @@ export const Dashboard1 = () => {
       try {
         const { data } = await stutzApi.get<Summary>(`/api/orders/summary?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
+          });
+          console.log(data)
+
         setSummary(data);
         } catch (error) {
           console.log({error})
@@ -149,8 +151,35 @@ export const Dashboard1 = () => {
             </Grid>
           </Grid>
 
+
+
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
+            {/* Categorías */}
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="400px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Categoría", "Productos"],
+                      ...(summary.productCategories || []).map((x) => [
+                        x._id,
+                        x.count,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Categorías",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+            
             <Grid item xs={12}>
               <Card>
                 <CardContent>
@@ -314,30 +343,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-            {/* Categorías */}
-            <Grid item xs={12} md={4}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="400px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Categoría", "Productos"],
-                      ...(summary.productCategories || []).map((x) => [
-                        x._id,
-                        x.count,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Categorías",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
+
           </Grid>
 
 

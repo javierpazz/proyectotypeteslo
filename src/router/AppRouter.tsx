@@ -20,6 +20,7 @@ import { Escribania } from '../pages/Escribania.tsx';
 // import { AuthContext } from '../../context';
 import {OrderPage} from '../pages/orders/OrderPage';
 import { Dashboard } from '../pages/admin/Dashboard';
+import { DashboardEsc } from '../pages/admin/Dashboardesc';
 import { Dashboard1 } from '../pages/admin/Dashboard1';
 import { Users } from '../pages/admin/Users';
 import { ForgetPassword } from '../pages/admin/users/forgetPassword';
@@ -179,6 +180,7 @@ export const AppRouter = () => {
                             <Route path="/checkout/address" element={ <Address /> } />
                             <Route path="/checkout/summary" element={ <Summary /> } />
                             <Route path="/admin/dashboard" element={ <Dashboard /> } />
+                            <Route path="/admin/dashboardesc" element={ <DashboardEsc /> } />
                             <Route path="/admin/dashboard1" element={ <Dashboard1 /> } />
                             <Route path="/admin/users" element={ <Users /> } />
                             <Route path="/admin/products" element={ <Products /> } />

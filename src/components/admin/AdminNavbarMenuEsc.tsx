@@ -10,6 +10,7 @@ export const AdminNavbarMenuEsc = () => {
 
   const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
   const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
 
   const handleOpen =
@@ -103,16 +104,36 @@ const { user} = useContext(  AuthContext );
             Mesa de Entrada
           </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-            Consulta Entradas
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElEscri)}>
-             Consulta Diligencias 
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
              Entradas sin Facturar (Sin Hacer)
           </MenuItem>
         </Menu>
 
+        {/* Consultas */}
+        <Button
+          color="primary"
+          onClick={handleOpen(setAnchorElAdmin)}
+        >
+          Consultas
+        </Button>
+        <Menu
+          anchorEl={anchorElAdmin}
+          open={Boolean(anchorElAdmin)}
+          onClose={handleClose(setAnchorElAdmin)}
+          sx={{ maxHeight: 400, overflowY: 'auto' }}
+        >
+          <MenuItem component={Link} to="/admin/dashboardEsc" onClick={handleClose(setAnchorElAdmin)}>
+            Dashboard
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboard1" onClick={handleClose(setAnchorElAdmin)}>
+            Charts
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElAdmin)}>
+            Entradas
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElAdmin)}>
+             Diligencias 
+          </MenuItem>
+        </Menu>
 
         {/* configuracion */}
         <Button

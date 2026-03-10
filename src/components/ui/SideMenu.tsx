@@ -156,7 +156,8 @@ export const SideMenu = () => {
                     <ListItemIcon>
                         <VpnKeyOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Log In (Admin)'} />
+                    {/* <ListItemText primary={'Log In (Admin)'} /> */}
+                    <ListItemText primary={'Staff'} />
                 </ListItem>
 
                 </>   
