@@ -42,9 +42,11 @@ export const CajaIngListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codEnc = userInfo.filtro.codEnc;
+  const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;            
       
     
     const [ recibos, setrecibos ] = useState<IReceiptB[]>([]);
@@ -54,7 +56,8 @@ export const CajaIngListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/receipts/searchcajS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&encargado=${codEnc}`);
+          // const resp = await stutzApi.get(`/api/receipts/searchcajS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&encargado=${codEnc}`);
+          const resp = await stutzApi.get(`/api/receipts/searchcajS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`)
           setIsloading(false);
           setrecibos(resp.data.receipts);
 

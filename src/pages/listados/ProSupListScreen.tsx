@@ -43,10 +43,12 @@ export const ProSupListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codSup = userInfo.filtro.codSup;
+  const codCus = userInfo.filtro.codCus;
   const codPro = userInfo.filtro.codPro;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;
   const [cuentas, setCuentas] = useState<Cuenta[]>([]);
 
 
@@ -54,7 +56,8 @@ export const ProSupListScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-           const { data } = await stutzApi.get(`api/invoices/prosup/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&supplier=${codSup}&producto=${codPro}`, {
+          //  const { data } = await stutzApi.get(`api/invoices/prosup/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&supplier=${codSup}&producto=${codPro}`, {
+           const { data } = await stutzApi.get(`api/invoices/prosup/?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}&producto=${codPro}`, {
                 headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);

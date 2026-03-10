@@ -56,13 +56,16 @@ export const ProiyeListScreen = () => {
   const codPro = userInfo.filtro.codPro;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;
   const [cuentas, setCuentas] = useState<Cuenta[]>([]);
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-           const { data } = await stutzApi.get(`api/invoices/proiye/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&customer=${codCus}&producto=${codPro}`, {
+          //  const { data } = await stutzApi.get(`api/invoices/proiye/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&customer=${codCus}&producto=${codPro}`, {
+           const { data } = await stutzApi.get(`api/invoices/proiye/?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}&producto=${codPro}`, {
                 headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);

@@ -42,9 +42,11 @@ export const InvoiceBuyListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codSup = userInfo.filtro.codSup;
+  const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;
       
     
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
@@ -54,7 +56,8 @@ export const InvoiceBuyListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchinvB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
+          // const resp = await stutzApi.get(`/api/invoices/searchinvB?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&supplier=${codSup}`);
+          const resp = await stutzApi.get(`/api/invoices/searchinvB?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 

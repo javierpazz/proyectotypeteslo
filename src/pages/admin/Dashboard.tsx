@@ -27,11 +27,11 @@ export const Dashboard = () => {
         navigate('/auth/loginadm?redirect=/');
         }
         if (user?.role === "client" ) {
-        if (window.confirm('Faltan Completar Datos')) {}
+        if (window.confirm('Usuario Sin Autorizacion')) {}
         navigate('/');
         }
         if (user?.role === "user" ) {
-        if (window.confirm('Faltan Completar Datos')) {}
+        if (window.confirm('Usuario Sin Autorizacion')) {}
         navigate('/');
         }
     }, [user, isLoading, navigate]);
@@ -62,7 +62,8 @@ export const Dashboard = () => {
         // console.log('Tick');
         setRefreshIn( refreshIn => refreshIn > 0 ? refreshIn - 1: 30 );
         refreshIn === 30 && loadData();
-      }, 1000 );
+    //   }, 1000 );
+      }, 30000 );
     
       return () => clearInterval(interval)
     }, []);

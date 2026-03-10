@@ -62,15 +62,19 @@ export const CtaSupListScreen = () => {
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
   const codSup = userInfo.filtro.codSup;
+  const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const codCom = userInfo.filtro.codCom;
+
   const [cuentas, setCuentas] = useState<Cuenta[]>([]);
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-           const { data } = await stutzApi.get(`api/invoices/ctasup/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&supplier=${codSup}`, {
+          //  const { data } = await stutzApi.get(`api/invoices/ctasup/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&supplier=${codSup}`, {
+           const { data } = await stutzApi.get(`api/invoices/ctasup/?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`, {
                 headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);

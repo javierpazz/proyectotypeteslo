@@ -43,11 +43,11 @@ export const Dashboard1 = () => {
         navigate('/auth/loginadm?redirect=/');
         }
         if (user?.role === "client" ) {
-        if (window.confirm('Faltan Completar Datos')) {}
+        if (window.confirm('Usuario Sin Autorizacion')) {}
         navigate('/');
         }
         if (user?.role === "user" ) {
-        if (window.confirm('Faltan Completar Datos')) {}
+        if (window.confirm('Usuario Sin Autorizacion')) {}
         navigate('/');
         }
     }, [user, isLoading, navigate]);
@@ -64,14 +64,16 @@ export const Dashboard1 = () => {
   const codCon = userInfo.filtro.codCon;
   const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
-  
+
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;
 
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
           console.log(data)
@@ -156,12 +158,12 @@ export const Dashboard1 = () => {
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
             {/* Categorías */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={6} md={4}>
               <Card>
                 <CardContent>
                   <Chart
                     width="100%"
-                    height="400px"
+                    height="250px"
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[

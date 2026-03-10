@@ -27,11 +27,11 @@ export const DashboardEsc = () => {
         navigate('/auth/loginadm?redirect=/');
         }
         if (user?.role === "client" ) {
-        if (window.confirm('Faltan Completar Datos')) {}
+        if (window.confirm('Usuario Sin Autorizacion')) {}
         navigate('/');
         }
         if (user?.role === "user" ) {
-        if (window.confirm('Faltan Completar Datos')) {}
+        if (window.confirm('Usuario Sin Autorizacion')) {}
         navigate('/');
         }
     }, [user, isLoading, navigate]);

@@ -39,13 +39,15 @@ export const RemitListScreen = () => {
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : null;
+
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
   const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
-      
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;
     
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
     const [ isloading, setIsloading ] = useState(false);
@@ -54,7 +56,8 @@ export const RemitListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchremS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`);
+          // const resp = await stutzApi.get(`/api/invoices/searchremS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`);
+          const resp = await stutzApi.get(`/api/invoices/searchremS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 

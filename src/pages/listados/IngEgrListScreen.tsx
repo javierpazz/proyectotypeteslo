@@ -55,8 +55,12 @@ export const IngEgrListScreen = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codEnc = userInfo.filtro.codEnc;
+  const codCus = userInfo.filtro.codCus;
+  const codPro = userInfo.filtro.codPro;
   const codUse = userInfo.filtro.codUse;
+  const order = userInfo.filtro.order;
+  const codSup = userInfo.filtro.codSup;
+  const codCom = userInfo.filtro.codCom;
   // const [cuentas, setCuentas] = useState([]);
   const [cuentas, setCuentas] = useState<Cuenta[]>([]);
 
@@ -64,7 +68,8 @@ export const IngEgrListScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get(`api/receipts/searchingegrSB?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&encargado=${codEnc}`,{
+        // const { data } = await stutzApi.get(`api/receipts/searchingegrSB?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&encargado=${codEnc}`,{
+        const { data } = await stutzApi.get(`api/receipts/searchingegrSB?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}&producto=${codPro}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);
