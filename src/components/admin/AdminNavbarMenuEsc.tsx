@@ -121,11 +121,11 @@ const { user} = useContext(  AuthContext );
           onClose={handleClose(setAnchorElAdmin)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/dashboardEsc" onClick={handleClose(setAnchorElAdmin)}>
+          {/* <MenuItem component={Link} to="/admin/dashboardesc" onClick={handleClose(setAnchorElAdmin)}>
             Dashboard
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/dashboard1" onClick={handleClose(setAnchorElAdmin)}>
-            Charts
+          </MenuItem> */}
+          <MenuItem component={Link} to="/admin/dashboard1esc" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos
           </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElAdmin)}>
             Entradas

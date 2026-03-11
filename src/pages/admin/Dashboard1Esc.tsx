@@ -40,7 +40,7 @@ interface Summary {
 
 
 
-export const Dashboard1 = () => {
+export const Dashboard1Esc = () => {
 
 
 
@@ -83,7 +83,7 @@ export const Dashboard1 = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
           console.log(data)
@@ -98,11 +98,9 @@ export const Dashboard1 = () => {
 
 
 
-
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/dashboard1');
+    navigate('/admin/filtro?redirect=/admin/dashboard1esc');
   };
-
 
 
 
@@ -118,11 +116,12 @@ export const Dashboard1 = () => {
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard
+        Dashboard Esc
       </Typography>
 
         <>
           <Grid container spacing={2}>
+
 
             <Grid item xs={6} md={2}>
                 <Box mt={4} ml={10} display="flex" gap={6} flexWrap="wrap">
@@ -136,7 +135,6 @@ export const Dashboard1 = () => {
                   </Button>
                 </Box>
             </Grid>
-
 
 
             <Grid item xs={6} md={2}>
@@ -167,7 +165,7 @@ export const Dashboard1 = () => {
                   <Typography variant="h5">
                     {summary.orders?.[0]?.numOrders || 0}
                   </Typography>
-                  <Typography>Facturas</Typography>
+                  <Typography>Entradas</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -178,7 +176,7 @@ export const Dashboard1 = () => {
                   <Typography variant="h5">
                     ${summary.orders?.[0]?.totalSales?.toFixed(2) || 0}
                   </Typography>
-                  <Typography>Importe</Typography>
+                  <Typography>Valor</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -188,32 +186,9 @@ export const Dashboard1 = () => {
 
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
-            {/* Categorías */}
-            <Grid item xs={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Categoría", "Productos"],
-                      ...(summary.productCategories || []).map((x) => [
-                        x._id,
-                        x.count,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Categorías",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
+
             
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -237,7 +212,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -262,7 +237,7 @@ export const Dashboard1 = () => {
             </Grid>
 
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -286,7 +261,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -310,7 +285,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -333,7 +308,7 @@ export const Dashboard1 = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -357,7 +332,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -381,7 +356,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -405,175 +380,7 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
 
-
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "Ventas", "Compras"],
-                      ...(summary.dailyOrders || []).map((x) => [
-                        x._id,
-                        x.sales,
-                        x.buys,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Ventas y Compras",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
           </Grid>
-
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            {/* Ventas y Compras */}
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "Ventas", "Compras"],
-                      ...(summary.dailyOrders || []).map((x) => [
-                        x._id,
-                        x.sales,
-                        x.buys,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Ventas y Compras",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Flujo de Dinero */}
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "$ Cobros", "$ Pagos"],
-                      ...(summary.dailyMoney || []).map((x) => [
-                        x._id,
-                        x.inputs,
-                        x.outputs,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Flujo de Dinero",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Ventas y Cobros */}
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "$ Ventas", "$ Cobros"],
-                      ...(summary.ctacte || []).map((x) => [
-                        x._id,
-                        x.salesS,
-                        x.inputsS,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Ventas y Cobros",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Compras y Pagos */}
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "$ Compras", "$ Pagos"],
-                      ...(summary.ctacte || []).map((x) => [
-                        x._id,
-                        x.salesB,
-                        x.inputsB,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Compras y Pagos",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Recepción y Entregas */}
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "Recepciones", "Entregas"],
-                      ...(summary.producIO || []).map((x) => [
-                        x._id,
-                        x.entro,
-                        x.salio,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Recepción y Entregas de Productos",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-
-          </Grid>
-
-
-
         </>
 
     </AdminLayoutMenu>

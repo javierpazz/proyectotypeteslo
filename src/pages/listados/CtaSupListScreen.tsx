@@ -66,6 +66,8 @@ export const CtaSupListScreen = () => {
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
   const codCom = userInfo.filtro.codCom;
+  const codEnc = userInfo.filtro.codEnc;
+  const codPar = userInfo.filtro.codPar;
 
   const [cuentas, setCuentas] = useState<Cuenta[]>([]);
 
@@ -74,7 +76,7 @@ export const CtaSupListScreen = () => {
     const fetchData = async () => {
       try {
           //  const { data } = await stutzApi.get(`api/invoices/ctasup/?configuracion=${codCon}&order=${order}&fech1=${fech1}&fech2=${fech2}&usuario=${codUse}&supplier=${codSup}`, {
-           const { data } = await stutzApi.get(`api/invoices/ctasup/?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`, {
+           const { data } = await stutzApi.get(`api/invoices/ctasup/?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}&encargado=${codEnc}&parte=${codPar}`, {
                 headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);

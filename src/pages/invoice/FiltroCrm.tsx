@@ -96,6 +96,8 @@ export const FiltroCrm = () => {
   const [nameCus, setNameCus] = useState('');
   const [codPar, setCodPar] = useState('');
   const [namePar, setNamePar] = useState('');
+  const [codIns, setCodIns] = useState('');
+  const [nameIns, setNameIns] = useState('');
 
   const [firstDat, setFirstDat] = useState(getTodayInGMT3());
   const [lastDat, setLastDat] = useState(getTodayInGMT3());
@@ -164,6 +166,7 @@ desVal;
     lastDat : lastDat,
     codCus : codCus,
     codPar : codPar,
+    codIns : codIns,
     codSup : codSup,
     codPro : codPro,
     codEnc : codEnc,
@@ -175,6 +178,7 @@ desVal;
     nameSup : nameSup,
     nameEnc : nameEnc,
     namePar : namePar,
+    nameIns : nameIns,
     desPro : desPro,
     desVal : desVal,
     nameCom : nameCom,
@@ -200,6 +204,8 @@ desVal;
       setNameCus(userInfo.filtro.nameCus);
       setCodPar(userInfo.filtro.codPar);
       setNamePar(userInfo.filtro.namePar);
+      setCodIns(userInfo.filtro.codIns);
+      setNameIns(userInfo.filtro.nameIns);
       setCodPro(userInfo.filtro.codPro);
       setDesPro(userInfo.filtro.desPro);
       setCodCom(userInfo.filtro.codCom);
@@ -227,6 +233,8 @@ desVal;
       setNameCus('Todos');
       // setCodPar('Todos');
       setNamePar('Todos');
+      // setCodIns('Todos');
+      setNameIns('Todos');
       // setCodPro('Todos');
       setDesPro('Todos');
       setNameCom('Todos');
@@ -268,6 +276,10 @@ desVal;
       filtro.nameUse = nameUse;
       filtro.codCon = codCon;
       filtro.nameCon = nameCon;
+      filtro.codPar = codPar;
+      filtro.namePar = namePar;
+      filtro.codIns = codIns;
+      filtro.nameIns = nameIns;
       filtro.order = order;
 
         userInfo.filtro = filtro
@@ -304,6 +316,8 @@ desVal;
       filtro.nameCus = nameCus;
       filtro.codPar = codPar;
       filtro.namePar = namePar;
+      filtro.codIns = codIns;
+      filtro.nameIns = nameIns;
       filtro.codPro = codPro;
       filtro.desPro = desPro;
       filtro.codSup = codSup;
