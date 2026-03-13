@@ -1,6 +1,7 @@
 
 
 export * from './cart';
+export * from './param';
 export * from './receiptcart';
 export * from './dashboard';
 export * from './order';

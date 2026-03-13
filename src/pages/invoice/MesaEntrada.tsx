@@ -14,7 +14,7 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
+import { IParamProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
@@ -336,7 +336,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setPublicoIns(true);
     }else{
       // cargaParametros(instRow.orderItems)
-      addTodosProductToCartEsc(instRow.orderItems as ICartProduct[], remDat);
+      addTodosProductToCartEsc(instRow.paramItems as IParamProduct[], remDat);
 
       setInstrumento(instRow);
       setCodIns(instRow._id);

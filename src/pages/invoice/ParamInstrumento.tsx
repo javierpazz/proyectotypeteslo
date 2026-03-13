@@ -20,7 +20,7 @@ import {
 // import Modal from 'react-bootstrap/Modal';
 // import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
-import { ICartProduct, IInstrumento } from '../../interfaces';
+import { IParamProduct, IInstrumento } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
@@ -59,7 +59,7 @@ export const ParamInstrumento = () => {
     const {  cart, removeCart, addTodosProductToCartEscPar, createParam } = useContext(CartContext);
     
         const body = {
-            orderItems: cart.map( p => ({
+            paramItems: cart.map( p => ({
                 ...p,
                 size: p.size!
             })),
@@ -179,7 +179,7 @@ export const ParamInstrumento = () => {
   //       setName('Elija Instrumento');
   //   }else{
   //     setInstrumento(instRow);
-  //     addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
+  //     addTodosProductToCartEsc(instRow.paramItems as IParamProduct[]);
   //     setCodIns(instRow._id);
   //     setCodInst(instRow.codIns);
   //     setName(instRow.name);
@@ -233,7 +233,7 @@ const handleShowIns = () => {
     setModalOpenIns(true);
     // const instRow = instrumentos.find((row) => row.codIns === codInst);
     // if (instRow) {
-    // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
+    // addTodosProductToCartEsc(instRow.paramItems as IParamProduct[]);
     // };
   };
 
@@ -252,8 +252,8 @@ const handleShowIns = () => {
         setCodInst('');
         setNameIns('Elija Instrumento');
     }else{
-      // cargaParametros(instRow.orderItems)
-      addTodosProductToCartEscPar(instRow.orderItems as ICartProduct[]);
+      // cargaParametros(instRow.paramItems)
+      addTodosProductToCartEscPar(instRow.paramItems as IParamProduct[]);
 
       setInstrumento(instRow);
       setCodIns(instRow._id);
@@ -291,7 +291,7 @@ const handleShowIns = () => {
       if (window.confirm('Esta seguro de Grabar?')) {
         if (codIns) {
            body._id = instrumento!._id;
-           body.orderItems = cart.map( p => ({
+           body.paramItems = cart.map( p => ({
                 ...p,
                 size: p.size!
             })),
