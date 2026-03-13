@@ -224,6 +224,7 @@ const loadProduct = async() => {
                     <Grid item xs={12} sm={ 6 }>
 
                         <TextField
+                            inputRef={input1Ref}
                             label="Nombre"
                             variant="filled"
                             fullWidth 

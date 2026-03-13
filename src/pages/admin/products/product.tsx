@@ -100,6 +100,7 @@ export const ProductAdminPage = () => {
     const [nameSup, setNameSup] = useState('');
     const inputSupRef = useRef<HTMLInputElement>(null);
     const input1Ref = useRef<HTMLInputElement>(null);
+    const input2Ref = useRef<HTMLInputElement>(null);
 
 
 const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
@@ -108,7 +109,7 @@ const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch
 
 
 useEffect(() => {
-  input1Ref.current?.focus()
+  input2Ref.current?.focus()
   loadProduct()
  }, [])
 
@@ -320,6 +321,7 @@ const loadProduct = async() => {
                     <Grid item xs={12} sm={ 6 }>
 
                             <TextField
+                            inputRef={input2Ref}
                                 label="Título"
                                 variant="filled"
                                 fullWidth 
@@ -334,7 +336,7 @@ const loadProduct = async() => {
                             />
 
                         <TextField
-                            // inputRef={input1Ref}
+                            // inputRef={input2Ref}
                             label="Codigo"
                             variant="filled"
                             fullWidth 

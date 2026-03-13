@@ -327,19 +327,19 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/encargados" onClick={handleClose(setAnchorElConfi)}>
             Encargados
           </MenuItem>
+          <MenuItem component={Link} to="/admin/estadosorden" onClick={handleClose(setAnchorElConfi)}>
+            Estados de Ordenes
+          </MenuItem>
           <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfi)}>
             Usuarios
           </MenuItem>
           {/* <MenuItem component={Link} to="/admin/profileadm" onClick={handleClose(setAnchorElConfi)}> */}
-          <MenuItem  onClick={handleClose(setAnchorElConfi)}>
+          {/* <MenuItem  onClick={handleClose(setAnchorElConfi)}>
             Perfil Usuario T
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/estadosorden" onClick={handleClose(setAnchorElConfi)}>
-            Estados de Ordenes
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/support" onClick={handleClose(setAnchorElConfi)}>
+          </MenuItem> */}
+          {/* <MenuItem component={Link} to="/admin/support" onClick={handleClose(setAnchorElConfi)}>
             Chat Soporte
-          </MenuItem>
+          </MenuItem> */}
 
 
         </Menu>
