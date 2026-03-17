@@ -26,6 +26,16 @@ export const SideMenu = () => {
         navigateTo(`/search/${ searchTerm }`);
     }
 
+        const LogOutStaff = () => {
+            navigateTo(`/blanco`);
+            logout();
+        }
+        const LogOutCli = () => {
+            navigateTo(`/`);
+            logout();
+        }
+
+
 
   return (
     <Drawer
@@ -127,12 +137,26 @@ export const SideMenu = () => {
                 {
                     isLoggedIn 
                     ? (
-                        <ListItem button onClick={ logout }>
+
+                            (user!.role !== "client") ? (
+                        // <ListItem button onClick={ logout }>
+                        <ListItem button onClick={ LogOutStaff }>
                         <ListItemIcon>
                             <LoginOutlined/>
                         </ListItemIcon>
-                        <ListItemText primary={'Log Out'} />
+                        <ListItemText primary={'Log Out1'} />
                     </ListItem>
+
+                            ) : (
+                        // <ListItem button onClick={ logout }>
+                        <ListItem button onClick={ LogOutCli }>
+                        <ListItemIcon>
+                            <LoginOutlined/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Log Out1'} />
+                    </ListItem>
+                            )
+
                        )
                        : (
                 <>

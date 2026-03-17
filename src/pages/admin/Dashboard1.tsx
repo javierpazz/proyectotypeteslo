@@ -213,29 +213,6 @@ export const Dashboard1 = () => {
               </Card>
             </Grid>
             
-            <Grid item xs={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Partes", "Ventas"],
-                      ...(summary.top10Partes || []).map((x) => [
-                        x.parte,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Partes",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
 
             <Grid item xs={6} md={4}>
               <Card>

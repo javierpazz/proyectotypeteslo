@@ -145,7 +145,8 @@ export const Ecommerce = () => {
       }
     };
     
-    if (punto) {
+    // if (punto) {
+    if (punto && userInfo.user.role === "client") {
       fetchCliente();
     }
   }, [punto]);

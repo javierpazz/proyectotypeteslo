@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 // import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {   useNavigate } from 'react-router-dom';
 import { Box, Button, Chip, Grid, TextField, Typography, IconButton, InputAdornment, } from '@mui/material';
@@ -23,6 +23,7 @@ export const LoginAdm = () => {
     // const redirect = redirectInUrl ? redirectInUrl : '/';
 
 //////////////////ghghgh
+  const input1Ref = useRef<HTMLInputElement>(null);
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -39,6 +40,11 @@ export const LoginAdm = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+
+    useEffect(() => {
+      input1Ref.current?.focus()
+    }, [])
+
 
     const onLoginUser = async({email, password}: FormData) => {
         setShowError(false);
@@ -94,7 +100,8 @@ export const LoginAdm = () => {
                             />
   
                 <Grid item xs={12}>
-                    <TextField 
+                    <TextField
+                    inputRef={input1Ref}
                     type="email"
                     label="Correo" variant="filled" fullWidth
                     { ...register('email', {

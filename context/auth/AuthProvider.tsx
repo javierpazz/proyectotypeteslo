@@ -189,6 +189,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     const logout = () => {
 
         localStorage.removeItem('punto');
+        localStorage.removeItem('modulo');
         localStorage.removeItem('puntonum');
         localStorage.removeItem('nameCon');
         localStorage.removeItem('userInfo');
@@ -197,7 +198,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
         Cookies.remove('cart');
         Cookies.remove('receipt');
         // router.reload();
-        navigate('/')
+        // navigate('/')
         window.location.reload();
     }
 
