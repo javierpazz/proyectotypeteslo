@@ -52,6 +52,7 @@ export const ValorAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
+void defaultValues;
 const [valor, setValor] = useState(valorI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
@@ -71,7 +72,7 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
-    console.log(defaultValues);
+    // console.log(defaultValues);
     try {
 
         if ( id === 'new' ) {

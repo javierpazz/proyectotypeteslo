@@ -15,7 +15,6 @@ export const Query = () => {
 
   const params = useParams();
   const { searchTerm } = params;
-  console.log(params)
   const [products, setProducts] = useState([])
 
   // const loadProducts = async() => {
@@ -135,7 +134,6 @@ export const Query = () => {
       try {
         // const result = await stutzApi.get(`/api/products?configuracion=${punto}`);
         const result = await stutzApi.get(`/api/products/eco?q=${params.query}`);
-        console.log(result.data)
       setProducts(result.data);
       } catch (err) {
       }

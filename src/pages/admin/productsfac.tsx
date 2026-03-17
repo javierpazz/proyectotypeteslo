@@ -77,11 +77,6 @@ export const ProductsFac = () => {
         try {
           const resp = await stutzApi.get<IProduct[]>(`/api/products/admin/tes?id_config=${userInfo.codCon}`);
           setProducts(resp.data);
-          console.log("codcon");
-          console.log(userInfo.codCon);
-          console.log("fact");
-          console.log(resp.data);
-          console.log("fact");
         } catch (error) {
           console.log({error})
         }
@@ -119,7 +114,6 @@ export const ProductsFac = () => {
 
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
-        console.log(id)
         try {
         await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
         window.location.reload();

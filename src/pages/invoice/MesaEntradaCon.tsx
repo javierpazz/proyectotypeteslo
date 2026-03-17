@@ -123,7 +123,6 @@ export const MesaEntradaCon = () => {
     const loadProduct = async() => {
         try {
             const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
-          console.log(resp)
             setInvoice({
                 _id: resp.data._id,
                 user: resp.data.user,
@@ -192,12 +191,10 @@ useEffect(() => {
   };
 
   const actualiza = () => {
-    console.log(invoice._id)
       // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
       navigate(`/admin/mesaentradaAct/${invoice._id}?redirect=${redirect}`);
   };
   const valoriza = () => {
-    console.log(invoice._id)
       // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
       navigate(`/admin/mesaentradaVal/${invoice._id}?redirect=${redirect}`);
   };

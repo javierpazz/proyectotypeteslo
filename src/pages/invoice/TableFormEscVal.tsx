@@ -75,7 +75,8 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
   // isPaying
 }) => {
 
-  console.log(terminado)
+  void terminado;
+  
   const {  cart, addProductToCartEsc, removeCartProduct } = useContext(CartContext);
 
 

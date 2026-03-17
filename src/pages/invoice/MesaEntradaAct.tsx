@@ -113,7 +113,6 @@ export const MesaEntradaAct = () => {
       const loadProduct = async() => {
           try {
               const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
-              console.log(resp)
                   OrderI._id = resp.data._id;
                   OrderI.user = resp.data.user;
                   OrderI.orderItems = resp.data.orderItems;
@@ -480,7 +479,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
   const placeCancelInvoiceHandler = async () => {
     clearitems();
-    console.log("inicio")
   };
 
   const placeInvoiceHandler = async () => {
@@ -546,44 +544,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
   const orderHandler = async () => {
-    console.log({
-          orderItems: invoice.orderItems,
-          orderAddress: invoice.orderAddress,
-          paymentMethod: invoice.paymentMethod,
-          subTotal: invoice.subTotal,
-          shippingPrice: invoice.shippingPrice,
-          tax: invoice.tax,
-          total: invoice.total,
-          totalBuy: invoice.totalBuy,
 
-          codCus: invoice.id_client,
-          codPar: invoice.id_parte,
-              codIns: invoice.id_instru,
-              libNum : invoice.libNum,
-              folNum : invoice.folNum,
-              asiNum : invoice.asiNum,
-              asiDat : invoice.asiDat,
-              escNum : invoice.escNum,
-              asieNum : invoice.asieNum,
-              asieDat : invoice.asieDat,
-              terminado : invoice.terminado,
-          codCon: invoice.id_config,
-          user: invoice.user,
-          codConNum: invoice.codConNum,
-
-          //        codSup: invoice.codSup,
-
-          remNum: invoice.remNum,
-          remDat: invoice.remDat,
-          dueDat: invoice.dueDat,
-          invNum: invoice.invNum,
-          invDat: invoice.invDat,
-          recNum: invoice.recNum,
-          recDat: invoice.recDat,
-          desVal: invoice.desVal,
-          notes: invoice.notes,
-          salbuy: 'SALE',
-        },)
     try {
       setIsloading(true);
       await stutzApi.put(

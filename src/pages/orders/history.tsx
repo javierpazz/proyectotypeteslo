@@ -85,11 +85,9 @@ const userInfo = localStorage.getItem('userInfo')
     // const { data, error } = useSWR<IOrder[]>('/api/admin/orders');
 
     const loadData = async() => {
-      console.log(userInfo.user._id);
         try {
           const resp = await stutzApi.get(`/api/tes/orders/getordersbyus/${userInfo.user._id}`);
           setOrders(resp.data);
-          console.log(resp.data);
         } catch (error) {
           console.log({error})
         }

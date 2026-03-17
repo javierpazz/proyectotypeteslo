@@ -71,6 +71,8 @@ export const ConfiguracionAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
+void defaultValues;
+
 const [configuracion, setConfiguracion] = useState(configuracionI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
@@ -90,7 +92,7 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
-    console.log(defaultValues);
+    // console.log(defaultValues);
     try {
 
         if ( id === 'new' ) {

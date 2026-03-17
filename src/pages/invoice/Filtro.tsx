@@ -108,14 +108,14 @@ export const Filtro = () => {
   
 
 
-console.log(codCom,
+void codCom,
 nameCom,
 codSup,
 nameSup,
 codEnc,
 nameEnc,
 codVal,
-desVal,);
+desVal;
 
 
 

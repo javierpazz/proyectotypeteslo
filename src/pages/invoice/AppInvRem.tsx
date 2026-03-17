@@ -247,6 +247,7 @@ export const AppInvRem = () => {
   const modalRef = useRef<HTMLDivElement>(null);
 
 void 
+  amountval,
   codValo,
   setGeRem,
   setRemNum,

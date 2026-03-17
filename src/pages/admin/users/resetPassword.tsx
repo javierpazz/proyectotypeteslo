@@ -20,8 +20,6 @@ export const ResetPassword = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
-  console.log("token");
-  console.log(token);
   Cookies.set('token', token! );
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();

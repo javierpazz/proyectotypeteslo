@@ -204,6 +204,7 @@ export const AppRemBuy = () => {
   const modalRef = useRef<HTMLDivElement>(null);
 
 void
+receiptB,
 codComt,
 codValo,
 codval,
@@ -437,12 +438,6 @@ const handleClickOutside = (e: MouseEvent) => {
 
 
   const orderHandler = async () => {
-    const invoiceAux = invoice;
-    const receiptAux = receiptB;
-            console.log("sdsdsdsd")
-            console.log(invoiceAux)
-            console.log(receiptAux)
-            console.log("sdsdsdsd")
     try {
       setIsloading(true);
       const { data } = await stutzApi.post(

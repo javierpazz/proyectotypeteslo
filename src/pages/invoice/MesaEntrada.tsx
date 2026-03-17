@@ -196,7 +196,8 @@ export const MesaEntrada = () => {
     date: "",
 
   };
-console.log(instrumento);
+  void instrumento;
+
 /////////////////consulta cliente
 const handleShowCus = () => {
   setModalOpenCus(true);
@@ -435,7 +436,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
   const placeCancelInvoiceHandler = async () => {
     clearitems();
-    console.log("inicio")
   };
 
   const placeInvoiceHandler = async () => {

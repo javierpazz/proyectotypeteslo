@@ -92,6 +92,8 @@ export const ProductAdminPage = () => {
 
 
     const [defaultValues ] = useState({});
+    void defaultValues;
+
     const [product, setProduct] = useState(productI);
     const params = useParams();
     const { slugadm } = params;
@@ -115,7 +117,7 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
-    console.log(defaultValues);
+    // console.log(defaultValues);
     try {
 
         if ( slugadm === 'new' ) {
@@ -140,9 +142,6 @@ const loadProduct = async() => {
         // productI.gender=data.gender,
 
 /////
-        console.log("data")
-        console.log(data)
-        console.log("data")
         const cleanData: FormData = {
         ...data,
         id_config: typeof data.id_config === 'string' ? data.id_config : data.id_config?._id || '',
@@ -258,7 +257,6 @@ const loadProduct = async() => {
         try {
             form.id_config = userInfo.codCon;
             if (codSup !== "")  {form.supplier = codSup} else {form.supplier = null};
-            console.log(form);
             if (form._id){
                 await stutzApi.put('/api/tes/admin/products', form)
             }else{

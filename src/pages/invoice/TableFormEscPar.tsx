@@ -96,9 +96,6 @@ export const TableFormEscPar: React.FC<TableFormProps> = ({
         // const { data } = await stutzApi.get(`/api/products/xpv?id_config=${id_config}`);
         const { data } = await stutzApi.get(`/api/products/`);
         setProductss(data);
-        console.log("data")
-        console.log(data)
-        console.log("data")
 
         // dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {}
@@ -193,7 +190,6 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
       input10Ref.current?.focus();
     } else {
     const productRow = productss.find((row) => (row.codPro === codProd || row.codigoPro === codProd));
-        console.log(productRow)
 
     if (!productRow) {
         setCodPro('');
@@ -237,6 +233,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
+  void selectedProduct;
   const modalRef = useRef<HTMLDivElement>(null);
 
   // const handleSelect = (product: IProduct) => {

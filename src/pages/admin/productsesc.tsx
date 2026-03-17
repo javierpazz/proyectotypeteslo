@@ -102,7 +102,6 @@ const columns:GridColDef[] = [
 
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
-        console.log(id)
         try {
         await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
         window.location.reload();

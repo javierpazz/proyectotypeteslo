@@ -244,9 +244,6 @@ const columns:GridColDef[] = [
         updatedAt: invoice.updatedAt!.substring(0, 10),
     }));
 
-    console.log("rows")
-    console.log(rows)
-    console.log("rows")
 
   const parametros = async () => {
     navigate('/admin/filtrocrm?redirect=/admin/invoicesBuy');

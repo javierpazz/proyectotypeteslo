@@ -21,7 +21,6 @@ export const SalePointScreen = () => {
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
-  console.log(redirect)
   const { user } = useContext( AuthContext );
 
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')

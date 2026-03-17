@@ -143,7 +143,6 @@ export const ParamInstrumento = () => {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         setInstrumentos(data);
-        console.log(data)
       } catch (err) {}
     };
     fetchData();
@@ -284,7 +283,6 @@ const handleShowIns = () => {
 
   const placeCancelInvoiceHandler = async () => {
     clearitems();
-    console.log("inicio")
   };
 
   const placeInstrumentoHandler = async () => {

@@ -90,7 +90,6 @@ export const Precios = () => {
         // const { data } = await axios.get(`${API}/api/products/categories?configuracion=${(localStorage.getItem('punto'))}`);
         const { data } = await stutzApi.get(`/api/products/categories?configuracion=${punto}`);
         setCategories(data);
-        console.log(data);
       } catch (err) {
       }
     };
@@ -120,11 +119,10 @@ if (window.confirm('El porcentaje tiene que ser mayor a Cero')) {
     if (+porcen <= 0) {unloadpayment();} else {
     if (window.confirm('Confirma los Datos?')) {
             try {
-            const { data } = await stutzApi.put(`/api/products/dispre/?configuracion=${id_config}&supplier=${codSup}&category=${category}&codProd1=${codProt}&codProd2=${codProt2}&porcen=${porcen}`, {
+            await stutzApi.put(`/api/products/dispre/?configuracion=${id_config}&supplier=${codSup}&category=${category}&codProd1=${codProt}&codProd2=${codProt2}&porcen=${porcen}`, {
               headers: { Authorization: `Bearer ${userInfo.token}` },
                   });
               // setCuentas(data.resultado);
-              console.log(data);
             } catch (err) {
             }
               // navigate(redirect);
@@ -137,11 +135,10 @@ if (window.confirm('El porcentaje tiene que ser mayor a Cero')) {
     if (+porcen <= 0) {unloadpayment();} else {
       if (window.confirm('Confirma los Datos?')) {
       try {
-      const { data } = await stutzApi.put(`/api/products/aumpre/?configuracion=${id_config}&category=${category}&supplier=${codSup}&codProd1=${codProt}&codProd2=${codProt2}&porcen=${porcen}`, {
+       await stutzApi.put(`/api/products/aumpre/?configuracion=${id_config}&category=${category}&supplier=${codSup}&codProd1=${codProt}&codProd2=${codProt2}&porcen=${porcen}`, {
         headers: { Authorization: `Bearer ${userInfo.token}` },
             });
         // setCuentas(data.resultado);
-        console.log(data);
       } catch (err) {
       }
         // navigate(redirect);

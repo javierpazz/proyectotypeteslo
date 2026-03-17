@@ -61,6 +61,8 @@ export const CustomerAdminPage = () => {
 ////////fg/fg/f/g/////////
 
 const [defaultValues, setDefaultValues] = useState({});
+void defaultValues;
+
 const [customer, setCustomer] = useState(customerI);
 
 const input1Ref = useRef<HTMLInputElement>(null);
@@ -80,7 +82,7 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
-    console.log(defaultValues);
+    // console.log(defaultValues);
     try {
 
         if ( id === 'new' ) {

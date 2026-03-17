@@ -66,7 +66,6 @@ useEffect(() => {
         try {
           const resp = await stutzApi.get('/api/tes/admin/orders');
           setOrders(resp.data);
-          console.log(resp.data);
         } catch (error) {
           console.log({error})
         }
@@ -197,7 +196,6 @@ const columns:GridColDef[] = [
 
 
     const onActivoUpdated = async( Id: string, newisActive: string ) => {
-console.log(Id,newisActive )
         const previosorders = orders!.map( ord => ({ ...ord }));
         const updatedorders = orders!.map( ord => ({
             ...ord,

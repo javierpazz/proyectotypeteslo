@@ -271,9 +271,6 @@ export const DiligenciaListScreen = () => {
         // });
         //   const resp = await stutzApi.get('/api/invoices/diligencias');
           const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
-          console.log("entrada")
-          console.log(resp)
-          console.log("entrada")
           // console.log(resp.data.invoices)
           setInvoices(resp.data.invoices);
           setIsloading(false);

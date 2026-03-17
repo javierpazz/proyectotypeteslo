@@ -104,10 +104,6 @@ export const Login = () => {
         ? JSON.parse(localStorage.getItem('userInfo')!)
         : {};
 
-        console.log('punto')
-        console.log(punto)
-        console.log(userInfo)
-        console.log('punto')
           userInfo.filtro = filtro;
           userInfo.codCon = punto;
           userInfo.user = userInfo.user;

@@ -57,7 +57,6 @@ export const ReceiptListScreen = () => {
           setIsloading(true);
           // const resp = await stutzApi.get(`/api/receipts/searchrecS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`);
           const resp = await stutzApi.get(`/api/receipts/searchrecS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`)
-          console.log(resp.data)
           setIsloading(false);
           setrecibos(resp.data.receipts);
 

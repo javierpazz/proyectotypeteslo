@@ -74,7 +74,6 @@ export const CtaCusListScreen = () => {
                 headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);
-        console.log(data);
       } catch (err) {
       }
     };

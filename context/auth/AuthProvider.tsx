@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { stutzApi } from '../../api';
 import { IUser } from '../../src/interfaces';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export interface AuthState {
     isLoggedIn: boolean;
@@ -25,7 +25,7 @@ const AUTH_INITIAL_STATE: AuthState = {
 }
 
 export const AuthProvider:FC<Props> = ({ children }) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const [state, dispatch] = useReducer( authReducer, AUTH_INITIAL_STATE );
 

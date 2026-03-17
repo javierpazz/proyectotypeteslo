@@ -86,7 +86,6 @@ export const Dashboard1Esc = () => {
         const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
-          console.log(data)
 
         setSummary(data);
         } catch (error) {

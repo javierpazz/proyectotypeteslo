@@ -71,7 +71,6 @@ export const ProiyeListScreen = () => {
                 headers: { Authorization: `Bearer ${userInfo.token}` },
       });
         setCuentas(data.resultado);
-        console.log(data.resultado)
       } catch (err) {
       }
     };

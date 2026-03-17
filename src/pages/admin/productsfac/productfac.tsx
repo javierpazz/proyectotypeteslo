@@ -122,9 +122,6 @@ useEffect(() => {
             setNameSup('Elija Proveedor');        
       } else {
         const { data } = await stutzApi.get<IProduct>(`/api/tes/products/${slugadm}`);
-        console.log("data")
-        console.log(data)
-        console.log("data")
         const cleanData: FormData = {
         ...data,
         id_config: typeof data.id_config === 'string' ? data.id_config : data.id_config?._id || '',

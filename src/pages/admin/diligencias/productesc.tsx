@@ -76,6 +76,8 @@ export const ProductEscAdminPage = () => {
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 const [defaultValues, setDefaultValues] = useState({});
+void defaultValues;
+
 const [product, setProduct] = useState(productI);
 const params = useParams();
 const { slugadm  } = params;
@@ -93,7 +95,7 @@ useEffect(() => {
 
 
 const loadProduct = async() => {
-    console.log(defaultValues);
+    // console.log(defaultValues);
     try {
 
         if ( slugadm === 'new' ) {

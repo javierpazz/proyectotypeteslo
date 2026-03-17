@@ -46,7 +46,6 @@ const userI =
 export const UserPerfilAdmPage = () => {
     ////////////////////FGFGFGFG
     const { user : user1, isLoading } = useContext(AuthContext);
-    console.log(user1)
     const navigate = useNavigate()
 
     useEffect(() => {
