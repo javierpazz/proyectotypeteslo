@@ -237,7 +237,7 @@ export const AppInvOrd = () => {
   const [showInvoice, setShowInvoice] = useState(false);
   const [geRem, setGeRem] = useState(false);
 
-  const [isPaying, setIsPaying] = useState(false);
+  const [isPaying, setIsPaying] = useState(true);
   const [isloading, setIsloading] = useState(false);
 
 
@@ -432,7 +432,8 @@ const handleClickOutside = (e: MouseEvent) => {
 
   const placeInvoiceHandler = async () => {
       if (window.confirm('Esta seguro de Grabar?')) {
-      if (isPaying && (!recNum || !recDat || !desVal)) {
+      // if (isPaying && (!recNum || !recDat || !desVal)) {
+      if (!isPaying && ( !recDat || !desVal)) {
         unloadpayment();
       } else {
         
@@ -476,7 +477,8 @@ const handleClickOutside = (e: MouseEvent) => {
           invoice.notes = notes;
           // invoice.salbuy = 'SALE';
           /////////
-          if (!isPaying) {
+          if (!isPaying && (comprob!.isHaber)) {
+          // if (!isPaying) {
             receiptB.recNum = recNum;
             receiptB.recDat = recDat;
             } else {
@@ -490,13 +492,14 @@ const handleClickOutside = (e: MouseEvent) => {
               valuee: codval,
               desval: desval,
               numval: numval,
-              amountval: amountval,
+              // amountval: amountval,
+              amountval: invoiceA.total,
             }];
 
 
-            receiptB.subTotal = invoice.subTotal;
-            receiptB.total = invoice.total;
-            receiptB.totalBuy = invoice.totalBuy;
+            receiptB.subTotal = invoiceA.subTotal;
+            receiptB.total = invoiceA.total;
+            receiptB.totalBuy = invoiceA.totalBuy;
             receiptB.codCus = invoice.codCus;
             receiptB.codCon = invoice.codCon;
             receiptB.user = userInfo.user._id,
