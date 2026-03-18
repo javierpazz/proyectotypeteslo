@@ -28,14 +28,23 @@ interface Summary {
   producIO: { _id: string; entro: number; salio: number }[];
   productCategories: { _id: string; count: number }[];
 
+  top10PVentas: { pventa: string; totalSales: number }[];
+  top10PVentasBuy: { pventa: string; totalBuys: number }[];
   top10Clients: { customer: string; totalSales: number }[];
-  top10Partes: { parte: string; totalSales: number }[];
-  PubPri: { type: string; total: number }[];
-  PubPriVal: { type: string; total: number }[];
-  dilVal: { _id: string; total: number }[];
-  inster: { _id: string; count: number }[];
-  insterVal: { _id: string; total: number }[];
-  dilter: { _id: string; count: number }[];
+  top10Suppliers: { supplier: string; totalBuys: number }[];
+  top10Users: { user: string; totalSales: number }[];
+  top10UsersBuy: { user: string; totalBuys: number }[];
+  top10Categorias: { categoria: string; total: number }[];
+  top10CategoriasBuy: { categoria: string; total: number }[];
+  top10Productos: { nombre: string; total: number }[];
+  top10ProductosBuy: { nombre: string; total: number }[];
+  // top10Partes: { parte: string; totalSales: number }[];
+  // PubPri: { type: string; total: number }[];
+  // PubPriVal: { type: string; total: number }[];
+  // dilVal: { _id: string; total: number }[];
+  // inster: { _id: string; count: number }[];
+  // insterVal: { _id: string; total: number }[];
+  // dilter: { _id: string; count: number }[];
 }
 
 
@@ -86,7 +95,7 @@ export const Dashboard = () => {
         const { data } = await stutzApi.get<Summary>(`/api/orders/summary?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
-
+          console.log(data)
         setSummary(data);
         } catch (error) {
           console.log({error})
@@ -187,6 +196,160 @@ export const Dashboard = () => {
 
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
+            
+
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["PVenta", "Ventas"],
+                      ...(summary.top10PVentas || []).map((x) => [
+                        x.pventa,
+                        x.totalSales,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ventas P.Venta",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Clientes", "Ventas"],
+                      ...(summary.top10Clients || []).map((x) => [
+                        x.customer,
+                        x.totalSales,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ventas Clientes",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Usuarios", "Ventas"],
+                      ...(summary.top10Users || []).map((x) => [
+                        x.user,
+                        x.totalSales,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ventas Usuarios",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["PVenta", "Compras"],
+                      ...(summary.top10PVentasBuy || []).map((x) => [
+                        x.pventa,
+                        x.totalBuys,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Compras P.Venta",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Proveedores", "Compras"],
+                      ...(summary.top10Suppliers || []).map((x) => [
+                        x.supplier,
+                        x.totalBuys,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Compras Proveedores",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={4}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Usuarios", "Compras"],
+                      ...(summary.top10UsersBuy || []).map((x) => [
+                        x.user,
+                        x.totalBuys,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Compras Usuarios",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+
+
             {/* Categorías */}
             <Grid item xs={6} md={4}>
               <Card>
@@ -211,7 +374,6 @@ export const Dashboard = () => {
                 </CardContent>
               </Card>
             </Grid>
-            
 
             <Grid item xs={6} md={4}>
               <Card>
@@ -222,39 +384,14 @@ export const Dashboard = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Clientes", "Ventas"],
-                      ...(summary.top10Clients || []).map((x) => [
-                        x.customer,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Clientes",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-
-            <Grid item xs={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "cantidad"],
-                      ...(summary.PubPri || []).map((x) => [
-                        x.type,
+                      ["Categoria", "Ventas"],
+                      ...(summary.top10Categorias || []).map((x) => [
+                        x.categoria,
                         x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Cantidad Instrumentos",
+                      title: "Top 10 Ventas x Categorias Sin IVA",
                       is3D: true,
                     }}
                   />
@@ -271,14 +408,14 @@ export const Dashboard = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Instrumentos", "importe"],
-                      ...(summary.PubPriVal || []).map((x) => [
-                        x.type,
+                      ["Categoria", "Ventas"],
+                      ...(summary.top10CategoriasBuy || []).map((x) => [
+                        x.categoria,
                         x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Valores Instrumentos",
+                      title: "Top 10 Compras x Categorias Sin IVA",
                       is3D: true,
                     }}
                   />
@@ -295,37 +432,14 @@ export const Dashboard = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.inster || []).map((x) => [
-                        x._id,
-                        x.count,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Estado Instrumentos",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.insterVal || []).map((x) => [
-                        x._id,
+                      ["Producto", "Ventas"],
+                      ...(summary.top10Productos || []).map((x) => [
+                        x.nombre,
                         x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Estado Instrumentos Valorizado",
+                      title: "Top 10 Ventas x Producto Sin IVA",
                       is3D: true,
                     }}
                   />
@@ -342,44 +456,21 @@ export const Dashboard = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.dilter || []).map((x) => [
-                        x._id,
-                        x.count,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Diligencias",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.dilVal || []).map((x) => [
-                        x._id,
+                      ["Producto", "Ventas"],
+                      ...(summary.top10ProductosBuy || []).map((x) => [
+                        x.nombre,
                         x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Valores Diligencias",
+                      title: "Top 10 Compras x Producto Sin IVA",
                       is3D: true,
                     }}
                   />
                 </CardContent>
               </Card>
             </Grid>
+
 
 
             <Grid item xs={12}>

@@ -144,7 +144,7 @@ export const SideMenu = () => {
                         <ListItemIcon>
                             <LoginOutlined/>
                         </ListItemIcon>
-                        <ListItemText primary={'Log Out1'} />
+                        <ListItemText primary={'Log Out'} />
                     </ListItem>
 
                             ) : (
@@ -153,7 +153,7 @@ export const SideMenu = () => {
                         <ListItemIcon>
                             <LoginOutlined/>
                         </ListItemIcon>
-                        <ListItemText primary={'Log Out1'} />
+                        <ListItemText primary={'Log Out'} />
                     </ListItem>
                             )
 
