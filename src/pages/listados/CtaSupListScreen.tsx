@@ -1,5 +1,4 @@
 import  {  useEffect, useRef, useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import { stutzApi } from '../../../api';
 import { AdminLayoutMenuList } from '../../components/layouts';
@@ -187,7 +186,10 @@ export const CtaSupListScreen = () => {
                     </TableBody>
                     <TableFooter>
                         <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                          <TableCell colSpan={7} align="right" sx={{ fontWeight: 'bold' }}>
+                          <TableCell align="right" sx={{ fontWeight: 'bold' }}>
+                            {cuenta.codSupp} - {cuenta.nombreSupplier}
+                          </TableCell>
+                          <TableCell colSpan={6} align="right" sx={{ fontWeight: 'bold' }}>
                             Saldo Total
                           </TableCell>
                           <TableCell align="right" sx={{ fontWeight: 'bold' }}>
@@ -216,7 +218,10 @@ export const CtaSupListScreen = () => {
                 </TableHead>
                 <TableFooter>
                         <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                          <TableCell colSpan={7} align="right" sx={{ fontWeight: 'bold' }}>
+                          <TableCell align="right" sx={{ fontWeight: 'bold' }}>
+                            {cuenta.codSupp} - {cuenta.nombreSupplier}
+                          </TableCell>
+                          <TableCell colSpan={6} align="right" sx={{ fontWeight: 'bold' }}>
                             Saldo Total
                           </TableCell>
                           <TableCell align="right" sx={{ fontWeight: 'bold' }}>

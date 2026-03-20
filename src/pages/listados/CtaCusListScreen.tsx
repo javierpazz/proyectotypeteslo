@@ -201,18 +201,6 @@ export const CtaCusListScreen = () => {
 
                   <TableContainer>
                     <Table size="small">
-                      <TableHead>
-                        <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                          <TableCell>Fecha</TableCell>
-                          <TableCell>Comprobante</TableCell>
-                          <TableCell align="right">Número</TableCell>
-                          <TableCell>Usuario</TableCell>
-                          <TableCell>Pto. Venta</TableCell>
-                          <TableCell align="right">Debe</TableCell>
-                          <TableCell align="right">Haber</TableCell>
-                          <TableCell align="right">Saldo Acumulado</TableCell>
-                        </TableRow>
-                      </TableHead>
                       <TableBody>
                         {cuenta.movimientos.map((mov: any) => (
                           <TableRow key={mov._uid} hover>

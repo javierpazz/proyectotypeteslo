@@ -28,14 +28,12 @@ interface Summary {
   producIO: { _id: string; entro: number; salio: number }[];
   productCategories: { _id: string; count: number }[];
 
+  top10UsersSTVal: { user: string; totalSales: number; totalOrders: number }[];
   top10Clients: { customer: string; totalSales: number }[];
   top10Partes: { parte: string; totalSales: number }[];
-  PubPri: { type: string; total: number }[];
-  PubPriVal: { type: string; total: number }[];
-  dilVal: { _id: string; total: number }[];
-  inster: { _id: string; count: number }[];
-  insterVal: { _id: string; total: number }[];
-  dilter: { _id: string; count: number }[];
+  PubPriVal: { type: string; total: number; totalcont: number }[];
+  dilVal: { _id: string; total: number; totalCan: number  }[];
+  insterVal: { _id: string; total: number; count: number }[];
 }
 
 
@@ -86,7 +84,6 @@ export const DashboardEsc = () => {
         const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
-
         setSummary(data);
         } catch (error) {
           console.log({error})
@@ -186,7 +183,199 @@ export const DashboardEsc = () => {
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Usuarios", "Ventas"],
+                      ...(summary.top10UsersSTVal || []).map((x) => [
+                        x.user,
+                        x.totalOrders,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Instrumentos s/Terminar x Usuarios Cantidad",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Usuarios", "Ventas"],
+                      ...(summary.top10UsersSTVal || []).map((x) => [
+                        x.user,
+                        x.totalSales,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Instrumentos s/Terminar x Usuarios Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
             
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Instrumentos", "cantidad"],
+                      ...(summary.PubPriVal || []).map((x) => [
+                        x.type,
+                        x.totalcont,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Cantidad Instrumentos",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Instrumentos", "importe"],
+                      ...(summary.PubPriVal || []).map((x) => [
+                        x.type,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Valores Instrumentos",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Instrumentos", "estado"],
+                      ...(summary.insterVal || []).map((x) => [
+                        x._id,
+                        x.count,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Estado Instrumentos",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Instrumentos", "estado"],
+                      ...(summary.insterVal || []).map((x) => [
+                        x._id,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Estado Instrumentos Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Instrumentos", "estado"],
+                      ...(summary.dilVal || []).map((x) => [
+                        x._id,
+                        x.totalCan,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Cantidad Diligencias",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Instrumentos", "estado"],
+                      ...(summary.dilVal || []).map((x) => [
+                        x._id,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Valores Diligencias",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
             <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
@@ -236,148 +425,6 @@ export const DashboardEsc = () => {
             </Grid>
 
 
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "cantidad"],
-                      ...(summary.PubPri || []).map((x) => [
-                        x.type,
-                        x.total,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Instrumentos",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "importe"],
-                      ...(summary.PubPriVal || []).map((x) => [
-                        x.type,
-                        x.total,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Valores Instrumentos",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.inster || []).map((x) => [
-                        x._id,
-                        x.count,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Estado Instrumentos",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.insterVal || []).map((x) => [
-                        x._id,
-                        x.total,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Estado Instrumentos Valorizado",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.dilter || []).map((x) => [
-                        x._id,
-                        x.count,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Diligencias",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.dilVal || []).map((x) => [
-                        x._id,
-                        x.total,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Valores Diligencias",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
 
           </Grid>
         </>

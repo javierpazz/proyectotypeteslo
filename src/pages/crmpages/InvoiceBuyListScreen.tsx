@@ -70,7 +70,7 @@ export const InvoiceBuyListScreen = () => {
   //do
 const controlStockHandler = async (row:any) => {
 
-  if (row.isHaber) {
+  if (!row.isHaber) {
     row.orderItems.map((item:any) => stockHandlerM({ item }))
     } else {
       row.orderItems.map((item:any) => stockHandlerL({ item }))
