@@ -478,7 +478,7 @@ const handleClickOutside = (e: MouseEvent) => {
           invoice.notes = notes;
           // invoice.salbuy = 'SALE';
           /////////
-          if (!isPaying && (comprob!.isHaber)) {
+          if (!isPaying && (!comprob!.isHaber)) {
           // if (!isPaying) {
             receiptB.recNum = recNum;
             receiptB.recDat = recDat;

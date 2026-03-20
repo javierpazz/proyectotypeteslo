@@ -152,7 +152,7 @@ const ayudaCom = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const fetchData = async () => {
       try {
         // const resp = await stutzApi.get(`/api/tes/admin/comprobantes?id_config=${userInfo.codCon}`);
-        const { data } = await stutzApi.get(`/api/tes/admin/comprobantes?id_config=${userInfo.codCon}&isHaber=true`);
+        const { data } = await stutzApi.get(`/api/tes/admin/comprobantes?id_config=${userInfo.codCon}&isHaber=false`);
         setComprobantes(data);
         setFiltered(data);
       } catch (err) {}
