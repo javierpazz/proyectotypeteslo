@@ -124,9 +124,6 @@ const ForgetPassword = lazy(() =>
   import('../../pages/admin/users/forgetPassword').then(m => ({ default: m.ForgetPassword }))
 );
 
-const ResetPassword = lazy(() =>
-  import('../../pages/admin/users/resetPassword').then(m => ({ default: m.ResetPassword }))
-);
 
 const Products = lazy(() =>
   import('../../pages/admin/products').then(m => ({ default: m.Products }))
@@ -233,77 +230,253 @@ const AppCajEgrCon = lazy(() =>
 //
 
 
+const Dashboard = lazy(() =>
+  import('../../pages/admin/Dashboard').then(m => ({ default: m.Dashboard }))
+);
+
+const DashboardEsc = lazy(() =>
+  import('../../pages/admin/DashboardEsc').then(m => ({ default: m.DashboardEsc }))
+);
 
 
 
+const MesaEntrada = lazy(() =>
+  import('../../pages/invoice/MesaEntrada').then(m => ({ default: m.MesaEntrada }))
+);
+
+const MesaEntradaAct = lazy(() =>
+  import('../../pages/invoice/MesaEntradaAct').then(m => ({ default: m.MesaEntradaAct }))
+);
+
+const MesaEntradaVal = lazy(() =>
+  import('../../pages/invoice/MesaEntradaVal').then(m => ({ default: m.MesaEntradaVal }))
+);
+
+const MesaEntradaCon = lazy(() =>
+  import('../../pages/invoice/MesaEntradaCon').then(m => ({ default: m.MesaEntradaCon }))
+);
+
+const Filtro = lazy(() =>
+  import('../../pages/invoice/Filtro').then(m => ({ default: m.Filtro }))
+);
+
+const FiltroCrm = lazy(() =>
+  import('../../pages/invoice/FiltroCrm').then(m => ({ default: m.FiltroCrm }))
+);
+
+const ParamInstrumento = lazy(() =>
+  import('../../pages/invoice/ParamInstrumento').then(m => ({ default: m.ParamInstrumento }))
+);
+
+
+const AppRemBuy = lazy(() =>
+  import('../../pages/invoice/AppRemBuy').then(m => ({ default: m.AppRemBuy }))
+);
+
+const AppRempv = lazy(() =>
+  import('../../pages/invoice/AppRempv').then(m => ({ default: m.AppRempv }))
+);
+
+const AppRemBuypv = lazy(() =>
+  import('../../pages/invoice/AppRemBuypv').then(m => ({ default: m.AppRemBuypv }))
+);
+
+const AppRec = lazy(() =>
+  import('../../pages/invoice/AppRec').then(m => ({ default: m.AppRec }))
+);
+
+const AppRecBuy = lazy(() =>
+  import('../../pages/invoice/AppRecBuy').then(m => ({ default: m.AppRecBuy }))
+);
+
+const AppCajIng = lazy(() =>
+  import('../../pages/invoice/AppCajIng').then(m => ({ default: m.AppCajIng }))
+);
+
+const AppCajEgr = lazy(() =>
+  import('../../pages/invoice/AppCajEgr').then(m => ({ default: m.AppCajEgr }))
+);
+
+const AppInvOrd = lazy(() =>
+  import('../../pages/invoice/AppInvOrd').then(m => ({ default: m.AppInvOrd }))
+);
+
+const AppInvRem = lazy(() =>
+  import('../../pages/invoice/AppInvRem').then(m => ({ default: m.AppInvRem }))
+);
+
+const AppInvIns = lazy(() =>
+  import('../../pages/invoice/AppInvIns').then(m => ({ default: m.AppInvIns }))
+);
+
+const App = lazy(() =>
+  import('../../pages/invoice/App').then(m => ({ default: m.App }))
+);
+
+const AppBuy = lazy(() =>
+  import('../../pages/invoice/AppBuy').then(m => ({ default: m.AppBuy }))
+);
+
+const AppRem = lazy(() =>
+  import('../../pages/invoice/AppRem').then(m => ({ default: m.AppRem }))
+);
+
+
+const InvoiceListScreen = lazy(() =>
+  import('../../pages/crmpages/InvoiceListScreen').then(m => ({ default: m.InvoiceListScreen }))
+);
+
+const RemitListScreen = lazy(() =>
+  import('../../pages/crmpages/RemitListScreen').then(m => ({ default: m.RemitListScreen }))
+);
+
+const CajaIngListScreen = lazy(() =>
+  import('../../pages/crmpages/CajaIngListScreen').then(m => ({ default: m.CajaIngListScreen }))
+);
+
+const CajaEgrListScreen = lazy(() =>
+  import('../../pages/crmpages/CajaEgrListScreen').then(m => ({ default: m.CajaEgrListScreen }))
+);
+
+const ReceiptListScreen = lazy(() =>
+  import('../../pages/crmpages/ReceiptListScreen').then(m => ({ default: m.ReceiptListScreen }))
+);
+
+const ReceiptBuyListScreen = lazy(() =>
+  import('../../pages/crmpages/ReceiptBuyListScreen').then(m => ({ default: m.ReceiptBuyListScreen }))
+);
+
+const RemitpvListScreen = lazy(() =>
+  import('../../pages/crmpages/RemitpvListScreen').then(m => ({ default: m.RemitpvListScreen }))
+);
+
+const InvoiceBuyListScreen = lazy(() =>
+  import('../../pages/crmpages/InvoiceBuyListScreen').then(m => ({ default: m.InvoiceBuyListScreen }))
+);
+
+const RemitBuyListScreen = lazy(() =>
+  import('../../pages/crmpages/RemitBuyListScreen').then(m => ({ default: m.RemitBuyListScreen }))
+);
+
+const RemitBuypvListScreen = lazy(() =>
+  import('../../pages/crmpages/RemitBuypvListScreen').then(m => ({ default: m.RemitBuypvListScreen }))
+);
+
+const EntradaListScreen = lazy(() =>
+  import('../../pages/crmpages/EntradaListScreen').then(m => ({ default: m.EntradaListScreen }))
+);
+
+const DiligenciaListScreen = lazy(() =>
+  import('../../pages/crmpages/DiligenciaListScreen').then(m => ({ default: m.DiligenciaListScreen }))
+);
 
 export default function AdminRoutes() {
   return (
     <Routes>
-        <Route path="/admin/users" element={ <Users /> } />
-        <Route path="/admin/products" element={ <Products /> } />
-        <Route path="/admin/products/product/:slugadm" element={ <ProductAdminPage /> } />
-        <Route path="/admin/orders/order/:id" element={ <Order /> } />
-        <Route path="/admin/orders" element={ <Orders /> } />
-
-        <Route path="/admin/productsList" element={<ProductListPrint /> }/>
-        <Route path="/admin/precios" element={<Precios /> }/>
-        <Route path="/admin/invoicesCajIngEgr" element={ <CajaIngEgrListScreen /> } />
-        <Route path="/admin/informe/IngEgr" element={ <IngEgrListScreen /> } />
-        <Route path="/admin/informe/ctacus" element={ <CtaCusListScreen /> } />
-        <Route path="/admin/informe/ctasup" element={ <CtaSupListScreen /> } />
-        <Route path="/admin/informe/cuspro" element={ <CusProListScreen /> } />
-        <Route path="/admin/informe/suppro" element={ <SupProListScreen /> } />
-        <Route path="/admin/informe/procus" element={ <ProCusListScreen /> } />
-        <Route path="/admin/informe/prosup" element={ <ProSupListScreen /> } />
-        <Route path="/admin/informe/proiye" element={ <ProiyeListScreen /> } />
+                            <Route path="dashboard" element={ <Dashboard /> } />
+                            <Route path="dashboardesc" element={ <DashboardEsc /> } />
+                            <Route path="users" element={ <Users /> } />
+                            <Route path="products" element={ <Products /> } />
+                            <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />
+                            <Route path="orders/order/:id" element={ <Order /> } />
+                            <Route path="orders" element={ <Orders /> } />
 
 
+                            <Route path="invoicerord/:id" element={ <AppInvOrd />  }/>
+                            <Route path="invoicerrem/:id" element={ <AppInvRem />  }/>
+                            <Route path="invoicerins/:id" element={ <AppInvIns />  }/>
+                            <Route path="invoicer" element={ <App />  }/>
+                            <Route path="remiter" element={ <AppRem />  }/>
+                            <Route path="remiterpv" element={ <AppRempv />  }/>
+                            <Route path="invoicerBuy" element={ <AppBuy />  }/>
+                            <Route path="remiterBuy" element={ <AppRemBuy />  }/>
+                            <Route path="remiterBuypv" element={ <AppRemBuypv />  }/>
+                            <Route path="invoicerRec" element={ <AppRec />  }/>
+                            <Route path="invoicerBuyRec" element={ <AppRecBuy />  }/>
+                            <Route path="invoicerCajIng" element={ <AppCajIng />  }/>
+                            <Route path="invoicerCajEgr" element={ <AppCajEgr />  }/>
 
-        <Route path="/admin/invoicerRemCon/:id" element={ <AppRemCon />  }/>
-        <Route path="/admin/invoicerRemBuyCon/:id" element={ <AppRemBuyCon />  }/>
-        <Route path="/admin/invoicerRempvCon/:id" element={ <AppRempvCon />  }/>
-        <Route path="/admin/invoicerBuyRempvCon/:id" element={ <AppBuyRempvCon />  }/>
-        <Route path="/admin/invoicerCon/:id" element={ <AppCon />  }/>
-        <Route path="/admin/invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
-        <Route path="/admin/invoicerRecCon/:id" element={ <AppRecCon />  }/>
-        <Route path="/admin/invoicerBuyRecCon/:id" element={ <AppBuyRecCon />  }/>
-        <Route path="/admin/invoicerCajIngCon/:id" element={ <AppCajIngCon />  }/>
-        <Route path="/admin/invoicerCajEgrCon/:id" element={ <AppCajEgrCon />  }/>
+                            <Route path="productsList" element={<ProductListPrint /> }/>
+                            <Route path="precios" element={<Precios /> }/>
+                            <Route path="invoicesCajIngEgr" element={ <CajaIngEgrListScreen /> } />
+                            <Route path="informe/IngEgr" element={ <IngEgrListScreen /> } />
+                            <Route path="informe/ctacus" element={ <CtaCusListScreen /> } />
+                            <Route path="informe/ctasup" element={ <CtaSupListScreen /> } />
+                            <Route path="informe/cuspro" element={ <CusProListScreen /> } />
+                            <Route path="informe/suppro" element={ <SupProListScreen /> } />
+                            <Route path="informe/procus" element={ <ProCusListScreen /> } />
+                            <Route path="informe/prosup" element={ <ProSupListScreen /> } />
+                            <Route path="informe/proiye" element={ <ProiyeListScreen /> } />
 
-        {/* <Route path="/admin/invoicesCajIngEgr" element={ <CajaIngEgrListScreen />  }/> */}
 
 
-        <Route path="/admin/instrumentos" element={ <Instrumentos /> } />
-        <Route path="/admin/instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
-        <Route path="/admin/customers" element={ <Customers /> } />
-        <Route path="/admin/customers/customer/:id" element={ <CustomerAdminPage /> } />
-        <Route path="/admin/comprobantes/comprobante/:id" element={ <ComprobanteAdminPage /> } />
-        <Route path="/admin/proveedores" element={ <Proveedores /> } />
-        <Route path="/admin/proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
-        <Route path="/admin/valores" element={ <Valores /> } />
-        <Route path="/admin/valores/valor/:id" element={ <ValorAdminPage /> } />
-        <Route path="/admin/encargados" element={ <Encargados /> } />
-        <Route path="/admin/encargados/encargado/:id" element={ <EncargadoAdminPage /> } />
-        <Route path="/admin/estadosorden" element={ <Estadosorden /> } />
-        <Route path="/admin/estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
-        <Route path="/admin/productsesc" element={ <ProductsEsc /> } />
-        <Route path="/admin/productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
-        <Route path="/admin/productsfac" element={ <ProductsFac /> } />
-        <Route path="/admin/productsfac/productfac/:slugadm" element={ <ProductFacAdminPage /> } />
-        <Route path="/admin/comprobantes" element={ <Comprobantes /> } />
-        <Route path="/admin/configuraciones" element={ <Configuraciones /> } />
-        <Route path="/admin/configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
-        <Route path="/admin/configuracionesesc" element={ <ConfiguracionesEsc /> } />
-        <Route path="/admin/configuraciones/configuracionesc/:id" element={ <ConfiguracionEscAdminPage /> } />
-        <Route path="/admin/partes" element={ <Partes /> } />
-        <Route path="/admin/partes/parte/:id" element={ <ParteAdminPage /> } />
-        <Route path="/admin/users/forgetPasword" element={ <ForgetPassword /> } />
-        <Route path="/reset-password/:token" element={ <ResetPassword /> } />
-        <Route path="/admin/users" element={ <Users /> } />
-        <Route path="/admin/users/user/:id" element={ <UserAdminPage /> } />
-        <Route path="/admin/profile/:id" element={ <UserPerfilPage /> } />
-        <Route path="/admin/profileadm" element={ <UserPerfilAdmPage /> } />
+                            <Route path="invoicerRemCon/:id" element={ <AppRemCon />  }/>
+                            <Route path="invoicerRemBuyCon/:id" element={ <AppRemBuyCon />  }/>
+                            <Route path="invoicerRempvCon/:id" element={ <AppRempvCon />  }/>
+                            <Route path="invoicerBuyRempvCon/:id" element={ <AppBuyRempvCon />  }/>
+                            <Route path="invoicerCon/:id" element={ <AppCon />  }/>
+                            <Route path="invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
+                            <Route path="invoicerRecCon/:id" element={ <AppRecCon />  }/>
+                            <Route path="invoicerBuyRecCon/:id" element={ <AppBuyRecCon />  }/>
+                            <Route path="invoicerCajIngCon/:id" element={ <AppCajIngCon />  }/>
+                            <Route path="invoicerCajEgrCon/:id" element={ <AppCajEgrCon />  }/>
+
+                            {/* <Route path="invoicesCajIngEgr" element={ <CajaIngEgrListScreen />  }/> */}
+
+                            <Route path="invoices" element={ <InvoiceListScreen /> } />
+                            <Route path="remits" element={ <RemitListScreen /> } />
+                            <Route path="invoicesBuy" element={ <InvoiceBuyListScreen /> } />
+                            <Route path="remitsBuy" element={ <RemitBuyListScreen /> } />
+                            <Route path="remitspv" element={ <RemitpvListScreen /> } />
+                            <Route path="invoicesCajIng" element={ <CajaIngListScreen /> } />
+                            <Route path="invoicesCajEgr" element={ <CajaEgrListScreen /> } />
+                            <Route path="invoicesRec" element={ <ReceiptListScreen /> } />
+                            <Route path="invoicesBuyRec" element={ <ReceiptBuyListScreen /> } />
+                            <Route path="remitsBuypv" element={ <RemitBuypvListScreen /> } />
+
+                            <Route path="mesaentrada" element={ <MesaEntrada /> } />
+                            <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
+                            <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
+                            <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
+                            <Route path="entradas" element={ <EntradaListScreen /> } />
+                            {/* <Route path="entradasrst" element={ <EntradaRegSinTerListScreen /> } />
+                            <Route path="entradasnrst" element={ <EntradaNoRegSinTerListScreen /> } />
+                            <Route path="entradaspst" element={ <EntradaProSinTerListScreen /> } />
+                            <Route path="entradasnpst" element={ <EntradaNoProSinTerListScreen /> } /> */}
+                            <Route path="diligencias" element={ <DiligenciaListScreen /> } />
+                            <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
+                            <Route path="instrumentos" element={ <Instrumentos /> } />
+                            <Route path="instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
+                            <Route path="customers" element={ <Customers /> } />
+                            <Route path="customers/customer/:id" element={ <CustomerAdminPage /> } />
+                            <Route path="comprobantes/comprobante/:id" element={ <ComprobanteAdminPage /> } />
+                            <Route path="proveedores" element={ <Proveedores /> } />
+                            <Route path="proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
+                            <Route path="valores" element={ <Valores /> } />
+                            <Route path="valores/valor/:id" element={ <ValorAdminPage /> } />
+                            <Route path="encargados" element={ <Encargados /> } />
+                            <Route path="encargados/encargado/:id" element={ <EncargadoAdminPage /> } />
+                            <Route path="estadosorden" element={ <Estadosorden /> } />
+                            <Route path="estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
+                            <Route path="productsesc" element={ <ProductsEsc /> } />
+                            <Route path="productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
+                            <Route path="productsfac" element={ <ProductsFac /> } />
+                            <Route path="productsfac/productfac/:slugadm" element={ <ProductFacAdminPage /> } />
+                            <Route path="comprobantes" element={ <Comprobantes /> } />
+                            <Route path="configuraciones" element={ <Configuraciones /> } />
+                            <Route path="configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
+                            <Route path="configuracionesesc" element={ <ConfiguracionesEsc /> } />
+                            <Route path="configuraciones/configuracionesc/:id" element={ <ConfiguracionEscAdminPage /> } />
+                            <Route path="partes" element={ <Partes /> } />
+                            <Route path="partes/parte/:id" element={ <ParteAdminPage /> } />
+                            <Route path="users/forgetPasword" element={ <ForgetPassword /> } />
+                            <Route path="users" element={ <Users /> } />
+                            <Route path="users/user/:id" element={ <UserAdminPage /> } />
+                            <Route path="profile/:id" element={ <UserPerfilPage /> } />
+                            <Route path="profileadm" element={ <UserPerfilAdmPage /> } />
+                            <Route path="filtro" element={ <Filtro /> } />
+                            <Route path="filtrocrm" element={ <FiltroCrm /> } />
+
 
 
     </Routes>
