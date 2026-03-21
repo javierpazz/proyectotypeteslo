@@ -117,6 +117,9 @@ export const MesaEntradaVal = () => {
       loadProduct()
     }, [])
 
+      const formatDate = (date?: string | null) => {
+        return date ? date.substring(0, 10) : '';
+      };
 
       const loadProduct = async() => {
           try {
@@ -164,18 +167,22 @@ export const MesaEntradaVal = () => {
             setCodPar(invoice.id_parte as any);
             setNamePar((invoice.id_parte as IParte).name);
             setRemNum(invoice.remNum as any) ;
-            setRemDat(invoice.remDat!.substring(0, 10) as any);
-            setDueDat(invoice.dueDat!.substring(0, 10) as any);
             setNotes(invoice.notes!);
             setLibNum(invoice.libNum as any);
             setFolNum(invoice.folNum as any);
             setAsiNum(invoice.asiNum as any);
-            setAsiDat(invoice.asiDat!.substring(0, 10) as any);
             setEscNum(invoice.escNum as any);
             setAsieNum(invoice.asieNum as any);
-            setAsieDat(invoice.asieDat!.substring(0, 10) as any);
             setTerminado(invoice.terminado as any);
-
+            
+            // setRemDat(invoice.remDat!.substring(0, 10) as any);
+            // setDueDat(invoice.dueDat!.substring(0, 10) as any);
+            // setAsiDat(invoice.asiDat!.substring(0, 10) as any);
+            // setAsieDat(invoice.asieDat!.substring(0, 10) as any);
+            setRemDat(formatDate(invoice.remDat));
+            setDueDat(formatDate(invoice.dueDat));
+            setAsiDat(formatDate(invoice.asiDat));
+            setAsieDat(formatDate(invoice.asieDat));
 
           } catch (error) {
             console.log(error)

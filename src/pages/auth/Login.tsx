@@ -141,7 +141,10 @@ export const Login = () => {
                     <TextField
                     inputRef={input1Ref}
                     type="email"
-                    label="Correo" variant="filled" fullWidth
+                    label="Correo" 
+                    variant="filled" 
+                    fullWidth
+                    autoComplete="username" 
                     { ...register('email', {
                         required: 'Este campo es requerido',
                         validate: validations.isEmail
@@ -169,6 +172,7 @@ export const Login = () => {
                 type={showPassword ? 'text' : 'password'} // 👈 toggle type
                 variant="filled"
                 fullWidth
+                autoComplete="current-password"
                 {...register('password', {
                   required: 'Este campo es requerido',
                   minLength: { value: 6, message: 'Mínimo 6 caracteres y dos letras una mayuscula' },

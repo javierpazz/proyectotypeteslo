@@ -130,8 +130,9 @@ export const IngEgrListScreen = () => {
   </Typography>
 
   {cuentas.map((cuenta) => (
-    <Paper
-      key={cuenta.id_client}
+    // <Paper
+    //   key={cuenta.id_client}
+    <Paper key={`${cuenta.id_client}-${cuenta.nombreCliente}`}
       sx={{
         p: 3,
         mb: 5,
@@ -159,7 +160,8 @@ export const IngEgrListScreen = () => {
 
         <TableBody>
           {cuenta.movimientos.map((mov) => (
-            <TableRow key={mov._uid} hover>
+            // <TableRow key={mov._uid} hover>
+            <TableRow key={`${mov._uid}-${mov.compNum}-${mov.fecha}`} hover>
               <TableCell>{mov.fecha?.substring(0, 10)}</TableCell>
               <TableCell>{mov.compDes}</TableCell>
               <TableCell align="right">{mov.compNum}</TableCell>

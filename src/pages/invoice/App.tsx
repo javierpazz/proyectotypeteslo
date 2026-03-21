@@ -182,7 +182,7 @@ const codConNum = userInfo?.configurationObj?.codCon ?? 0;
   const [desval, setDesval] = useState('');
   const [valueeR, setValueeR] = useState<IValue>();
   const [desVal, setDesVal] = useState('');
-  const [numval, setNumval] = useState(' ');
+  const [numval, setNumval] = useState('');
   // const [userss, setUserss] = useState([]);
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [valuees, setValuees] = useState([]);
@@ -277,7 +277,7 @@ const handleClickOutside = (e: MouseEvent) => {
       );
     };
     if (numval === '') {
-      setNumval(' ');
+      setNumval('');
     }
     setCodCus(codCus);
     calculateAmountval();
@@ -472,7 +472,7 @@ const handleClickOutside = (e: MouseEvent) => {
       setDesVal('');
       setRecNum(0);
       setRecDat('');
-      setNumval(' ');
+      setNumval('');
       // setAmountval(0);
       setDesval(valueeR!.desVal);
       setDesVal(valueeR!.desVal);
@@ -486,7 +486,7 @@ const handleClickOutside = (e: MouseEvent) => {
       setDesVal('');
       setRecNum(0);
       setRecDat('');
-      setNumval(' ');
+      setNumval('');
       // setAmountval(0);
       input8Ref.current?.focus()
 

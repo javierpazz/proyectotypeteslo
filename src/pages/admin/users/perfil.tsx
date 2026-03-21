@@ -225,6 +225,21 @@ const loadProduct = async() => {
             // icon={ <DriveFileRenameOutline /> }
         >
             <form onSubmit={ handleSubmit( onSubmit ) }>
+
+                  <input
+                    type="text"
+                    name="username"
+                    autoComplete="username"
+                    value={user1?.email || ''}
+                    readOnly
+                    style={{
+                      position: 'absolute',
+                      opacity: 0,
+                      height: 0,
+                      pointerEvents: 'none'
+                    }}
+                  />
+
                 <Box display='flex' justifyContent='end' sx={{ mb: 1 }}>
                     <Button 
                         color="secondary"
@@ -259,7 +274,8 @@ const loadProduct = async() => {
                         <TextField
                             label="Email"
                             variant="filled"
-                            fullWidth 
+                            fullWidth
+                            autoComplete="username" 
                             multiline
                             sx={{ mb: 1 }}
                             { ...register('email', {
@@ -315,6 +331,7 @@ const loadProduct = async() => {
                 type={showPassword ? 'text' : 'password'} // 👈 toggle type
                 variant="filled"
                 fullWidth
+                autoComplete="current-password"
                 sx={{ mb: 1 }}
                 {...register('password', {
                   required: (user1!.role !== 'admin') ? 'Este campo es requerido' : false,    
@@ -343,6 +360,7 @@ const loadProduct = async() => {
                 type={showPasswordN ? 'text' : 'password'} // 👈 toggle type
                 variant="filled"
                 fullWidth
+                autoComplete="new-password" 
                 sx={{ mb: 1 }}
                 {...register('passwordNue', {
                   // required: 'Este campo es requerido',
@@ -371,6 +389,7 @@ const loadProduct = async() => {
                 type={showPasswordCN ? 'text' : 'password'} // 👈 toggle type
                 variant="filled"
                 fullWidth
+                autoComplete="new-password"
                 sx={{ mb: 1 }}
                 {...register('passwordConNue', {
                   // required: 'Este campo es requerido',
