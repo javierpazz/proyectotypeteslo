@@ -462,6 +462,7 @@ const handleClickOutside = (e: MouseEvent) => {
           invoice.codConNum = codConNum;
           invoice.codCom = codCom;
           invoice.isHaber = comprob!.isHaber;
+          invoice.ajuste = comprob!.isAjuste;
           invoice.geRem = geRem;
           
           invoice.codSup = undefined;

@@ -31,6 +31,7 @@ const columns:GridColDef[] = [
         }
     },
     { field: 'isHaber', headerName: 'isHaber' },
+    { field: 'isAjuste', headerName: 'isAjuste' },
     { field: 'noDisc', headerName: 'noDisc' },
     { field: 'toDisc', headerName: 'toDisc' },
     { field: 'itDisc', headerName: 'itDisc' },
@@ -99,6 +100,7 @@ const columns:GridColDef[] = [
         codCom: comprobante.codCom,
         nameCom: comprobante.nameCom,
         isHaber: comprobante.isHaber,
+        isAjuste: comprobante.isAjuste,
         noDisc: comprobante.noDisc,
         toDisc: comprobante.toDisc,
         itDisc: comprobante.itDisc,

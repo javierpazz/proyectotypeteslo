@@ -265,7 +265,8 @@ useEffect(() => {
               </TableHead>
               <TableBody>
                 {invoice.orderItems.map((item, index) => (
-                  <TableRow key={item._id}>
+                  // <TableRow key={item._id}>
+                  <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.codigoPro}</TableCell>
                     <TableCell>{item.title}</TableCell>

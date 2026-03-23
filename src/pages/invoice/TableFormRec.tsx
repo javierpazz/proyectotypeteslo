@@ -308,6 +308,7 @@ void input0Ref, tempReceiptCart, selectedValue;
               size="small"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                onFocus={(e) => e.target.select()}
                 onKeyDown={(e) => e.key === "Enter" && input11Ref.current?.focus()}
                 required
               />

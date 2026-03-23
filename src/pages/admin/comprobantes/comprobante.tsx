@@ -22,6 +22,7 @@ interface FormData {
   codCom: string;
   nameCom: string;
   isHaber: boolean;
+  isAjuste: boolean;
   noDisc: boolean;
   toDisc: boolean;
   itDisc: boolean;
@@ -35,6 +36,7 @@ const comprobanteInicial: FormData = {
   codCom: '',
   nameCom: '',
   isHaber: true,
+  isAjuste: false,
   noDisc: true,
   toDisc: false,
   itDisc: false,
@@ -190,6 +192,16 @@ export const ComprobanteAdminPage = () => {
                   <FormControlLabel
                     control={<Checkbox {...field} checked={field.value} />}
                     label='Imputa en Cuenta Haber'
+                  />
+                )}
+              />
+              <Controller
+                name='isAjuste'
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Checkbox {...field} checked={field.value} />}
+                    label='Comprobande de Ajuste (Nota Credito/Debito)'
                   />
                 )}
               />

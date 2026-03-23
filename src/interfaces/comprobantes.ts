@@ -5,6 +5,7 @@ export interface IComprobante {
     nameCom: string;
     claCom: string;
     isHaber: boolean;
+    isAjuste: boolean;
     noDisc: boolean;
     toDisc: boolean;
     itDisc: boolean;

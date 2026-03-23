@@ -34,6 +34,7 @@ export interface IInvoice {
     notes?       : string;
     paymentMethod: string;
     isHaber?    : boolean;
+    ajuste?    : boolean;
     geRem?    : boolean;
     salbuy?    : string;
 

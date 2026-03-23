@@ -243,7 +243,7 @@ useEffect(() => {
               </TableHead>
               <TableBody>
                 {receipt.receiptItems.map((item, index) => (
-                  <TableRow key={item._id}>
+                  <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.desval}</TableCell>
                     <TableCell align="right">{item.numval}</TableCell>

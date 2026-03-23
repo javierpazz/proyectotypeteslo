@@ -24,7 +24,8 @@ interface Summary {
   orders: { numOrders: number; totalSales: number }[];
   dailyOrders: { _id: string; sales: number; buys: number }[];
   dailyMoney: { _id: string; inputs: number; outputs: number }[];
-  ctacte: { _id: string; salesS: number; inputsS: number; salesB: number; inputsB: number }[];
+  ctacteSale: { _id: string; salesS: number; inputsS: number; salesB: number; inputsB: number }[];
+  ctacteBuy: { _id: string; salesS: number; inputsS: number; salesB: number; inputsB: number }[];
   producIO: { _id: string; entro: number; salio: number }[];
   productCategories: { _id: string; count: number }[];
 
@@ -472,31 +473,6 @@ export const Dashboard = () => {
 
 
 
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="300px"
-                    chartType="LineChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Día", "Ventas", "Compras"],
-                      ...(summary.dailyOrders || []).map((x) => [
-                        x._id,
-                        x.sales,
-                        x.buys,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Ventas y Compras",
-                      curveType: "function",
-                      legend: { position: "bottom" },
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
           </Grid>
 
           <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -510,7 +486,7 @@ export const Dashboard = () => {
                     chartType="LineChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Día", "Ventas", "Compras"],
+                      ["Día", "$ Ventas", "$ Compras"],
                       ...(summary.dailyOrders || []).map((x) => [
                         x._id,
                         x.sales,
@@ -545,7 +521,7 @@ export const Dashboard = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Flujo de Dinero",
+                      title: "Flujo de Dinero (Cobros y Pagos)",
                       curveType: "function",
                       legend: { position: "bottom" },
                     }}
@@ -565,7 +541,7 @@ export const Dashboard = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Día", "$ Ventas", "$ Cobros"],
-                      ...(summary.ctacte || []).map((x) => [
+                      ...(summary.ctacteSale|| []).map((x) => [
                         x._id,
                         x.salesS,
                         x.inputsS,
@@ -592,7 +568,7 @@ export const Dashboard = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Día", "$ Compras", "$ Pagos"],
-                      ...(summary.ctacte || []).map((x) => [
+                      ...(summary.ctacteBuy || []).map((x) => [
                         x._id,
                         x.salesB,
                         x.inputsB,
@@ -618,7 +594,7 @@ export const Dashboard = () => {
                     chartType="LineChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Día", "Recepciones", "Entregas"],
+                      ["Día", "Compras", "Ventas"],
                       ...(summary.producIO || []).map((x) => [
                         x._id,
                         x.entro,
@@ -626,7 +602,7 @@ export const Dashboard = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Recepción y Entregas de Productos",
+                      title: "Compras y Ventas de Productos",
                       curveType: "function",
                       legend: { position: "bottom" },
                     }}
