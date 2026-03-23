@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AppBar,  Box, Button, Toolbar } from '@mui/material';
 // import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import {  UiContext } from '../../../context';
-import foto from '../../assets/fondo.jpg';
+import foto from '../../assets/fondocrm.jpg';
 
 export const NavbarInv = () => {
 

@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context";
 import { useNavigate } from "react-router-dom";
-import { AdminLayoutMenuEsc } from "../components/layouts";
+import { AdminLayoutMenuInv } from "../components/layouts";
 import { CategoryOutlined } from "@mui/icons-material";
-import foto from '../assets/fondo.jpg';
+import foto from '../assets/fondocrm.jpg';
 
 
 export const Invoice = () => {
@@ -40,7 +40,7 @@ export const Invoice = () => {
             }}
         >
 
-    <AdminLayoutMenuEsc 
+    <AdminLayoutMenuInv 
         title={`Entredas`} 
         subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
@@ -49,7 +49,7 @@ export const Invoice = () => {
 
 
 
-    </AdminLayoutMenuEsc>
+    </AdminLayoutMenuInv>
             </div> 
 
   );

@@ -235,18 +235,18 @@ const columns:GridColDef[] = [
         icon={ <ConfirmationNumberOutlined /> }
     >
          <Grid container className='fadeIn'>
-            <Grid item xs={12} sx={{ height:450, width: '100%' }}>
+            <Grid item xs={12} sx={{ height:475, width: '100%' }}>
                 <DataGrid
                 rows={rows}
                 columns={columns}
-                rowHeight={35}
+                rowHeight={33}
 
                 initialState={{
                     pagination: {
-                    paginationModel: { pageSize: 10, page: 0 },
+                    paginationModel: { pageSize: 20, page: 0 },
                     },
                 }}
-                pageSizeOptions={[10]}
+                pageSizeOptions={[20]}
                 />
 
             </Grid>

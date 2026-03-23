@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { NavbarInv, SideMenu } from '../ui';
-import foto from '../../assets/fondo.jpg';
+import foto from '../../assets/fondocrm.jpg';
 
 
 
