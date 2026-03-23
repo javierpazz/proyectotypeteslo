@@ -32,7 +32,8 @@ const { user} = useContext(  AuthContext );
   return (
     <AppBar position="static" color="primary"
                              style={{
-                        backgroundImage: `url(${foto})`,
+                        // backgroundImage: `url(${foto})`,
+                        backgroundColor: '#dedbdbff', // gris
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundAttachment: 'fixed',

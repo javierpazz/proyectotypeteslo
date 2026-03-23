@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { ShopLayoutInv } from '../components/layouts';
 // import { ProductList } from '../components/products';
 
+localStorage.removeItem('modulo');
 
 
 export const Blanco = () => {
