@@ -5,7 +5,7 @@ import { AuthContext, UiContext } from '../../../context';
 // import foto from '../../assets/fondocrm.jpg';
 
 // export default function AdminNavBar() {
-export const AdminNavbarMenu = () => {
+export const AdminNavbarMenuBla = () => {
 
     const { toggleSideMenu } = useContext( UiContext );
 

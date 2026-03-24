@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import {
@@ -6,8 +6,8 @@ import {
   ListItem,
   ListItemText,
   Rating as MuiRating,
-  TextField,
-  CircularProgress,
+  // TextField,
+  // CircularProgress,
 } from "@mui/material";
 import { ShopLayout } from '../../components/layouts';
 import { ProductSlideshow } from '../../components/products';
@@ -16,7 +16,7 @@ import { ICartProduct } from '../../interfaces';
 
 import stutzApi from '../../../api/stutzApi';
 import { FullScreenLoading } from '../../components/ui';
-import { AuthContext, CartContext } from '../../../context';
+import { CartContext } from '../../../context';
 
 
 const productI = 
@@ -59,14 +59,14 @@ export const Slug = () => {
   const navigate = useNavigate();
   const {addProductToCart} =useContext(CartContext)
 
-    // let reviewsRef = useRef();
-    let reviewsRef = useRef<HTMLDivElement>(null);
+    // // let reviewsRef = useRef();
+    // let reviewsRef = useRef<HTMLDivElement>(null);
 
-    const { user : userInfo } = useContext(AuthContext);
-    // const [rating, setRating] = useState(0);
-    const [rating, setRating] = useState<number | null>(0);
-    const [comment, setComment] = useState('');
-    const [loadingCreateReview, setLoadingCreateReview] = useState(false);
+    // const { user : userInfo } = useContext(AuthContext);
+    // // const [rating, setRating] = useState(0);
+    // const [rating, setRating] = useState<number | null>(0);
+    // const [comment, setComment] = useState('');
+    // const [loadingCreateReview, setLoadingCreateReview] = useState(false);
 
 
 
@@ -137,33 +137,33 @@ const onAddProduct = () => {
  
   }
 
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!comment || !rating) {
-        if (window.confirm('Please enter comment and rating')) {}
-      return;
-    }
-    try {
-        setLoadingCreateReview(true);
-        const { data } = await stutzApi.post(
-        `/api/products/${product._id}/reviews`,
-        { rating, comment, name: userInfo!.name },
-        {
-          headers: { Authorization: `Bearer ${userInfo!}` },
-        }
-      );
-        setLoadingCreateReview(false)
-        if (window.confirm('Review submitted successfully')) {}
-      product.reviews.unshift(data.review);
-      product.numReviews = data.numReviews;
-      product.rating = data.rating;
-      window.scrollTo({
-        behavior: 'smooth',
-        top: reviewsRef.current!.offsetTop,
-      });
-    } catch (error) {
-    }
-  };
+  // const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (!comment || !rating) {
+  //       if (window.confirm('Please enter comment and rating')) {}
+  //     return;
+  //   }
+  //   try {
+  //       setLoadingCreateReview(true);
+  //       const { data } = await stutzApi.post(
+  //       `/api/products/${product._id}/reviews`,
+  //       { rating, comment, name: userInfo!.name },
+  //       {
+  //         headers: { Authorization: `Bearer ${userInfo!}` },
+  //       }
+  //     );
+  //       setLoadingCreateReview(false)
+  //       if (window.confirm('Review submitted successfully')) {}
+  //     product.reviews.unshift(data.review);
+  //     product.numReviews = data.numReviews;
+  //     product.rating = data.rating;
+  //     window.scrollTo({
+  //       behavior: 'smooth',
+  //       top: reviewsRef.current!.offsetTop,
+  //     });
+  //   } catch (error) {
+  //   }
+  // };
 
 
 
@@ -276,7 +276,7 @@ const onAddProduct = () => {
         </List>
       )}
 
-      <Box mt={3}>
+      {/* <Box mt={3}>
         {userInfo ? (
           <form onSubmit={submitHandler}>
             <Typography variant="h6" gutterBottom>
@@ -321,7 +321,7 @@ const onAddProduct = () => {
             para escribir una calificación.
           </Typography>
         )}
-      </Box>
+      </Box> */}
     </Box>  
       </ShopLayout>
     )

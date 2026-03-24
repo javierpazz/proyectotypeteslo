@@ -2,7 +2,7 @@ import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AuthContext, UiContext } from '../../../context';
-import foto from '../../assets/fondo.jpg';
+// import foto from '../../assets/fondo.jpg';
 
 export const AdminNavbarMenuEsc = () => {
 

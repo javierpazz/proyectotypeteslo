@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
 import { AdminNavbarMenu, AdminNavbarMenuEsc } from '../admin';
 import { SideMenu } from '../ui';
-import foto from '../../assets/fondoesc.jpg';
+import foto from '../../assets/fondo.jpg';
 
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const AdminLayoutMenuEsc:FC<Props> = ({ children}) => {
+export const AdminLayoutMenuBla:FC<Props> = ({ children}) => {
   return (
     <>
 
