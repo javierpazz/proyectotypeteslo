@@ -10,6 +10,13 @@ const InstrumentoAdminPage = lazy(() =>
   import('../../pages/admin/instrumentos/instrumento').then(m => ({ default: m.InstrumentoAdminPage }))
 );
 
+const Trabajos = lazy(() =>
+  import('../../pages/admin/Trabajos').then(m => ({ default: m.Trabajos }))
+);
+const TrabajoAdminPage = lazy(() =>
+  import('../../pages/admin/instrumentos/trabajo').then(m => ({ default: m.TrabajoAdminPage }))
+);
+
 const Customers = lazy(() =>
   import('../../pages/admin/Customers').then(m => ({ default: m.Customers }))
 );
@@ -57,9 +64,16 @@ const EstadoordenAdminPage = lazy(() =>
 const ProductsEsc = lazy(() =>
   import('../../pages/admin/productsesc').then(m => ({ default: m.ProductsEsc }))
 );
-
 const ProductEscAdminPage = lazy(() =>
   import('../../pages/admin/diligencias/productesc').then(m => ({ default: m.ProductEscAdminPage }))
+);
+
+const ProductsSer = lazy(() =>
+  import('../../pages/admin/productsser').then(m => ({ default: m.ProductsSer }))
+);
+
+const ProductSerAdminPage = lazy(() =>
+  import('../../pages/admin/diligencias/productser').then(m => ({ default: m.ProductSerAdminPage }))
 );
 
 const ProductsFac = lazy(() =>
@@ -69,9 +83,15 @@ const ProductsFac = lazy(() =>
 const ProductFacAdminPage = lazy(() =>
   import('../../pages/admin/productsfac/productfac').then(m => ({ default: m.ProductFacAdminPage }))
 );
+const Maquinas = lazy(() =>
+  import('../../pages/admin/Maquinas').then(m => ({ default: m.Maquinas }))
+);
+const MaquinaAdminPage = lazy(() =>
+  import('../../pages/admin/maquinas/maquina').then(m => ({ default: m.MaquinaAdminPage }))
+);
 
 const Comprobantes = lazy(() =>
-  import('../../pages/admin/comprobantes').then(m => ({ default: m.Comprobantes }))
+  import('../../pages/admin/Comprobantes').then(m => ({ default: m.Comprobantes }))
 );
 
 const Configuraciones = lazy(() =>
@@ -264,8 +284,16 @@ const FiltroCrm = lazy(() =>
   import('../../pages/invoice/FiltroCrm').then(m => ({ default: m.FiltroCrm }))
 );
 
+const FiltroSer = lazy(() =>
+  import('../../pages/invoice/FiltroSer').then(m => ({ default: m.FiltroSer }))
+);
+
 const ParamInstrumento = lazy(() =>
   import('../../pages/invoice/ParamInstrumento').then(m => ({ default: m.ParamInstrumento }))
+);
+
+const ParamTrabajo = lazy(() =>
+  import('../../pages/invoice/ParamTrabajo').then(m => ({ default: m.ParamTrabajo }))
 );
 
 
@@ -369,6 +397,13 @@ const EntradaListScreen = lazy(() =>
 const DiligenciaListScreen = lazy(() =>
   import('../../pages/crmpages/DiligenciaListScreen').then(m => ({ default: m.DiligenciaListScreen }))
 );
+const OrdenTraListScreen = lazy(() =>
+  import('../../pages/crmpages/OrdenTraListScreen').then(m => ({ default: m.OrdenTraListScreen }))
+);
+
+const TareaListScreen = lazy(() =>
+  import('../../pages/crmpages/TareaListScreen').then(m => ({ default: m.TareaListScreen }))
+);
 
 export default function AdminRoutes() {
   return (
@@ -438,15 +473,16 @@ export default function AdminRoutes() {
                             <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
                             <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
                             <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
+                            <Route path="paramtrabajo" element={ <ParamTrabajo /> } />
                             <Route path="entradas" element={ <EntradaListScreen /> } />
-                            {/* <Route path="entradasrst" element={ <EntradaRegSinTerListScreen /> } />
-                            <Route path="entradasnrst" element={ <EntradaNoRegSinTerListScreen /> } />
-                            <Route path="entradaspst" element={ <EntradaProSinTerListScreen /> } />
-                            <Route path="entradasnpst" element={ <EntradaNoProSinTerListScreen /> } /> */}
                             <Route path="diligencias" element={ <DiligenciaListScreen /> } />
+                            <Route path="ordenestrabajo" element={ <OrdenTraListScreen /> } />
+                            <Route path="tareas" element={ <TareaListScreen /> } />
                             <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
                             <Route path="instrumentos" element={ <Instrumentos /> } />
                             <Route path="instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
+                            <Route path="trabajos" element={ <Trabajos /> } />
+                            <Route path="instrumentos/trabajo/:id" element={ <TrabajoAdminPage /> } />
                             <Route path="customers" element={ <Customers /> } />
                             <Route path="customers/customer/:id" element={ <CustomerAdminPage /> } />
                             <Route path="comprobantes/comprobante/:id" element={ <ComprobanteAdminPage /> } />
@@ -460,8 +496,12 @@ export default function AdminRoutes() {
                             <Route path="estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
                             <Route path="productsesc" element={ <ProductsEsc /> } />
                             <Route path="productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
+                            <Route path="productsser" element={ <ProductsSer /> } />
+                            <Route path="productsesc/productser/:slugadm" element={ <ProductSerAdminPage /> } />
                             <Route path="productsfac" element={ <ProductsFac /> } />
                             <Route path="productsfac/productfac/:slugadm" element={ <ProductFacAdminPage /> } />
+                            <Route path="maquinas" element={ <Maquinas /> } />
+                            <Route path="maquinas/maquina/:id" element={ <MaquinaAdminPage /> } />
                             <Route path="comprobantes" element={ <Comprobantes /> } />
                             <Route path="configuraciones" element={ <Configuraciones /> } />
                             <Route path="configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
@@ -476,6 +516,7 @@ export default function AdminRoutes() {
                             <Route path="profileadm" element={ <UserPerfilAdmPage /> } />
                             <Route path="filtro" element={ <Filtro /> } />
                             <Route path="filtrocrm" element={ <FiltroCrm /> } />
+                            <Route path="filtroser" element={ <FiltroSer /> } />
 
 
 

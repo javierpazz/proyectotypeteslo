@@ -46,6 +46,10 @@ const Escribania = lazy(() =>
   import('../../pages/Escribania').then(m => ({ default: m.Escribania }))
 );
 
+const Servicio = lazy(() =>
+  import('../../pages/Servicio').then(m => ({ default: m.Servicio }))
+);
+
 const OrderPage = lazy(() =>
   import('../../pages/orders/OrderPage').then(m => ({ default: m.OrderPage }))
 );
@@ -60,6 +64,7 @@ export default function EcommerceRoutes() {
         <Route path="/" element={ <Ecommerce /> } />
         <Route path="/factura" element={ <Invoice /> } />
         <Route path="/escribania" element={ <Escribania /> } />
+        <Route path="/servicio" element={ <Servicio /> } />
         <Route path="/checkout/address" element={ <Address /> } />
         <Route path="/checkout/summary" element={ <Summary /> } />
         <Route path="/salepoint" element={ <SalePointScreen /> }/>

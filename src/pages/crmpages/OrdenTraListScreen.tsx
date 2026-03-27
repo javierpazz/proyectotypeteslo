@@ -10,7 +10,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
-import { AdminLayoutMenuList } from '../../components/layouts'
+import { AdminLayoutMenuListSer } from '../../components/layouts'
 import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
@@ -20,7 +20,7 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 
-export const EntradaListScreen = () => {
+export const OrdenTraListScreen = () => {
 
     
     ////////////////////FGFGFGFG
@@ -104,7 +104,7 @@ const totalGeneral = invoices.reduce((acc, inv) => acc + inv.total, 0);
 
 const columns:GridColDef[] = [
     { field: 'remNum',
-      headerName: 'Entrada',
+      headerName: 'Orden Nro',
         width: 100,
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
@@ -140,10 +140,10 @@ const columns:GridColDef[] = [
         }
     },
     { field: 'nameCus', headerName: 'Cliente', width: 200 },
-    { field: 'nameIns', headerName: 'Instrumento', width: 200 },
+    { field: 'nameIns', headerName: 'Trabajo', width: 200 },
         {
             field: 'publico',
-            headerName: 'INSTRUMETO',
+            headerName: 'TRABAJO',
             width: 120,
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
                 return row.publico
@@ -156,15 +156,15 @@ const columns:GridColDef[] = [
             }
         },
     { field: 'namePar', headerName: 'Parte', width: 200 },
-    { field: 'nameCon', headerName: 'Registro', width: 200 },
+    { field: 'nameCon', headerName: 'Punto Venta', width: 200 },
     { field: 'notes', headerName: 'Observaciones', width: 200 },
-    { field: 'libNum', headerName: 'Libro', width: 100 },
-    { field: 'folNum', headerName: 'Folio', width: 100 },
-    { field: 'asiNum', headerName: 'asiento', width: 100 },
-    { field: 'asiDat', headerName: 'Fecha Asiento', width: 120 },
-    { field: 'escNum', headerName: 'Nro Instrum.', width: 100 },
-    { field: 'asieNum', headerName: 'Asiento ', width: 100 },
-    { field: 'asieDat', headerName: 'Fecha Publico', width: 120 },
+    // { field: 'libNum', headerName: 'Libro', width: 100 },
+    // { field: 'folNum', headerName: 'Folio', width: 100 },
+    // { field: 'asiNum', headerName: 'asiento', width: 100 },
+    // { field: 'asiDat', headerName: 'Fecha Asiento', width: 120 },
+    // { field: 'escNum', headerName: 'Nro Instrum.', width: 100 },
+    // { field: 'asieNum', headerName: 'Asiento ', width: 100 },
+    // { field: 'asieDat', headerName: 'Fecha Publico', width: 120 },
     // { field: 'total', headerName: 'Monto total', width: 100 },
     { field: 'total',
       headerName: 'Monto total',
@@ -247,16 +247,16 @@ const columns:GridColDef[] = [
     
     const rows = invoices!.map( invoice => ({
         id    : invoice._id,
-        libNum : invoice.libNum,
-        folNum : invoice.folNum,
-        asiNum : invoice.asiNum,
-        // asiDat : invoice.asiDat!.substring(0, 10),
-        asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
+        // libNum : invoice.libNum,
+        // folNum : invoice.folNum,
+        // asiNum : invoice.asiNum,
+        // // asiDat : invoice.asiDat!.substring(0, 10),
+        // asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
 
-        escNum : invoice.escNum,
-        asieNum : invoice.asieNum,
-        // asieDat : invoice.asieDat!.substring(0, 10),
-        asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
+        // escNum : invoice.escNum,
+        // asieNum : invoice.asieNum,
+        // // asieDat : invoice.asieDat!.substring(0, 10),
+        // asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
 
         invNum    : invoice.invNum,
         invDat: invoice.invDat ? formatDateNoTZ(invoice.invDat) : '',
@@ -312,13 +312,13 @@ const columns:GridColDef[] = [
     const rows = invoices.map(invoice => ({
       id: invoice._id,
       punteid: invoice._id,
-      libNum: invoice.libNum,
-      folNum: invoice.folNum,
-      asiNum: invoice.asiNum,
-      asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
-      escNum: invoice.escNum,
-      asieNum: invoice.asieNum,
-      asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
+      // libNum: invoice.libNum,
+      // folNum: invoice.folNum,
+      // asiNum: invoice.asiNum,
+      // asiDat: invoice.asiDat ? formatDateNoTZ(invoice.asiDat) : '',
+      // escNum: invoice.escNum,
+      // asieNum: invoice.asieNum,
+      // asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
       notes: invoice.notes,
       terminado: invoice.terminado,
       remNum: invoice.remNum,
@@ -353,13 +353,13 @@ const columns:GridColDef[] = [
 
        row.terminado,
        row.notes,
-       row.libNum,
-       row.folNum,
-       row.asiNum,
-       row.asiDat,
-       row.escNum,
-       row.asieNum,
-       row.asieDat,
+      //  row.libNum,
+      //  row.folNum,
+      //  row.asiNum,
+      //  row.asiDat,
+      //  row.escNum,
+      //  row.asieNum,
+      //  row.asieDat,
        row.total,
        row.nameUse,
        row.id,
@@ -380,13 +380,13 @@ const columns:GridColDef[] = [
 
       'Terminado',
       'Observaciones',
-      'Libro',
-      'Folio',
-      'Asiento N°',
-      'Fecha Asiento',
-      'Inst.Publico N°',
-      'Asiento Publico N°',
-      'Fecha Asiento Publico',
+      // 'Libro',
+      // 'Folio',
+      // 'Asiento N°',
+      // 'Fecha Asiento',
+      // 'Inst.Publico N°',
+      // 'Asiento Publico N°',
+      // 'Fecha Asiento Publico',
       'Total',
       'Usuario',
       'ID',
@@ -403,13 +403,13 @@ const columns:GridColDef[] = [
         `${userInfo.filtro.nameCus}`,
         `Parte.:`,
         `${userInfo.filtro.namePar}`,
-        `Instrumento.:`,
+        `Trabajo.:`,
         `${userInfo.filtro.nameIns}`,
-        `Registro.:`,
+        `P.Venta.:`,
         `${userInfo.filtro.nameCon}`,
         `Usuario.:`,
         `${userInfo.filtro.nameUse}`,
-        `Diligencia.:`,
+        `Tarea.:`,
         `${userInfo.filtro.desPro}`,
         `Terminado.: `,
         `${userInfo.filtro.estado}`,
@@ -424,19 +424,19 @@ const columns:GridColDef[] = [
 
     const worksheet = XLSX.utils.json_to_sheet(finalData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Entradas');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Ordenes de Trabajo');
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'Entradas.xlsx');
+    saveAs(blob, 'OrdenesTrabajo.xlsx');
   };
 
 
     if ( !invoices ) return (<></>);
     
   return (
-    <AdminLayoutMenuList
-        title={'Entradas'} 
-        subTitle={'Actualizando Entradas'}
+    <AdminLayoutMenuListSer
+        title={'Ordenes de Trabajo'} 
+        subTitle={'Actualizando Ordenes de Trabajo'}
         icon={ <ConfirmationNumberOutlined /> }
     >
 
@@ -484,7 +484,7 @@ const columns:GridColDef[] = [
         }
 
         
-    </AdminLayoutMenuList>
+    </AdminLayoutMenuListSer>
   )
 }
 

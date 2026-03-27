@@ -223,6 +223,14 @@ export const SideMenu = () => {
                     <ListItemText primary={'Escribania'} />
                 </ListItem>
 
+                <ListItem button
+                onClick={ () => navigateTo('/servicio') }>
+                    <ListItemIcon>
+                        <CategoryOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Servicios'} />
+                </ListItem>
+
                 {/* <ListItem 
                                 button
                                 onClick={ () => navigateTo('/admin/') }>

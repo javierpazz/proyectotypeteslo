@@ -1,6 +1,6 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import {TableFormEscPar} from './TableFormEscPar';
+import {TableFormSerPar} from './TableFormSerPar';
 import { BiFileFind } from "react-icons/bi";
 import { AuthContext, CartContext } from '../../../context';
 import {
@@ -21,9 +21,9 @@ import {
 // import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
 import { IParamProduct, IInstrumento } from '../../interfaces';
-import { AdminLayoutMenu } from '../../components/layouts';
+import { AdminLayoutMenuSer } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
-import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
+import { TrabajoSelector } from '../crmpages/TrabajoSelector';
 import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
 
@@ -33,14 +33,14 @@ const getError = (error:any) => {
     : error.message;
 };
 
-export const ParamInstrumento = () => {
+export const ParamTrabajo = () => {
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/paraminstrumento');
+        navigate('/auth/loginadm?redirect=/admin/paramtrabajo');
         }
         if (user?.role === "client" ) {
         navigate('/');
@@ -249,7 +249,7 @@ const handleShowIns = () => {
     if (!instRow) {
         setCodIns('');
         setCodInst('');
-        setNameIns('Elija Instrumento');
+        setNameIns('Elija Trabajo');
     }else{
       // cargaParametros(instRow.paramItems)
       addTodosProductToCartEscPar(instRow.paramItems as IParamProduct[]);
@@ -344,7 +344,7 @@ const handleShowIns = () => {
   return (
     // <>
     //   <main>
-    <AdminLayoutMenu 
+    <AdminLayoutMenuSer 
         title={`Trabajos`} 
         subTitle={'Mantenimiento de Trabajos'}
         icon={ <CategoryOutlined /> }
@@ -359,7 +359,7 @@ const handleShowIns = () => {
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">PARAMETRIZA INSTRUMENTO</Typography>
+                    <Typography variant="h1">PARAMETRIZA TRABAJO</Typography>
           </Grid>
         </Grid>
 
@@ -368,8 +368,8 @@ const handleShowIns = () => {
             <TextField
               fullWidth
               inputRef={input2Ref}
-              label={codInst === '' ? 'Código Instrumento' : ''}
-              placeholder="Codigo Instrumento"
+              label={codInst === '' ? 'Código Trabajo' : ''}
+              placeholder="Codigo Trabajo"
               value={codInst}
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
@@ -440,7 +440,7 @@ const handleShowIns = () => {
         </Grid>
                 {/* This is our table form */}
                 <article>
-                  <TableFormEscPar
+                  <TableFormSerPar
                     input0Ref={input0Ref}
                     input8Ref={input8Ref}
                     codPro={codPro}
@@ -487,7 +487,7 @@ const handleShowIns = () => {
             <Box display="flex" justifyContent="flex-end">
               <Button onClick={() => setModalOpenIns(false)}>X</Button>
             </Box>
-            <InstrumentoSelector onSelectIns={handleSelectIns} instrumentos={instrumentos} />
+            <TrabajoSelector onSelectIns={handleSelectIns} instrumentos={instrumentos} />
           </Box>
         </Modal>
 
@@ -503,7 +503,7 @@ const handleShowIns = () => {
 
       {/* </main>
     </> */}
-    </AdminLayoutMenu>
+    </AdminLayoutMenuSer>
   );
 }
 

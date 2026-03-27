@@ -15,6 +15,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { stutzApi } from '../../../api';
 import { IConfiguracion } from '../../interfaces';
 import { AuthContext } from '../../../context';
+import foto from '../../assets/fondo.jpg';
 
 export const SalePointScreen = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ export const SalePointScreen = () => {
     codSup : '',
     codPro : '',
     codEnc : '',
+    codMaq : '',
     codCom : '',
     codIns : '',
     codVal : '',
@@ -59,6 +61,7 @@ export const SalePointScreen = () => {
     nameCom : 'Todos',
     desVal : 'Todos',
     nameEnc : 'Todos',
+    nameMaq : 'Todos',
     order : 'newest',
     estado : 'TOD',
     registro : 'TOD',
@@ -143,6 +146,17 @@ const handleChange = (event: SelectChangeEvent<string>) => {
     // }, [navigate, redirect, userInfo]);
     
   return (
+            <main
+            style={{
+            // backgroundColor: '#dedbdbff', // gris
+            backgroundImage: `url(${foto})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            minHeight: '100vh', // opcional, para ocupar toda la pantalla
+            }}
+        >
+
     <Container maxWidth="sm">
       <Box mt={4}>
         <Typography variant="h5" gutterBottom>
@@ -202,5 +216,7 @@ const handleChange = (event: SelectChangeEvent<string>) => {
         </Box>
       </Box>
     </Container>
+      </main>
+
   );
 }

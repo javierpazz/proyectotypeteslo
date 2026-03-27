@@ -76,6 +76,11 @@ useEffect(() => {
         loadData();
     }, [])
 
+    function formatDateNoTZ(dateString: string) {
+    const datePart = dateString.split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    return `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+    }
 
 
     if ( !orders ) return (<></>);
@@ -88,6 +93,10 @@ useEffect(() => {
         codConNum: order.codConNum,
         staOrd: order.staOrd,
         invNum: order.invNum,
+        
+        invNumAux: order.invNum,
+        invDat: order.invDat ? formatDateNoTZ(order.invDat) : '',
+
         isPaid: order.isPaid,
         noProducts: order.numberOfItems,
         createdAt: order.createdAt,
@@ -170,6 +179,16 @@ const columns:GridColDef[] = [
                 : ( <Chip variant='outlined' label="Comp.Pendiente" color="error" /> )
         }
     },
+
+    { field: 'invNumAux',
+    headerName: 'Nro Comprobante',
+    width: 100,
+    align: 'right',
+    headerAlign: 'center',
+    },
+    { field: 'invDat', headerName: 'Fec Comprobante', width: 100, headerAlign: 'center' },
+
+    
     { field: 'noProducts', headerName: 'No.Productos', align: 'center', width: 150 },
     {
         field: 'check',

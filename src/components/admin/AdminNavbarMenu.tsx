@@ -154,9 +154,9 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/remiter" onClick={handleClose(setAnchorElSales)}>
             Remitos de Ventas
           </MenuItem>
-            <MenuItem component={Link} to="/admin/infocust" onClick={handleClose(setAnchorElSales)}>
+            {/* <MenuItem component={Link} to="/admin/infocust" onClick={handleClose(setAnchorElSales)}>
               Informes
-            </MenuItem>
+            </MenuItem> */}
         </Menu>
 
         {/* Compras */}
@@ -180,9 +180,9 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/remiterBuy" onClick={handleClose(setAnchorElBuys)}>
             Remitos de Compras
           </MenuItem>
-            <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElBuys)}>
+            {/* <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElBuys)}>
               Informes
-            </MenuItem>
+            </MenuItem> */}
         </Menu>
 
         {/* Caja */}
@@ -206,9 +206,9 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/invoicesCajIngEgr" onClick={handleClose(setAnchorElCash)}>
             Consulta Caja
           </MenuItem>
-            <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElCash)}>
+            {/* <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElCash)}>
               Informes
-            </MenuItem>
+            </MenuItem> */}
         </Menu>
 
         {/* Stocks Ptos Venta */}
@@ -229,9 +229,9 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/remiterBuypv" onClick={handleClose(setAnchorElStocks)}>
             Recepcion desde Punto de Venta
           </MenuItem>
-            <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElStocks)}>
+            {/* <MenuItem component={Link} to="/admin/infosupp" onClick={handleClose(setAnchorElStocks)}>
               Informes
-            </MenuItem>
+            </MenuItem> */}
         </Menu> 
 
         {/* Consultas */}

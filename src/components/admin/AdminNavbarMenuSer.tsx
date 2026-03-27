@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { AuthContext, UiContext } from '../../../context';
 // import foto from '../../assets/fondo.jpg';
 
-export const AdminNavbarMenuEsc = () => {
+export const AdminNavbarMenuSer = () => {
 
     const { toggleSideMenu } = useContext( UiContext );
 
-  const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
+  const [anchorElServicio, setAnchorElServicio] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
-  const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
+  const [anchorElConfiSer, setAnchorElConfiSer] = useState<null | HTMLElement>(null);
 
   const handleOpen =
     (setter: React.Dispatch<React.SetStateAction<HTMLElement | null>>) =>
@@ -56,7 +56,9 @@ const { user} = useContext(  AuthContext );
                 {
                 (localStorage.getItem('modulo') === "invo") ?
                   'Punto Venta.: '
-                : 'Registro.: '
+                  : (localStorage.getItem('modulo') === "serv") ?
+                    'Punto Venta.: '
+                  : 'Registro.: '
                 }
                 {/* Punto Venta.:{(localStorage.getItem('puntonum')) || ""}{(localStorage.getItem('nameCon')) || ""} */}
                 {(localStorage.getItem('puntonum')) || ""}{(localStorage.getItem('nameCon')) || ""}
@@ -66,9 +68,9 @@ const { user} = useContext(  AuthContext );
               )}
             </Button>
         <Menu
-          anchorEl={anchorElEscri}
-          open={Boolean(anchorElEscri)}
-          onClose={handleClose(setAnchorElEscri)}
+          anchorEl={anchorElServicio}
+          open={Boolean(anchorElServicio)}
+          onClose={handleClose(setAnchorElServicio)}
         >
         </Menu>
 
@@ -92,20 +94,20 @@ const { user} = useContext(  AuthContext );
         {/* Ventas */}
         <Button
           color="primary"
-          onClick={handleOpen(setAnchorElEscri)}
+          onClick={handleOpen(setAnchorElServicio)}
         >
-          Escribania
+          Ordenes Trabajo
         </Button>
         <Menu
-          anchorEl={anchorElEscri}
-          open={Boolean(anchorElEscri)}
-          onClose={handleClose(setAnchorElEscri)}
+          anchorEl={anchorElServicio}
+          open={Boolean(anchorElServicio)}
+          onClose={handleClose(setAnchorElServicio)}
         >
-          <MenuItem component={Link} to="/admin/mesaentrada" onClick={handleClose(setAnchorElEscri)}>
-            Mesa de Entrada
+          <MenuItem component={Link} to="/admin/mesaentrada" onClick={handleClose(setAnchorElServicio)}>
+            Genera Orden Trabajos
           </MenuItem>
-          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-             Entradas para Facturar
+          <MenuItem component={Link} to="/admin/ordenestrabajo" onClick={handleClose(setAnchorElServicio)}>
+             Ordenes Trabajo para Facturar
           </MenuItem>
         </Menu>
 
@@ -125,49 +127,56 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/dashboardesc" onClick={handleClose(setAnchorElAdmin)}>
             Graficos
           </MenuItem>
-          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElAdmin)}>
-            Entradas
+          <MenuItem component={Link} to="/admin/ordenestrabajo" onClick={handleClose(setAnchorElAdmin)}>
+            Ordenes de Trabajo
           </MenuItem>
-          <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElAdmin)}>
-             Diligencias 
+          <MenuItem component={Link} to="/admin/tareas" onClick={handleClose(setAnchorElAdmin)}>
+             Tareas 
           </MenuItem>
         </Menu>
 
         {/* configuracion */}
         <Button
           color="primary"
-          onClick={handleOpen(setAnchorElConfiEsc)}
+          onClick={handleOpen(setAnchorElConfiSer)}
         >
-          Configuracion Esc-
+          Configuracion Ser-
         </Button>
         <Menu
-          anchorEl={anchorElConfiEsc}
-          open={Boolean(anchorElConfiEsc)}
-         onClose={handleClose(setAnchorElConfiEsc)}
+          anchorEl={anchorElConfiSer}
+          open={Boolean(anchorElConfiSer)}
+         onClose={handleClose(setAnchorElConfiSer)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElConfiEsc)}>
+          <MenuItem component={Link} to="/admin/filtroser" onClick={handleClose(setAnchorElConfiSer)}>
             Informes y Filtros
           </MenuItem>
-          <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfiEsc)}>
+          <MenuItem component={Link} to="/admin/configuracionesser" onClick={handleClose(setAnchorElConfiSer)}>
             Registros
           </MenuItem>
-          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
-            Instrumentos
+          <MenuItem component={Link} to="/admin/trabajos" onClick={handleClose(setAnchorElServicio)}>
+            Trabajos
           </MenuItem>
-          <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfiEsc)}>
-            Diligencias
+          <MenuItem component={Link} to="/admin/productsser" onClick={handleClose(setAnchorElConfiSer)}>
+            Tareas
           </MenuItem>
-          <MenuItem component={Link} to="/admin/paraminstrumento" onClick={handleClose(setAnchorElEscri)}>
-            Parametriza Instrumentos
+          <MenuItem component={Link} to="/admin/paramtrabajo" onClick={handleClose(setAnchorElServicio)}>
+            Parametriza Trabajos
           </MenuItem>
-          <MenuItem component={Link} to="/admin/customers" onClick={handleClose(setAnchorElConfiEsc)}>
+          <MenuItem component={Link} to="/admin/customers" onClick={handleClose(setAnchorElConfiSer)}>
             Clientes
           </MenuItem>
-          <MenuItem component={Link} to="/admin/partes" onClick={handleClose(setAnchorElConfiEsc)}>
+          <MenuItem component={Link} to="/admin/partes" onClick={handleClose(setAnchorElConfiSer)}>
             Partes
           </MenuItem>
-          <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfiEsc)}>
+
+          <MenuItem component={Link} to="/admin/maquinas" onClick={handleClose(setAnchorElConfiSer)}>
+            Maquinas
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/encargados" onClick={handleClose(setAnchorElConfiSer)}>
+            Encargados
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfiSer)}>
             Usuarios
           </MenuItem>
 

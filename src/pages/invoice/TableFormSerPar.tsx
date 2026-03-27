@@ -13,7 +13,7 @@ import {
   IconButton
 } from '@mui/material';
 import { ICartProduct, IProduct } from '../../interfaces';
-import {ProductSelectorEsc} from '../../../src/pages/crmpages/ProductSelectorEsc';
+import {ProductSelectorSer} from '../../../src/pages/crmpages/ProductSelectorSer';
 import { CartContext } from '../../../context';
 import { stutzApi } from '../../../api';
 
@@ -46,7 +46,7 @@ type TableFormProps = {
 
 // export const TableForm = (input0Ref,
 
-export const TableFormEscPar: React.FC<TableFormProps> = ({
+export const TableFormSerPar: React.FC<TableFormProps> = ({
   input8Ref,
   codPro,
   setCodPro,
@@ -195,7 +195,7 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setCodPro('');
         setCodigoPro('');
         setCodProd('');
-        setDesPro('Elija una Diligencia');
+        setDesPro('Elija una Tarea');
         // setVenDat('');
         setObserv('');
         setQuantity(0);
@@ -310,8 +310,8 @@ const handleClickOutside = (e: MouseEvent) => {
               <TextField
                 inputRef={input8Ref}
                 // label="Diligencia"
-                label="Diligencia"
-                placeholder="Diligencia"
+                label="Tarea"
+                placeholder="Tarea"
                 fullWidth
                 value={codProd}
                 onChange={(e) => setCodProd(e.target.value)}
@@ -399,7 +399,7 @@ const handleClickOutside = (e: MouseEvent) => {
             <Box display="flex" justifyContent="flex-end">
               <Button onClick={() => setModalOpen(false)}>X</Button>
             </Box>
-            <ProductSelectorEsc onSelectPro={handleSelect} productss={productss} />
+            <ProductSelectorSer onSelectPro={handleSelect} productss={productss} />
           </Box>
         </Modal>
 
