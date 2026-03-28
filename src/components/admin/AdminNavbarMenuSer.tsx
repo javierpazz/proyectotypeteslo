@@ -103,7 +103,7 @@ const { user} = useContext(  AuthContext );
           open={Boolean(anchorElServicio)}
           onClose={handleClose(setAnchorElServicio)}
         >
-          <MenuItem component={Link} to="/admin/mesaentrada" onClick={handleClose(setAnchorElServicio)}>
+          <MenuItem component={Link} to="/admin/ordenentrada" onClick={handleClose(setAnchorElServicio)}>
             Genera Orden Trabajos
           </MenuItem>
           <MenuItem component={Link} to="/admin/ordenestrabajo" onClick={handleClose(setAnchorElServicio)}>

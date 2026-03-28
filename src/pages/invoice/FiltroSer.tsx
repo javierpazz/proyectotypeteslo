@@ -550,7 +550,7 @@ desVal;
             inputRef={inputEncRef} 
             />
 
-            {/* <BuscaMaq
+            <BuscaMaq
             codMaq={codMaq}
             setCodMaq={setCodMaq}
             codMaqt={codMaqt}
@@ -559,7 +559,7 @@ desVal;
             setNameMaq={setNameMaq}
             nextRef={inputMaqRef}
             inputRef={inputMaqRef} 
-            /> */}
+            />
 
 
         </Grid>

@@ -264,6 +264,10 @@ const MesaEntrada = lazy(() =>
   import('../../pages/invoice/MesaEntrada').then(m => ({ default: m.MesaEntrada }))
 );
 
+const OrdenEntrada = lazy(() =>
+  import('../../pages/invoice/OrdenEntrada').then(m => ({ default: m.OrdenEntrada }))
+);
+
 const MesaEntradaAct = lazy(() =>
   import('../../pages/invoice/MesaEntradaAct').then(m => ({ default: m.MesaEntradaAct }))
 );
@@ -470,6 +474,7 @@ export default function AdminRoutes() {
                             <Route path="remitsBuypv" element={ <RemitBuypvListScreen /> } />
 
                             <Route path="mesaentrada" element={ <MesaEntrada /> } />
+                            <Route path="ordenentrada" element={ <OrdenEntrada /> } />
                             <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
                             <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
                             <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
