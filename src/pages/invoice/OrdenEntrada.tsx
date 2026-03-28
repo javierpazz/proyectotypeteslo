@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { stutzApi } from '../../../api';
 import { IParamProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
-import { AdminLayoutMenu } from '../../components/layouts';
+import { AdminLayoutMenuSer } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { TrabajoSelector } from '../crmpages/TrabajoSelector';
@@ -84,6 +84,7 @@ export const OrdenEntrada = () => {
             id_parte : undefined,
             id_instru : "",
             id_maquin : "",
+            id_encar : "",
             id_config : "",
             user : "",
             codConNum : 0,
@@ -471,9 +472,9 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
           invoice.id_maquin = codMaq;
+          invoice.id_encar = codEnc;
               (codPar) ? invoice.id_parte = codPar : null;
               invoice.id_instru = codIns;
-              invoice.id_maquin = codMaq;
               invoice.libNum= +libNum;
               invoice.folNum= +folNum;
               invoice.asiNum= +asiNum;
@@ -527,6 +528,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               codPar: invoice.id_parte,
               codIns: invoice.id_instru,
               codMaq: invoice.id_maquin,
+              codEnc: invoice.id_encar,
               libNum : invoice.libNum,
               folNum : invoice.folNum,
               asiNum : invoice.asiNum,
@@ -624,7 +626,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   return (
     // <>
     //   <main>
-    <AdminLayoutMenu 
+    <AdminLayoutMenuSer 
         title={`Entredas`} 
         subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
@@ -1124,7 +1126,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
       {/* </main>
     </> */}
-    </AdminLayoutMenu>
+    </AdminLayoutMenuSer>
   );
 }
 

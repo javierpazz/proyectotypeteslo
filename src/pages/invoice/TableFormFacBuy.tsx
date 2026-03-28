@@ -540,7 +540,7 @@ const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
         <table width="100%" className="mb-10">
           <thead>
             <tr>
-              <th>Codigo Producto</th>
+              {/* <th>Codigo Producto</th> */}
               <th>Descripción</th>
               <th>Cantidad</th>
               <th>Unidad</th>
@@ -552,7 +552,7 @@ const stockControl = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
           <tbody>
             {cart.map((itemInv) => (
               <tr key={itemInv._id}>
-                <td>{itemInv.codigoPro}</td>
+                {/* <td>{itemInv.codigoPro}</td> */}
                 <td>{itemInv.title}</td>
                 <td style={{ textAlign: 'right' }}>{(itemInv.quantity.toFixed(2))}</td>
                 <td>{itemInv.medPro}</td>

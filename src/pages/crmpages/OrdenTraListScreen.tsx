@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuListSer } from '../../components/layouts'
-import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser } from '../../interfaces';
+import { IOrder, ICustomer, IInstrumento, IMaquina, IEncargado, IParte, IConfiguracion, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -46,6 +46,8 @@ export const OrdenTraListScreen = () => {
   const codIns = userInfo.filtro.codIns;
   const codCus = userInfo.filtro.codCus;
   const codPar = userInfo.filtro.codPar;
+  const codMaq = userInfo.filtro.codMaq;
+  const codEnc = userInfo.filtro.codEnc;
   // const codSup = userInfo.filtro.codSup;
   const codPro = userInfo.filtro.codPro;
   // const codVal = userInfo.filtro.codVal;
@@ -65,7 +67,7 @@ export const OrdenTraListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           setIsloading(false);
           setInvoices(resp.data.invoices);
 
@@ -141,6 +143,8 @@ const columns:GridColDef[] = [
     },
     { field: 'nameCus', headerName: 'Cliente', width: 200 },
     { field: 'nameIns', headerName: 'Trabajo', width: 200 },
+    { field: 'nameMaq', headerName: 'Maquina', width: 200 },
+    { field: 'nameEnc', headerName: 'Encargado', width: 200 },
         {
             field: 'publico',
             headerName: 'TRABAJO',
@@ -271,6 +275,8 @@ const columns:GridColDef[] = [
         nameIns  : (invoice.id_instru as IInstrumento).name,
         publico  : (invoice.id_instru as IInstrumento).publico,
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
+        nameMaq  : (invoice.id_maquin as IMaquina)?.name ?? '',
+        nameEnc  : (invoice.id_encar as IEncargado)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         // total : invoice.total,
         total : invoice.total.toFixed(2),
@@ -283,7 +289,7 @@ const columns:GridColDef[] = [
 
 
   const parametros = async () => {
-    navigate('/admin/filtro?redirect=/admin/entradas');
+    navigate('/admin/filtroser?redirect=/admin/ordenestrabajo');
   };
 
 
@@ -331,6 +337,8 @@ const columns:GridColDef[] = [
         nameUse  : (invoice.user as IUser).name,
         nameIns  : (invoice.id_instru as IInstrumento).name,
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
+        nameMaq  : (invoice.id_maquin as IMaquina)?.name ?? '',
+        nameEnc  : (invoice.id_encar as IEncargado)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
       total: invoice.total,
       isPaid: invoice.isPaid,
@@ -345,6 +353,8 @@ const columns:GridColDef[] = [
        row.nameCus,
        row.nameIns,
        row.namePar,
+       row.nameMaq,
+       row.nameEnc,
        row.nameCon,
        row.remDat,
 
@@ -372,6 +382,8 @@ const columns:GridColDef[] = [
       'Cliente',
       'Instrumento',
       'Parte',
+      'Maquina',
+      'Encargado',
       'Configuración',
       'Fecha Entrada',
 
@@ -403,6 +415,10 @@ const columns:GridColDef[] = [
         `${userInfo.filtro.nameCus}`,
         `Parte.:`,
         `${userInfo.filtro.namePar}`,
+        `Maquina.:`,
+        `${userInfo.filtro.nameMaq}`,
+        `Encargado.:`,
+        `${userInfo.filtro.nameEnc}`,
         `Trabajo.:`,
         `${userInfo.filtro.nameIns}`,
         `P.Venta.:`,

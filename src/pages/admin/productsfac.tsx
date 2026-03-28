@@ -35,6 +35,7 @@ export const ProductsFac = () => {
     },
     { field: 'price', headerName: 'Precio', align: 'right', headerAlign: 'center' },
     { field: 'priceBuy', headerName: 'Costo', align: 'right', headerAlign: 'center' },
+    { field: 'medPro', headerName: 'U.Medida', headerAlign: 'center' },
     { field: 'inStock', headerName: 'Stock', align: 'right', headerAlign: 'center' },
     { field: 'minStock', headerName: 'Stock Minimo', align: 'right', headerAlign: 'center' },
     { field: 'porIva', headerName: '%IVA', align: 'right', headerAlign: 'center' },

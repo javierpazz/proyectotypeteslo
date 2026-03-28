@@ -10,7 +10,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { AdminLayoutMenuListSer } from '../../components/layouts'
-import { IConfiguracion, ICustomer, IInstrumento, IParte, IUser } from '../../interfaces';
+import { IMaquina, IEncargado, IConfiguracion, ICustomer, IInstrumento, IParte, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -41,6 +41,8 @@ interface IOrderUnwiund {
     id_client?: ICustomer | string;
     id_instru?: IInstrumento | string;
     id_parte?: IParte | string;
+    id_maquin?: IMaquina | string;
+    id_encar?: IEncargado | string;
     id_config?: IConfiguracion | string;
     user?: IUser | string;
     orderItems: IOrderItemUnwind;
@@ -69,6 +71,8 @@ interface IOrderUnwiund {
     customName? : string;
     userName? : string;
     parteName? : string;
+    maquinaName? : string;
+    encargadoName? : string;
     configName? : string;
     libNum? : number;
     folNum? : number;
@@ -160,6 +164,8 @@ const columns:GridColDef[] = [
             }
         },
     { field: 'parteName', headerName: 'Parte', width: 200 },
+    { field: 'maquinaName', headerName: 'Maquina', width: 200 },
+    { field: 'encargadoName', headerName: 'Encargado', width: 200 },
     { field: 'configName', headerName: 'Punto Venta', width: 200 },
     { field: 'namePro', headerName: 'Tarea', width: 200 },
     // { field: 'valor', headerName: 'Valor Dil.', width: 200 },
@@ -241,6 +247,8 @@ export const TareaListScreen = () => {
   const codIns = userInfo.filtro.codIns;
   const codCus = userInfo.filtro.codCus;
   const codPar = userInfo.filtro.codPar;
+  const codMaq = userInfo.filtro.codMaq;
+  const codEnc = userInfo.filtro.codEnc;
   // const codSup = userInfo.filtro.codSup;
   const codPro = userInfo.filtro.codPro;
   // const codVal = userInfo.filtro.codVal;
@@ -270,7 +278,7 @@ export const TareaListScreen = () => {
         //     headers: { Authorization: `Bearer ${userInfo.token}` },
         // });
         //   const resp = await stutzApi.get('/api/invoices/diligencias');
-          const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&product=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           // console.log(resp.data.invoices)
           setInvoices(resp.data.invoices);
           setIsloading(false);
@@ -301,6 +309,8 @@ export const TareaListScreen = () => {
         customName : invoice.customName,
         userName : invoice.userName,
         parteName : invoice.parteName,
+        maquinaName : invoice.maquinaName,
+        encargadoName : invoice.encargadoName,
         configName : invoice.configName,
         libNum : invoice.libNum,
         folNum : invoice.folNum,
@@ -322,6 +332,8 @@ export const TareaListScreen = () => {
         // nameCon  : (invoice.id_config as IConfiguracion).name,
         namePro  : invoice.orderItems.title,
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
+        nameMaq  : (invoice.id_maquin as IMaquina)?.name ?? '',
+        nameEnc  : (invoice.id_encar as IEncargado)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         dilterminado  : invoice.orderItems.terminado,
         valor  : (invoice.orderItems.price*(1+(invoice.orderItems.porIva/100))).toFixed(2),
@@ -335,7 +347,7 @@ export const TareaListScreen = () => {
     }));
 
     const parametros = async () => {
-    navigate('/admin/filtro?redirect=/admin/diligencias');
+    navigate('/admin/filtroser?redirect=/admin/tareas');
   };
 
     const exportToExcel = () => {
@@ -346,6 +358,8 @@ export const TareaListScreen = () => {
       customName: invoice.customName,
       userName: invoice.userName,
       parteName: invoice.parteName,
+      maquinaName: invoice.maquinaName,
+      encargadoName: invoice.encargadoName,
       configName: invoice.configName,
       // libNum: invoice.libNum,
       // folNum: invoice.folNum,
@@ -379,6 +393,8 @@ export const TareaListScreen = () => {
        row.customName,
        row.trabajoName,
        row.parteName,
+       row.maquinaName,
+       row.encargadoName,
        row.configName,
        row.remDat,
        row.terminado,
@@ -406,6 +422,8 @@ export const TareaListScreen = () => {
       'Cliente',
       'Trabajo',
       'Parte',
+      'Maquina',
+      'Encargado',
       'Configuración',
       'Fecha Entrada',
       'Trabajo Terminado',
@@ -436,6 +454,10 @@ export const TareaListScreen = () => {
         `${userInfo.filtro.nameCus}`,
         `Parte.:`,
         `${userInfo.filtro.namePar}`,
+        `Maquina.:`,
+        `${userInfo.filtro.nameMaq}`,
+        `Encargado.:`,
+        `${userInfo.filtro.nameEnc}`,
         `Trabajo.:`,
         `${userInfo.filtro.nameIns}`,
         `Registro.:`,

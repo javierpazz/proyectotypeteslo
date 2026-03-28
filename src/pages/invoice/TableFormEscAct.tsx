@@ -490,7 +490,7 @@ const handleClickOutside = (e: MouseEvent) => {
         <table width="100%" className="mb-10">
           <thead>
             <tr>
-              <th>Codigo dil.</th>
+              {/* <th>Codigo dil.</th> */}
               <th>Descripción</th>
               <th>Observaciones</th>
               <th>Vence</th>
@@ -502,7 +502,7 @@ const handleClickOutside = (e: MouseEvent) => {
           <tbody>
             {cart.map((itemInv) => (
               <tr key={itemInv._id}>
-                <td>{itemInv.codigoPro}</td>
+                {/* <td>{itemInv.codigoPro}</td> */}
                 <td>{itemInv.title}</td>
                 <td>{itemInv.observ}</td>
                 <td style={{ textAlign: 'center' }}>{itemInv.venDat?.substring(0, 10)}</td>

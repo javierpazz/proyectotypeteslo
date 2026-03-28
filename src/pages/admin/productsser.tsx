@@ -38,6 +38,9 @@ const columns:GridColDef[] = [
       align: 'right',
       headerAlign: 'center',
     },
+    { field: 'priceBuy', headerName: 'Costo', align: 'right', headerAlign: 'center' },
+    { field: 'porIva', headerName: '%IVA', align: 'right', headerAlign: 'center' },
+    { field: 'medPro', headerName: 'U.Medida', headerAlign: 'center' },
 
     {
             field: 'check',
@@ -98,6 +101,10 @@ const columns:GridColDef[] = [
         price: product.price.toFixed(2),
         // sizes: product.sizes.join(', '),
         slug: product.slug,
+        priceBuy: product.priceBuy.toFixed(2),
+        medPro: product.medPro,
+        porIva: product.porIva.toFixed(2),
+
     }));
 
     const deleteHandler = async (id : string) => {

@@ -1,4 +1,4 @@
-import { IConfiguracion, ICustomer, ISupplier, ISize, IUser, IInstrumento, IParte, IComprobante } from './';
+import { IMaquina, IEncargado, IConfiguracion, ICustomer, ISupplier, ISize, IUser, IInstrumento, IParte, IComprobante } from './';
 
 export interface IOrder {
 
@@ -7,7 +7,8 @@ export interface IOrder {
     id_client?: ICustomer | string;
     codCus?: ICustomer | string;
     id_instru?: IInstrumento | string;
-    id_maquin?: IInstrumento | string;
+    id_maquin?: IMaquina | string;
+    id_encar?: IEncargado | string;
     id_parte?: IParte | string | undefined | null;
     id_config?: IConfiguracion | string;
     codCon?: IConfiguracion | string;

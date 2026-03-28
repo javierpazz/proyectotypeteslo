@@ -365,7 +365,7 @@ void input0Ref, tempReceiptCart, selectedValue;
         <table width="100%" className="mb-10">
           <thead>
             <tr>
-              <th>Codigo Valor</th>
+              {/* <th>Codigo Valor</th> */}
               <th>Valor</th>
               <th>Nro Valor</th>
               <th>Importe</th>
@@ -375,7 +375,7 @@ void input0Ref, tempReceiptCart, selectedValue;
           <tbody>
             {receipt.map((itemInv) => (
               <tr key={itemInv._id}>
-                <td>{itemInv._id}</td>
+                {/* <td>{itemInv._id}</td> */}
                 <td>{itemInv.desval}</td>
                 <td style={{ textAlign: 'right' }}>{itemInv.numval}</td>
                 <td style={{ textAlign: 'right' }}>{itemInv.amountval.toFixed(2)}</td>
