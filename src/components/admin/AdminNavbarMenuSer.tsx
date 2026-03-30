@@ -142,6 +142,9 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/dashboardsermaq" onClick={handleClose(setAnchorElAdmin)}>
             Graficos Estado por Maquina
           </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboardsertar" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos Estado por Tarea
+          </MenuItem>
         </Menu>
 
         {/* configuracion */}

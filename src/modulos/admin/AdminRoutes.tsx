@@ -268,6 +268,9 @@ const DashboardSerMaq = lazy(() =>
 const DashboardSerPar = lazy(() =>
   import('../../pages/admin/DashboardSerPar').then(m => ({ default: m.DashboardSerPar }))
 );
+const DashboardSerTar = lazy(() =>
+  import('../../pages/admin/DashboardSerTar').then(m => ({ default: m.DashboardSerTar }))
+);
 
 
 
@@ -437,6 +440,7 @@ export default function AdminRoutes() {
                             <Route path="dashboardser" element={ <DashboardSer /> } />
                             <Route path="dashboardsermaq" element={ <DashboardSerMaq /> } />
                             <Route path="dashboardserpar" element={ <DashboardSerPar /> } />
+                            <Route path="dashboardsertar" element={ <DashboardSerTar /> } />
                             <Route path="users" element={ <Users /> } />
                             <Route path="products" element={ <Products /> } />
                             <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />

@@ -19,14 +19,11 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  top10PartesSTVal: { maquina: string; totalSales: number; totalOrders: number }[];
-  top10PartesTerVal: { maquina: string; totalSales: number; totalOrders: number }[];
-  TarxMaq: { producto: string; total: number; totalCan: number }[];
+  TarxMaq: { maquina: string; total: number; totalCan: number }[];
+  TarxPar: { parte: string; total: number; totalCan: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
-  dailyOrders: { _id: string; sales: number; buys: number }[];
-  top10Maquinas: { maquina: string; totalSales: number; totalOrders: number }[];
   
 
 
@@ -35,7 +32,7 @@ interface Summary {
 
 
 
-export const DashboardSerPar = () => {
+export const DashboardSerTar = () => {
 
 
 
@@ -81,9 +78,10 @@ export const DashboardSerPar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/par?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/tar?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
+          console.log(data)
         setSummary(data);
         } catch (error) {
           console.log({error})
@@ -95,7 +93,7 @@ export const DashboardSerPar = () => {
 
 
   const parametros = async () => {
-    navigate('/admin/filtroser?redirect=/admin/dashboardserpar');
+    navigate('/admin/filtroser?redirect=/admin/dashboardsertar');
   };
 
 
@@ -112,7 +110,7 @@ export const DashboardSerPar = () => {
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Servicios X Parte Top Ten
+        Dashboard Tareas Top Ten
       </Typography>
 
         <>
@@ -183,107 +181,111 @@ export const DashboardSerPar = () => {
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Maquinas", "Ordenes"],
-                      ...(summary.top10PartesSTVal || []).map((x) => [
-                        x.maquina,
-                        x.totalOrders,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Ordenes Trabajo sin Terminar x Parte",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Maquinas", "Valor"],
-                      ...(summary.top10PartesSTVal || []).map((x) => [
-                        x.maquina,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Valores Ordenes Trabajo sin Terminar x Parte ",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Maquinas", "Ordenes"],
-                      ...(summary.top10PartesTerVal || []).map((x) => [
-                        x.maquina,
-                        x.totalOrders,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Ordenes Trabajo Terminados x Parte",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Maquinas", "Valor"],
-                      ...(summary.top10PartesTerVal || []).map((x) => [
-                        x.maquina,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Valores Ordenes Trabajo Terminados x Parte ",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
 
             
 
 
+
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Partes", "Valores"],
+                      ...(summary.TarxMaq || []).map((x) => [
+                        x.maquina,
+                        x.totalCan,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Tareas x Maquinas ",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Partes", "Valores"],
+                      ...(summary.TarxMaq || []).map((x) => [
+                        x.maquina,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Tareas x Maquinas  Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+
+
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Parte", "Valores"],
+                      ...(summary.TarxPar || []).map((x) => [
+                        x.parte,
+                        x.totalCan,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Tareas x Partes ",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Parte", "Valores"],
+                      ...(summary.TarxPar || []).map((x) => [
+                        x.parte,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Tareas x Partes  Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
 
             <Grid item xs={6} md={3}>
               <Card>
@@ -333,103 +335,6 @@ export const DashboardSerPar = () => {
               </Card>
             </Grid>
 
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Maquinas", "Orders"],
-                      ...(summary.top10Maquinas || []).map((x) => [
-                        x.maquina,
-                        x.totalOrders,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Parte con Ordenes de Trabajo",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Maquinas", "Valores"],
-                      ...(summary.top10Maquinas || []).map((x) => [
-                        x.maquina,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Partes con Ordenes de Trabajo Valorizado",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Productos", "Valores"],
-                      ...(summary.TarxMaq || []).map((x) => [
-                        x.producto,
-                        x.totalCan,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Tareas x Parte ",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Productos", "Valores"],
-                      ...(summary.TarxMaq || []).map((x) => [
-                        x.producto,
-                        x.total,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Tareas x Parte  Valorizado",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
 
 
 
