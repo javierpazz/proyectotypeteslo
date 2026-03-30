@@ -19,8 +19,8 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  top10MaquinasSTVal: { maquina: string; totalSales: number; totalOrders: number }[];
-  top10MaquinasTerVal: { maquina: string; totalSales: number; totalOrders: number }[];
+  top10PartesSTVal: { maquina: string; totalSales: number; totalOrders: number }[];
+  top10PartesTerVal: { maquina: string; totalSales: number; totalOrders: number }[];
   TarxMaq: { producto: string; total: number; totalCan: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
@@ -35,7 +35,7 @@ interface Summary {
 
 
 
-export const DashboardSerMaq = () => {
+export const DashboardSerPar = () => {
 
 
 
@@ -81,7 +81,7 @@ export const DashboardSerMaq = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/maq?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/par?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
@@ -95,7 +95,7 @@ export const DashboardSerMaq = () => {
 
 
   const parametros = async () => {
-    navigate('/admin/filtroser?redirect=/admin/dashboardsermaq');
+    navigate('/admin/filtroser?redirect=/admin/dashboardserpar');
   };
 
 
@@ -112,7 +112,7 @@ export const DashboardSerMaq = () => {
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Servicios X Maquina Top Ten
+        Dashboard Servicios X Parte Top Ten
       </Typography>
 
         <>
@@ -193,7 +193,7 @@ export const DashboardSerMaq = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Maquinas", "Ordenes"],
-                      ...(summary.top10MaquinasSTVal || []).map((x) => [
+                      ...(summary.top10PartesSTVal || []).map((x) => [
                         x.maquina,
                         x.totalOrders,
                       ]),
@@ -217,7 +217,7 @@ export const DashboardSerMaq = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Maquinas", "Valor"],
-                      ...(summary.top10MaquinasSTVal || []).map((x) => [
+                      ...(summary.top10PartesSTVal || []).map((x) => [
                         x.maquina,
                         x.totalSales,
                       ]),
@@ -243,7 +243,7 @@ export const DashboardSerMaq = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Maquinas", "Ordenes"],
-                      ...(summary.top10MaquinasTerVal || []).map((x) => [
+                      ...(summary.top10PartesTerVal || []).map((x) => [
                         x.maquina,
                         x.totalOrders,
                       ]),
@@ -267,7 +267,7 @@ export const DashboardSerMaq = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Maquinas", "Valor"],
-                      ...(summary.top10MaquinasTerVal || []).map((x) => [
+                      ...(summary.top10PartesTerVal || []).map((x) => [
                         x.maquina,
                         x.totalSales,
                       ]),
@@ -375,7 +375,7 @@ export const DashboardSerMaq = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Maquinas con Ordenes de Trabajo Valorizado",
+                      title: "Top 10 Partes con Ordenes de Trabajo Valorizado",
                       is3D: true,
                     }}
                   />

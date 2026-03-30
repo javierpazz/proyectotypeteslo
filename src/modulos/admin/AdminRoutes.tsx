@@ -265,6 +265,10 @@ const DashboardSerMaq = lazy(() =>
   import('../../pages/admin/DashboardSerMaq').then(m => ({ default: m.DashboardSerMaq }))
 );
 
+const DashboardSerPar = lazy(() =>
+  import('../../pages/admin/DashboardSerPar').then(m => ({ default: m.DashboardSerPar }))
+);
+
 
 
 const MesaEntrada = lazy(() =>
@@ -432,6 +436,7 @@ export default function AdminRoutes() {
                             <Route path="dashboardesc" element={ <DashboardEsc /> } />
                             <Route path="dashboardser" element={ <DashboardSer /> } />
                             <Route path="dashboardsermaq" element={ <DashboardSerMaq /> } />
+                            <Route path="dashboardserpar" element={ <DashboardSerPar /> } />
                             <Route path="users" element={ <Users /> } />
                             <Route path="products" element={ <Products /> } />
                             <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />

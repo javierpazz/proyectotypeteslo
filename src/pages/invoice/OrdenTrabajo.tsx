@@ -614,6 +614,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   setAsieNum("");
   setAsieDat("");
   setCodPart("");
+  setCodMaqt("");
+  setCodEnct("");
   setCodInst("");
   setNotes("");
 

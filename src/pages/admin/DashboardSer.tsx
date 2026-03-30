@@ -29,8 +29,8 @@ interface Summary {
   productCategories: { _id: string; count: number }[];
 
   top10UsersSTVal: { user: string; totalSales: number; totalOrders: number }[];
-  top10Clients: { customer: string; totalSales: number }[];
-  top10Partes: { parte: string; totalSales: number }[];
+  top10Clients: { customer: string; totalSales: number; totalOrders: number }[];
+  top10Partes: { parte: string; totalSales: number; totalOrders: number }[];
   PubPriVal: { type: string; total: number; totalcont: number }[];
   dilVal: { _id: string; total: number; totalCan: number  }[];
   insterVal: { _id: string; total: number; count: number }[];
@@ -75,13 +75,16 @@ export const DashboardSer = () => {
 
   const codSup = userInfo.filtro.codSup;
   const codCom = userInfo.filtro.codCom;
+  const codPar = userInfo.filtro.codPar;
+  const codMaq = userInfo.filtro.codMaq;
+  const codEnc = userInfo.filtro.codEnc;
 
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
@@ -112,7 +115,7 @@ export const DashboardSer = () => {
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Servicios
+        Dashboard Servicios Top Ten
       </Typography>
 
         <>
@@ -385,6 +388,30 @@ export const DashboardSer = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
+                      ["Partes", "Orders"],
+                      ...(summary.top10Partes || []).map((x) => [
+                        x.parte,
+                        x.totalOrders,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Partes",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
                       ["Partes", "Ventas"],
                       ...(summary.top10Partes || []).map((x) => [
                         x.parte,
@@ -392,7 +419,31 @@ export const DashboardSer = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Partes",
+                      title: "Top 10 Partes Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Clientes", "Orders"],
+                      ...(summary.top10Clients || []).map((x) => [
+                        x.customer,
+                        x.totalOrders,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Clientes",
                       is3D: true,
                     }}
                   />
@@ -416,7 +467,7 @@ export const DashboardSer = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Clientes",
+                      title: "Top 10 Clientes Valorizado",
                       is3D: true,
                     }}
                   />

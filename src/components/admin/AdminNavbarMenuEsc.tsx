@@ -122,6 +122,9 @@ const { user} = useContext(  AuthContext );
           onClose={handleClose(setAnchorElAdmin)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
+          <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElAdmin)}>
+            Informes y Filtros
+          </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElAdmin)}>
             Entradas
           </MenuItem>
@@ -146,9 +149,7 @@ const { user} = useContext(  AuthContext );
          onClose={handleClose(setAnchorElConfiEsc)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElConfiEsc)}>
-            Informes y Filtros
-          </MenuItem>
+
           <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfiEsc)}>
             Registros
           </MenuItem>

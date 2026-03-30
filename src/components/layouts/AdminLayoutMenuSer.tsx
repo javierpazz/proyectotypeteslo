@@ -32,20 +32,20 @@ export const AdminLayoutMenuSer:FC<Props> = ({ children}) => {
         }}> */}
 
         <main
-            style={{
-            backgroundColor: '#dedbdbff', // gris
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-            minHeight: '100vh', // opcional, para ocupar toda la pantalla
-            }}
             // style={{
-            // backgroundImage: `url(${foto})`,
+            // backgroundColor: '#dedbdbff', // gris
             // backgroundSize: 'cover',
             // backgroundPosition: 'center',
             // backgroundAttachment: 'fixed',
-            // minHeight: '100vh',
+            // minHeight: '100vh', // opcional, para ocupar toda la pantalla
             // }}
+            style={{
+            backgroundImage: `url(${foto})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            minHeight: '100vh',
+            }}
         >
 
 

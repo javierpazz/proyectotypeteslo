@@ -330,7 +330,7 @@ const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
       setCodCust(usersRow.codCus);
       // setUserObj(usersRow);
       setNameCus(usersRow.nameCus);
-      inputParRef.current?.focus();
+      inputMaqRef.current?.focus();
       };
   };
 

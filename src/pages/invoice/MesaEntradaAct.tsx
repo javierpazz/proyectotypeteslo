@@ -116,6 +116,7 @@ export const MesaEntradaAct = () => {
       const loadProduct = async() => {
           try {
               const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+              console.log(resp.data)
                   OrderI._id = resp.data._id;
                   OrderI.user = resp.data.user;
                   OrderI.orderItems = resp.data.orderItems;
@@ -152,6 +153,7 @@ export const MesaEntradaAct = () => {
             setCodInst((invoice.id_instru as IInstrumento).codIns);
             setCodIns(invoice.id_instru as any);
             setNameIns((invoice.id_instru as IInstrumento).name);
+            setPublicoIns((invoice.id_instru as IInstrumento).publico);
             setCodCust((invoice.id_client as ICustomer).codCus);
             setCodCus(invoice.id_client as any);
             setNameCus((invoice.id_client as ICustomer).nameCus);
