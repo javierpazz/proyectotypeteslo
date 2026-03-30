@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import {DashboardOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-import { AdminLayoutMenu } from '../../components/layouts'
+import { AdminLayoutMenuSer } from '../../components/layouts'
 // import { Grid } from '@mui/material'
 // import { SummaryTile } from '../../components/admin'
 // import { DashboardSummaryResponse } from '../../interfaces';
@@ -38,7 +38,7 @@ interface Summary {
 
 
 
-export const DashboardEsc = () => {
+export const DashboardSer = () => {
 
 
 
@@ -95,7 +95,7 @@ export const DashboardEsc = () => {
 
 
   const parametros = async () => {
-    navigate('/admin/filtro?redirect=/admin/dashboardesc');
+    navigate('/admin/filtroser?redirect=/admin/dashboardser');
   };
 
 
@@ -105,14 +105,14 @@ export const DashboardEsc = () => {
 
 
   return (
-    <AdminLayoutMenu
+    <AdminLayoutMenuSer
         title='Dashboard'
         subTitle='Estadisticas generales'
         icon={ <DashboardOutlined /> }
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Esc
+        Dashboard Servicios
       </Typography>
 
         <>
@@ -161,7 +161,7 @@ export const DashboardEsc = () => {
                   <Typography variant="h5">
                     {summary.orders?.[0]?.numOrders || 0}
                   </Typography>
-                  <Typography>Entradas</Typography>
+                  <Typography>Ordenes Trabajo</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -199,7 +199,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Instrumentos s/Terminar x Usuarios Cantidad",
+                      title: "Ordenes Trabajo sin Terminar x Usuarios Cantidad",
                       is3D: true,
                     }}
                   />
@@ -223,7 +223,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Instrumentos s/Terminar x Usuarios Valorizado",
+                      title: "Ordenes Trabajo sin Terminar x Usuarios Valorizado",
                       is3D: true,
                     }}
                   />
@@ -249,7 +249,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Cantidad Instrumentos",
+                      title: "Cantidad Ordenes Privadas / Publicas",
                       is3D: true,
                     }}
                   />
@@ -273,7 +273,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Valores Instrumentos",
+                      title: "Valores Ordenes Privadas / Publicas",
                       is3D: true,
                     }}
                   />
@@ -297,7 +297,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Estado Instrumentos",
+                      title: "Estado Ordenes Terminadas y Pendientes",
                       is3D: true,
                     }}
                   />
@@ -320,7 +320,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Estado Instrumentos Valorizado",
+                      title: "Estado  Ordenes Terminadas y Pendientes Valorizado", 
                       is3D: true,
                     }}
                   />
@@ -344,7 +344,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Cantidad Diligencias",
+                      title: "Cantidad Tareas Terminadas y Pendientes",
                       is3D: true,
                     }}
                   />
@@ -368,7 +368,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Valores Diligencias",
+                      title: "Valores Tareas Terminadas y Pendientes",
                       is3D: true,
                     }}
                   />
@@ -429,6 +429,6 @@ export const DashboardEsc = () => {
           </Grid>
         </>
 
-    </AdminLayoutMenu>
+    </AdminLayoutMenuSer>
   )
 }

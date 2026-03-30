@@ -1,6 +1,6 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import {TableFormEscAct} from './TableFormEscAct';
+import {TableFormSer} from './TableFormSer';
 import { BiFileFind } from "react-icons/bi";
 import { AuthContext, CartContext } from '../../../context';
 import {
@@ -12,14 +12,14 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IInstrumento, IOrder, IParte } from '../../interfaces';
+import { ICartProduct, ICustomer, IEncargado, IInstrumento, IMaquina, IOrder, IParte } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
-import { BuscaPar } from '../../components/buscador';
+import { BuscaPar, BuscaMaq, BuscaEnc } from '../../components/buscador';
 
 const getError = (error:any) => {
   return error.response && error.response.data.message
@@ -27,7 +27,7 @@ const getError = (error:any) => {
     : error.message;
 };
 
-export const MesaEntradaAct = () => {
+export const OrdenTrabajoAct = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -35,7 +35,7 @@ export const MesaEntradaAct = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/mesaentradaAct');
+        navigate('/auth/loginadm?redirect=/admin/ordentrabajoAct');
         }
         if (user?.role === "client" ) {
         navigate('/');
@@ -83,6 +83,8 @@ export const MesaEntradaAct = () => {
             totalBuy : 0,
             id_client : "",
             id_parte : undefined,
+            id_maquin : undefined,
+            id_encar : undefined,
             id_instru : "",
             id_config : "",
             user : "",
@@ -129,6 +131,8 @@ export const MesaEntradaAct = () => {
                   OrderI.totalBuy     = resp.data.totalBuy;
                   OrderI.id_client    = resp.data.id_client;
                   OrderI.id_parte    = resp.data.id_parte;
+                  OrderI.id_maquin    = resp.data.id_maquin;
+                  OrderI.id_encar    = resp.data.id_encar;
                   OrderI.id_instru    = resp.data.id_instru;
                   OrderI.id_config      = resp.data.id_config;
                   OrderI.codConNum       = resp.data.codConNum;
@@ -164,14 +168,33 @@ export const MesaEntradaAct = () => {
               setCodPar('');
               setNamePar('');
             }
+            if (invoice.id_maquin) {
+              setCodMaqt((invoice.id_maquin as IMaquina).codMaq);
+              setCodMaq(invoice.id_maquin as any);
+              setNameMaq((invoice.id_maquin as IMaquina).name);
+            } else {
+              setCodMaqt('');
+              setCodMaq('');
+              setNameMaq('');
+            }
+
+            if (invoice.id_encar) {
+              setCodEnct((invoice.id_encar as IEncargado).codEnc);
+              setCodEnc(invoice.id_encar as any);
+              setNameEnc((invoice.id_encar as IEncargado).name);
+            } else {
+              setCodEnct('');
+              setCodEnc('');
+              setNameEnc('');
+            }
 
             setRemNum(invoice.remNum as any) ;
             setNotes(invoice.notes!);
-            setLibNum(invoice.libNum as any);
-            setFolNum(invoice.folNum as any);
-            setAsiNum(invoice.asiNum as any);
-            setEscNum(invoice.escNum as any);
-            setAsieNum(invoice.asieNum as any);
+            // setLibNum(invoice.libNum as any);
+            // setFolNum(invoice.folNum as any);
+            // setAsiNum(invoice.asiNum as any);
+            // setEscNum(invoice.escNum as any);
+            // setAsieNum(invoice.asieNum as any);
             setTerminado(invoice.terminado as any);
             
             // setRemDat(invoice.remDat!.substring(0, 10) as any);
@@ -180,8 +203,8 @@ export const MesaEntradaAct = () => {
             // setAsieDat(invoice.asieDat!.substring(0, 10) as any);
             setRemDat(formatDate(invoice.remDat));
             setDueDat(formatDate(invoice.dueDat));
-            setAsiDat(formatDate(invoice.asiDat));
-            setAsieDat(formatDate(invoice.asieDat));
+            // setAsiDat(formatDate(invoice.asiDat));
+            // setAsieDat(formatDate(invoice.asieDat));
 
 
 
@@ -201,6 +224,8 @@ export const MesaEntradaAct = () => {
   const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
   const inputParRef = useRef<HTMLInputElement>(null);
+  const inputEncRef = useRef<HTMLInputElement>(null);
+  const inputMaqRef = useRef<HTMLInputElement>(null);
 
 
   const codConNum = userInfo.configurationObj.codCon;
@@ -226,14 +251,21 @@ export const MesaEntradaAct = () => {
   const [codPar, setCodPar] = useState('');
   const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
+  const [codEnct, setCodEnct] = useState('');
+  const [codEnc, setCodEnc] = useState('');
+  const [nameEnc, setNameEnc] = useState('');
+  const [codMaqt, setCodMaqt] = useState('');
+  const [codMaq, setCodMaq] = useState('');
+  const [nameMaq, setNameMaq] = useState('');
+
   const [remNum, setRemNum] = useState("");
-  const [libNum, setLibNum] = useState("");
-  const [folNum, setFolNum] = useState("");
-  const [asiNum, setAsiNum] = useState("");
-  const [asiDat, setAsiDat] = useState("");
-  const [escNum, setEscNum] = useState("");
-  const [asieNum, setAsieNum] = useState("");
-  const [asieDat, setAsieDat] = useState("");
+  // const [libNum, setLibNum] = useState("");
+  // const [folNum, setFolNum] = useState("");
+  // const [asiNum, setAsiNum] = useState("");
+  // const [asiDat, setAsiDat] = useState("");
+  // const [escNum, setEscNum] = useState("");
+  // const [asieNum, setAsieNum] = useState("");
+  // const [asieDat, setAsieDat] = useState("");
   const [remDat, setRemDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState('');
   const [recDat, setRecDat] = useState(getTodayInGMT3());
@@ -251,6 +283,7 @@ export const MesaEntradaAct = () => {
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
   const [notes, setNotes] = useState('');
   const [desPro, setDesPro] = useState('');
+  const [medPro, setMedPro] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
   const [porIva, setPorIva] = useState(0);
@@ -518,14 +551,16 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
           if (codPar !== "") {invoice.id_parte = codPar;} else  {invoice.id_parte = null;}
+          if (codMaq !== "") {invoice.id_maquin = codMaq;} else  {invoice.id_maquin = null;}
+          if (codEnc !== "") {invoice.id_encar = codEnc;} else  {invoice.id_encar = null;}
               invoice.id_instru = codIns;
-              invoice.libNum= +libNum;
-              invoice.folNum= +folNum;
-              invoice.asiNum= +asiNum;
-              invoice.asiDat= asiDat;
-              invoice.escNum= +escNum;
-              invoice.asieNum= +asieNum;
-              invoice.asieDat= asieDat;
+              // invoice.libNum= +libNum;
+              // invoice.folNum= +folNum;
+              // invoice.asiNum= +asiNum;
+              // invoice.asiDat= asiDat;
+              // invoice.escNum= +escNum;
+              // invoice.asieNum= +asieNum;
+              // invoice.asieDat= asieDat;
               invoice.terminado= terminado;
           // invoice.id_config = userInfo.codCon;
           // invoice.user = userInfo._id,
@@ -571,6 +606,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
           codCus: invoice.id_client,
           codPar: invoice.id_parte,
+          codMaq: invoice.id_maquin,
+          codEnc: invoice.id_encar,
               codIns: invoice.id_instru,
               libNum : invoice.libNum,
               folNum : invoice.folNum,
@@ -632,7 +669,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   };
 
   const clearitems = () => {
-            navigate(`/admin/entrada/${invoice._id}?redirect=${redirect}`);
+            navigate(`/admin/ordentrabajo/${invoice._id}?redirect=${redirect}`);
   }
 
   return (
@@ -661,7 +698,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">ACTUALIZA ENTRADA</Typography>
+                    <Typography variant="h1">ACTUALIZA ORDEN TRABAJO</Typography>
           </Grid>
         </Grid>
 
@@ -711,12 +748,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
                     <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
           </Grid> */}
 
-          {!(nameIns === "") ? (
-                <Grid item md={4}>
-                          <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
-                </Grid>
-          ):(<></>)}
-
 
         </Grid>
 
@@ -724,10 +755,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
         <Grid container spacing={2} mt={0}>
-
-
-
-
           <Grid item md={2}>
             <TextField
               fullWidth
@@ -754,78 +781,24 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               F2
             </Button>
           </Grid>
-          <Grid item md={4}>
-            <Typography
-              variant="h6"
-              noWrap
-              title={nameCus}
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {nameCus}
-            </Typography>
+
+          
+          <Grid item md={3}>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameCus}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameCus}
+      </Typography>
           </Grid>
 
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Libro N°"
-              placeholder="Libro N°"
-              value={libNum}
-              onChange={(e) => setLibNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-            />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Folio N°"
-              placeholder="Folio N°"
-              value={folNum}
-              onChange={(e) => setFolNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Asiento N°"
-              placeholder="Asiento N°"
-              value={asiNum}
-              onChange={(e) => setAsiNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              type="date"
-              label="Fecha Asiento"
-              value={asiDat}
-              onChange={(e) => setAsiDat(e.target.value)}
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
 
-        </Grid>
-
-        <Grid container spacing={2} mt={0}>
             <BuscaPar
             codPar={codPar}
             setCodPar={setCodPar}
@@ -833,54 +806,42 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             setCodPart={setCodPart}
             namePar={namePar}
             setNamePar={setNamePar}
-            nextRef={input9Ref}
+            nextRef={inputEncRef}
             inputRef={inputParRef} 
             />
-          <Grid item md={2}>
-                <Typography></Typography>
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Instrumento N°"
-              placeholder="Instrumento N°"
-              value={escNum}
-              onChange={(e) => setEscNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Asiento N°"
-              placeholder="Asiento N°"
-              value={asieNum}
-              onChange={(e) => setAsieNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              type="date"
-              label="Fecha Asiento"
-              value={asieDat}
-              onChange={(e) => setAsieDat(e.target.value)}
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
+
+
+
 
         </Grid>
+
+
+        <Grid container spacing={2} mt={0}>
+
+            <BuscaMaq
+            codMaq={codMaq}
+            setCodMaq={setCodMaq}
+            codMaqt={codMaqt}
+            setCodMaqt={setCodMaqt}
+            nameMaq={nameMaq}
+            setNameMaq={setNameMaq}
+            nextRef={input9Ref}
+            inputRef={inputMaqRef} 
+            />
+
+            <BuscaEnc
+            codEnc={codEnc}
+            setCodEnc={setCodEnc}
+            codEnct={codEnct}
+            setCodEnct={setCodEnct}
+            nameEnc={nameEnc}
+            setNameEnc={setNameEnc}
+            nextRef={input9Ref}
+            inputRef={inputEncRef} 
+            />
+
+        </Grid>
+
 
 
         <Grid container spacing={2} mt={0}>
@@ -890,8 +851,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               size="small"
               type="number"
               inputRef={input6Ref}
-              label="Entrada N°"
-              placeholder="Entrada N°"
+              label="Orden N°"
+              placeholder="Orden N°"
               value={remNum}
               onChange={(e) => setRemNum(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
@@ -977,7 +938,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               onClick={placeInvoiceHandler}
               disabled={ !codCus || isloading}
             >
-              GRABA ENTRADA
+              GRABA ORDEN TRABAJO
             </Button>
             {isloading && <FullScreenLoading />}
           </Grid>
@@ -990,7 +951,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
                 {/* This is our table form */}
                 <article>
-                  <TableFormEscAct
+                  <TableFormSer
                     terminado={terminado}
                     setTerminado={setTerminado}
                     input0Ref={input0Ref}
@@ -1001,6 +962,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
                     setCodigoPro={setCodigoPro}
                     desPro={desPro}
                     setDesPro={setDesPro}
+                    medPro={medPro}
+                    setMedPro={setMedPro}
                     quantity={quantity}
                     setQuantity={setQuantity}
                     price={price}

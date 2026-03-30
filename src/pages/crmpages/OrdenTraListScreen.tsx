@@ -29,7 +29,7 @@ export const OrdenTraListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/entradas');
+        navigate('/auth/loginadm?redirect=/admin/ordenestrabajo');
         }
         if (user?.role === "client" ) {
         navigate('/');
@@ -110,7 +110,7 @@ const columns:GridColDef[] = [
         width: 100,
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.id}?redirect=/admin/ordenestrabajo`}
                     color= "secondary"
                     underline='always'>
                          { row.remNum}
@@ -128,13 +128,13 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.terminado
                 ? (
-                    <MuiLink component={RouterLink} to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.id}?redirect=/admin/ordenestrabajo`}
                      underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
                   )
                 : (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.id}?redirect=/admin/entradas`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.id}?redirect=/admin/ordenestrabajo`}
                      underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
                     </MuiLink>
@@ -191,24 +191,25 @@ const columns:GridColDef[] = [
       headerName: 'Actualiza',
       renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
         return (
-          <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaAct/${row.id}?redirect=/admin/entradas`}>
+                    // <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaAct/${row.id}?redirect=/admin/entradas`}>
+                    <MuiLink component={RouterLink} color="success" to={`/admin/ordentrabajoAct/${row.id}?redirect=/admin/ordenestrabajo`}>
                     { "Actualiza"}
                     </MuiLink>
                 )
               }
             },
-            {
-              field: 'check3',
-              headerName: 'Valoriza',
-              renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                return (
-                  // <MuiLink to={`/admin/invoices/invoice/${ row.id }`}>
-                  <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaVal/${row.id}?redirect=/admin/entradas`}>
-                    { "Valoriza"}
-                    </MuiLink>
-                )
-              }
-            },
+            // {
+            //   field: 'check3',
+            //   headerName: 'Valoriza',
+            //   renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+            //     return (
+            //       // <MuiLink to={`/admin/invoices/invoice/${ row.id }`}>
+            //       <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaVal/${row.id}?redirect=/admin/entradas`}>
+            //         { "Valoriza"}
+            //         </MuiLink>
+            //     )
+            //   }
+            // },
             {
               field: 'check',
               headerName: 'Acción',

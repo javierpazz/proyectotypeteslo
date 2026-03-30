@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import {DashboardOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-import { AdminLayoutMenu } from '../../components/layouts'
+import { AdminLayoutMenuSer } from '../../components/layouts'
 // import { Grid } from '@mui/material'
 // import { SummaryTile } from '../../components/admin'
 // import { DashboardSummaryResponse } from '../../interfaces';
@@ -19,6 +19,9 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
+  top10MaquinasSTVal: { id_maquin: string; totalSales: number; totalOrders: number }[];
+
+
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
@@ -28,7 +31,6 @@ interface Summary {
   producIO: { _id: string; entro: number; salio: number }[];
   productCategories: { _id: string; count: number }[];
 
-  top10UsersSTVal: { user: string; totalSales: number; totalOrders: number }[];
   top10Clients: { customer: string; totalSales: number }[];
   top10Partes: { parte: string; totalSales: number }[];
   PubPriVal: { type: string; total: number; totalcont: number }[];
@@ -38,7 +40,7 @@ interface Summary {
 
 
 
-export const DashboardEsc = () => {
+export const DashboardSerMaq = () => {
 
 
 
@@ -81,7 +83,7 @@ export const DashboardEsc = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/maq?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
@@ -95,7 +97,7 @@ export const DashboardEsc = () => {
 
 
   const parametros = async () => {
-    navigate('/admin/filtro?redirect=/admin/dashboardesc');
+    navigate('/admin/filtroser?redirect=/admin/dashboardsermaq');
   };
 
 
@@ -105,14 +107,14 @@ export const DashboardEsc = () => {
 
 
   return (
-    <AdminLayoutMenu
+    <AdminLayoutMenuSer
         title='Dashboard'
         subTitle='Estadisticas generales'
         icon={ <DashboardOutlined /> }
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Esc
+        Dashboard Servicios X Maquina
       </Typography>
 
         <>
@@ -161,7 +163,7 @@ export const DashboardEsc = () => {
                   <Typography variant="h5">
                     {summary.orders?.[0]?.numOrders || 0}
                   </Typography>
-                  <Typography>Entradas</Typography>
+                  <Typography>Ordenes Trabajo</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -192,14 +194,14 @@ export const DashboardEsc = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Usuarios", "Ventas"],
-                      ...(summary.top10UsersSTVal || []).map((x) => [
-                        x.user,
+                      ["Maquinas", "Ordenes"],
+                      ...(summary.top10MaquinasSTVal || []).map((x) => [
+                        x.id_maquin,
                         x.totalOrders,
                       ]),
                     ]}
                     options={{
-                      title: "Instrumentos s/Terminar x Usuarios Cantidad",
+                      title: "Ordenes Trabajo sin Terminar x Maquina",
                       is3D: true,
                     }}
                   />
@@ -216,14 +218,14 @@ export const DashboardEsc = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Usuarios", "Ventas"],
-                      ...(summary.top10UsersSTVal || []).map((x) => [
-                        x.user,
+                      ["Maquinas", "Valor"],
+                      ...(summary.top10MaquinasSTVal || []).map((x) => [
+                        x.id_maquin,
                         x.totalSales,
                       ]),
                     ]}
                     options={{
-                      title: "Instrumentos s/Terminar x Usuarios Valorizado",
+                      title: "Ordenes Trabajo sin Terminar x Maquina Valorizado",
                       is3D: true,
                     }}
                   />
@@ -249,7 +251,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Cantidad Instrumentos",
+                      title: "Cantidad Ordenes Privadas / Publicas",
                       is3D: true,
                     }}
                   />
@@ -273,7 +275,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Valores Instrumentos",
+                      title: "Valores Ordenes Privadas / Publicas",
                       is3D: true,
                     }}
                   />
@@ -297,7 +299,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Estado Instrumentos",
+                      title: "Estado Ordenes Terminadas y Pendientes",
                       is3D: true,
                     }}
                   />
@@ -320,7 +322,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Estado Instrumentos Valorizado",
+                      title: "Estado  Ordenes Terminadas y Pendientes Valorizado", 
                       is3D: true,
                     }}
                   />
@@ -344,7 +346,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Cantidad Diligencias",
+                      title: "Cantidad Tareas Terminadas y Pendientes",
                       is3D: true,
                     }}
                   />
@@ -368,7 +370,7 @@ export const DashboardEsc = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Valores Diligencias",
+                      title: "Valores Tareas Terminadas y Pendientes",
                       is3D: true,
                     }}
                   />
@@ -429,6 +431,6 @@ export const DashboardEsc = () => {
           </Grid>
         </>
 
-    </AdminLayoutMenu>
+    </AdminLayoutMenuSer>
   )
 }

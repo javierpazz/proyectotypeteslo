@@ -108,7 +108,7 @@ export const Dashboard = () => {
 
 
   const parametros = async () => {
-    navigate('/admin/filtrocrm?redirect=/admin/dashboard1');
+    navigate('/admin/filtrocrm?redirect=/admin/dashboard');
   };
 
 

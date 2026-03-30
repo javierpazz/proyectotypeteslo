@@ -7,9 +7,9 @@ export interface IOrder {
     id_client?: ICustomer | string;
     codCus?: ICustomer | string;
     id_instru?: IInstrumento | string;
-    id_maquin?: IMaquina | string;
-    id_encar?: IEncargado | string;
     id_parte?: IParte | string | undefined | null;
+    id_maquin?: IMaquina | string | undefined | null;
+    id_encar?: IEncargado | string | undefined | null;
     id_config?: IConfiguracion | string;
     codCon?: IConfiguracion | string;
     id_config2?: IConfiguracion | string;

@@ -67,7 +67,7 @@ const OrderI:IOrder = {
 
 
 
-export const AppInvIns = () => {
+export const AppInvSer = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -602,8 +602,8 @@ const handleClickOutside = (e: MouseEvent) => {
 
 
   const clearitems = () => {
-            // navigate(`/admin/invoicerRemCon/${id}?redirect=/admin/entradas`);
-            navigate(`/admin/entrada/${id}?redirect=/admin/entradas`);
+            // navigate(`/admin/invoicerRemCon/${id}?redirect=/admin/ordenestrabajo`);
+            navigate(`/admin/ordentrabajo/${id}?redirect=/admin/ordenestrabajo`);
 
     // inputComRef.current?.focus()
     // createParam();
@@ -638,7 +638,7 @@ const handleClickOutside = (e: MouseEvent) => {
           </Grid>
 
           <Grid item md={6}>
-                    <Typography variant="h1">COMPROBANTE DESDE INSTRUMENTO</Typography>
+                    <Typography variant="h1">COMPROBANTE DESDE ORDEN TRABAJO</Typography>
           </Grid>
         </Grid>
 

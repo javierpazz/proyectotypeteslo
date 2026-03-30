@@ -96,7 +96,8 @@ const columns:GridColDef[] = [
         width: 100,
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    // <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.punteid}?redirect=/admin/tareas`}
                      color= "secondary"
                      underline='always'>
                          { row.remNum}
@@ -114,13 +115,15 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.terminado
                 ? (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    // <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.punteid}?redirect=/admin/tareas`}
                      underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
                   )
                 : (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    // <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.punteid}?redirect=/admin/tareas`}
                      underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
                     </MuiLink>
@@ -134,13 +137,15 @@ const columns:GridColDef[] = [
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return row.dilterminado
                 ? (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    // <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.punteid}?redirect=/admin/tareas`}
                      underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
                   )
                 : (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    // <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+                    <MuiLink component={RouterLink}  to={`/admin/ordentrabajo/${row.punteid}?redirect=/admin/tareas`}
                      underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
                     </MuiLink>
@@ -169,6 +174,19 @@ const columns:GridColDef[] = [
     { field: 'configName', headerName: 'Punto Venta', width: 200 },
     { field: 'namePro', headerName: 'Tarea', width: 200 },
     // { field: 'valor', headerName: 'Valor Dil.', width: 200 },
+    { field: 'cantidad',
+      headerName: 'Cantidad',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
+    { field: 'unidad', headerName: 'Unidad', width: 200 },
+    { field: 'precio',
+      headerName: 'Precio S/IVA',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
     { field: 'valor',
       headerName: 'Valor Tarea.',
       width: 100,
@@ -196,24 +214,14 @@ const columns:GridColDef[] = [
         headerName: 'Actualiza',
         renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
             return (
-                    <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaAct/${row.punteid}?redirect=/admin/diligencias`}>
+                    // <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaAct/${row.punteid}?redirect=/admin/diligencias`}>
+                    <MuiLink component={RouterLink}  color="success" to={`/admin/ordentrabajo/${row.punteid}?redirect=/admin/tareas`}>
                     { "Actualiza"}
                     </MuiLink>
                 )
         }
     },
-    {
-        field: 'check3',
-        headerName: 'Valoriza',
-        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-            return (
-                    // <NavLink to={`/admin/invoices/invoice/${ row.id }`}>
-                    <MuiLink component={RouterLink} color="success" to={`/admin/mesaentradaVal/${row.punteid}?redirect=/admin/diligencias`}>
-                    { "Valoriza"}
-                    </MuiLink>
-                )
-        }
-    },
+
     { field: 'createdAt', headerName: 'Creada en', width: 100 },
     { field: 'updatedAt', headerName: 'Modificada en', width: 100 },
 
@@ -230,7 +238,7 @@ export const TareaListScreen = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/diligencias');
+        navigate('/auth/loginadm?redirect=/admin/tareas');
         }
         if (user?.role === "client" ) {
         navigate('/');
@@ -336,7 +344,10 @@ export const TareaListScreen = () => {
         nameEnc  : (invoice.id_encar as IEncargado)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         dilterminado  : invoice.orderItems.terminado,
-        valor  : (invoice.orderItems.price*(1+(invoice.orderItems.porIva/100))).toFixed(2),
+        precio  : (invoice.orderItems.price).toFixed(2),
+        cantidad  : (invoice.orderItems.quantity).toFixed(2),
+        unidad  : invoice.orderItems.medPro,
+        valor  : (invoice.orderItems.quantity*invoice.orderItems.price*(1+(invoice.orderItems.porIva/100))).toFixed(2),
         // namePro  : invoice.orderItems.title as any,
         // total : invoice.total,
         total : invoice.total.toFixed(2),

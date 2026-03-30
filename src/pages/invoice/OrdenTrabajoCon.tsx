@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 
-import { IConfiguracion, ICustomer, IInstrumento, IOrder, IParte, IUser } from '../../interfaces';
+import { IConfiguracion, ICustomer, IInstrumento, IOrder, IParte, IMaquina, IEncargado, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
@@ -65,7 +65,7 @@ const OrderI:IOrder = {
 }
 
 
-export const MesaEntradaCon = () => {
+export const OrdenTrabajoCon = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -85,6 +85,8 @@ export const MesaEntradaCon = () => {
   const [nameCus, setNameCus] = useState('');
   const [nameCon, setNameCon] = useState('');
   const [namePar, setNamePar] = useState('');
+  const [nameMaq, setNameMaq] = useState('');
+  const [nameEnc, setNameEnc] = useState('');
   const [nameIns, setNameIns] = useState('');
   const [nameUse, setNameUse] = useState('');
 
@@ -144,6 +146,8 @@ export const MesaEntradaCon = () => {
                 id_instru    : resp.data.id_instru,
                 id_config      : resp.data.id_config,
                 id_parte      : resp.data.id_parte,
+                id_maquin      : resp.data.id_maquin,
+                id_encar      : resp.data.id_encar,
                 codConNum       : resp.data.codConNum,
                 supplier      : resp.data.supplier,
                 remNum      : resp.data.remNum,
@@ -162,6 +166,8 @@ export const MesaEntradaCon = () => {
             setNameCus((invoice.id_client as ICustomer).nameCus);
             setNameIns((invoice.id_instru as IInstrumento).name);
             setNamePar((invoice.id_parte as IParte).name);
+            setNameMaq((invoice.id_maquin as IMaquina).name);
+            setNameEnc((invoice.id_encar as IEncargado).name);
             setNameCon((invoice.id_config as IConfiguracion).name);
             setNameUse((invoice.user as IUser).name);
         } catch (error) {
@@ -178,6 +184,8 @@ useEffect(() => {
   setNameCus((invoice.id_client as ICustomer)?.nameCus || '');
   setNameIns((invoice.id_instru as IInstrumento)?.name || '');
   setNamePar((invoice.id_parte as IParte)?.name || '');
+  setNameMaq((invoice.id_maquin as IMaquina)?.name || '');
+  setNameEnc((invoice.id_encar as IEncargado)?.name || '');
   setNameCon((invoice.id_config as IConfiguracion)?.name || '');
   setNameUse((invoice.user as IUser)?.name || '');
 }, [invoice]);
@@ -197,16 +205,16 @@ useEffect(() => {
 
   const actualiza = () => {
       // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
-      navigate(`/admin/mesaentradaAct/${invoice._id}?redirect=${redirect}`);
+      navigate(`/admin/ordentrabajoAct/${invoice._id}?redirect=${redirect}`);
   };
-  const valoriza = () => {
-      // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
-      navigate(`/admin/mesaentradaVal/${invoice._id}?redirect=${redirect}`);
-  };
+  // const valoriza = () => {
+  //     // navigate(`/admin/entrada/${invoice._id}?redirect=/admin/entradas`);
+  //     navigate(`/admin/mesaentradaVal/${invoice._id}?redirect=${redirect}`);
+  // };
 
 
   const generaInv = async () => {
-    navigate(`/admin/invoicerins/${id}?redirect=${redirect}`);
+    navigate(`/admin/invoicerser/${id}?redirect=${redirect}`);
   };
 
 
@@ -238,7 +246,7 @@ useEffect(() => {
 <Box mt={2} display="flex" gap={2} flexWrap="wrap">
   <Button variant="contained" color="primary" onClick={reactToPrintFn}>IMPRIME</Button>
   <Button variant="contained" color="secondary" onClick={actualiza}>ACTUALIZA</Button>
-  <Button variant="contained" color="secondary" onClick={valoriza}>VALORIZA</Button>
+  {/* <Button variant="contained" color="secondary" onClick={valoriza}>VALORIZA</Button> */}
           <Button 
             variant="contained"
             color="primary"
@@ -253,19 +261,21 @@ useEffect(() => {
   <Card variant="outlined">
     <CardContent>
       <Typography variant="h5" align="center" gutterBottom>
-        ENTRADA
+        ORDEN TRABAJO
       </Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography><strong>Registro:</strong> {nameCon}</Typography>
+          <Typography><strong>Punto Venta:</strong> {nameCon}</Typography>
           <Typography><strong>Cliente:</strong> {nameCus}</Typography>
           <Typography><strong>Parte:</strong> {namePar}</Typography>
-          <Typography><strong>Instrumento:</strong> {nameIns}</Typography>
+          <Typography><strong>Maquina:</strong> {nameMaq}</Typography>
+          <Typography><strong>Trabajo:</strong> {nameIns}</Typography>
+          <Typography><strong>Encargado:</strong> {nameEnc}</Typography>
           <Typography><strong>Usuario:</strong> {nameUse}</Typography>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography><strong>ENTRADA Nro.:  {invoice.remNum}</strong></Typography>
+          <Typography><strong>ORDEN TRABAJO Nro.:  {invoice.remNum}</strong></Typography>
           <Typography>Fecha Orden.: {invoice.remDat ? formatDateNoTZ(invoice.remDat) : ''}</Typography>
           <Typography>
             <strong>Obs:</strong> {invoice.notes} 
@@ -280,8 +290,11 @@ useEffect(() => {
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>Codigo dil.</TableCell>
+              {/* <TableCell>Codigo dil.</TableCell> */}
               <TableCell>Descripción</TableCell>
+              <TableCell>Vence</TableCell>
+              <TableCell>Cantidad</TableCell>
+              <TableCell>Unidad</TableCell>
               <TableCell>Observaciones</TableCell>
               <TableCell>Estado</TableCell>
               <TableCell align="right">Valor</TableCell>
@@ -291,8 +304,11 @@ useEffect(() => {
             {invoice.orderItems.map((item, index) => (
               <TableRow key={item._id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{item.codigoPro}</TableCell>
+                {/* <TableCell>{item.codigoPro}</TableCell> */}
                 <TableCell>{item.title}</TableCell>
+                <TableCell>{item.venDat ? formatDateNoTZ(item.venDat) : ''}</TableCell>
+                <TableCell align="right">{(item.quantity).toFixed(2)}                </TableCell>
+                <TableCell>{item.medPro}</TableCell>
                 <TableCell>{item.observ}</TableCell>
                 <TableCell>
                   {item.terminado ? 'Terminado' : 'Pendiente'}

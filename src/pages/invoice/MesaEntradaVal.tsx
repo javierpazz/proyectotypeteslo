@@ -701,9 +701,16 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       </Typography>
           </Grid>
 
-          <Grid item md={4}>
+          {/* <Grid item md={4}>
                     <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
-          </Grid>
+          </Grid> */}
+
+
+          {!(nameIns === "") ? (
+                <Grid item md={4}>
+                          <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
+                </Grid>
+          ):(<></>)}
 
 
 

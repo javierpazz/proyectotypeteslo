@@ -258,16 +258,29 @@ const DashboardEsc = lazy(() =>
   import('../../pages/admin/DashboardEsc').then(m => ({ default: m.DashboardEsc }))
 );
 
+const DashboardSer = lazy(() =>
+  import('../../pages/admin/DashboardSer').then(m => ({ default: m.DashboardSer }))
+);
+const DashboardSerMaq = lazy(() =>
+  import('../../pages/admin/DashboardSerMaq').then(m => ({ default: m.DashboardSerMaq }))
+);
+
 
 
 const MesaEntrada = lazy(() =>
   import('../../pages/invoice/MesaEntrada').then(m => ({ default: m.MesaEntrada }))
 );
 
-const OrdenEntrada = lazy(() =>
-  import('../../pages/invoice/OrdenEntrada').then(m => ({ default: m.OrdenEntrada }))
+const OrdenTrabajo = lazy(() =>
+  import('../../pages/invoice/OrdenTrabajo').then(m => ({ default: m.OrdenTrabajo }))
 );
 
+const OrdenTrabajoCon = lazy(() =>
+  import('../../pages/invoice/OrdenTrabajoCon').then(m => ({ default: m.OrdenTrabajoCon }))
+);
+const OrdenTrabajoAct = lazy(() =>
+  import('../../pages/invoice/OrdenTrabajoAct').then(m => ({ default: m.OrdenTrabajoAct }))
+);
 const MesaEntradaAct = lazy(() =>
   import('../../pages/invoice/MesaEntradaAct').then(m => ({ default: m.MesaEntradaAct }))
 );
@@ -339,6 +352,9 @@ const AppInvRem = lazy(() =>
 
 const AppInvIns = lazy(() =>
   import('../../pages/invoice/AppInvIns').then(m => ({ default: m.AppInvIns }))
+);
+const AppInvSer = lazy(() =>
+  import('../../pages/invoice/AppInvSer').then(m => ({ default: m.AppInvSer }))
 );
 
 const App = lazy(() =>
@@ -414,6 +430,8 @@ export default function AdminRoutes() {
     <Routes>
                             <Route path="dashboard" element={ <Dashboard /> } />
                             <Route path="dashboardesc" element={ <DashboardEsc /> } />
+                            <Route path="dashboardser" element={ <DashboardSer /> } />
+                            <Route path="dashboardsermaq" element={ <DashboardSerMaq /> } />
                             <Route path="users" element={ <Users /> } />
                             <Route path="products" element={ <Products /> } />
                             <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />
@@ -424,6 +442,7 @@ export default function AdminRoutes() {
                             <Route path="invoicerord/:id" element={ <AppInvOrd />  }/>
                             <Route path="invoicerrem/:id" element={ <AppInvRem />  }/>
                             <Route path="invoicerins/:id" element={ <AppInvIns />  }/>
+                            <Route path="invoicerser/:id" element={ <AppInvSer />  }/>
                             <Route path="invoicer" element={ <App />  }/>
                             <Route path="remiter" element={ <AppRem />  }/>
                             <Route path="remiterpv" element={ <AppRempv />  }/>
@@ -474,16 +493,20 @@ export default function AdminRoutes() {
                             <Route path="remitsBuypv" element={ <RemitBuypvListScreen /> } />
 
                             <Route path="mesaentrada" element={ <MesaEntrada /> } />
-                            <Route path="ordenentrada" element={ <OrdenEntrada /> } />
+                            <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
                             <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
                             <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
-                            <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
-                            <Route path="paramtrabajo" element={ <ParamTrabajo /> } />
                             <Route path="entradas" element={ <EntradaListScreen /> } />
                             <Route path="diligencias" element={ <DiligenciaListScreen /> } />
+
+                            <Route path="ordentrabajo" element={ <OrdenTrabajo /> } />
+                            <Route path="ordentrabajo/:id" element={ <OrdenTrabajoCon /> } />
                             <Route path="ordenestrabajo" element={ <OrdenTraListScreen /> } />
+                            <Route path="ordentrabajoAct/:id" element={ <OrdenTrabajoAct /> } />
                             <Route path="tareas" element={ <TareaListScreen /> } />
-                            <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
+
+                            <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
+                            <Route path="paramtrabajo" element={ <ParamTrabajo /> } />
                             <Route path="instrumentos" element={ <Instrumentos /> } />
                             <Route path="instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
                             <Route path="trabajos" element={ <Trabajos /> } />

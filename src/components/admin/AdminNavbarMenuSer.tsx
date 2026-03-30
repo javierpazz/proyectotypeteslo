@@ -103,7 +103,7 @@ const { user} = useContext(  AuthContext );
           open={Boolean(anchorElServicio)}
           onClose={handleClose(setAnchorElServicio)}
         >
-          <MenuItem component={Link} to="/admin/ordenentrada" onClick={handleClose(setAnchorElServicio)}>
+          <MenuItem component={Link} to="/admin/ordentrabajo" onClick={handleClose(setAnchorElServicio)}>
             Genera Orden Trabajos
           </MenuItem>
           <MenuItem component={Link} to="/admin/ordenestrabajo" onClick={handleClose(setAnchorElServicio)}>
@@ -124,14 +124,20 @@ const { user} = useContext(  AuthContext );
           onClose={handleClose(setAnchorElAdmin)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/dashboardesc" onClick={handleClose(setAnchorElAdmin)}>
-            Graficos
-          </MenuItem>
           <MenuItem component={Link} to="/admin/ordenestrabajo" onClick={handleClose(setAnchorElAdmin)}>
             Ordenes de Trabajo
           </MenuItem>
           <MenuItem component={Link} to="/admin/tareas" onClick={handleClose(setAnchorElAdmin)}>
              Tareas 
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboardser" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos Estado General
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboardserpar" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos Estado por Parte
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboardsermaq" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos Estado por Maquina
           </MenuItem>
         </Menu>
 

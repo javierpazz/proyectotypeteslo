@@ -12,9 +12,9 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { AdminLayoutMenu } from '../../components/layouts';
+import { AdminLayoutMenuSer } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
-import { BuscaMaq, BuscaEnc, BuscaPar, BuscaCli, BuscaProEsc, BuscaIns, BuscaConFac, BuscaUse } from '../../components/buscador';
+import { BuscaMaq, BuscaEnc, BuscaPar, BuscaCli, BuscaProSer, BuscaTra, BuscaConFac, BuscaUse } from '../../components/buscador';
 import { AuthContext } from '../../../context';
 
 
@@ -309,7 +309,7 @@ desVal;
 
 
   return (
-    <AdminLayoutMenu 
+    <AdminLayoutMenuSer 
         title={`Entredas`} 
         subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
@@ -487,7 +487,7 @@ desVal;
         </Grid>
         <Grid container spacing={2} mt={2}>
 
-            <BuscaIns
+            <BuscaTra
             codIns={codIns}
             setCodIns={setCodIns}
             codInst={codInst}
@@ -498,7 +498,7 @@ desVal;
             inputRef={inputInsRef} 
             />
 
-            <BuscaProEsc
+            <BuscaProSer
             codPro={codPro}
             setCodProt={setCodProt}
             codProt={codProt}
@@ -616,7 +616,7 @@ desVal;
 
     </Box>
 
-    </AdminLayoutMenu>
+    </AdminLayoutMenuSer>
   );
 }
 

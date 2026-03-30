@@ -1,8 +1,10 @@
 import { useContext, useState, useRef, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import {TableFormEscAct} from './TableFormEscAct';
+import {Header} from './Header';
+// import { toast } from 'react-toastify';
+import {TableFormSer} from './TableFormSer';
 import { BiFileFind } from "react-icons/bi";
 import { AuthContext, CartContext } from '../../../context';
+import ReactToPrint from 'react-to-print';
 import {
   Box,
   Button,
@@ -12,22 +14,22 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IInstrumento, IOrder, IParte } from '../../interfaces';
-import { AdminLayoutMenu } from '../../components/layouts';
+import { IParamProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
+import { AdminLayoutMenuSer } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
-import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { TrabajoSelector } from '../crmpages/TrabajoSelector';
+import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
-import { BuscaPar } from '../../components/buscador';
+import { BuscaPar, BuscaEnc, BuscaMaq } from '../../components/buscador';
 
-const getError = (error:any) => {
-  return error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message;
-};
+// const getError = (error:any) => {
+//   return error.response && error.response.data.message
+//     ? error.response.data.message
+//     : error.message;
+// };
 
-export const MesaEntradaAct = () => {
+export const OrdenTrabajo = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
@@ -35,28 +37,25 @@ export const MesaEntradaAct = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/mesaentradaAct');
+        navigate('/auth/loginadm?redirect=/admin/mesaentrada');
         }
         if (user?.role === "client" ) {
         navigate('/');
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
+    
 
-  const { search } = useLocation();
-  const redirectInUrl = new URLSearchParams(search).get('redirect');
-  const redirect = redirectInUrl ? redirectInUrl : '/';
 
         const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 
 
-
   // const { state, dispatch: ctxDispatch } = useContext(Store);
-    const {  cart, addTodosProductToCartEscPar } = useContext(CartContext);
+    const {  cart, createParam, addTodosProductToCartEsc } = useContext(CartContext);
     
-        const OrderI: IOrder = {
+        const invoice: IOrder = {
             orderItems: cart.map( p => ({
                 ...p,
                 size: p.size!
@@ -84,6 +83,8 @@ export const MesaEntradaAct = () => {
             id_client : "",
             id_parte : undefined,
             id_instru : "",
+            id_maquin : "",
+            id_encar : "",
             id_config : "",
             user : "",
             codConNum : 0,
@@ -100,98 +101,18 @@ export const MesaEntradaAct = () => {
 
         }              
 
-   const [invoice, setInvoice] = useState(OrderI);
-   const params = useParams();
-   const { id } = params;
-
-
-   useEffect(() => {
-      loadProduct()
-    }, [])
-
-      const formatDate = (date?: string | null) => {
-        return date ? date.substring(0, 10) : '';
-      };
-
-      const loadProduct = async() => {
-          try {
-              const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
-                  OrderI._id = resp.data._id;
-                  OrderI.user = resp.data.user;
-                  OrderI.orderItems = resp.data.orderItems;
-                  OrderI.orderAddress = resp.data.orderAddress;
-              //    paymentResult: '';
-                  OrderI.shippingPrice=  resp.data.shippingPrice;
-                  OrderI.numberOfItems= resp.data.numberOfItems;
-                  OrderI.subTotal     = resp.data.subTotal;
-                  OrderI.tax          = resp.data.tax;
-                  OrderI.total        = resp.data.total;
-                  OrderI.totalBuy     = resp.data.totalBuy;
-                  OrderI.id_client    = resp.data.id_client;
-                  OrderI.id_parte    = resp.data.id_parte;
-                  OrderI.id_instru    = resp.data.id_instru;
-                  OrderI.id_config      = resp.data.id_config;
-                  OrderI.codConNum       = resp.data.codConNum;
-                  OrderI.supplier          = resp.data.supplier;
-                  OrderI.remNum          = resp.data.remNum;
-                  OrderI.remDat          = resp.data.remDat;
-                  OrderI.dueDat          = resp.data.dueDat;
-                  OrderI.notes          = resp.data.notes;
-                  OrderI.libNum          = resp.data.libNum;
-                  OrderI.folNum          = resp.data.folNum;
-                  OrderI.asiNum          = resp.data.asiNum;
-                  OrderI.asiDat          = resp.data.asiDat;
-                  OrderI.escNum          = resp.data.escNum;
-                  OrderI.asieNum           = resp.data.asieNum;
-                  OrderI.asieDat   = resp.data.asieDat;
-                  OrderI.terminado          = resp.data.terminado;
-                  OrderI.paidAt          = resp.data.paidAt;
-           addTodosProductToCartEscPar(invoice.orderItems as ICartProduct[]);
-           setInvoice(OrderI);
-
-            setCodInst((invoice.id_instru as IInstrumento).codIns);
-            setCodIns(invoice.id_instru as any);
-            setNameIns((invoice.id_instru as IInstrumento).name);
-            setCodCust((invoice.id_client as ICustomer).codCus);
-            setCodCus(invoice.id_client as any);
-            setNameCus((invoice.id_client as ICustomer).nameCus);
-            if (invoice.id_parte) {
-              setCodPart((invoice.id_parte as IParte).codPar);
-              setCodPar(invoice.id_parte as any);
-              setNamePar((invoice.id_parte as IParte).name);
-            } else {
-              setCodPart('');
-              setCodPar('');
-              setNamePar('');
-            }
-
-            setRemNum(invoice.remNum as any) ;
-            setNotes(invoice.notes!);
-            setLibNum(invoice.libNum as any);
-            setFolNum(invoice.folNum as any);
-            setAsiNum(invoice.asiNum as any);
-            setEscNum(invoice.escNum as any);
-            setAsieNum(invoice.asieNum as any);
-            setTerminado(invoice.terminado as any);
-            
-            // setRemDat(invoice.remDat!.substring(0, 10) as any);
-            // setDueDat(invoice.dueDat!.substring(0, 10) as any);
-            // setAsiDat(invoice.asiDat!.substring(0, 10) as any);
-            // setAsieDat(invoice.asieDat!.substring(0, 10) as any);
-            setRemDat(formatDate(invoice.remDat));
-            setDueDat(formatDate(invoice.dueDat));
-            setAsiDat(formatDate(invoice.asiDat));
-            setAsieDat(formatDate(invoice.asieDat));
-
-
-
-          } catch (error) {
-            console.log(error)
-          }
-         }
   
 
-  
+    // useEffect(() => {
+    // if ( isLoaded) {
+    // }
+    // }, [isLoaded, cart])
+
+    // if(!isLoaded ){
+    //     return (<></>);
+    // }
+
+
   const input2Ref = useRef<HTMLInputElement>(null);
   const input3Ref = useRef<HTMLInputElement>(null);
   const input5Ref = useRef<HTMLInputElement>(null);
@@ -201,6 +122,8 @@ export const MesaEntradaAct = () => {
   const input9Ref = useRef<HTMLInputElement>(null);
   const input0Ref = useRef<HTMLInputElement>(null);
   const inputParRef = useRef<HTMLInputElement>(null);
+  const inputEncRef = useRef<HTMLInputElement>(null);
+  const inputMaqRef = useRef<HTMLInputElement>(null);
 
 
   const codConNum = userInfo.configurationObj.codCon;
@@ -222,10 +145,16 @@ export const MesaEntradaAct = () => {
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
-  // const [userObj, setUserObj] = useState<ICustomer>();
-  const [codPar, setCodPar] = useState('');
   const [codPart, setCodPart] = useState('');
+  const [codPar, setCodPar] = useState('');
   const [namePar, setNamePar] = useState('');
+  const [codEnct, setCodEnct] = useState('');
+  const [codEnc, setCodEnc] = useState('');
+  const [nameEnc, setNameEnc] = useState('');
+  const [codMaqt, setCodMaqt] = useState('');
+  const [codMaq, setCodMaq] = useState('');
+  const [nameMaq, setNameMaq] = useState('');
+  const [userObj, setUserObj] = useState<ICustomer>();
   const [remNum, setRemNum] = useState("");
   const [libNum, setLibNum] = useState("");
   const [folNum, setFolNum] = useState("");
@@ -234,16 +163,17 @@ export const MesaEntradaAct = () => {
   const [escNum, setEscNum] = useState("");
   const [asieNum, setAsieNum] = useState("");
   const [asieDat, setAsieDat] = useState("");
+  const [remNumImp, setRemNumImp] = useState('');
   const [remDat, setRemDat] = useState(getTodayInGMT3());
   const [recNum, setRecNum] = useState('');
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   const [desval, setDesval] = useState('');
-  // const [valueeR, setValueeR] = useState('');
+  const [valueeR, setValueeR] = useState('');
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
   const [instrumentos, setInstrumentos] = useState<IInstrumento[]>([]);
-  // const [instrumento, setInstrumento] = useState<IInstrumento>();
+  const [instrumento, setInstrumento] = useState<IInstrumento>();
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [codPro, setCodPro] = useState('');
   const [codigoPro, setCodigoPro] = useState('');
@@ -251,6 +181,7 @@ export const MesaEntradaAct = () => {
   const [dueDat, setDueDat] = useState(getTodayInGMT3());
   const [notes, setNotes] = useState('');
   const [desPro, setDesPro] = useState('');
+  const [medPro, setMedPro] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
   const [porIva, setPorIva] = useState(0);
@@ -258,11 +189,25 @@ export const MesaEntradaAct = () => {
   const [amountval, setAmountval] = useState(0);
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
+  const [totalImp, setTotalImp] = useState(0);
   const [width] = useState(641);
+  const [showInvoice, setShowInvoice] = useState(false);
 
   const [isPaying, setIsPaying] = useState(false);
   const [isloading, setIsloading] = useState(false);
+  const config = {
+    salePoint: userInfo.configurationObj.codCon,
+    name: userInfo.configurationObj.name,
+    cuit: userInfo.configurationObj.cuit,
+    address: userInfo.configurationObj.domcomer,
+    ivaCondition: userInfo.configurationObj.coniva,
+    ib: userInfo.configurationObj.ib,
+    feciniact: userInfo.configurationObj.feciniact,
+    invoiceNumber: "",
+    date: "",
 
+  };
+  void instrumento;
 
 /////////////////consulta cliente
 const handleShowCus = () => {
@@ -274,6 +219,7 @@ const handleShowCus = () => {
   //   e.key === "F2" && handleShowCus();
   //   e.key === "Tab" && buscarPorCodCus(codCust);
   // };
+  
 const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
   if (e.key === "Enter" || e.key === "Tab") {
     e.preventDefault();
@@ -284,7 +230,6 @@ const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
     handleShowCus();
   }
 };
-  
 
   const buscarPorCodCus = (codCust: string) => {
     const usersRow = customers.find((row) => row.codCus === codCust);
@@ -295,9 +240,9 @@ const ayudaCus = (e: React.KeyboardEvent<HTMLDivElement>) => {
     }else{
       setCodCus(usersRow._id);
       setCodCust(usersRow.codCus);
-      // setUserObj(usersRow);
+      setUserObj(usersRow);
       setNameCus(usersRow.nameCus);
-      inputParRef.current?.focus();
+      inputMaqRef.current?.focus();
       };
   };
 
@@ -366,6 +311,7 @@ const handleClickOutside = (e: MouseEvent) => {
   }, [modalOpenCus, modalOpenIns]);
 /////////////////consulta cliente
 /////////////////consulta instrumento
+///////Publico//////consulta publico
 
 const handleShowIns = () => {
     setModalOpenIns(true);
@@ -398,13 +344,13 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!instRow) {
         setCodIns('');
         setCodInst('');
-        setNameIns('Elija Instrumento');
+        setNameIns('Elija Trabajo');
         setPublicoIns(true);
     }else{
       // cargaParametros(instRow.orderItems)
-      // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
+      addTodosProductToCartEsc(instRow.paramItems as IParamProduct[], remDat);
 
-      // setInstrumento(instRow);
+      setInstrumento(instRow);
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
       setNameIns(instRow.name);
@@ -433,6 +379,12 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
 
+  const componentRef = useRef<HTMLDivElement | null>(null);
+  const TypedReactToPrint = ReactToPrint as unknown as React.FC<any>;
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   useEffect(() => {
     const calculateAmountval = () => {
@@ -447,6 +399,13 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     calculateAmountval();
   }, [cart]);
 
+    useEffect(() => {
+      if (customers) {
+        createParam();
+        setValueeR("");
+        setShowInvoice(false);
+      }
+    }, [customers]);
 
 
   useEffect(() => {
@@ -495,12 +454,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (isPaying && (!recNum || !recDat || !desVal)) {
         unloadpayment();
       } else {
-        if (true) {
+        if (remDat && codCus) {
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
-           invoice.orderItems = cart.map( p => ({
-                ...p,
-                size: p.size!
-            })),
           invoice.subTotal = round2(
             cart.reduce((a, c) => a + c.quantity * c.price, 0)
           );
@@ -517,7 +472,9 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           );
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
-          if (codPar !== "") {invoice.id_parte = codPar;} else  {invoice.id_parte = null;}
+          invoice.id_maquin = codMaq;
+          invoice.id_encar = codEnc;
+              (codPar) ? invoice.id_parte = codPar : null;
               invoice.id_instru = codIns;
               invoice.libNum= +libNum;
               invoice.folNum= +folNum;
@@ -527,8 +484,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               invoice.asieNum= +asieNum;
               invoice.asieDat= asieDat;
               invoice.terminado= terminado;
-          // invoice.id_config = userInfo.codCon;
-          // invoice.user = userInfo._id,
+          invoice.id_config = userInfo.codCon;
+          invoice.user = userInfo.user._id,
           invoice.codConNum = codConNum;
 
           invoice.supplier = '0';
@@ -553,11 +510,10 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
   const orderHandler = async () => {
-
     try {
       setIsloading(true);
-      await stutzApi.put(
-        `/api/invoices/remModEsc/${invoice._id}`,
+      const { data } = await stutzApi.post(
+        `/api/invoices/remEsc`,
 
         {
           orderItems: invoice.orderItems,
@@ -570,8 +526,10 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           totalBuy: invoice.totalBuy,
 
           codCus: invoice.id_client,
-          codPar: invoice.id_parte,
+              codPar: invoice.id_parte,
               codIns: invoice.id_instru,
+              codMaq: invoice.id_maquin,
+              codEnc: invoice.id_encar,
               libNum : invoice.libNum,
               folNum : invoice.folNum,
               asiNum : invoice.asiNum,
@@ -581,7 +539,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               asieDat : invoice.asieDat,
               terminado : invoice.terminado,
           codCon: invoice.id_config,
-          user: invoice.user,
+          user: userInfo.user._id,
           codConNum: invoice.codConNum,
 
           //        codSup: invoice.codSup,
@@ -606,23 +564,36 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       //ctxDispatch({ type: 'INVOICE_CLEAR' });
       //      dispatch({ type: 'CREATE_SUCCESS' });
       //      localStorage.removeItem('cart');
-      setIsloading(true);
+      setIsloading(false);
       setIsPaying(false);
       setDesval('');
       setDesVal('');
-      // setRemNumImp(data.invoice.remNum);
+      setRemNumImp(data.invoice.remNum);
       // setTotalSubImp(data.invoice.subTotal);
       // setTaxImp(data.invoice.tax);
-      // setTotalImp(data.invoice.total);
+      setTotalImp(data.invoice.total);
       setRecNum('');
       setRecDat('');
       setNumval(' ');
       setAmountval(0);
       //navigate(`/order/${data.order._id}`);
-    } catch (err) {
-      // dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
+    // } catch (err) {
+    //   toast.error(getError(err));
+    // }
+  } catch (error: any) {
+    // Capturar errores HTTP u otros
+    if (error.response) {
+      console.error('Error de backend:', error.response.data);
+      alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);
+    } else if (error.request) {
+      console.error('No hubo respuesta del servidor', error.request);
+      alert('No hubo respuesta del servidor. Verifica tu conexión.');
+    } else {
+      console.error('Error inesperado', error.message);
+      alert('Error inesperado al guardar.');
     }
+  }
+
   };
 
 
@@ -632,27 +603,37 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   };
 
   const clearitems = () => {
-            navigate(`/admin/entrada/${invoice._id}?redirect=${redirect}`);
-  }
+    input2Ref.current?.focus()
+    createParam();
+
+  setLibNum("");
+  setFolNum("");
+  setAsiNum("");
+  setAsiDat("");
+  setEscNum("");
+  setAsieNum("");
+  setAsieDat("");
+  setCodPart("");
+  setCodInst("");
+  setNotes("");
+
+
+    setValueeR("");
+    setCodCust("");
+    setRemNum("");
+    setShowInvoice(false);
+  };
 
   return (
-
-    <>
-      {!invoice ? (
-        // <LoadingBox></LoadingBox>
-        <></>
-      // ) : error ? (
-      //   <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
-
-      <main>
-    <AdminLayoutMenu 
+    // <>
+    //   <main>
+    <AdminLayoutMenuSer 
         title={`Entredas`} 
         subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
     >
 
-    {/* {!showInvoice ? ( */}
+    {!showInvoice ? (
     <Box>
       <Box p={0} mb={2}>
         <Grid container>
@@ -661,7 +642,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">ACTUALIZA ENTRADA</Typography>
+                    <Typography variant="h1">ORDEN DE TRABAJO</Typography>
           </Grid>
         </Grid>
 
@@ -673,8 +654,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               inputRef={input2Ref}
               // label={codInst === '' ? 'Código Instrumento' : ''}
               // placeholder="Codigo Instrumento"
-              label="Instrumento"
-              placeholder="Instrumento"
+              label="Trabajo"
+              placeholder="Trabajo"
               value={codInst}
               onChange={(e) => setCodInst(e.target.value)}
               onKeyDown={(e) => ayudaIns(e)}
@@ -693,30 +674,24 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             </Button>
           </Grid>
           <Grid item md={4}>
-      <Typography
-        variant="h6"
-        noWrap
-        title={nameIns}
-        sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {nameIns}
-      </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              title={nameIns}
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {nameIns}
+            </Typography>
           </Grid>
-
-          {/* <Grid item md={4}>
-                    <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
-          </Grid> */}
-
-          {!(nameIns === "") ? (
-                <Grid item md={4}>
-                          <Typography variant="h4">{publicoIns ? "INSTRUMENTO PUBLICO" : "INSTRUMENTO PRIVADO"}</Typography>
-                </Grid>
-          ):(<></>)}
-
+    {/* {!(nameIns === "") ? (
+          <Grid item md={4}>
+                    <Typography variant="h4">{publicoIns ? "TRABAJO PUBLICO" : "TRABAJO PRIVADO"}</Typography>
+          </Grid>
+    ):(<></>)} */}
 
         </Grid>
 
@@ -724,10 +699,6 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
 
         <Grid container spacing={2} mt={0}>
-
-
-
-
           <Grid item md={2}>
             <TextField
               fullWidth
@@ -754,78 +725,24 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               F2
             </Button>
           </Grid>
-          <Grid item md={4}>
-            <Typography
-              variant="h6"
-              noWrap
-              title={nameCus}
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {nameCus}
-            </Typography>
+
+          
+          <Grid item md={3}>
+      <Typography
+        variant="h6"
+        noWrap
+        title={nameCus}
+        sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {nameCus}
+      </Typography>
           </Grid>
 
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Libro N°"
-              placeholder="Libro N°"
-              value={libNum}
-              onChange={(e) => setLibNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-            />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Folio N°"
-              placeholder="Folio N°"
-              value={folNum}
-              onChange={(e) => setFolNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Asiento N°"
-              placeholder="Asiento N°"
-              value={asiNum}
-              onChange={(e) => setAsiNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              type="date"
-              label="Fecha Asiento"
-              value={asiDat}
-              onChange={(e) => setAsiDat(e.target.value)}
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
 
-        </Grid>
-
-        <Grid container spacing={2} mt={0}>
             <BuscaPar
             codPar={codPar}
             setCodPar={setCodPar}
@@ -833,54 +750,47 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             setCodPart={setCodPart}
             namePar={namePar}
             setNamePar={setNamePar}
-            nextRef={input9Ref}
+            nextRef={inputEncRef}
             inputRef={inputParRef} 
             />
-          <Grid item md={2}>
-                <Typography></Typography>
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Instrumento N°"
-              placeholder="Instrumento N°"
-              value={escNum}
-              onChange={(e) => setEscNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={1}>
-            <TextField
-              fullWidth
-              size="small"
-              type="number"
-              label="Asiento N°"
-              placeholder="Asiento N°"
-              value={asieNum}
-              onChange={(e) => setAsieNum(e.target.value)}
-              // onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
-              required
-              />
-          </Grid>
-          <Grid item md={2}>
-            <TextField
-              fullWidth
-              size="small"
-              type="date"
-              label="Fecha Asiento"
-              value={asieDat}
-              onChange={(e) => setAsieDat(e.target.value)}
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
+
+
+
 
         </Grid>
+
+
+        <Grid container spacing={2} mt={0}>
+
+        </Grid>
+
+        <Grid container spacing={2} mt={0}>
+
+            <BuscaMaq
+            codMaq={codMaq}
+            setCodMaq={setCodMaq}
+            codMaqt={codMaqt}
+            setCodMaqt={setCodMaqt}
+            nameMaq={nameMaq}
+            setNameMaq={setNameMaq}
+            nextRef={input9Ref}
+            inputRef={inputMaqRef} 
+            />
+
+            <BuscaEnc
+            codEnc={codEnc}
+            setCodEnc={setCodEnc}
+            codEnct={codEnct}
+            setCodEnct={setCodEnct}
+            nameEnc={nameEnc}
+            setNameEnc={setNameEnc}
+            nextRef={input9Ref}
+            inputRef={inputEncRef} 
+            />
+
+        </Grid>
+
+
 
 
         <Grid container spacing={2} mt={0}>
@@ -890,8 +800,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               size="small"
               type="number"
               inputRef={input6Ref}
-              label="Entrada N°"
-              placeholder="Entrada N°"
+              label="Orden N°"
+              placeholder="Orden N°"
               value={remNum}
               onChange={(e) => setRemNum(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input9Ref.current?.focus()}
@@ -910,7 +820,9 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               onChange={(e) => setRemDat(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input5Ref.current?.focus()}
               required
-
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
           <Grid item md={1.5}>
@@ -924,9 +836,12 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               onChange={(e) => setDueDat(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && input7Ref.current?.focus()}
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Grid>
-          <Grid item md={6}>
+          <Grid item md={7}>
             <TextField
               fullWidth
               size="small"
@@ -975,9 +890,9 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
               sx={{  bgcolor: 'secondary.main' , color: 'white' }}
               // inputRef={input0Ref}
               onClick={placeInvoiceHandler}
-              disabled={ !codCus || isloading}
+              disabled={cart.length === 0 || !codCus || isloading}
             >
-              GRABA ENTRADA
+              GRABA ORDEN DE TRABAJO
             </Button>
             {isloading && <FullScreenLoading />}
           </Grid>
@@ -990,7 +905,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
                 {/* This is our table form */}
                 <article>
-                  <TableFormEscAct
+                  <TableFormSer
                     terminado={terminado}
                     setTerminado={setTerminado}
                     input0Ref={input0Ref}
@@ -1001,6 +916,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
                     setCodigoPro={setCodigoPro}
                     desPro={desPro}
                     setDesPro={setDesPro}
+                    medPro={medPro}
+                    setMedPro={setMedPro}
                     quantity={quantity}
                     setQuantity={setQuantity}
                     price={price}
@@ -1021,8 +938,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
                     //                    setTotInvwithTax={setTotInvwithTax}
                   />
                 </article>
-
-
+      
                 {/* <Dialog
                   open={showCus}
                   onClose={() => setShowCus(false)}
@@ -1104,19 +1020,116 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
             <Box display="flex" justifyContent="flex-end">
               <Button onClick={() => setModalOpenIns(false)}>X</Button>
             </Box>
-            <InstrumentoSelector onSelectIns={handleSelectIns} instrumentos={instrumentos} />
+            <TrabajoSelector onSelectIns={handleSelectIns} instrumentos={instrumentos} />
           </Box>
         </Modal>
 
 
       </Box>
     </Box>
+        ) : (
+          <>
+            <TypedReactToPrint
+              trigger={() => <Button type="button">Print / Download</Button>}
+              content={() => componentRef.current}
+            />
 
-        </AdminLayoutMenu>
-      </main>
+            <Button onClick={() => clearitems()}>Nuevo Entrada</Button>
+
+            {/* Invoice Preview */}
+
+            <div ref={componentRef} className="p-5">
+              <Header handlePrint={handlePrint} />
+
+              <div className="container mt-4">
+      <div className="card border-dark">
+        <div className="card-header bg-dark text-white text-center"></div>
+        <div className="card-body">
+          
+        <div className="card-header text-black text-center">TRABAJO</div>
+        <div className="row">
+            <div className="col-md-6">
+              <p><strong>{userInfo.nameCon}</strong></p>
+              <p><strong>Razon Social:</strong> {userInfo.nameCon}</p>
+              <p><strong>Domicilio Comercial:</strong> {config.address}</p>
+              <p><strong>Condición frente al IVA:</strong> {config.ivaCondition}</p>
+            </div>
+            <div className="col-md-6 ">
+              <p><strong>TRABAJO</strong></p>
+              <p><strong>Punto de Venta:</strong> {config.salePoint}    
+              <strong>     Comp. Nro:</strong> {remNumImp}</p>
+              <p><strong>Fecha de Emision:</strong> {remDat}</p>
+              <p><strong>CUIT:</strong> {config.cuit}</p>
+              <p><strong>Ingresos Brutos:</strong> {config.ib}</p>
+              <p><strong>Fecha de Inicio de Actividades:</strong> {config.feciniact}</p>
+            </div>
+          </div>
+                    <hr />
+            <div className="row">
+              <div className="col-md-6">
+                <p><strong>CUIT:</strong> {userObj!.cuit}</p>
+                <p><strong>Condición IVA:</strong> {userObj!.coniva}</p>
+              </div>
+              <div className="col-md-6">
+                <p><strong>Apellido y Nombre / Razon Social:</strong> {userObj!.nameCus}</p>
+                <p><strong>Dirección:</strong> {userObj!.domcomer}</p>
+              </div>
+          </div>
+
+          </div>
+          { true &&
+          (
+            <div>
+              <table className="table table-bordered mt-3">
+                <thead className="table-dark text-white">
+                  <tr>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th className="text-end">Cantidad</th>
+                    <th className="text-end">Unidad</th>
+                    <th className="text-end">Precio</th>
+                    <th className="text-end">Subtotal</th>
+                    <th className="text-end">IVA (%)</th>
+                    <th className="text-end">Subtotal c/IVA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.map((item, index) => (
+                    <tr key={item._id}>
+                      <td>{index + 1}</td>
+                      <td>{item.title}</td>
+                      <td className="text-end">{item.quantity}</td>
+                      <td>{item.medPro}</td>
+                      <td className="text-end">${item.price}</td>
+                      <td className="text-end">${(item.quantity * item.price).toFixed(2)}</td>
+                      <td className="text-end">%{item.porIva}</td>
+                      <td className="text-end">${(item.quantity * item.price*(1+(item.porIva/100))).toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="text-end">
+                {/* <p><strong>Subtotal:</strong> ${totalSubImp}</p>
+                <p><strong>IVA:</strong> ${taxImp}</p> */}
+                <h5><strong>Total:</strong> ${totalImp}</h5>
+              </div>
+            </div>
           )}
-          </>
 
+
+      </div>
+    </div>
+
+
+
+
+            </div>
+          </>
+        )}
+
+      {/* </main>
+    </> */}
+    </AdminLayoutMenuSer>
   );
 }
 
