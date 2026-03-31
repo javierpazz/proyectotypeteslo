@@ -338,7 +338,9 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     }else{
       // cargaParametros(instRow.orderItems)
       addTodosProductToCartEsc(instRow.paramItems as IParamProduct[], remDat);
-
+      console.log("instRow.paramItems")
+      console.log(instRow.paramItems)
+      console.log("instRow.paramItems")
       setInstrumento(instRow);
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);

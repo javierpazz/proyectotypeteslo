@@ -24,6 +24,53 @@ export const NameInstrumento = () => {
 
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
+  const getTodayInGMT3 = () => {
+    const now = new Date();
+    // Convertimos a la hora de Argentina (GMT-3)
+    const offset = now.getTimezoneOffset(); // En minutos
+    const localDate = new Date(now.getTime() - (offset + 180) * 60 * 1000); // 180 = 3 horas
+    
+    return localDate.toISOString().split("T")[0];
+  };
+
+
+  const [instrumento, setInstrumento] = useState(instrumentoI);
+  const params = useParams();
+  const { _id } = params;
+
+  const [remDat] = useState(getTodayInGMT3());
+  const [isPaying, setIsPaying] = useState(false);
+  const [recNum, setRecNum] = useState('');
+  const [recDat, setRecDat] = useState(getTodayInGMT3());
+  const [desval, setDesval] = useState('');
+  const [desVal, setDesVal] = useState('');
+  const [codCus, setCodCus] = useState(localStorage.getItem('cliente'));
+  const [codIns, setCodIns] = useState('');
+  const [codPar, setCodPar] = useState('');
+  const [terminado, setTerminado] = useState(false);
+  const [dueDat, setDueDat] = useState(getTodayInGMT3());
+  const [remNum, setRemNum] = useState("");
+  const [notes, setNotes] = useState('');
+
+  const [libNum, setLibNum] = useState("");
+  const [folNum, setFolNum] = useState("");
+  const [asiNum, setAsiNum] = useState("");
+  const [asiDat, setAsiDat] = useState("");
+  const [escNum, setEscNum] = useState("");
+  const [asieNum, setAsieNum] = useState("");
+  const [asieDat, setAsieDat] = useState("");
+  const [codCust, setCodCust] = useState('');
+  const [codPart, setCodPart] = useState('');
+  const [namePar, setNamePar] = useState('');
+  const [nameCus, setNameCus] = useState('');
+  const [codInst, setCodInst] = useState('');
+  const [isloading, setIsloading] = useState(false);
+  const [remNumImp, setRemNumImp] = useState('');
+  const [numval, setNumval] = useState(' ');
+  const [amountval, setAmountval] = useState(0);
+  const [totalImp, setTotalImp] = useState(0);
+  const [valueeR, setValueeR] = useState('');
+  const [showInvoice, setShowInvoice] = useState(false);
 
     useEffect(() => {
         if (!user && !isLoading) {
@@ -40,7 +87,9 @@ export const NameInstrumento = () => {
         const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;  
-  
+
+    // const codConNum = (localStorage.getItem('puntonum') && localStorage.getItem('puntonum') || "");
+    const codConNum = Number(localStorage.getItem('puntonum') || 0);  
   
   
   const {  cart, addTodosProductToCartEsc } = useContext(CartContext);
@@ -92,36 +141,40 @@ export const NameInstrumento = () => {
 
 
 
-  const getTodayInGMT3 = () => {
-    const now = new Date();
-    // Convertimos a la hora de Argentina (GMT-3)
-    const offset = now.getTimezoneOffset(); // En minutos
-    const localDate = new Date(now.getTime() - (offset + 180) * 60 * 1000); // 180 = 3 horas
-    
-    return localDate.toISOString().split("T")[0];
-  };
 
-
-  const [instrumento, setInstrumento] = useState(instrumentoI);
-  const params = useParams();
-  const { _id } = params;
-
-  const [remDat] = useState(getTodayInGMT3());
- 
-
-
+  
   useEffect(() => {
     loadProduct()
    }, [])
+
+  const clearitems = () => {
+
+  setLibNum("");
+  setFolNum("");
+  setAsiNum("");
+  setAsiDat("");
+  setEscNum("");
+  setAsieNum("");
+  setAsieDat("");
+  setCodPart("");
+  setCodInst("");
+  setNotes("");
+
+
+    setValueeR("");
+    setCodCust("");
+    setRemNum("");
+    setShowInvoice(false);
+  };
 
 
   const loadProduct = async() => {
     try {
       // const resp = await stutzApi.get<IProduct>(`/api/tes/instrumentos/${ slug }`);
       const resp = await stutzApi.get(`/api/tes/admin/instrumentos/${ _id }`);
-      console.log("resp.data")
-      console.log(resp)
-      console.log("resp.data")
+      // console.log("resp.data")
+      // console.log(resp)
+      // console.log("resp.data")
       
       // setInstrumento(resp.data);
       setInstrumento({
@@ -131,13 +184,15 @@ export const NameInstrumento = () => {
       }
       );
       addTodosProductToCartEsc(resp.data.paramItems as IParamProduct[], remDat);
+      console.log("resp.data.paramItems")
+      console.log(resp.data.paramItems)
+      console.log("resp.data.paramItems")
 
 
-
-      console.log("resp.data")
-      console.log(instrumento)
-      console.log("resp.data")
-      console.log(remDat)
+      // console.log("resp.data")
+      // console.log(instrumento)
+      // console.log("resp.data")
+      // console.log(remDat)
 
     } catch (error) {
       // console.log(error)
@@ -145,6 +200,10 @@ export const NameInstrumento = () => {
     }
    }
  
+  const unloadpayment = async () => {
+    if (window.confirm('Cargo correctamente los Datos?')) {
+    }
+  };
 
 
   const placeInvoiceHandler = async () => {
@@ -152,6 +211,8 @@ export const NameInstrumento = () => {
       if (isPaying && (!recNum || !recDat || !desVal)) {
         unloadpayment();
       } else {
+        console.log(remDat)
+        console.log(codCus)
         if (remDat && codCus) {
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
           invoice.subTotal = round2(
@@ -181,7 +242,7 @@ export const NameInstrumento = () => {
               invoice.asieDat= asieDat;
               invoice.terminado= terminado;
           invoice.id_config = userInfo.codCon;
-          invoice.user = userInfo.user._id,
+          invoice.user = userInfo.user._id;
           invoice.codConNum = codConNum;
 
           invoice.supplier = '0';
@@ -234,7 +295,7 @@ export const NameInstrumento = () => {
               terminado : invoice.terminado,
           codCon: invoice.id_config,
           user: userInfo.user._id,
-          codConNum: invoice.codConNum,
+          codConNum: invoice.codConNum.toString(),
 
           //        codSup: invoice.codSup,
 
@@ -327,6 +388,7 @@ export const NameInstrumento = () => {
                     className='circular-btn'
                     onClick={placeInvoiceHandler}
                   >
+                  Genera Orden Servicio
                   </Button>
             </Box>
           </Grid>
