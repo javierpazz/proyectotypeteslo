@@ -91,12 +91,28 @@ export const SideMenu = () => {
                 </ListItem>
 
                 <ListItem button 
+                onClick={ () => navigateTo('/pedidoservice') }
+                >
+                    <ListItemIcon>
+                        <ConfirmationNumberOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Pedido Service'} />
+                </ListItem>
+                <ListItem button 
+                onClick={ () => navigateTo('/orders/miservices') }
+                >
+                    <ListItemIcon>
+                        <ConfirmationNumberOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Mis Services'} />
+                </ListItem>
+                <ListItem button 
                 onClick={ () => navigateTo('/orders/history') }
                 >
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Mis Ordenes'} />
+                    <ListItemText primary={'Mis Compras'} />
                 </ListItem>
                 </>
                     )
