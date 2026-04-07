@@ -5,17 +5,20 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 import { useEffect, useState, useContext } from "react";
-import { IOrder, IUser } from "../../interfaces";
+import { IMaquina, IOrder, IParte, IUser } from "../../interfaces";
 import { stutzApi } from "../../../api";
 import { AuthContext } from "../../../context";
 
 
 
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 100 },
+    // { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'remNum', headerName: 'Orden', width: 100 },
+    { field: 'remDat', headerName: 'Fecha', width: 100 },
     // { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
     { field: 'email', headerName: 'Correo', width: 200 },
-    { field: 'name', headerName: 'Nombre Completo', width: 200 },
+    { field: 'maquina', headerName: 'Maquina', width: 200 },
+    { field: 'parte', headerName: 'Parte', width: 200 },
     { field: 'total',
       headerName: 'Importe',
       width: 100,
@@ -49,7 +52,7 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-               <NavLink to={`/orders/${ params.row.orderId }`} >
+               <NavLink to={`/pedidoservices/${ params.row.orderId }`} >
                         Ver orden
                </NavLink>
             )
@@ -60,7 +63,7 @@ const columns: GridColDef[] = [
 
 
 
-export const History = () => {
+export const HistoryServices = () => {
 
   
 ////////////////////FGFGFGFG
@@ -81,7 +84,7 @@ export const History = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/orders/history');
+        navigate('/auth/login?redirect=/pedidoservices/history');
         }
         if (user?.role !== "client" ) {
         navigate('/');
@@ -90,13 +93,16 @@ export const History = () => {
     ////////////////////FGFGFGFG
 
 
-
-
-// ////////////////////FGFGFGFG
+////////////////////FGFGFGFG
 const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;
 
+    function formatDateNoTZ(dateString: string) {
+    const datePart = dateString.split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    return `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+    }
 
     const [ orders, setOrders ] = useState<IOrder[]>([]);
 
@@ -104,7 +110,11 @@ const userInfo = localStorage.getItem('userInfo')
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get(`/api/tes/orders/getordersbyus/${userInfo.user._id}`);
+          // aqui hago trampa
+          userInfo.user._id = userInfo.user.email;
+          // aqui hago trampa
+          const resp = await stutzApi.get(`/api/tes/orders/getservicesbyus/${userInfo.user._id}`);
+          // console.log(resp.data)
           setOrders(resp.data);
         } catch (error) {
           console.log({error})
@@ -121,9 +131,14 @@ const userInfo = localStorage.getItem('userInfo')
     if ( !orders ) return (<></>);
     const rows = orders.map( (order, idx) => ({
         id: idx + 1,
+        remNum: order.remNum,
+        remDat: order.remDat ? formatDateNoTZ(order.remDat) : '',
         paid: order.isPaid,
-        fullname: `${ order.orderAddress.firstName } ${ order.orderAddress.lastName }`,
+        // fullname: `${ order.orderAddress.firstName } ${ order.orderAddress.lastName }`,
         email : (order.user as IUser).email,
+        maquina  : (order.id_maquin as IMaquina)?.name ?? "",
+        parte  : (order.id_parte as IParte)?.name ?? "",
+
         name  : (order.user as IUser).name,
         total : order.total.toFixed(2),
         staOrd: order.staOrd,
@@ -134,21 +149,23 @@ const userInfo = localStorage.getItem('userInfo')
 
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
-        <Typography variant='h1' component='h1'>Historial de ordenes</Typography>
+        <Typography variant='h1' component='h1'>Historial de Services</Typography>
 
 
         <Grid container>
-            <Grid item xs={12} sx={{ height:650, width: '100%' }}>
+            <Grid item xs={12} sx={{ height:475, width: '100%' }}>
                 <DataGrid 
                     rows={ rows }
                     columns={ columns }
+                    rowHeight={33}
                     initialState={{
                         pagination: { 
                           // paginationModel: { pageSize: 5 } 
-                          paginationModel: { pageSize: 10, page: 0 },
+                          paginationModel: { pageSize: 20, page: 0 },
                         },
                       }}
-                      pageSizeOptions={[5, 10, 25]}                />
+                      // pageSizeOptions={[5, 10, 25]}                />
+                      pageSizeOptions={[20]}                />
 
             </Grid>
         </Grid>

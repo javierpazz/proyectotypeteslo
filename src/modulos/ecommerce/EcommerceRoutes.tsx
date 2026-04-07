@@ -25,6 +25,11 @@ const Summary = lazy(() =>
   import('../../pages/checkout/Summary').then(m => ({ default: m.Summary }))
 );
 
+const HistoryServices = lazy(() =>
+
+  import('../../pages/services/HistoryServices').then(m => ({ default: m.HistoryServices }))
+);
+
 const History = lazy(() =>
   import('../../pages/orders/History').then(m => ({ default: m.History }))
 );
@@ -59,6 +64,9 @@ const Servicio = lazy(() =>
 const OrderPage = lazy(() =>
   import('../../pages/orders/OrderPage').then(m => ({ default: m.OrderPage }))
 );
+const OrderEscSerPage = lazy(() =>
+  import('../../pages/services/OrderEscSerPage').then(m => ({ default: m.OrderEscSerPage }))
+);
 
 const SalePointScreen = lazy(() =>
   import('../../pages/crmpages/SalePointScreen').then(m => ({ default: m.SalePointScreen }))
@@ -69,6 +77,8 @@ export default function EcommerceRoutes() {
         <Route path="/blanco" element={ <Blanco /> } />
         <Route path="/" element={ <Ecommerce /> } />
         <Route path="/pedidoservice" element={ <Eservice /> } />
+        <Route path="/pedidoservices/history" element={ <HistoryServices /> } />
+        <Route path="/pedidoservices/:id" element={ <OrderEscSerPage /> } />
         <Route path="/factura" element={ <Invoice /> } />
         <Route path="/escribania" element={ <Escribania /> } />
         <Route path="/servicio" element={ <Servicio /> } />

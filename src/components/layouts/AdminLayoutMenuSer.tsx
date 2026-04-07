@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
-import { AdminNavbarMenu, AdminNavbarMenuSer } from '../admin';
+import { AdminNavbarMenu, AdminNavbarMenuEsc, AdminNavbarMenuSer } from '../admin';
 import { SideMenu } from '../ui';
 import foto from '../../assets/fondoser.jpg';
 
@@ -18,9 +18,12 @@ export const AdminLayoutMenuSer:FC<Props> = ({ children}) => {
 
         <nav>
             {
-            (localStorage.getItem('modulo') === "serv") ?
-            <AdminNavbarMenuSer />
-            :<AdminNavbarMenu />
+            (localStorage.getItem('modulo') === "invo") ?
+            <AdminNavbarMenu />
+            // :<AdminNavbarMenuEsc />
+            : (localStorage.getItem('modulo') === "serv") ?
+                <AdminNavbarMenuSer />
+                :<AdminNavbarMenuEsc />
             }
         </nav>
         <SideMenu />
@@ -32,20 +35,20 @@ export const AdminLayoutMenuSer:FC<Props> = ({ children}) => {
         }}> */}
 
         <main
-            style={{
-            backgroundColor: '#dedbdbff', // gris
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-            minHeight: '100vh', // opcional, para ocupar toda la pantalla
-            }}
             // style={{
-            // backgroundImage: `url(${foto})`,
+            // backgroundColor: '#dedbdbff', // gris
             // backgroundSize: 'cover',
             // backgroundPosition: 'center',
             // backgroundAttachment: 'fixed',
-            // minHeight: '100vh',
+            // minHeight: '100vh', // opcional, para ocupar toda la pantalla
             // }}
+            style={{
+            backgroundImage: `url(${foto})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            minHeight: '100vh',
+            }}
         >
 
 

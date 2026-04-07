@@ -45,7 +45,7 @@ export const NameInstrumento = () => {
   const [desval, setDesval] = useState('');
   const [desVal, setDesVal] = useState('');
   const [codCus, setCodCus] = useState(localStorage.getItem('cliente'));
-  const [codIns, setCodIns] = useState('');
+  const [codIns, setCodIns] = useState(_id);
   const [codPar, setCodPar] = useState('');
   const [terminado, setTerminado] = useState(false);
   const [dueDat, setDueDat] = useState(getTodayInGMT3());

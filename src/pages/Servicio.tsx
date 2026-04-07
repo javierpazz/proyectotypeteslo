@@ -3,7 +3,7 @@ import { AuthContext } from "../../context";
 import { useNavigate } from "react-router-dom";
 import { AdminLayoutMenuSer } from "../components/layouts";
 import { CategoryOutlined } from "@mui/icons-material";
-import foto from '../assets/fondo.jpg';
+import foto from '../assets/fondoSer.jpg';
 
 
 export const Servicio = () => {

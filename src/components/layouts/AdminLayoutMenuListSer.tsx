@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Box, Typography } from '@mui/material';
-import { AdminNavbarMenu, AdminNavbarMenuSer } from '../admin';
+import { AdminNavbarMenu, AdminNavbarMenuEsc, AdminNavbarMenuSer } from '../admin';
 
 import { SideMenu } from '../ui';
 
@@ -18,9 +18,12 @@ export const AdminLayoutMenuListSer:FC<Props> = ({ children, title, subTitle, ic
 
         <nav>
             {
-            (localStorage.getItem('modulo') === "serv") ?
-            <AdminNavbarMenuSer />
-            :<AdminNavbarMenu />
+            (localStorage.getItem('modulo') === "invo") ?
+            <AdminNavbarMenu />
+            // :<AdminNavbarMenuEsc />
+            : (localStorage.getItem('modulo') === "serv") ?
+                <AdminNavbarMenuSer />
+                :<AdminNavbarMenuEsc />
             }
         </nav>
 

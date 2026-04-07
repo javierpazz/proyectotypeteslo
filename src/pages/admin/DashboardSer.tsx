@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import {DashboardOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-import { AdminLayoutMenuSer } from '../../components/layouts'
+import { AdminLayoutMenu } from '../../components/layouts'
 // import { Grid } from '@mui/material'
 // import { SummaryTile } from '../../components/admin'
 // import { DashboardSummaryResponse } from '../../interfaces';
@@ -108,7 +108,7 @@ export const DashboardSer = () => {
 
 
   return (
-    <AdminLayoutMenuSer
+    <AdminLayoutMenu
         title='Dashboard'
         subTitle='Estadisticas generales'
         icon={ <DashboardOutlined /> }
@@ -480,6 +480,6 @@ export const DashboardSer = () => {
           </Grid>
         </>
 
-    </AdminLayoutMenuSer>
+    </AdminLayoutMenu>
   )
 }

@@ -12,7 +12,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { AdminLayoutMenuSer } from '../../components/layouts';
+import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { BuscaMaq, BuscaEnc, BuscaPar, BuscaCli, BuscaProSer, BuscaTra, BuscaConFac, BuscaUse } from '../../components/buscador';
 import { AuthContext } from '../../../context';
@@ -309,7 +309,7 @@ desVal;
 
 
   return (
-    <AdminLayoutMenuSer 
+    <AdminLayoutMenu 
         title={`Entredas`} 
         subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
@@ -616,7 +616,7 @@ desVal;
 
     </Box>
 
-    </AdminLayoutMenuSer>
+    </AdminLayoutMenu>
   );
 }
 

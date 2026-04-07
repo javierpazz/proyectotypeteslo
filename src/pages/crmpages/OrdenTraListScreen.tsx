@@ -121,6 +121,7 @@ const columns:GridColDef[] = [
 
     },
     { field: 'remDat', headerName: 'Fecha', width: 100 },
+    { field: 'dueDat', headerName: 'Vence', width: 100 },
     {
         field: 'terminado',
         headerName: 'Terminada',
@@ -269,6 +270,7 @@ const columns:GridColDef[] = [
         terminado : invoice.terminado,
         remNum    : invoice.remNum,
         remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+        dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
         notes: invoice.notes,
         nameCus  : (invoice.id_client as ICustomer).nameCus,
         nameUse  : (invoice.user as IUser).name,
@@ -330,6 +332,7 @@ const columns:GridColDef[] = [
       terminado: invoice.terminado,
       remNum: invoice.remNum,
       remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+      dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
 
       invNum: invoice.invNum,
       invDat: invoice.invDat ? formatDateNoTZ(invoice.invDat) : '',
@@ -358,6 +361,7 @@ const columns:GridColDef[] = [
        row.nameEnc,
        row.nameCon,
        row.remDat,
+       row.dueDat,
 
        row.invNum,
        row.invDat,
@@ -386,7 +390,8 @@ const columns:GridColDef[] = [
       'Maquina',
       'Encargado',
       'Configuración',
-      'Fecha Entrada',
+      'Fecha Orden',
+      'Fecha Vence',
 
       'Nro Comprobante',
       'Fecha Comprobante',

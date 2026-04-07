@@ -103,6 +103,7 @@ const columns:GridColDef[] = [
 
     },
     { field: 'remDat', headerName: 'Fecha', width: 100 },
+    { field: 'dueDat', headerName: 'Fec.Vence', width: 100 },
     {
         field: 'terminado',
         headerName: 'Entrada',
@@ -124,25 +125,26 @@ const columns:GridColDef[] = [
         }
     },
     {
-        field: 'dilterminado',
-        headerName: 'Diligencia',
-        width: 120,
-        renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-            return row.dilterminado
-                ? (
-                    <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
-                     underline='always'>
+      field: 'dilterminado',
+      headerName: 'Diligencia',
+      width: 120,
+      renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+        return row.dilterminado
+        ? (
+          <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
+          underline='always'>
                     <Chip variant='outlined' label="Terminada" color="success" /> 
                     </MuiLink>
                   )
-                : (
+                  : (
                     <MuiLink component={RouterLink}  to={`/admin/entrada/${row.punteid}?redirect=/admin/diligencias`}
-                     underline='always'>
+                    underline='always'>
                      <Chip variant='outlined' label="Pendiente" color="error" /> 
                     </MuiLink>
                     )
-        }
-    },
+                  }
+                },
+    { field: 'venDil', headerName: 'Dil.Vence', width: 200 },
     { field: 'customName', headerName: 'Cliente', width: 200 },
     { field: 'instruName', headerName: 'Instrumento', width: 200 },
         {
@@ -162,6 +164,7 @@ const columns:GridColDef[] = [
     { field: 'parteName', headerName: 'Parte', width: 200 },
     { field: 'configName', headerName: 'Registro', width: 200 },
     { field: 'namePro', headerName: 'Diligencia', width: 200 },
+
     // { field: 'valor', headerName: 'Valor Dil.', width: 200 },
     { field: 'valor',
       headerName: 'Valor Dil.',
@@ -316,6 +319,7 @@ export const DiligenciaListScreen = () => {
         remNum    : invoice.remNum,
         observ    : invoice.orderItems.observ,
         remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+        dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
         nameCus  : (invoice.id_client as ICustomer).nameCus,
         nameIns  : (invoice.id_instru as IInstrumento).name,
         // namePar  : (invoice.id_parte as IParte).name,
@@ -325,6 +329,7 @@ export const DiligenciaListScreen = () => {
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
         dilterminado  : invoice.orderItems.terminado,
         valor  : (invoice.orderItems.price*(1+(invoice.orderItems.porIva/100))).toFixed(2),
+        venDil: invoice.orderItems.venDat ? formatDateNoTZ(invoice.orderItems.venDat) : '',
         // namePro  : invoice.orderItems.title as any,
         // total : invoice.total,
         total : invoice.total.toFixed(2),
@@ -358,6 +363,7 @@ export const DiligenciaListScreen = () => {
       remNum: invoice.remNum,
       observ: invoice.orderItems.observ,
       remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
+      dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
       // nameCus: invoice.id_client?.nameCus ?? '',
       // nameIns: invoice.id_instru?.name ?? '',
       namePro: invoice.orderItems.title,
@@ -366,6 +372,7 @@ export const DiligenciaListScreen = () => {
       // dilterminado: invoice.orderItems.terminado,
       dilterminado  : invoice.orderItems.terminado ? "TERMINADO" : "PENDIENTE",
       valor  : invoice.orderItems.price*(1+(invoice.orderItems.porIva/100)),
+      venDil: invoice.orderItems.venDat ? formatDateNoTZ(invoice.orderItems.venDat) : '',
       total: invoice.total,
       isPaid: invoice.isPaid,
       noProducts: invoice.numberOfItems,
@@ -381,6 +388,7 @@ export const DiligenciaListScreen = () => {
        row.parteName,
        row.configName,
        row.remDat,
+       row.dueDat,
        row.terminado,
        row.observ,
        row.libNum,
@@ -391,6 +399,7 @@ export const DiligenciaListScreen = () => {
        row.asieNum,
        row.asieDat,
        row.namePro,
+       row.venDil,
        row.dilterminado,
        row.valor,
        row.total,
@@ -408,6 +417,7 @@ export const DiligenciaListScreen = () => {
       'Parte',
       'Configuración',
       'Fecha Entrada',
+      'Fecha Vence',
       'Terminado',
       'Observaciones',
       'Libro',
@@ -418,6 +428,7 @@ export const DiligenciaListScreen = () => {
       'Asiento Publico  N°',
       'Fecha Asiento Publico',
       'Diligencia',
+      'Vence',
       'Estado Diligencia',
       'Valor Diligencia',
       'Total',

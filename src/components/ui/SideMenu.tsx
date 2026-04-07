@@ -99,7 +99,7 @@ export const SideMenu = () => {
                     <ListItemText primary={'Pedido Service'} />
                 </ListItem>
                 <ListItem button 
-                onClick={ () => navigateTo('/orders/miservices') }
+                onClick={ () => navigateTo('/pedidoservices/history') }
                 >
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
