@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link as MuiLink } from '@mui/material';
+import { MenuItem, Link as MuiLink, Select } from '@mui/material';
 
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
 import { Button, Chip, Grid, Box } from '@mui/material'
@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser } from '../../interfaces';
+import { IOrder, ICustomer, IInstrumento, IParte, IConfiguracion, IUser, IEstadoOrden } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
@@ -22,7 +22,9 @@ import { BiFileFind } from 'react-icons/bi';
 
 export const EntradaListScreen = () => {
 
-    
+    // const [ orders, setOrders ] = useState<IOrder[]>([]);
+    const [stateOrdss, setStateOrdss] = useState<IEstadoOrden[]>();
+
     ////////////////////FGFGFGFG
     const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
@@ -61,6 +63,20 @@ export const EntradaListScreen = () => {
     const [ invoices, setInvoices ] = useState<IOrder[]>([]);
     const [ isloading, setIsloading ] = useState(false);
 
+
+  useEffect(() => {
+    const fetchDataVal = async () => {
+      try {
+        const { data } = await stutzApi.get(`api/stateOrds/`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        setStateOrdss(data);
+
+      } catch (err) {}
+    };
+    fetchDataVal();
+  }, []);
+
  useEffect(() => {
     const fetchData = async () => {
       try {
@@ -98,8 +114,42 @@ export const EntradaListScreen = () => {
     
     //   }
 
+
+
+    const onActivoUpdated = async( Id: string, newisActive: string ) => {
+        const previosorders = invoices!.map( ord => ({ ...ord }));
+        const updatedorders = invoices!.map( ord => ({
+            ...ord,
+            staOrd: Id === ord._id ? newisActive : ord.staOrd
+        }));
+
+        setInvoices(updatedorders);
+
+        try {
+            
+            await stutzApi.put(`/api/invoices/${Id}/applychasta`,
+              //  {  Id, isActive: newisActive });
+        {
+          staOrd: newisActive
+        }),
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+
+
+
+        } catch (error) {
+            setInvoices( previosorders );
+            console.log(error);
+            alert('No se pudo actualizar el estado de la Orden');
+        }
+
+    }
+
+
 // 👉 Calculás el total
 const totalGeneral = invoices.reduce((acc, inv) => acc + inv.total, 0);
+
 
 
 const columns:GridColDef[] = [
@@ -206,6 +256,31 @@ const columns:GridColDef[] = [
                 )
               }
             },
+
+        {
+            field: 'staOrd', 
+            headerName: 'Estado', 
+            headerAlign: 'center',
+            width: 200,
+            renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+                return (
+                    <Select
+                    value={ row.staOrd }
+                    label="Estado"
+                    onChange={ ({ target }) => onActivoUpdated( row.id, target.value ) }
+                    sx={{ width: '300px' }}
+                    >
+
+                        {stateOrdss!.map((estado) => (
+                          <MenuItem key={estado.name} value={estado.name}>
+                            {estado.name}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                )
+            }
+        },
+
             {
               field: 'check',
               headerName: 'Acción',
@@ -261,6 +336,7 @@ const columns:GridColDef[] = [
 
         invNum    : invoice.invNum,
         invDat: invoice.invDat ? formatDateNoTZ(invoice.invDat) : '',
+        staOrd: invoice.staOrd,
 
         terminado : invoice.terminado,
         remNum    : invoice.remNum,

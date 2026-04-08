@@ -37,8 +37,8 @@ const columns: GridColDef[] = [
     },
     { field: 'staOrd',
       headerName: 'Estado',
-      width: 100,
-      align: 'center',
+      width: 200,
+      // align: 'center',
       headerAlign: 'center',
     },
 
@@ -138,17 +138,19 @@ const userInfo = localStorage.getItem('userInfo')
 
 
         <Grid container>
-            <Grid item xs={12} sx={{ height:650, width: '100%' }}>
+            <Grid item xs={12} sx={{ height:475, width: '100%' }}>
                 <DataGrid 
                     rows={ rows }
                     columns={ columns }
+                    rowHeight={33}
                     initialState={{
                         pagination: { 
                           // paginationModel: { pageSize: 5 } 
                           paginationModel: { pageSize: 10, page: 0 },
                         },
                       }}
-                      pageSizeOptions={[5, 10, 25]}                />
+                      // pageSizeOptions={[5, 10, 25]}                />
+                      pageSizeOptions={[20]}                />
 
             </Grid>
         </Grid>

@@ -104,6 +104,13 @@ export const Eservice = () => {
         setCodCon(conf._id);
         setName(conf.name);
         setSalePoint(conf.codCon);
+
+          userInfo.codCon = conf._id;
+          userInfo.salePoint = conf.codCon;
+          userInfo.nameCon = conf.name;
+          userInfo.configurationObj = conf;
+
+
         userInfo.filtro = filtro;
         userInfo.codCon = conf._id;
         localStorage.setItem('userInfo', JSON.stringify(userInfo));

@@ -132,8 +132,8 @@ const columns:GridColDef[] = [
         {
             field: 'staOrd', 
             headerName: 'Estado', 
-            align: 'right',
-            width: 240,
+            headerAlign: 'center',
+            width: 200,
             renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
                 return (
                     <Select

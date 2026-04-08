@@ -89,7 +89,9 @@ export const NameInstrumento = () => {
     : null;  
 
     // const codConNum = (localStorage.getItem('puntonum') && localStorage.getItem('puntonum') || "");
-    const codConNum = Number(localStorage.getItem('puntonum') || 0);  
+    // const codConNum = Number(localStorage.getItem('puntonum') || 0);  
+    const codConNum = userInfo.configurationObj.codCon;
+  
   
   
   const {  cart, addTodosProductToCartEsc } = useContext(CartContext);
@@ -184,9 +186,6 @@ export const NameInstrumento = () => {
       }
       );
       addTodosProductToCartEsc(resp.data.paramItems as IParamProduct[], remDat);
-      console.log("resp.data.paramItems")
-      console.log(resp.data.paramItems)
-      console.log("resp.data.paramItems")
 
 
       // console.log("resp.data")
@@ -295,7 +294,7 @@ export const NameInstrumento = () => {
               terminado : invoice.terminado,
           codCon: invoice.id_config,
           user: userInfo.user._id,
-          codConNum: invoice.codConNum.toString(),
+          codConNum: invoice.codConNum,
 
           //        codSup: invoice.codSup,
 
@@ -331,7 +330,7 @@ export const NameInstrumento = () => {
       setRecDat('');
       setNumval(' ');
       setAmountval(0);
-      //navigate(`/order/${data.order._id}`);
+      navigate(`/pedidoservice`);
     // } catch (err) {
     //   toast.error(getError(err));
     // }

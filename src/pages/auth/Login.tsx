@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../components/layouts'
 import { AuthContext } from '../../../context';
 import { validations } from '../../utils';
+import { stutzApi } from '../../../api';
 
 type FormData = {
     email   : string,
@@ -103,6 +104,24 @@ export const Login = () => {
         const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
         ? JSON.parse(localStorage.getItem('userInfo')!)
         : {};
+
+
+/////busca primer config
+      try {
+        const { data } = await stutzApi.get(`/api/configurations/`);
+        // const conf = data[0];
+        const conf = data.find((item : any) => item.codCon === "0001");
+          userInfo.codCon = conf._id;
+          userInfo.salePoint = conf.codCon;
+          userInfo.nameCon = conf.name;
+          userInfo.configurationObj = conf;
+
+
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      } catch (error) {
+        console.error('Error al cargar configuración:', error);
+      }
+/////busca primer config
 
           userInfo.filtro = filtro;
           userInfo.codCon = punto;

@@ -2,9 +2,9 @@ import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 // import { GetServerSideProps } from 'next'
 // import { useRouter } from 'next/router';
 import {  useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Box, Button,  Card, CardActions, CardMedia, Chip, Divider, FormLabel, Grid, TextField } from '@mui/material';
+import { Box, Button,  Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControlLabel, FormLabel, Grid, TextField } from '@mui/material';
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 
 import { AdminLayoutMenuList } from '../../../components/layouts'
@@ -21,6 +21,7 @@ interface FormData {
     _id?       : string;
     codPro     : string;
     codigoPro? : string;
+    ecoActive: boolean;
     images     : string[];
     inStock    : number;
     minStock    : number;
@@ -44,6 +45,7 @@ const productI: FormData =
           _id: '',
           codPro: '',
           codigoPro: '',
+          ecoActive: true,
           description: "",
           medPro: "",
           porIva: 0,
@@ -105,7 +107,7 @@ export const ProductAdminPage = () => {
     const input2Ref = useRef<HTMLInputElement>(null);
 
 
-const { register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
+const { control, register, handleSubmit, formState:{ errors }, getValues, setValue, watch, reset } = useForm<FormData>({
     defaultValues: product
 })
 
@@ -412,6 +414,18 @@ const loadProduct = async() => {
                                 helperText={ errors.brand?.message }
                                 InputLabelProps={{shrink: true}}
                             />
+
+
+                        <Controller
+                            name='ecoActive'
+                            control={control}
+                            render={({ field }) => (
+                            <FormControlLabel
+                                control={<Checkbox {...field} checked={field.value} />}
+                                label='Ecommerce Activo'
+                            />
+                            )}
+                        />
 
 
 

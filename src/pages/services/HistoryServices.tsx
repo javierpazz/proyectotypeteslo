@@ -40,8 +40,8 @@ const columns: GridColDef[] = [
     },
     { field: 'staOrd',
       headerName: 'Estado',
-      width: 100,
-      align: 'center',
+      width: 200,
+      // align: 'center',
       headerAlign: 'center',
     },
 
