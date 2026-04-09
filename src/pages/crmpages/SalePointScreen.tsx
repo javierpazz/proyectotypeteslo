@@ -76,6 +76,25 @@ export const SalePointScreen = () => {
   
   const [configus, setConfigus] = useState<IConfiguracion[]>([]);
 
+    useEffect(() => {
+      if (configus.length > 0) {
+        // 👇 selecciona automáticamente el primero
+        searchProduct(configus[0]._id);
+      }
+    }, [configus]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && name) {
+        e.preventDefault();
+        submitHandler(e as any);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [name]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -121,10 +140,12 @@ const handleChange = (event: SelectChangeEvent<string>) => {
     userInfo.configurationObj = configurationObj
 
       userInfo.filtro = filtro;
-      userInfo.filtro.codCon = codCon;
-      userInfo.filtro.nameCon = name;
-      userInfo.filtro.codUse = user._id;
-      userInfo.filtro.nameUse = user.name;
+      if (user.role === "user") {
+        userInfo.filtro.codCon = codCon;
+        userInfo.filtro.nameCon = name;
+        userInfo.filtro.codUse = user._id;
+        userInfo.filtro.nameUse = user.name;
+      }
 
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
       localStorage.setItem('punto', codCon);

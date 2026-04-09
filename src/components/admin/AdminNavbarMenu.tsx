@@ -2,7 +2,7 @@ import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AuthContext, UiContext } from '../../../context';
-// import foto from '../../assets/fondocrm.jpg';
+import foto from '../../assets/fondocrm.jpg';
 
 // export default function AdminNavBar() {
 export const AdminNavbarMenu = () => {
@@ -43,8 +43,8 @@ const { user} = useContext(  AuthContext );
   return (
     <AppBar position="static" color="primary"
                              style={{
-                        // backgroundImage: `url(${foto})`,
-                        backgroundColor: '#dedbdbff', // gris
+                        backgroundImage: `url(${foto})`,
+                        // backgroundColor: '#dedbdbff', // gris
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundAttachment: 'fixed',
@@ -301,9 +301,6 @@ const { user} = useContext(  AuthContext );
          onClose={handleClose(setAnchorElConfi)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/products" onClick={handleClose(setAnchorElConfi)}>
-            Productos Ecommerce
-          </MenuItem>
           <MenuItem component={Link} to="/admin/productsfac" onClick={handleClose(setAnchorElConfi)}>
             Productos
           </MenuItem>

@@ -223,6 +223,16 @@ export const SideMenu = () => {
                 </ListItem>
 
                 <ListItem button
+                onClick={ () => navigateTo('/ecomm') }>
+                    <ListItemIcon>
+                        <CategoryOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Ecommerce'} />
+                </ListItem>
+
+
+
+                <ListItem button
                 onClick={ () => navigateTo('/factura') }>
                     <ListItemIcon>
                         <CategoryOutlined/>

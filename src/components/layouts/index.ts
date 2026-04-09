@@ -3,6 +3,7 @@
 export * from './AdminLayout';
 export * from './AdminLayoutMenu';
 export * from './AdminLayoutMenuEsc';
+export * from './AdminLayoutMenuEco';
 export * from './AdminLayoutMenuBla';
 export * from './AdminLayoutMenuInv';
 export * from './AdminLayoutMenuSer';

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
-import { AdminNavbarMenu, AdminNavbarMenuEsc, AdminNavbarMenuSer } from '../admin';
+import { AdminNavbarMenu, AdminNavbarMenuEco, AdminNavbarMenuEsc, AdminNavbarMenuSer } from '../admin';
 import { SideMenu } from '../ui';
 import foto from '../../assets/fondoesc.jpg';
 
@@ -23,7 +23,9 @@ export const AdminLayoutMenuEsc:FC<Props> = ({ children}) => {
             // :<AdminNavbarMenuEsc />
             : (localStorage.getItem('modulo') === "serv") ?
                 <AdminNavbarMenuSer />
-                :<AdminNavbarMenuEsc />
+                : (localStorage.getItem('modulo') === "ecom") ?
+                    <AdminNavbarMenuEco />
+                    : <AdminNavbarMenuEsc />
             }
         </nav>
         <SideMenu />

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Box } from '@mui/material';
-import { AdminNavbarMenu, AdminNavbarMenuEco, AdminNavbarMenuEsc, AdminNavbarMenuSer } from '../admin';
+import { AdminNavbarMenu, AdminNavbarMenuEsc, AdminNavbarMenuEco, AdminNavbarMenuSer } from '../admin';
 import { SideMenu } from '../ui';
 import foto from '../../assets/fondocrm.jpg';
 
@@ -12,7 +12,7 @@ interface Props {
     icon?: JSX.Element;
 }
 
-export const AdminLayoutMenuInv:FC<Props> = ({ children}) => {
+export const AdminLayoutMenuEco:FC<Props> = ({ children}) => {
   return (
     <>
 

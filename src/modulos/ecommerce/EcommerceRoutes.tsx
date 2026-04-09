@@ -53,6 +53,10 @@ const Invoice = lazy(() =>
   import('../../pages/Invoice').then(m => ({ default: m.Invoice }))
 );
 
+const Ecomm = lazy(() =>
+  import('../../pages/Ecomm').then(m => ({ default: m.Ecomm }))
+);
+
 const Escribania = lazy(() =>
   import('../../pages/Escribania').then(m => ({ default: m.Escribania }))
 );
@@ -80,6 +84,7 @@ export default function EcommerceRoutes() {
         <Route path="/pedidoservices/history" element={ <HistoryServices /> } />
         <Route path="/pedidoservices/:id" element={ <OrderEscSerPage /> } />
         <Route path="/factura" element={ <Invoice /> } />
+        <Route path="/ecomm" element={ <Ecomm /> } />
         <Route path="/escribania" element={ <Escribania /> } />
         <Route path="/servicio" element={ <Servicio /> } />
         <Route path="/checkout/address" element={ <Address /> } />

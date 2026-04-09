@@ -15,7 +15,7 @@ export const AppRouter = () => {
         <Route
           path="/auth/*"
           element={
-            <Suspense fallback={<div>Cargando auth...</div>}>
+            <Suspense fallback={<div>Cargando ...</div>}>
               <AuthRoutes />
             </Suspense>
           }
@@ -24,7 +24,7 @@ export const AppRouter = () => {
         <Route
           path="/admin/*"
           element={
-            <Suspense fallback={<div>Cargando admin...</div>}>
+            <Suspense fallback={<div>Cargando ...</div>}>
               <AdminRoutes />
             </Suspense>
           }
@@ -34,7 +34,7 @@ export const AppRouter = () => {
         <Route
           path="/*"
           element={
-            <Suspense fallback={<div>Cargando tienda...</div>}>
+            <Suspense fallback={<div>Cargando ...</div>}>
               <EcommerceRoutes />
             </Suspense>
           }

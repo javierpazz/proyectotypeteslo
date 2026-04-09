@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { stutzApi } from '../../../api';
 import { IParamProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
-import { AdminLayoutMenuSer } from '../../components/layouts';
+import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { TrabajoSelector } from '../crmpages/TrabajoSelector';
@@ -629,7 +629,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   return (
     // <>
     //   <main>
-    <AdminLayoutMenuSer 
+    <AdminLayoutMenu 
         title={`Entredas`} 
         subTitle={'Generando Entredas'}
         icon={ <CategoryOutlined /> }
@@ -1131,7 +1131,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
 
       {/* </main>
     </> */}
-    </AdminLayoutMenuSer>
+    </AdminLayoutMenu>
   );
 }
 

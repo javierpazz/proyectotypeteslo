@@ -2,17 +2,24 @@ import { MouseEvent, useContext, useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AuthContext, UiContext } from '../../../context';
-import foto from '../../assets/fondoesc.jpg';
+import foto from '../../assets/fondocrm.jpg';
 
-export const AdminNavbarMenuEsc = () => {
+// export default function AdminNavBar() {
+export const AdminNavbarMenuEco = () => {
 
     const { toggleSideMenu } = useContext( UiContext );
 
-  const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
+    // Estados para cada menú desplegable
+  // const [anchorElEscri, setAnchorElEscri] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [anchorElAdmin, setAnchorElAdmin] = useState<null | HTMLElement>(null);
-  const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
+  const [anchorElConfi, setAnchorElConfi] = useState<null | HTMLElement>(null);
+  // const [anchorElConfiEsc, setAnchorElConfiEsc] = useState<null | HTMLElement>(null);
 
+  // // Funciones para abrir menú
+  // const handleOpen = (setter) => (event) => setter(event.currentTarget);
+  // // Funciones para cerrar menú
+  // const handleClose = (setter) => () => setter(null);
   const handleOpen =
     (setter: React.Dispatch<React.SetStateAction<HTMLElement | null>>) =>
     (event: MouseEvent<HTMLElement>) =>
@@ -53,22 +60,16 @@ const { user} = useContext(  AuthContext );
               {(user && user.name && user.role !== "client") && (
 
               <MenuItem component={Link} to="/salepoint" onClick={handleClose(setAnchorElUser)}>
-                {
-                (localStorage.getItem('modulo') === "invo") ?
-                  'Punto Venta.: '
-                : 'Registro.: '
-                }
-                {/* Punto Venta.:{(localStorage.getItem('puntonum')) || ""}{(localStorage.getItem('nameCon')) || ""} */}
-                {(localStorage.getItem('puntonum')) || ""}{(localStorage.getItem('nameCon')) || ""}
+                Punto Venta.:{(localStorage.getItem('puntonum')) || ""}{(localStorage.getItem('nameCon')) || ""}
               </MenuItem>
 
 
               )}
             </Button>
         <Menu
-          anchorEl={anchorElEscri}
-          open={Boolean(anchorElEscri)}
-          onClose={handleClose(setAnchorElEscri)}
+          anchorEl={anchorElUser}
+          open={Boolean(anchorElUser)}
+          onClose={handleClose(setAnchorElUser)}
         >
         </Menu>
 
@@ -85,12 +86,25 @@ const { user} = useContext(  AuthContext );
               open={Boolean(anchorElUser)}
               onClose={handleClose(setAnchorElUser)}
             >
+              {/* <MenuItem component={Link} to="/profile" onClick={handleClose(setAnchorElUser)}>
+                Perfil Usuario
+              </MenuItem>
+              <MenuItem component={Link} to="/invoicehistory" onClick={handleClose(setAnchorElUser)}>
+                Mis Comprobantes
+              </MenuItem>
+              <MenuItem component={Link} to="/orderhistory" onClick={handleClose(setAnchorElUser)}>
+                Mis Ordenes
+              </MenuItem>
+              <MenuItem divider /> */}
+              {/* <MenuItem onClick={() => { handleClose(setAnchorElUser)(); signoutHandler(); }}>
+                Log Out
+              </MenuItem> */}
             </Menu>
           </div>
 
         <div style={{ display: 'flex' }}>
         {/* Ventas */}
-        <Button
+        {/* <Button
           color="primary"
           onClick={handleOpen(setAnchorElEscri)}
         >
@@ -105,9 +119,16 @@ const { user} = useContext(  AuthContext );
             Mesa de Entrada
           </MenuItem>
           <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
-             Entradas para Facturar
+            Consulta Entradas
           </MenuItem>
-        </Menu>
+          <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElEscri)}>
+             Consulta Diligencias 
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElEscri)}>
+             Entradas sin Facturar (Sin Hacer)
+          </MenuItem>
+        </Menu> */}
+
 
         {/* Consultas */}
         <Button
@@ -122,22 +143,52 @@ const { user} = useContext(  AuthContext );
           onClose={handleClose(setAnchorElAdmin)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-          <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElAdmin)}>
-            Informes y Filtros
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/entradas" onClick={handleClose(setAnchorElAdmin)}>
-            Entradas
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/diligencias" onClick={handleClose(setAnchorElAdmin)}>
-             Diligencias 
-          </MenuItem>
-          <MenuItem component={Link} to="/admin/dashboardesc" onClick={handleClose(setAnchorElAdmin)}>
-            Graficos Estado General
+          <MenuItem component={Link} to="/admin/orders" onClick={handleClose(setAnchorElAdmin)}>
+            Ordenes E-commerce
           </MenuItem>
         </Menu>
 
         {/* configuracion */}
         <Button
+          color="primary"
+          onClick={handleOpen(setAnchorElConfi)}
+        >
+          Configuracion
+        </Button>
+        <Menu
+          anchorEl={anchorElConfi}
+          open={Boolean(anchorElConfi)}
+         onClose={handleClose(setAnchorElConfi)}
+          sx={{ maxHeight: 400, overflowY: 'auto' }}
+        >
+          <MenuItem component={Link} to="/admin/products" onClick={handleClose(setAnchorElConfi)}>
+            Productos Ecommerce
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/customers" onClick={handleClose(setAnchorElConfi)}>
+            Clientes
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/configuraciones" onClick={handleClose(setAnchorElConfi)}>
+            Puntos de Venta
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/estadosorden" onClick={handleClose(setAnchorElConfi)}>
+            Estados de Ordenes
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfi)}>
+            Usuarios
+          </MenuItem>
+          {/* <MenuItem component={Link} to="/admin/profileadm" onClick={handleClose(setAnchorElConfi)}> */}
+          {/* <MenuItem  onClick={handleClose(setAnchorElConfi)}>
+            Perfil Usuario T
+          </MenuItem> */}
+          {/* <MenuItem component={Link} to="/admin/support" onClick={handleClose(setAnchorElConfi)}>
+            Chat Soporte
+          </MenuItem> */}
+
+
+        </Menu>
+
+        {/* configuracion */}
+        {/* <Button
           color="primary"
           onClick={handleOpen(setAnchorElConfiEsc)}
         >
@@ -149,11 +200,13 @@ const { user} = useContext(  AuthContext );
          onClose={handleClose(setAnchorElConfiEsc)}
           sx={{ maxHeight: 400, overflowY: 'auto' }}
         >
-
+          <MenuItem component={Link} to="/admin/filtro" onClick={handleClose(setAnchorElConfiEsc)}>
+            Informes y Filtros
+          </MenuItem>
           <MenuItem component={Link} to="/admin/configuracionesesc" onClick={handleClose(setAnchorElConfiEsc)}>
             Registros
           </MenuItem>
-          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElEscri)}>
+          <MenuItem component={Link} to="/admin/instrumentos" onClick={handleClose(setAnchorElConfiEsc)}>
             Instrumentos
           </MenuItem>
           <MenuItem component={Link} to="/admin/productsesc" onClick={handleClose(setAnchorElConfiEsc)}>
@@ -172,7 +225,7 @@ const { user} = useContext(  AuthContext );
             Usuarios
           </MenuItem>
 
-        </Menu>
+        </Menu> */}
                 <Button
                     color="primary"
                     onClick={ toggleSideMenu }>
