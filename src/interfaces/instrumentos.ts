@@ -25,7 +25,9 @@ export interface IInstrumento {
     _id: string;
     codIns: string;
     name: string;
+    detalle: string;
     publico     : boolean;
+    ecoActive     : boolean;
 
     paramItems: IParamItem[];
 

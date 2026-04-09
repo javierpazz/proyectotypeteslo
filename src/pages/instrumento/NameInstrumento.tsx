@@ -13,7 +13,8 @@ const instrumentoI =
       {
           _id: '',
           name: "",
-          paramItems: []
+          detalle: "",
+          // paramItems: []
       }
     
 
@@ -97,10 +98,11 @@ export const NameInstrumento = () => {
   const {  cart, addTodosProductToCartEsc } = useContext(CartContext);
 
         const invoice: IOrder = {
-            orderItems: cart.map( p => ({
-                ...p,
-                size: p.size!
-            })),
+          // orderItems: cart.map( p => ({
+            //     ...p,
+            //     size: p.size!
+            // })),
+            orderItems: [],
             orderAddress: {
               firstName: "",
               lastName: "",
@@ -182,10 +184,11 @@ export const NameInstrumento = () => {
       setInstrumento({
                 _id: resp.data._id,
                 name: resp.data.name,
-                paramItems: resp.data.paramItems,
+                detalle: resp.data.detalle,
+                // paramItems: resp.data.paramItems,
       }
       );
-      addTodosProductToCartEsc(resp.data.paramItems as IParamProduct[], remDat);
+      // addTodosProductToCartEsc(resp.data.paramItems as IParamProduct[], remDat);
 
 
       // console.log("resp.data")
@@ -372,15 +375,13 @@ export const NameInstrumento = () => {
               <Box sx={{ mt:3 }}>
               {/* titulos */}
               <Typography variant='h1' component='h1'>Descripción</Typography>
-                {/* <Typography variant='body2'>{ instrumento.paramItems[1].medPro }</Typography>
-                <Typography variant='body2'>{ instrumento.paramItems[2].medPro }</Typography>
-                <Typography variant='body2'>{ instrumento.paramItems[3].medPro }</Typography> */}
+                <Typography variant='body2'>{ instrumento.detalle }</Typography> */
 
-                {instrumento.paramItems.map((item: any, index: number) => (
+                {/* {instrumento.paramItems.map((item: any, index: number) => (
                   <Typography key={index} variant='body2'>
-                    {item.medPro} {/* o la propiedad que quieras mostrar */}
+                    {item.medPro} 
                   </Typography>
-                ))}
+                ))} */}
               </Box>
                     <Button 
                     color="secondary" 

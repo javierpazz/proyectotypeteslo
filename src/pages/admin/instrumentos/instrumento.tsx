@@ -18,14 +18,18 @@ interface FormData {
     _id?       : string;
     codIns       : string;
     name       : string;
+    detalle       : string;
     publico     : boolean;
+    ecoActive     : boolean;
 }
 const instrumentoI = 
       {
           _id: '',
           codIns: "",
           name: "",
+          detalle: "",
           publico: true,
+          ecoActive: true,
       }
 
 
@@ -82,13 +86,17 @@ const loadProduct = async() => {
         instrumentoI._id= "",
         instrumentoI.codIns= "",
         instrumentoI.name= "",
-        instrumentoI.publico= true
+        instrumentoI.detalle= "",
+        instrumentoI.publico= true,
+        instrumentoI.ecoActive= true
     } else {
         const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
         instrumentoI._id=resp.data._id,
         instrumentoI.codIns=resp.data.codIns,
         instrumentoI.name=resp.data.name,
-        instrumentoI.publico=resp.data.publico
+        instrumentoI.detalle=resp.data.detalle,
+        instrumentoI.publico=resp.data.publico,
+        instrumentoI.ecoActive=resp.data.ecoActive
     }
   } catch (error) {
     console.log(error)
@@ -202,6 +210,21 @@ const loadProduct = async() => {
                         />
 
 
+                        <TextField
+                            label="Detalle"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('detalle', {
+                                // required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.detalle }
+                            helperText={ errors.detalle?.message }
+                            InputLabelProps={{shrink: true}}
+                        />
+
                         <Controller
                             name='publico'
                             control={control}
@@ -212,6 +235,18 @@ const loadProduct = async() => {
                             />
                             )}
                         />
+
+                        <Controller
+                            name='ecoActive'
+                            control={control}
+                            render={({ field }) => (
+                            <FormControlLabel
+                                control={<Checkbox {...field} checked={field.value} />}
+                                label='Ecommerce Activo'
+                            />
+                            )}
+                        />
+
 
                     </Grid>
 

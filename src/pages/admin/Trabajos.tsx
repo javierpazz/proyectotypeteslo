@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, Chip, Grid } from '@mui/material'
+import { Box, Button, Chip, Grid, MenuItem, Select } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
 
@@ -18,6 +18,51 @@ import { AuthContext } from '../../../context';
 
 export const Trabajos = () => {
 
+
+    ////////////////////FGFGFGFG
+    const { user, isLoading } = useContext(AuthContext);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user && !isLoading) {
+        navigate('/auth/loginadm?redirect=/admin/trabajos');
+        }
+        if (user?.role === "client" ) {
+        navigate('/');
+        }
+    }, [user, isLoading, navigate]);
+    ////////////////////FGFGFGFG
+
+
+    const [ instrumentos, setInstrumentos ] = useState<IInstrumento[]>([]);
+
+
+    const onActivoUpdated = async( instrumentoId: string, newecoActive: boolean ) => {
+
+        const previosTrabajos = instrumentos.map( instrumento => ({ ...instrumento }));
+        const updatedTrabajos = instrumentos.map( instrumento => ({
+            ...instrumento,
+            ecoActive: instrumentoId === instrumento._id ? newecoActive : instrumento.ecoActive
+        }));
+
+        setInstrumentos(updatedTrabajos);
+
+        try {
+
+            await stutzApi.put('/api/tes/admin/instrumentos/ecomActive', {  instrumentoId, ecoActive: newecoActive });
+
+        } catch (error) {
+            setInstrumentos( previosTrabajos );
+            console.log(error);
+            alert('No se pudo actualizar el estado del Producto');
+        }
+
+    }
+
+
+
+
+    
     const columns:GridColDef[] = [
         { field: 'codIns', headerName: 'Codigo' },
         { 
@@ -47,6 +92,53 @@ export const Trabajos = () => {
                         )
             }
         },
+        {
+            field: 'ecoActive', 
+            headerName: 'Ecommerce', 
+            width: 150,
+            // renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+            //     // if (user?.role !== 'admin') return null;
+            //     if (user?.role !== 'admin') return null;
+            //     return (
+            //         <Select
+            //         value={ row.ecoActive }
+            //         label="Activo"
+            //         onChange={ ({ target }) => onActivoUpdated( row.id, target.value ) }
+            //         sx={{ width: '300px' }}
+            //         >
+            //             <MenuItem value='true'> Activo </MenuItem>
+            //             <MenuItem value='false'> InActivo </MenuItem>
+            //         </Select>
+            //     )
+            // }
+
+                    renderCell: ({ row }: GridRenderCellParams) => {
+
+                    // 👤 Usuario: solo mostrar texto
+                    if (user?.role !== 'admin') {
+                        return (
+                        <span>
+                            {row.ecoActive === true ? 'Activo' : 'Inactivo'}
+                        </span>
+                        );
+                    }
+
+                    // 👑 Admin: mostrar Select editable
+                    return (
+                        <Select
+                        value={row.ecoActive}
+                        label="Activo"
+                        onChange={({ target }) => onActivoUpdated(row.id, target.value)}
+                        sx={{ width: '150px' }}
+                        >
+                        <MenuItem value='true'>Activo</MenuItem>
+                        <MenuItem value='false'>Inactivo</MenuItem>
+                        </Select>
+                    );
+                    }
+
+
+        },
 
         {
             field: 'check',
@@ -64,22 +156,6 @@ export const Trabajos = () => {
     ];
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/trabajos');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
-
-
-    const [ instrumentos, setInstrumentos ] = useState<IInstrumento[]>([]);
 
 
     const loadData = async() => {
@@ -105,6 +181,7 @@ export const Trabajos = () => {
         codIns: instrumentos.codIns,
         name: instrumentos.name,
         publico: instrumentos.publico,
+        ecoActive: instrumentos.ecoActive,
     }));
 
     const deleteHandler = async (id : string) => {

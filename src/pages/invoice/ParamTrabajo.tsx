@@ -21,7 +21,7 @@ import {
 // import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
 import { IParamProduct, IInstrumento } from '../../interfaces';
-import { AdminLayoutMenuSer } from '../../components/layouts';
+import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { TrabajoSelector } from '../crmpages/TrabajoSelector';
 import { useNavigate } from 'react-router-dom';
@@ -344,7 +344,7 @@ const handleShowIns = () => {
   return (
     // <>
     //   <main>
-    <AdminLayoutMenuSer 
+    <AdminLayoutMenu 
         title={`Trabajos`} 
         subTitle={'Mantenimiento de Trabajos'}
         icon={ <CategoryOutlined /> }
@@ -503,7 +503,7 @@ const handleShowIns = () => {
 
       {/* </main>
     </> */}
-    </AdminLayoutMenuSer>
+    </AdminLayoutMenu>
   );
 }
 

@@ -18,14 +18,18 @@ interface FormData {
     _id?       : string;
     codIns       : string;
     name       : string;
+    detalle       : string;
     publico     : boolean;
+    ecoActive     : boolean;
 }
 const instrumentoI = 
       {
           _id: '',
           codIns: "",
           name: "",
+          detalle: "",
           publico: true,
+          ecoActive: true,
       }
 
 
@@ -36,7 +40,7 @@ export const TrabajoAdminPage = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/instrumentos');
+        navigate('/auth/loginadm?redirect=/admin/trabajos');
         }
         if (user?.role === "client" ) {
         navigate('/');
@@ -82,13 +86,17 @@ const loadProduct = async() => {
         instrumentoI._id= "",
         instrumentoI.codIns= "",
         instrumentoI.name= "",
-        instrumentoI.publico= true
+        instrumentoI.detalle= "",
+        instrumentoI.publico= true,
+        instrumentoI.ecoActive= true
     } else {
         const resp = await stutzApi.get<IInstrumento>(`/api/tes/admin/instrumentos/${ id }`);
         instrumentoI._id=resp.data._id,
         instrumentoI.codIns=resp.data.codIns,
         instrumentoI.name=resp.data.name,
-        instrumentoI.publico=resp.data.publico
+        instrumentoI.detalle=resp.data.detalle,
+        instrumentoI.publico=resp.data.publico,
+        instrumentoI.ecoActive=resp.data.ecoActive
     }
   } catch (error) {
     console.log(error)
@@ -135,11 +143,11 @@ const loadProduct = async() => {
 
             if ( !form._id ) {
                 // navigate(`/admin/invoicerCon/${invoiceId}?redirect=/admin/invoices`);
-                navigate(`/admin/instrumentos`);
+                navigate(`/admin/trabajos`);
             } else {
                 setIsSaving(false)
             }
-            navigate(`/admin/instrumentos`);
+            navigate(`/admin/trabajos`);
 
         } catch (error) {
             console.log(error);
@@ -201,6 +209,36 @@ const loadProduct = async() => {
                             InputLabelProps={{shrink: true}}
                         />
 
+                        {/* <TextField
+                            label="Detalle"
+                            variant="filled"
+                            fullWidth 
+                            multiline
+                            sx={{ mb: 1 }}
+                            { ...register('detalle', {
+                                // required: 'Este campo es requerido',
+                                minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                            })}
+                            error={ !!errors.detalle }
+                            helperText={ errors.detalle?.message }
+                            InputLabelProps={{shrink: true}}
+                        /> */}
+
+                        <TextField
+                        label="Detalle Trabajo"
+                        variant="filled"
+                        fullWidth
+                        multiline
+                        rows={4} // 👈 esto lo hace tipo comentario
+                        sx={{ mb: 1 }}
+                        { ...register('detalle', {
+                            minLength: { value: 1, message: 'Mínimo 1 caracteres' }
+                        })}
+                        error={ !!errors.detalle }
+                        helperText={ errors.detalle?.message }
+                        InputLabelProps={{ shrink: true }}
+                        />
+
 
                         <Controller
                             name='publico'
@@ -209,6 +247,17 @@ const loadProduct = async() => {
                             <FormControlLabel
                                 control={<Checkbox {...field} checked={field.value} />}
                                 label='Trabajo Publico'
+                            />
+                            )}
+                        />
+
+                        <Controller
+                            name='ecoActive'
+                            control={control}
+                            render={({ field }) => (
+                            <FormControlLabel
+                                control={<Checkbox {...field} checked={field.value} />}
+                                label='Ecommerce Activo'
                             />
                             )}
                         />

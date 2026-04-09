@@ -146,20 +146,48 @@ export const Products = () => {
             field: 'ecoActive', 
             headerName: 'Ecommerce', 
             width: 150,
-            renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
-                if (user?.role !== 'admin') return null;
-                return (
-                    <Select
-                    value={ row.ecoActive }
-                    label="Activo"
-                    onChange={ ({ target }) => onActivoUpdated( row.id, target.value ) }
-                    sx={{ width: '300px' }}
-                    >
-                        <MenuItem value='true'> Activo </MenuItem>
-                        <MenuItem value='false'> InActivo </MenuItem>
-                    </Select>
-                )
-            }
+            // renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
+            //     // if (user?.role !== 'admin') return null;
+            //     if (user?.role !== 'admin') return null;
+            //     return (
+            //         <Select
+            //         value={ row.ecoActive }
+            //         label="Activo"
+            //         onChange={ ({ target }) => onActivoUpdated( row.id, target.value ) }
+            //         sx={{ width: '300px' }}
+            //         >
+            //             <MenuItem value='true'> Activo </MenuItem>
+            //             <MenuItem value='false'> InActivo </MenuItem>
+            //         </Select>
+            //     )
+            // }
+
+                    renderCell: ({ row }: GridRenderCellParams) => {
+
+                    // 👤 Usuario: solo mostrar texto
+                    if (user?.role !== 'admin') {
+                        return (
+                        <span>
+                            {row.ecoActive === true ? 'Activo' : 'Inactivo'}
+                        </span>
+                        );
+                    }
+
+                    // 👑 Admin: mostrar Select editable
+                    return (
+                        <Select
+                        value={row.ecoActive}
+                        label="Activo"
+                        onChange={({ target }) => onActivoUpdated(row.id, target.value)}
+                        sx={{ width: '150px' }}
+                        >
+                        <MenuItem value='true'>Activo</MenuItem>
+                        <MenuItem value='false'>Inactivo</MenuItem>
+                        </Select>
+                    );
+                    }
+
+
         },
 
 
