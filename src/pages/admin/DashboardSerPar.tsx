@@ -19,14 +19,15 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  top10PartesSTVal: { maquina: string; totalSales: number; totalOrders: number }[];
-  top10PartesTerVal: { maquina: string; totalSales: number; totalOrders: number }[];
-  TarxMaq: { producto: string; total: number; totalCan: number }[];
+  top10PartesSTVal: { parte: string; totalSales: number; totalOrders: number }[];
+  top10PartesTerVal: { parte: string; totalSales: number; totalOrders: number }[];
+  TarxPar: { producto: string; total: number; totalCan: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
   dailyOrders: { _id: string; sales: number; buys: number }[];
-  top10Maquinas: { maquina: string; totalSales: number; totalOrders: number }[];
+  top10PartesxOrd: { parte: string; totalSales: number; totalOrders: number }[];
+  top10InstrumentosxPar: { instrumento: string; totalSales: number; totalOrders: number }[];
   
 
 
@@ -192,9 +193,9 @@ export const DashboardSerPar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Ordenes"],
+                      ["Partes", "Ordenes"],
                       ...(summary.top10PartesSTVal || []).map((x) => [
-                        x.maquina,
+                        x.parte,
                         x.totalOrders,
                       ]),
                     ]}
@@ -216,9 +217,9 @@ export const DashboardSerPar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Valor"],
+                      ["Partes", "Valor"],
                       ...(summary.top10PartesSTVal || []).map((x) => [
-                        x.maquina,
+                        x.parte,
                         x.totalSales,
                       ]),
                     ]}
@@ -242,9 +243,9 @@ export const DashboardSerPar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Ordenes"],
+                      ["Partes", "Ordenes"],
                       ...(summary.top10PartesTerVal || []).map((x) => [
-                        x.maquina,
+                        x.parte,
                         x.totalOrders,
                       ]),
                     ]}
@@ -266,9 +267,9 @@ export const DashboardSerPar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Valor"],
+                      ["Partes", "Valor"],
                       ...(summary.top10PartesTerVal || []).map((x) => [
-                        x.maquina,
+                        x.parte,
                         x.totalSales,
                       ]),
                     ]}
@@ -343,14 +344,14 @@ export const DashboardSerPar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Orders"],
-                      ...(summary.top10Maquinas || []).map((x) => [
-                        x.maquina,
+                      ["Partes", "Orders"],
+                      ...(summary.top10PartesxOrd || []).map((x) => [
+                        x.parte,
                         x.totalOrders,
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Parte con Ordenes de Trabajo",
+                      title: "Top 10 Parte x Ordenes de Trabajo",
                       is3D: true,
                     }}
                   />
@@ -368,20 +369,71 @@ export const DashboardSerPar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Valores"],
-                      ...(summary.top10Maquinas || []).map((x) => [
-                        x.maquina,
+                      ["Partes", "Valores"],
+                      ...(summary.top10PartesxOrd || []).map((x) => [
+                        x.parte,
                         x.totalSales,
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Partes con Ordenes de Trabajo Valorizado",
+                      title: "Top 10 Partes x Ordenes de Trabajo Valorizado",
                       is3D: true,
                     }}
                   />
                 </CardContent>
               </Card>
             </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Partes", "Orders"],
+                      ...(summary.top10InstrumentosxPar || []).map((x) => [
+                        x.instrumento,
+                        x.totalOrders,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ordenes de Trabajo x Parte",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Partes", "Valores"],
+                      ...(summary.top10InstrumentosxPar || []).map((x) => [
+                        x.instrumento,
+                        x.totalSales,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ordenes de Trabajo x Parte Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
 
             <Grid item xs={6} md={3}>
               <Card>
@@ -393,7 +445,7 @@ export const DashboardSerPar = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Productos", "Valores"],
-                      ...(summary.TarxMaq || []).map((x) => [
+                      ...(summary.TarxPar || []).map((x) => [
                         x.producto,
                         x.totalCan,
                       ]),
@@ -417,7 +469,7 @@ export const DashboardSerPar = () => {
                     loader={<div>Cargando...</div>}
                     data={[
                       ["Productos", "Valores"],
-                      ...(summary.TarxMaq || []).map((x) => [
+                      ...(summary.TarxPar || []).map((x) => [
                         x.producto,
                         x.total,
                       ]),

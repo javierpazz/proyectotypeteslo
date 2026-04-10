@@ -19,7 +19,7 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  TarxMaq: { maquina: string; total: number; totalCan: number }[];
+  MaqxTar: { maquina: string; total: number; totalCan: number }[];
   TarxPar: { parte: string; total: number; totalCan: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
@@ -196,14 +196,15 @@ export const DashboardSerTar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Valores"],
-                      ...(summary.TarxMaq || []).map((x) => [
+                      ["Maquinas", "Valores"],
+                      ...(summary.MaqxTar || []).map((x) => [
                         x.maquina,
                         x.totalCan,
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Tareas x Maquinas ",
+                      // title: "Top 10 Tareas x Maquinas ",
+                      title: "Top 10 Maquinas x Tarea",
                       is3D: true,
                     }}
                   />
@@ -220,14 +221,15 @@ export const DashboardSerTar = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Valores"],
-                      ...(summary.TarxMaq || []).map((x) => [
+                      ["Maquinas", "Valores"],
+                      ...(summary.MaqxTar || []).map((x) => [
                         x.maquina,
                         x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Tareas x Maquinas  Valorizado",
+                      // title: "Top 10 Tareas x Maquinas  Valorizado",
+                      title: "Top 10 Maquinas x Tarea Valorizado",
                       is3D: true,
                     }}
                   />

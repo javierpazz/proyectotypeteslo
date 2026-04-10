@@ -26,8 +26,14 @@ const Summary = lazy(() =>
 );
 
 const HistoryServices = lazy(() =>
-
   import('../../pages/services/HistoryServices').then(m => ({ default: m.HistoryServices }))
+);
+
+const GraficosServices = lazy(() =>
+  import('../../pages/services/GraficosServices').then(m => ({ default: m.GraficosServices }))
+);
+const FiltroCli = lazy(() =>
+  import('../../pages/services/FiltroCli').then(m => ({ default: m.FiltroCli }))
 );
 
 const History = lazy(() =>
@@ -81,6 +87,8 @@ export default function EcommerceRoutes() {
         <Route path="/blanco" element={ <Blanco /> } />
         <Route path="/" element={ <Ecommerce /> } />
         <Route path="/pedidoservice" element={ <Eservice /> } />
+        <Route path="/pedidoservices/graficos" element={ <GraficosServices /> } />
+        <Route path="/pedidoservices/filtrocli" element={ <FiltroCli /> } />
         <Route path="/pedidoservices/history" element={ <HistoryServices /> } />
         <Route path="/pedidoservices/:id" element={ <OrderEscSerPage /> } />
         <Route path="/factura" element={ <Invoice /> } />
