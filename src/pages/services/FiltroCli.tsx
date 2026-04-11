@@ -319,7 +319,7 @@ desVal;
           </Grid>
 
           <Grid item md={4}>
-                    <Typography variant="h1">FILTROS</Typography>
+                    <Typography variant="h1">FILTROS GRAFICOS</Typography>
           </Grid>
         </Grid>
 

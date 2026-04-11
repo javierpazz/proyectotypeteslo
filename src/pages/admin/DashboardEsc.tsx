@@ -73,7 +73,7 @@ export const DashboardEsc = () => {
   const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
 
-  const codSup = userInfo.filtro.codSup;
+  const codPro = userInfo.filtro.codPro;
   const codIns = userInfo.filtro.codIns;
   const codPar = userInfo.filtro.codPar;
   const codMaq = userInfo.filtro.codMaq;
@@ -84,7 +84,7 @@ export const DashboardEsc = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
