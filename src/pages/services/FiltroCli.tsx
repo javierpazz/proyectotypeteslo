@@ -457,30 +457,46 @@ desVal;
 
                   </Grid>
 
+
         <Grid container spacing={2} mt={2}>
 
-            <BuscaConFac
-            codCon={codCon}
-            setCodCon={setCodCon}
-            codCont={codCont}
-            setCodCont={setCodCont}
-            nameCon={nameCon}
-            setNameCon={setNameCon}
-            nextRef={inputUseRef}
-            inputRef={inputConRef} 
-            />
+            {/* <BuscaCli
+            codCus={codCus}
+            setCodCus={setCodCus}
+            codCust={codCust}
+            setCodCust={setCodCust}
+            nameCus={nameCus}
+            setNameCus={setNameCus}
+            nextRef={inputParRef}
+            inputRef={inputCusRef} 
+            /> */}
 
 
-            <BuscaUse
-            codUse={codUse}
-            setCodUse={setCodUse}
-            nameUse={nameUse}
-            setNameUse={setNameUse}
-            nextRef={inputInsRef}
-            inputRef={inputUseRef} 
+            <BuscaPar
+            codPar={codPar}
+            setCodPar={setCodPar}
+            codPart={codPart}
+            setCodPart={setCodPart}
+            namePar={namePar}
+            setNamePar={setNamePar}
+            nextRef={inputConRef}
+            inputRef={inputParRef} 
             />
+
+            <BuscaMaq
+            codMaq={codMaq}
+            setCodMaq={setCodMaq}
+            codMaqt={codMaqt}
+            setCodMaqt={setCodMaqt}
+            nameMaq={nameMaq}
+            setNameMaq={setNameMaq}
+            nextRef={inputMaqRef}
+            inputRef={inputMaqRef} 
+            />
+
 
         </Grid>
+
         <Grid container spacing={2} mt={2}>
 
             <BuscaTra
@@ -506,34 +522,19 @@ desVal;
             />
 
         </Grid>
-        <Grid container spacing={2} mt={2}>
-
-            <BuscaCli
-            codCus={codCus}
-            setCodCus={setCodCus}
-            codCust={codCust}
-            setCodCust={setCodCust}
-            nameCus={nameCus}
-            setNameCus={setNameCus}
-            nextRef={inputParRef}
-            inputRef={inputCusRef} 
-            />
-
-
-            <BuscaPar
-            codPar={codPar}
-            setCodPar={setCodPar}
-            codPart={codPart}
-            setCodPart={setCodPart}
-            namePar={namePar}
-            setNamePar={setNamePar}
-            nextRef={inputConRef}
-            inputRef={inputParRef} 
-            />
-
-        </Grid>
 
         <Grid container spacing={2} mt={2}>
+
+            <BuscaConFac
+            codCon={codCon}
+            setCodCon={setCodCon}
+            codCont={codCont}
+            setCodCont={setCodCont}
+            nameCon={nameCon}
+            setNameCon={setNameCon}
+            nextRef={inputUseRef}
+            inputRef={inputConRef} 
+            />
 
             <BuscaEnc
             codEnc={codEnc}
@@ -546,19 +547,19 @@ desVal;
             inputRef={inputEncRef} 
             />
 
-            <BuscaMaq
-            codMaq={codMaq}
-            setCodMaq={setCodMaq}
-            codMaqt={codMaqt}
-            setCodMaqt={setCodMaqt}
-            nameMaq={nameMaq}
-            setNameMaq={setNameMaq}
-            nextRef={inputMaqRef}
-            inputRef={inputMaqRef} 
-            />
 
+
+            {/* <BuscaUse
+            codUse={codUse}
+            setCodUse={setCodUse}
+            nameUse={nameUse}
+            setNameUse={setNameUse}
+            nextRef={inputInsRef}
+            inputRef={inputUseRef} 
+            /> */}
 
         </Grid>
+
 
 
       </Box>

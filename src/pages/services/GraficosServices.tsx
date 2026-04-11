@@ -64,11 +64,15 @@ export const GraficosServices = () => {
   const fech1 = userInfo.filtro.firstDat;
   const fech2 = userInfo.filtro.lastDat;
   const codCon = userInfo.filtro.codCon;
-  const codCus = userInfo.filtro.codCus;
+  
+  //aqui  uso el usuario para filtrar desde la web
+  // const codCus = userInfo.filtro.codCus;
+  const codCus = localStorage.getItem('cliente');
+  //aqui  uso el usuario para filtrar desde la web
+  
   const codUse = userInfo.filtro.codUse;
-
-  const codSup = userInfo.filtro.codSup;
-  const codCom = userInfo.filtro.codCom;
+  const codPro = userInfo.filtro.codPro;
+  const codIns = userInfo.filtro.codIns;
   const codPar = userInfo.filtro.codPar;
   const codMaq = userInfo.filtro.codMaq;
   const codEnc = userInfo.filtro.codEnc;
@@ -78,7 +82,7 @@ export const GraficosServices = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/cli?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/orders/summary/cli?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
