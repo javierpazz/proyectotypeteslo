@@ -45,6 +45,8 @@ export const ReceiptListScreen = () => {
   const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const obser = userInfo.filtro.obser;
+  const codVal = userInfo.filtro.codVal;
   const codSup = userInfo.filtro.codSup;
   const codCom = userInfo.filtro.codCom;       
     
@@ -56,7 +58,7 @@ export const ReceiptListScreen = () => {
       try {
           setIsloading(true);
           // const resp = await stutzApi.get(`/api/receipts/searchrecS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`);
-          const resp = await stutzApi.get(`/api/receipts/searchrecS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`)
+          const resp = await stutzApi.get(`/api/receipts/searchrecS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}&valor=${codVal}&obser=${obser}`)
           setIsloading(false);
           setrecibos(resp.data.receipts);
 

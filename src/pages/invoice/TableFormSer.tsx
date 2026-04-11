@@ -104,7 +104,7 @@ export const TableFormSer: React.FC<TableFormProps> = ({
   const input11Ref = useRef<HTMLButtonElement>(null);
   const input12Ref = useRef<HTMLButtonElement>(null);
   const input13Ref = useRef<HTMLButtonElement>(null);
-  const input14Ref = useRef<HTMLButtonElement>(null);
+  // const input14Ref = useRef<HTMLButtonElement>(null);
   const input22Ref = useRef<HTMLInputElement>(null);
 
   const isEditing = false;

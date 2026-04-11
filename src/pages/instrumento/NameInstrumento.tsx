@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Chip, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
-import { ICartProduct, IOrder, IParamProduct } from '../../interfaces';
+import {  IOrder } from '../../interfaces';
 
 import stutzApi from '../../../api/stutzApi';
 import { FullScreenLoading } from '../../components/ui';
@@ -43,13 +43,13 @@ export const NameInstrumento = () => {
   const [isPaying, setIsPaying] = useState(false);
   const [recNum, setRecNum] = useState('');
   const [recDat, setRecDat] = useState(getTodayInGMT3());
-  const [desval, setDesval] = useState('');
+  // const [desval, setDesval] = useState('');
   const [desVal, setDesVal] = useState('');
-  const [codCus, setCodCus] = useState(localStorage.getItem('cliente'));
-  const [codIns, setCodIns] = useState(_id);
-  const [codPar, setCodPar] = useState('');
-  const [terminado, setTerminado] = useState(false);
-  const [dueDat, setDueDat] = useState(getTodayInGMT3());
+  const [codCus] = useState(localStorage.getItem('cliente'));
+  const [codIns] = useState(_id);
+  const [codPar] = useState('');
+  const [terminado] = useState(false);
+  const [dueDat] = useState(getTodayInGMT3());
   const [remNum, setRemNum] = useState("");
   const [notes, setNotes] = useState('');
 
@@ -60,18 +60,18 @@ export const NameInstrumento = () => {
   const [escNum, setEscNum] = useState("");
   const [asieNum, setAsieNum] = useState("");
   const [asieDat, setAsieDat] = useState("");
-  const [codCust, setCodCust] = useState('');
-  const [codPart, setCodPart] = useState('');
-  const [namePar, setNamePar] = useState('');
-  const [nameCus, setNameCus] = useState('');
-  const [codInst, setCodInst] = useState('');
-  const [isloading, setIsloading] = useState(false);
-  const [remNumImp, setRemNumImp] = useState('');
-  const [numval, setNumval] = useState(' ');
-  const [amountval, setAmountval] = useState(0);
-  const [totalImp, setTotalImp] = useState(0);
-  const [valueeR, setValueeR] = useState('');
-  const [showInvoice, setShowInvoice] = useState(false);
+  // const [codCust, setCodCust] = useState('');
+  // const [codPart, setCodPart] = useState('');
+  // const [namePar, setNamePar] = useState('');
+  // const [nameCus, setNameCus] = useState('');
+  // const [codInst, setCodInst] = useState('');
+  // const [isloading, setIsloading] = useState(false);
+  // const [remNumImp, setRemNumImp] = useState('');
+  // const [numval, setNumval] = useState(' ');
+  // const [amountval, setAmountval] = useState(0);
+  // const [totalImp, setTotalImp] = useState(0);
+  // const [valueeR, setValueeR] = useState('');
+  // const [showInvoice, setShowInvoice] = useState(false);
 
     useEffect(() => {
         if (!user && !isLoading) {
@@ -89,19 +89,13 @@ export const NameInstrumento = () => {
     ? JSON.parse(localStorage.getItem('userInfo')!)
     : null;  
 
-    // const codConNum = (localStorage.getItem('puntonum') && localStorage.getItem('puntonum') || "");
-    // const codConNum = Number(localStorage.getItem('puntonum') || 0);  
     const codConNum = userInfo.configurationObj.codCon;
   
   
   
-  const {  cart, addTodosProductToCartEsc } = useContext(CartContext);
+  const {  cart } = useContext(CartContext);
 
         const invoice: IOrder = {
-          // orderItems: cart.map( p => ({
-            //     ...p,
-            //     size: p.size!
-            // })),
             orderItems: [],
             orderAddress: {
               firstName: "",
@@ -117,9 +111,6 @@ export const NameInstrumento = () => {
             isPaid: false,
             subTotal :0,
             shippingPrice : 0,
-            //        invoice.shippingPrice =
-            //        invoice.subTotal > 100 ? round2(0) : round2(10);
-            // invoice.tax = round2((poriva/100) * invoice.subTotal);
             tax : 0,
             total : 0,
             totalBuy : 0,
@@ -160,44 +151,31 @@ export const NameInstrumento = () => {
   setEscNum("");
   setAsieNum("");
   setAsieDat("");
-  setCodPart("");
-  setCodInst("");
+  // setCodPart("");
+  // setCodInst("");
   setNotes("");
 
 
-    setValueeR("");
-    setCodCust("");
+    // setValueeR("");
+    // setCodCust("");
     setRemNum("");
-    setShowInvoice(false);
+    // setShowInvoice(false);
   };
 
 
   const loadProduct = async() => {
     try {
-      // const resp = await stutzApi.get<IProduct>(`/api/tes/instrumentos/${ slug }`);
       const resp = await stutzApi.get(`/api/tes/admin/instrumentos/${ _id }`);
-      // console.log("resp.data")
-      // console.log(resp)
-      // console.log("resp.data")
-      
-      // setInstrumento(resp.data);
       setInstrumento({
                 _id: resp.data._id,
                 name: resp.data.name,
                 detalle: resp.data.detalle,
-                // paramItems: resp.data.paramItems,
       }
       );
-      // addTodosProductToCartEsc(resp.data.paramItems as IParamProduct[], remDat);
 
 
-      // console.log("resp.data")
-      // console.log(instrumento)
-      // console.log("resp.data")
-      // console.log(remDat)
 
     } catch (error) {
-      // console.log(error)
       
     }
    }
@@ -222,9 +200,6 @@ export const NameInstrumento = () => {
           );
           invoice.shippingPrice = 0;
 
-          //        invoice.shippingPrice =
-          //        invoice.subTotal > 100 ? round2(0) : round2(10);
-          // invoice.tax = round2((poriva/100) * invoice.subTotal);
           invoice.tax = round2(
             cart.reduce((a, c) => a + c.quantity * c.price * (c.porIva/100), 0)
           );
@@ -270,8 +245,9 @@ export const NameInstrumento = () => {
 
   const orderHandler = async () => {
     try {
-      setIsloading(true);
-      const { data } = await stutzApi.post(
+      // setIsloading(true);
+      // const { data } = await stutzApi.post(
+      await stutzApi.post(
         `/api/invoices/remEsc`,
 
         {
@@ -299,7 +275,6 @@ export const NameInstrumento = () => {
           user: userInfo.user._id,
           codConNum: invoice.codConNum,
 
-          //        codSup: invoice.codSup,
 
           remNum: invoice.remNum,
           remDat: invoice.remDat,
@@ -318,27 +293,18 @@ export const NameInstrumento = () => {
           },
         }
       );
-      //ctxDispatch({ type: 'INVOICE_CLEAR' });
-      //      dispatch({ type: 'CREATE_SUCCESS' });
-      //      localStorage.removeItem('cart');
-      setIsloading(false);
+      // setIsloading(false);
       setIsPaying(false);
-      setDesval('');
+      // setDesval('');
       setDesVal('');
-      setRemNumImp(data.invoice.remNum);
-      // setTotalSubImp(data.invoice.subTotal);
-      // setTaxImp(data.invoice.tax);
-      setTotalImp(data.invoice.total);
+      // setRemNumImp(data.invoice.remNum);
+      // setTotalImp(data.invoice.total);
       setRecNum('');
       setRecDat('');
-      setNumval(' ');
-      setAmountval(0);
+      // setNumval(' ');
+      // setAmountval(0);
       navigate(`/pedidoservice`);
-    // } catch (err) {
-    //   toast.error(getError(err));
-    // }
   } catch (error: any) {
-    // Capturar errores HTTP u otros
     if (error.response) {
       console.error('Error de backend:', error.response.data);
       alert(`Error del servidor: ${error.response.data.message || 'Revisá los campos'}`);

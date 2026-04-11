@@ -13,8 +13,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
-import { CategoryOutlined } from '@mui/icons-material';
-import { BuscaMaq, BuscaEnc, BuscaPar, BuscaCli, BuscaProSer, BuscaTra, BuscaConFac, BuscaUse } from '../../components/buscador';
+import { BuscaMaq, BuscaEnc, BuscaPar, BuscaProSer, BuscaTra, BuscaConFac } from '../../components/buscador';
 import { AuthContext } from '../../../context';
 
 
@@ -83,7 +82,6 @@ export const FiltroCli = () => {
   const [codProt, setCodProt] = useState('');
   const [desPro, setDesPro] = useState('');
   const [codCus, setCodCus] = useState('');
-  const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
   const [codPar, setCodPar] = useState('');
   const [codPart, setCodPart] = useState('');

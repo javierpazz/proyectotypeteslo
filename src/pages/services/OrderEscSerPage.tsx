@@ -108,7 +108,7 @@ export const OrderEscSerPage = () => {
          loadProduct()
         }, [id])
 
-    const { orderAddress } = order;
+    // const { orderAddress } = order;
 //////
  
 //   if ( !order ) {

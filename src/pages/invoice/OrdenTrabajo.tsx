@@ -141,7 +141,7 @@ export const OrdenTrabajo = () => {
   const [codIns, setCodIns] = useState('');
   const [codInst, setCodInst] = useState('');
   const [nameIns, setNameIns] = useState('');
-  const [publicoIns, setPublicoIns] = useState(true);
+  // const [publicoIns, setPublicoIns] = useState(true);
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
@@ -168,7 +168,7 @@ export const OrdenTrabajo = () => {
   const [recNum, setRecNum] = useState('');
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   const [desval, setDesval] = useState('');
-  const [valueeR, setValueeR] = useState('');
+  // const [valueeR, setValueeR] = useState('');
   const [desVal, setDesVal] = useState('');
   const [numval, setNumval] = useState(' ');
   // const [userss, setUserss] = useState([]);
@@ -345,7 +345,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setCodIns('');
         setCodInst('');
         setNameIns('Elija Trabajo');
-        setPublicoIns(true);
+        // setPublicoIns(true);
     }else{
       // cargaParametros(instRow.orderItems)
       addTodosProductToCartEsc(instRow.paramItems as IParamProduct[], remDat);
@@ -354,7 +354,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
       setNameIns(instRow.name);
-      setPublicoIns(instRow.publico);
+      // setPublicoIns(instRow.publico);
       input3Ref.current?.focus();
       };
   };
@@ -369,7 +369,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     setCodIns(instrumento._id);
     setCodInst(instrumento.codIns);
     setNameIns(instrumento.name);
-    setPublicoIns(instrumento.publico);
+    // setPublicoIns(instrumento.publico);
     // input8Ref.current.focus()
 
     setModalOpenIns(false);
@@ -402,7 +402,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     useEffect(() => {
       if (customers) {
         createParam();
-        setValueeR("");
+        // setValueeR("");
         setShowInvoice(false);
       }
     }, [customers]);
@@ -620,7 +620,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
   setNotes("");
 
 
-    setValueeR("");
+    // setValueeR("");
     setCodCust("");
     setRemNum("");
     setShowInvoice(false);

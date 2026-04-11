@@ -243,7 +243,7 @@ export const OrdenTrabajoAct = () => {
   const [codIns, setCodIns] = useState('');
   const [codInst, setCodInst] = useState('');
   const [nameIns, setNameIns] = useState('');
-  const [publicoIns, setPublicoIns] = useState(true);
+  // const [publicoIns, setPublicoIns] = useState(true);
   const [codCus, setCodCus] = useState('');
   const [codCust, setCodCust] = useState('');
   const [nameCus, setNameCus] = useState('');
@@ -432,7 +432,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setCodIns('');
         setCodInst('');
         setNameIns('Elija Instrumento');
-        setPublicoIns(true);
+        // setPublicoIns(true);
     }else{
       // cargaParametros(instRow.orderItems)
       // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
@@ -441,7 +441,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
       setNameIns(instRow.name);
-      setPublicoIns(instRow.publico);
+      // setPublicoIns(instRow.publico);
       input3Ref.current?.focus();
       };
   };
@@ -456,7 +456,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     setCodIns(instrumento._id);
     setCodInst(instrumento.codIns);
     setNameIns(instrumento.name);
-    setPublicoIns(instrumento.publico);
+    // setPublicoIns(instrumento.publico);
     // input8Ref.current.focus()
 
     setModalOpenIns(false);

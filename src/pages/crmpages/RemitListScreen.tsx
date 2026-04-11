@@ -46,6 +46,8 @@ export const RemitListScreen = () => {
   const codCus = userInfo.filtro.codCus;
   const codUse = userInfo.filtro.codUse;
   const order = userInfo.filtro.order;
+  const obser = userInfo.filtro.obser;
+  const codPro = userInfo.filtro.codPro;
   const codSup = userInfo.filtro.codSup;
   const codCom = userInfo.filtro.codCom;
     
@@ -57,7 +59,7 @@ export const RemitListScreen = () => {
       try {
           setIsloading(true);
           // const resp = await stutzApi.get(`/api/invoices/searchremS?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}`);
-          const resp = await stutzApi.get(`/api/invoices/searchremS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}`)
+          const resp = await stutzApi.get(`/api/invoices/searchremS?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&supplier=${codSup}&comprobante=${codCom}&order=${order}&producto=${codPro}&obser=${obser}`)
           setIsloading(false);
           setInvoices(resp.data.invoices);
 
