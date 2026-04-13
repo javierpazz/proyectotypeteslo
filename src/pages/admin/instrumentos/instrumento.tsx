@@ -211,10 +211,11 @@ const loadProduct = async() => {
 
 
                         <TextField
-                            label="Detalle"
+                            label="Detalle Instrumento"
                             variant="filled"
                             fullWidth 
                             multiline
+                            rows={4} // 👈 esto lo hace tipo comentario                                    sx={{ mb: 1 }}
                             sx={{ mb: 1 }}
                             { ...register('detalle', {
                                 // required: 'Este campo es requerido',

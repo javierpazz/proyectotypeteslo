@@ -45,7 +45,8 @@ export const NameInstrumento = () => {
   const [recDat, setRecDat] = useState(getTodayInGMT3());
   // const [desval, setDesval] = useState('');
   const [desVal, setDesVal] = useState('');
-  const [codCus] = useState(localStorage.getItem('cliente'));
+  // const [codCus] = useState(localStorage.getItem('cliente'));
+  const [codCus, setCodCus] = useState('');
   const [codIns] = useState(_id);
   const [codPar] = useState('');
   const [terminado] = useState(false);
@@ -91,7 +92,7 @@ export const NameInstrumento = () => {
       try {
         const result = await stutzApi.get(`/api/customers/byemail/${userInfo.user.email}`);
         localStorage.setItem('cliente', result.data._id);
-
+        setCodCus(result.data._id);
       } catch (err) {
       }
     };

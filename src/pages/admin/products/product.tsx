@@ -375,11 +375,13 @@ const loadProduct = async() => {
                                 helperText={ errors.medPro?.message }
                                 InputLabelProps={{shrink: true}}
                             />
+
                             <TextField
                                 label="Descripcion"
                                 variant="filled"
                                 fullWidth 
-                                sx={{ mb: 1 }}
+                                multiline
+                                rows={4} // 👈 esto lo hace tipo comentario                                sx={{ mb: 1 }}
                                 { ...register('description', {
                                     required: 'Este campo es requerido',
                                     minLength: { value: 1, message: 'Mínimo 1 caracter' }
@@ -388,6 +390,7 @@ const loadProduct = async() => {
                                 helperText={ errors.description?.message }
                                 InputLabelProps={{shrink: true}}
                             />
+
                             <TextField
                                 label="Categoria"
                                 variant="filled"

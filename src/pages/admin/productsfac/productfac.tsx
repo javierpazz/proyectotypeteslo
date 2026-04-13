@@ -313,6 +313,8 @@ useEffect(() => {
                                 label="Descripcion"
                                 variant="filled"
                                 fullWidth 
+                                multiline
+                                rows={4} // 👈 esto lo hace tipo comentario                                    sx={{ mb: 1 }}
                                 sx={{ mb: 1 }}
                                 { ...register('description', {
                                     required: 'Este campo es requerido',
