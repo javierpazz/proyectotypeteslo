@@ -51,6 +51,10 @@ export const Navbar = () => {
                                 <Typography sx={{ ml: 0.5 }}>Shop</Typography>
                         </NavLink>
 
+                        <NavLink to="/pedidoservice" >
+                                <Typography sx={{ ml: 0.5 }}>Turnos</Typography>
+                        </NavLink>
+
 
                         <Box flex={ 1 } />
 

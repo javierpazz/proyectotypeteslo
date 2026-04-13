@@ -75,15 +75,28 @@ export const NameInstrumento = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/');
+        // navigate('/auth/login?redirect=/');
+        navigate(`/auth/login?redirect=/instrumento/${_id}`);
         }
         if (user?.role !== "client" ) {
-        navigate('/');
+        // navigate('/');
+        navigate(`/auth/login?redirect=/instrumento/${_id}`);
         }
     }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG    
 
 
+  useEffect(() => {
+    const fetchCliente = async () => {
+      try {
+        const result = await stutzApi.get(`/api/customers/byemail/${userInfo.user.email}`);
+        localStorage.setItem('cliente', result.data._id);
+
+      } catch (err) {
+      }
+    };
+    fetchCliente();
+  }, []);
 
         const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
@@ -165,7 +178,7 @@ export const NameInstrumento = () => {
 
   const loadProduct = async() => {
     try {
-      const resp = await stutzApi.get(`/api/tes/admin/instrumentos/${ _id }`);
+      const resp = await stutzApi.get(`/api/tes/admin/instrumentos/eco/${ _id }`);
       setInstrumento({
                 _id: resp.data._id,
                 name: resp.data.name,
@@ -191,8 +204,8 @@ export const NameInstrumento = () => {
       if (isPaying && (!recNum || !recDat || !desVal)) {
         unloadpayment();
       } else {
-        console.log(remDat)
-        console.log(codCus)
+        // console.log(remDat)
+        // console.log(codCus)
         if (remDat && codCus) {
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
           invoice.subTotal = round2(

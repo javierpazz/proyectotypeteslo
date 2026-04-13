@@ -136,11 +136,14 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/dashboardser" onClick={handleClose(setAnchorElAdmin)}>
             Graficos Estado General
           </MenuItem>
+          <MenuItem component={Link} to="/admin/dashboardsermaq" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos Estado por Maquina
+          </MenuItem>
           <MenuItem component={Link} to="/admin/dashboardserpar" onClick={handleClose(setAnchorElAdmin)}>
             Graficos Estado por Parte
           </MenuItem>
-          <MenuItem component={Link} to="/admin/dashboardsermaq" onClick={handleClose(setAnchorElAdmin)}>
-            Graficos Estado por Maquina
+          <MenuItem component={Link} to="/admin/dashboardsertra" onClick={handleClose(setAnchorElAdmin)}>
+            Graficos Estado por Trabajo
           </MenuItem>
           <MenuItem component={Link} to="/admin/dashboardsertar" onClick={handleClose(setAnchorElAdmin)}>
             Graficos Estado por Tarea

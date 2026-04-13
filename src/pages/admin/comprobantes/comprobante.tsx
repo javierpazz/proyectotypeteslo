@@ -146,7 +146,8 @@ export const ComprobanteAdminPage = () => {
             startIcon={<SaveOutlined />}
             sx={{ width: '150px' }}
             type='submit'
-            disabled={isSaving}
+            // disabled={isSaving}
+            disabled={ isSaving || (user?.role !== "admin" ) }
           >
             Guardar
           </Button>

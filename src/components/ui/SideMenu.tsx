@@ -91,12 +91,22 @@ export const SideMenu = () => {
                 </ListItem>
 
                 <ListItem button 
+                onClick={ () => navigateTo('/orders/history') }
+                >
+                    <ListItemIcon>
+                        <ConfirmationNumberOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Mis Compras'} />
+                </ListItem>
+
+
+                <ListItem button 
                 onClick={ () => navigateTo('/pedidoservice') }
                 >
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Pedido Service'} />
+                    <ListItemText primary={'Turno Trabajos'} />
                 </ListItem>
                 <ListItem button 
                 onClick={ () => navigateTo('/pedidoservices/history') }
@@ -104,7 +114,7 @@ export const SideMenu = () => {
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Mis Services'} />
+                    <ListItemText primary={'Mis Trabajos'} />
                 </ListItem>
 
                 <ListItem button 
@@ -113,18 +123,10 @@ export const SideMenu = () => {
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Graficos de Services'} />
+                    <ListItemText primary={'Graficos de Trabajos'} />
                 </ListItem>
 
 
-                <ListItem button 
-                onClick={ () => navigateTo('/orders/history') }
-                >
-                    <ListItemIcon>
-                        <ConfirmationNumberOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Mis Compras'} />
-                </ListItem>
                 </>
                     )
                 }
