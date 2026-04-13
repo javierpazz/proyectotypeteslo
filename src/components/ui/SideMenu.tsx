@@ -100,14 +100,34 @@ export const SideMenu = () => {
                 </ListItem>
 
 
-                <ListItem button 
+                {/* <ListItem button 
                 onClick={ () => navigateTo('/pedidoservice') }
                 >
                     <ListItemIcon>
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Turno Trabajos'} />
+                </ListItem> */}
+                <ListItem button 
+                // onClick={ () => navigateTo('/pedidoentradas/history') }
+                onClick={ () => navigateTo('/') }
+                >
+                    <ListItemIcon>
+                        <ConfirmationNumberOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Mis Entradas (HACER A PEDIDO)'} />
                 </ListItem>
+
+                <ListItem button 
+                // onClick={ () => navigateTo('/pedidoentradas/graficos') }
+                onClick={ () => navigateTo('/') }
+                >
+                    <ListItemIcon>
+                        <ConfirmationNumberOutlined/>
+                    </ListItemIcon>
+                    <ListItemText primary={'Graficos de Entradas (HACER A PEDIDO)'} />
+                </ListItem>
+
                 <ListItem button 
                 onClick={ () => navigateTo('/pedidoservices/history') }
                 >

@@ -63,7 +63,7 @@ const columns: GridColDef[] = [
 
 
 
-export const HistoryServices = () => {
+export const HistoryEntradas = () => {
 
   
 ////////////////////FGFGFGFG
