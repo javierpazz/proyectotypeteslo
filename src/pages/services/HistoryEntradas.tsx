@@ -52,7 +52,7 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-               <NavLink to={`/pedidoservices/${ params.row.orderId }`} >
+               <NavLink to={`/pedidoentradas/${ params.row.orderId }`} >
                         Ver orden
                </NavLink>
             )

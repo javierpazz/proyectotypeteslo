@@ -5,7 +5,7 @@ import { Box, Card, CardContent, Divider, Grid, Typography, Chip } from '@mui/ma
 import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material';
 
 import { ShopLayout } from '../../components/layouts/ShopLayout';
-import { CartServList, OrderSummary } from '../../components/cart';
+import { CartEntradaList, OrderSummary } from '../../components/cart';
 import { IService } from '../../interfaces';
 import { stutzApi } from '../../../api';
 
@@ -52,7 +52,7 @@ const OrderI:IService = {
 
 
 
-export const OrderEscSerPage = () => {
+export const OrderEntradaPage = () => {
 
 
     
@@ -121,7 +121,7 @@ export const OrderEscSerPage = () => {
   return (
     <ShopLayout title='Resumen de la orden 123671523' pageDescription={'Resumen de la orden'}>
         {/* <Typography variant='h1' component='h1'>Orden: {order._id} </Typography> */}
-        <Typography variant='h1' component='h1'>Orden Trabajo: {order.remNum} </Typography>
+        <Typography variant='h1' component='h1'>Entrada Nro: {order.remNum} </Typography>
 
 {
     order.isPaid
@@ -149,7 +149,7 @@ export const OrderEscSerPage = () => {
 
         <Grid container>
             <Grid item xs={ 12 } sm={ 7 }>
-                <CartServList products={  order.serviceItems } />                
+                <CartEntradaList products={  order.serviceItems } />                
             </Grid>
             <Grid item xs={ 12 } sm={ 5 }>
                 <Card className='summary-card'>

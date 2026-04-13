@@ -46,7 +46,7 @@ export const CartEntradaList: FC<Props> = ({ editable = false, products }) => {
                             <Typography variant='body1'>{ product.title }</Typography>
                             {/* <Typography variant='body1'>Talla: <strong>{ product.size }</strong></Typography> */}
 
-                            {
+                            {/* {
                                 editable 
                                 ? (
                                     <ItemCounter 
@@ -58,7 +58,7 @@ export const CartEntradaList: FC<Props> = ({ editable = false, products }) => {
                                 )
 
                                 : <Typography variant='h5'>{ product.quantity }</Typography>
-                            }
+                            } */}
                             
                         </Box>
                     </Grid>
