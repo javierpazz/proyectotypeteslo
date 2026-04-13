@@ -20,7 +20,7 @@ import {
 // import Modal from 'react-bootstrap/Modal';
 // import { getError, API } from '../../utils';
 import { stutzApi } from '../../../api';
-import { ICartProduct, ICustomer, IInstrumento, IOrder, IParte } from '../../interfaces';
+import { ICartProduct, ICustomer, IInstrumento, IService, IParte } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
@@ -64,21 +64,21 @@ export const MesaEntradaVal = () => {
   // const { state, dispatch: ctxDispatch } = useContext(Store);
     const {  cart, addTodosProductToCartEscPar } = useContext(CartContext);
     
-        const OrderI: IOrder = {
-            orderItems: cart.map( p => ({
+        const OrderI: IService = {
+            serviceItems: cart.map( p => ({
                 ...p,
                 size: p.size!
             })),
-            orderAddress: {
-              firstName: "",
-              lastName: "",
-              address: "",
-              address2: "",
-              zip: "",
-              city: "",
-              country: "",
-              phone: "",
-            },
+            // orderAddress: {
+            //   firstName: "",
+            //   lastName: "",
+            //   address: "",
+            //   address2: "",
+            //   zip: "",
+            //   city: "",
+            //   country: "",
+            //   phone: "",
+            // },
             numberOfItems: 0,
             isPaid: false,
             subTotal :0,
@@ -123,11 +123,11 @@ export const MesaEntradaVal = () => {
 
       const loadProduct = async() => {
           try {
-              const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+              const resp = await stutzApi.get<IService>(`/api/tes/entradas/getorderbyid/${ id }`);
                   OrderI._id = resp.data._id;
                   OrderI.user = resp.data.user;
-                  OrderI.orderItems = resp.data.orderItems;
-                  OrderI.orderAddress = resp.data.orderAddress;
+                  OrderI.serviceItems = resp.data.serviceItems;
+                  // OrderI.orderAddress = resp.data.orderAddress;
               //    paymentResult: '';
                   OrderI.shippingPrice=  resp.data.shippingPrice;
                   OrderI.numberOfItems= resp.data.numberOfItems;
@@ -154,7 +154,7 @@ export const MesaEntradaVal = () => {
                   OrderI.asieDat   = resp.data.asieDat;
                   OrderI.terminado          = resp.data.terminado;
                   OrderI.paidAt          = resp.data.paidAt;
-           addTodosProductToCartEscPar(invoice.orderItems as ICartProduct[]);
+           addTodosProductToCartEscPar(invoice.serviceItems as ICartProduct[]);
            setInvoice(OrderI);
 
             setCodInst((invoice.id_instru as IInstrumento).codIns);
@@ -368,7 +368,7 @@ const handleShowIns = () => {
     setModalOpenIns(true);
     // const instRow = instrumentos.find((row) => row.codIns === codInst);
     // if (instRow) {
-    // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
+    // addTodosProductToCartEsc(instRow.serviceItems as ICartProduct[]);
     // };
   };
 
@@ -398,8 +398,8 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setNameIns('Elija Instrumento');
         setPublicoIns(true);
     }else{
-      // cargaParametros(instRow.orderItems)
-      // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
+      // cargaParametros(instRow.serviceItems)
+      // addTodosProductToCartEsc(instRow.serviceItems as ICartProduct[]);
 
       setCodIns(instRow._id);
       setCodInst(instRow.codIns);
@@ -493,7 +493,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
       } else {
         if (true) {
           const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100; // 123.2345 => 123.23
-           invoice.orderItems = cart.map( p => ({
+           invoice.serviceItems = cart.map( p => ({
                 ...p,
                 size: p.size!
             })),
@@ -552,11 +552,11 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     try {
       setIsloading(true);
       await stutzApi.put(
-        `/api/invoices/remModEsc/${invoice._id}`,
+        `/api/entradas/remModEsc/${invoice._id}`,
 
         {
-          orderItems: invoice.orderItems,
-          orderAddress: invoice.orderAddress,
+          serviceItems: invoice.serviceItems,
+          // orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

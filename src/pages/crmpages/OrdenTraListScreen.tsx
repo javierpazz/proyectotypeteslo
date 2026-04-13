@@ -86,9 +86,9 @@ export const OrdenTraListScreen = () => {
     const fetchData = async () => {
       try {
           setIsloading(true);
-          const resp = await stutzApi.get(`/api/invoices/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&producto=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/entradas/searchremSEsc?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&producto=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           setIsloading(false);
-          setInvoices(resp.data.invoices);
+          setInvoices(resp.data.entradas);
 
     } catch (err) {
       }
@@ -132,7 +132,7 @@ export const OrdenTraListScreen = () => {
 
         try {
             
-            await stutzApi.put(`/api/invoices/${Id}/applychasta`,
+            await stutzApi.put(`/api/entradas/${Id}/applychasta`,
               //  {  Id, isActive: newisActive });
         {
           staOrd: newisActive
@@ -311,7 +311,7 @@ const columns:GridColDef[] = [
     if (window.confirm('Esta Seguro de Eliminar?')) {
       try {
         // await stutzApi.delete(`/api/tes/admin/partes/${id}`);
-        await stutzApi.delete(`/api/invoices/${id}/deleteremitEsc`);
+        await stutzApi.delete(`/api/entradas/${id}/deleteremitEsc`);
         window.location.reload();
     } catch (err) {
       }

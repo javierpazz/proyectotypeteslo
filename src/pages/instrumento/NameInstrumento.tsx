@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
-import {  IOrder } from '../../interfaces';
+import {  IService } from '../../interfaces';
 
 import stutzApi from '../../../api/stutzApi';
 import { FullScreenLoading } from '../../components/ui';
@@ -95,18 +95,18 @@ export const NameInstrumento = () => {
   
   const {  cart } = useContext(CartContext);
 
-        const invoice: IOrder = {
-            orderItems: [],
-            orderAddress: {
-              firstName: "",
-              lastName: "",
-              address: "",
-              address2: "",
-              zip: "",
-              city: "",
-              country: "",
-              phone: "",
-            },
+        const invoice: IService = {
+            serviceItems: [],
+            // orderAddress: {
+            //   firstName: "",
+            //   lastName: "",
+            //   address: "",
+            //   address2: "",
+            //   zip: "",
+            //   city: "",
+            //   country: "",
+            //   phone: "",
+            // },
             numberOfItems: 0,
             isPaid: false,
             subTotal :0,
@@ -248,11 +248,11 @@ export const NameInstrumento = () => {
       // setIsloading(true);
       // const { data } = await stutzApi.post(
       await stutzApi.post(
-        `/api/invoices/remEsc`,
+        `/api/entradas/remEsc`,
 
         {
-          orderItems: invoice.orderItems,
-          orderAddress: invoice.orderAddress,
+          serviceItems: invoice.serviceItems,
+          // orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

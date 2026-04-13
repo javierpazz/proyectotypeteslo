@@ -6,23 +6,23 @@ import { CreditCardOffOutlined, CreditScoreOutlined } from '@mui/icons-material'
 
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
-import { IOrder } from '../../interfaces';
+import { IService } from '../../interfaces';
 import { stutzApi } from '../../../api';
 
-const OrderI:IOrder = {
+const OrderI:IService = {
     _id : '',
     user: '',
-    orderItems: [],
-    orderAddress: {
-        firstName: '',
-        lastName : '',
-        address  : '',
-        address2 : '',
-        zip      : '',
-        city     : '',
-        country  : '',
-        phone    : '',
-    },
+    serviceItems: [],
+    // orderAddress: {
+    //     firstName: '',
+    //     lastName : '',
+    //     address  : '',
+    //     address2 : '',
+    //     zip      : '',
+    //     city     : '',
+    //     country  : '',
+    //     phone    : '',
+    // },
 //    paymentResult: '',
 
     numberOfItems: 0,
@@ -69,12 +69,12 @@ export const OrderEscSerPage = () => {
  useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+            const resp = await stutzApi.get<IService>(`/api/tes/entradas/getorderbyid/${ id }`);
             setOrder({
                 _id: resp.data._id,
                 user: resp.data.user,
-                orderItems: resp.data.orderItems,
-                orderAddress: resp.data.orderAddress,
+                serviceItems: resp.data.serviceItems,
+                // orderAddress: resp.data.orderAddress,
             //    paymentResult: '',
                 shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,
@@ -149,7 +149,7 @@ export const OrderEscSerPage = () => {
 
         <Grid container>
             <Grid item xs={ 12 } sm={ 7 }>
-                <CartList products={  order.orderItems } />                
+                <CartList products={  order.serviceItems } />                
             </Grid>
             <Grid item xs={ 12 } sm={ 5 }>
                 <Card className='summary-card'>

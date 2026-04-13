@@ -113,7 +113,7 @@ const userInfo = localStorage.getItem('userInfo')
           // aqui hago trampa
           userInfo.user._id = userInfo.user.email;
           // aqui hago trampa
-          const resp = await stutzApi.get(`/api/tes/orders/getservicesbyus/${userInfo.user._id}`);
+          const resp = await stutzApi.get(`/api/tes/entradas/getservicesbyus/${userInfo.user._id}`);
           // console.log(resp.data)
           setOrders(resp.data);
         } catch (error) {

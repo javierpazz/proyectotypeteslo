@@ -14,7 +14,7 @@ import {
   TextField,
 } from '@mui/material';
 import { stutzApi } from '../../../api';
-import { IParamProduct, ICustomer, IInstrumento, IOrder } from '../../interfaces';
+import { IParamProduct, ICustomer, IInstrumento, IService } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
@@ -55,21 +55,21 @@ export const OrdenTrabajo = () => {
   // const { state, dispatch: ctxDispatch } = useContext(Store);
     const {  cart, createParam, addTodosProductToCartEsc } = useContext(CartContext);
     
-        const invoice: IOrder = {
-            orderItems: cart.map( p => ({
+        const invoice: IService = {
+            serviceItems: cart.map( p => ({
                 ...p,
                 size: p.size!
             })),
-            orderAddress: {
-              firstName: "",
-              lastName: "",
-              address: "",
-              address2: "",
-              zip: "",
-              city: "",
-              country: "",
-              phone: "",
-            },
+            // orderAddress: {
+            //   firstName: "",
+            //   lastName: "",
+            //   address: "",
+            //   address2: "",
+            //   zip: "",
+            //   city: "",
+            //   country: "",
+            //   phone: "",
+            // },
             numberOfItems: 0,
             isPaid: false,
             subTotal :0,
@@ -317,7 +317,7 @@ const handleShowIns = () => {
     setModalOpenIns(true);
     // const instRow = instrumentos.find((row) => row.codIns === codInst);
     // if (instRow) {
-    // addTodosProductToCartEsc(instRow.orderItems as ICartProduct[]);
+    // addTodosProductToCartEsc(instRow.serviceItems as ICartProduct[]);
     // };
   };
 
@@ -347,7 +347,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setNameIns('Elija Trabajo');
         // setPublicoIns(true);
     }else{
-      // cargaParametros(instRow.orderItems)
+      // cargaParametros(instRow.serviceItems)
       addTodosProductToCartEsc(instRow.paramItems as IParamProduct[], remDat);
 
       setInstrumento(instRow);
@@ -513,11 +513,11 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
     try {
       setIsloading(true);
       const { data } = await stutzApi.post(
-        `/api/invoices/remEsc`,
+        `/api/entradas/remEsc`,
 
         {
-          orderItems: invoice.orderItems,
-          orderAddress: invoice.orderAddress,
+          serviceItems: invoice.serviceItems,
+          // orderAddress: invoice.orderAddress,
           paymentMethod: invoice.paymentMethod,
           subTotal: invoice.subTotal,
           shippingPrice: invoice.shippingPrice,

@@ -15,27 +15,27 @@ import {
 } from '@mui/material';
 
 
-import { IConfiguracion, ICustomer, IInstrumento, IOrder, IParte, IUser } from '../../interfaces';
+import { IConfiguracion, ICustomer, IInstrumento, IService, IParte, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from "react-to-print";
 
 
-const OrderI:IOrder = {
+const OrderI:IService = {
     _id : '',
     user: '',
-    orderItems: [],
-    orderAddress: {
-        firstName: '',
-        lastName : '',
-        address  : '',
-        address2 : '',
-        zip      : '',
-        city     : '',
-        country  : '',
-        phone    : '',
-    },
+    serviceItems: [],
+    // orderAddress: {
+    //     firstName: '',
+    //     lastName : '',
+    //     address  : '',
+    //     address2 : '',
+    //     zip      : '',
+    //     city     : '',
+    //     country  : '',
+    //     phone    : '',
+    // },
 //    paymentResult: '',
 
     numberOfItems: 0,
@@ -127,12 +127,12 @@ export const MesaEntradaCon = () => {
  useEffect(() => {
     const loadProduct = async() => {
         try {
-            const resp = await stutzApi.get<IOrder>(`/api/tes/orders/getorderbyid/${ id }`);
+            const resp = await stutzApi.get<IService>(`/api/tes/entradas/getorderbyid/${ id }`);
             setInvoice({
                 _id: resp.data._id,
                 user: resp.data.user,
-                orderItems: resp.data.orderItems,
-                orderAddress: resp.data.orderAddress,
+                serviceItems: resp.data.serviceItems,
+                // orderAddress: resp.data.orderAddress,
             //    paymentResult: '',
                 shippingPrice:  resp.data.shippingPrice,
                 numberOfItems: resp.data.numberOfItems,
@@ -288,7 +288,7 @@ useEffect(() => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {invoice.orderItems.map((item, index) => (
+            {invoice.serviceItems.map((item, index) => (
               <TableRow key={item._id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.codigoPro}</TableCell>

@@ -45,7 +45,7 @@ interface IOrderUnwiund {
     id_encar?: IEncargado | string;
     id_config?: IConfiguracion | string;
     user?: IUser | string;
-    orderItems: IOrderItemUnwind;
+    serviceItems: IOrderItemUnwind;
     paymentResult?: string;
 
     numberOfItems: number;
@@ -288,9 +288,9 @@ export const TareaListScreen = () => {
         //     headers: { Authorization: `Bearer ${userInfo.token}` },
         // });
         //   const resp = await stutzApi.get('/api/invoices/diligencias');
-          const resp = await stutzApi.get(`/api/invoices/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&producto=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
+          const resp = await stutzApi.get(`/api/entradas/diligencias?order=${order}&fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&producto=${codPro}&estado=${estado}&registro=${registro}&obser=${obser}`);
           // console.log(resp.data.invoices)
-          setInvoices(resp.data.invoices);
+          setInvoices(resp.data.entradas);
           setIsloading(false);
         } catch (error) {
           console.log({error})
@@ -312,7 +312,7 @@ export const TareaListScreen = () => {
     
 
     const rows = invoices!.map( invoice => ({
-        id    : (invoice.orderItems._id+invoice._id),
+        id    : (invoice.serviceItems._id+invoice._id),
         punteid : invoice._id,
         instruName : invoice.instruName,
         publico : invoice.instruPublico,
@@ -334,25 +334,25 @@ export const TareaListScreen = () => {
 
         terminado : invoice.terminado,
         remNum    : invoice.remNum,
-        observ    : invoice.orderItems.observ,
+        observ    : invoice.serviceItems.observ,
         remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
         dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
         nameCus  : (invoice.id_client as ICustomer).nameCus,
         nameIns  : (invoice.id_instru as IInstrumento).name,
         // namePar  : (invoice.id_parte as IParte).name,
         // nameCon  : (invoice.id_config as IConfiguracion).name,
-        namePro  : invoice.orderItems.title,
+        namePro  : invoice.serviceItems.title,
         namePar  : (invoice.id_parte as IParte)?.name ?? '',
         nameMaq  : (invoice.id_maquin as IMaquina)?.name ?? '',
         nameEnc  : (invoice.id_encar as IEncargado)?.name ?? '',
         nameCon  : (invoice.id_config as IConfiguracion)?.name ?? '',
-        dilterminado  : invoice.orderItems.terminado,
-        precio  : (invoice.orderItems.price).toFixed(2),
-        cantidad  : (invoice.orderItems.quantity).toFixed(2),
-        unidad  : invoice.orderItems.medPro,
-        valor  : (invoice.orderItems.quantity*invoice.orderItems.price*(1+(invoice.orderItems.porIva/100))).toFixed(2),
-        venDil: invoice.orderItems.venDat ? formatDateNoTZ(invoice.orderItems.venDat) : '',
-        // namePro  : invoice.orderItems.title as any,
+        dilterminado  : invoice.serviceItems.terminado,
+        precio  : (invoice.serviceItems.price).toFixed(2),
+        cantidad  : (invoice.serviceItems.quantity).toFixed(2),
+        unidad  : invoice.serviceItems.medPro,
+        valor  : (invoice.serviceItems.quantity*invoice.serviceItems.price*(1+(invoice.serviceItems.porIva/100))).toFixed(2),
+        venDil: invoice.serviceItems.venDat ? formatDateNoTZ(invoice.serviceItems.venDat) : '',
+        // namePro  : invoice.serviceItems.title as any,
         // total : invoice.total,
         total : invoice.total.toFixed(2),
         isPaid: invoice.isPaid,
@@ -367,7 +367,7 @@ export const TareaListScreen = () => {
 
     const exportToExcel = () => {
     const rows = invoices.map(invoice => ({
-      id: invoice.orderItems._id + invoice._id,
+      id: invoice.serviceItems._id + invoice._id,
       punteid: invoice._id,
       trabajoName: invoice.instruName,
       customName: invoice.customName,
@@ -385,18 +385,18 @@ export const TareaListScreen = () => {
       // asieDat: invoice.asieDat ? formatDateNoTZ(invoice.asieDat) : '',
       terminado: invoice.terminado,
       remNum: invoice.remNum,
-      observ: invoice.orderItems.observ,
+      observ: invoice.serviceItems.observ,
       remDat: invoice.remDat ? formatDateNoTZ(invoice.remDat) : '',
       dueDat: invoice.dueDat ? formatDateNoTZ(invoice.dueDat) : '',
       // nameCus: invoice.id_client?.nameCus ?? '',
       // nameIns: invoice.id_instru?.name ?? '',
-      namePro: invoice.orderItems.title,
+      namePro: invoice.serviceItems.title,
       // namePar: invoice.id_parte?.name ?? '',
       // nameCon: invoice.id_config?.name ?? '',
-      // dilterminado: invoice.orderItems.terminado,
-      tarterminado  : invoice.orderItems.terminado ? "TERMINADO" : "PENDIENTE",
-      valor  : invoice.orderItems.price*(1+(invoice.orderItems.porIva/100)),
-      venDil: invoice.orderItems.venDat ? formatDateNoTZ(invoice.orderItems.venDat) : '',
+      // dilterminado: invoice.serviceItems.terminado,
+      tarterminado  : invoice.serviceItems.terminado ? "TERMINADO" : "PENDIENTE",
+      valor  : invoice.serviceItems.price*(1+(invoice.serviceItems.porIva/100)),
+      venDil: invoice.serviceItems.venDat ? formatDateNoTZ(invoice.serviceItems.venDat) : '',
       total: invoice.total,
       isPaid: invoice.isPaid,
       noProducts: invoice.numberOfItems,
@@ -510,7 +510,7 @@ export const TareaListScreen = () => {
 
     if ( !invoices ) return (<></>);
 // 👉 Calculás el total
-const totalGeneral = invoices.reduce((acc, inv) => acc + (inv.orderItems.price*(1+(inv.orderItems.porIva/100))), 0);
+const totalGeneral = invoices.reduce((acc, inv) => acc + (inv.serviceItems.price*(1+(inv.serviceItems.porIva/100))), 0);
 
   return (
     <AdminLayoutMenuListSer

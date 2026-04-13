@@ -5,6 +5,7 @@ export * from './param';
 export * from './receiptcart';
 export * from './dashboard';
 export * from './order';
+export * from './service';
 export * from './invoice';
 export * from './receipt';
 export * from './receiptB';
