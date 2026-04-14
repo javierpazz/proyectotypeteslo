@@ -259,7 +259,7 @@ export const DashboardSerTar = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Tareas x Partes ",
+                      title: "Top 10 Partes x Tareas",
                       is3D: true,
                     }}
                   />
@@ -283,7 +283,7 @@ export const DashboardSerTar = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Tareas x Partes  Valorizado",
+                      title: "Top 10 Partes x Tareas Valorizado",
                       is3D: true,
                     }}
                   />

@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 import { useEffect, useState, useContext } from "react";
-import { IMaquina, IOrder, IParte, IUser } from "../../interfaces";
+import { IInstrumento, IMaquina, IOrder, IParte, IUser } from "../../interfaces";
 import { stutzApi } from "../../../api";
 import { AuthContext } from "../../../context";
 
@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
     { field: 'remNum', headerName: 'Orden', width: 100 },
     { field: 'remDat', headerName: 'Fecha', width: 100 },
     // { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
-    { field: 'email', headerName: 'Correo', width: 200 },
+    { field: 'trabajo', headerName: 'Trabajo', width: 250 },
     { field: 'maquina', headerName: 'Maquina', width: 200 },
     { field: 'parte', headerName: 'Parte', width: 200 },
     { field: 'total',
@@ -25,6 +25,7 @@ const columns: GridColDef[] = [
       align: 'right',
       headerAlign: 'center',
     },
+    { field: 'email', headerName: 'Correo', width: 200 },
     {
         field: 'paid',
         headerName: 'Pagada',
@@ -114,7 +115,7 @@ const userInfo = localStorage.getItem('userInfo')
           userInfo.user._id = userInfo.user.email;
           // aqui hago trampa
           const resp = await stutzApi.get(`/api/tes/entradas/getservicesbyus/${userInfo.user._id}`);
-          // console.log(resp.data)
+          console.log(resp.data)
           setOrders(resp.data);
         } catch (error) {
           console.log({error})
@@ -136,6 +137,7 @@ const userInfo = localStorage.getItem('userInfo')
         paid: order.isPaid,
         // fullname: `${ order.orderAddress.firstName } ${ order.orderAddress.lastName }`,
         email : (order.user as IUser).email,
+        trabajo  : (order.id_instru as IInstrumento)?.name ?? "",
         maquina  : (order.id_maquin as IMaquina)?.name ?? "",
         parte  : (order.id_parte as IParte)?.name ?? "",
 

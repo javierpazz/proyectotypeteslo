@@ -42,7 +42,7 @@ export const GraficosEntradas = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/');
+        navigate('/auth/loginadm?redirect=/pedidoentradas/graficos');
         }
         if (user?.role !== "client" ) {
         if (window.confirm('Usuario Sin Autorizacion')) {}
@@ -96,7 +96,7 @@ export const GraficosEntradas = () => {
 
 
   const parametros = async () => {
-    navigate('/pedidoservices/filtrocli?redirect=/pedidoservices/graficos');
+    navigate('/pedidoservices/filtrocli?redirect=/pedidoentradas/graficos');
   };
 
 
@@ -109,7 +109,7 @@ export const GraficosEntradas = () => {
     <ShopLayout title={'- Home'} pageDescription={'Encuentra los mejores productos de Teslo aquí'}>
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Clientes Trabajos Realizados
+        Dashboard Clientes Entradas
       </Typography>
 
         <>
@@ -142,7 +142,7 @@ export const GraficosEntradas = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={6} md={3}>
+            {/* <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Typography variant="h5">
@@ -151,7 +151,7 @@ export const GraficosEntradas = () => {
                   <Typography>Valor</Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Grid> */}
           </Grid>
 
 
@@ -160,7 +160,7 @@ export const GraficosEntradas = () => {
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
 
-            <Grid item xs={6} md={3}>
+            {/* <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
                   <Chart
@@ -258,7 +258,7 @@ export const GraficosEntradas = () => {
             </Grid>
 
 
-
+ */}
 
             <Grid item xs={6} md={3}>
               <Card>
@@ -276,7 +276,7 @@ export const GraficosEntradas = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Ordenes de Trabajo x Parte",
+                      title: "Top 10 Instrumentos x Parte",
                       is3D: true,
                     }}
                   />
@@ -301,7 +301,7 @@ export const GraficosEntradas = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Ordenes de Trabajo x Parte Valorizado",
+                      title: "Top 10 Instrumentos x Parte Valorizado",
                       is3D: true,
                     }}
                   />
@@ -326,7 +326,7 @@ export const GraficosEntradas = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Tareas x Parte ",
+                      title: "Top 10 Diligencias x Parte ",
                       is3D: true,
                     }}
                   />
@@ -350,7 +350,7 @@ export const GraficosEntradas = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Tareas x Parte  Valorizado",
+                      title: "Top 10 Diligencias x Parte  Valorizado",
                       is3D: true,
                     }}
                   />

@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 import { useEffect, useState, useContext } from "react";
-import { IMaquina, IOrder, IParte, IUser } from "../../interfaces";
+import { IInstrumento, IMaquina, IOrder, IParte, IUser } from "../../interfaces";
 import { stutzApi } from "../../../api";
 import { AuthContext } from "../../../context";
 
@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
     { field: 'remNum', headerName: 'Orden', width: 100 },
     { field: 'remDat', headerName: 'Fecha', width: 100 },
     // { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
-    { field: 'email', headerName: 'Correo', width: 200 },
+    { field: 'instrumento', headerName: 'Instrumento', width: 250 },
     { field: 'maquina', headerName: 'Maquina', width: 200 },
     { field: 'parte', headerName: 'Parte', width: 200 },
     { field: 'total',
@@ -25,10 +25,11 @@ const columns: GridColDef[] = [
       align: 'right',
       headerAlign: 'center',
     },
+    { field: 'email', headerName: 'Correo', width: 200 },
     {
-        field: 'paid',
-        headerName: 'Pagada',
-        description: 'Muestra información si está pagada la orden o no',
+      field: 'paid',
+      headerName: 'Pagada',
+      description: 'Muestra información si está pagada la orden o no',
         width: 200,
         renderCell: (params: GridRenderCellParams) => {
             return (
@@ -84,7 +85,7 @@ export const HistoryEntradas = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/pedidoservices/history');
+        navigate('/auth/login?redirect=/pedidoentradas/history');
         }
         if (user?.role !== "client" ) {
         navigate('/');
@@ -136,6 +137,7 @@ const userInfo = localStorage.getItem('userInfo')
         paid: order.isPaid,
         // fullname: `${ order.orderAddress.firstName } ${ order.orderAddress.lastName }`,
         email : (order.user as IUser).email,
+        instrumento  : (order.id_instru as IInstrumento)?.name ?? "",
         maquina  : (order.id_maquin as IMaquina)?.name ?? "",
         parte  : (order.id_parte as IParte)?.name ?? "",
 
@@ -149,7 +151,7 @@ const userInfo = localStorage.getItem('userInfo')
 
   return (
     <ShopLayout title={'Historial de ordenes'} pageDescription={'Historial de ordenes del cliente'}>
-        <Typography variant='h1' component='h1'>Historial de Trabajos</Typography>
+        <Typography variant='h1' component='h1'>Historial de Entradas</Typography>
 
 
         <Grid container>

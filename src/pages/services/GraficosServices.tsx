@@ -42,7 +42,7 @@ export const GraficosServices = () => {
 
     useEffect(() => {
         if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/');
+        navigate('/auth/loginadm?redirect=/pedidoservices/graficos');
         }
         if (user?.role !== "client" ) {
         if (window.confirm('Usuario Sin Autorizacion')) {}
