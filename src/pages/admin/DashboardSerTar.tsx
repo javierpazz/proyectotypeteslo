@@ -72,13 +72,15 @@ export const DashboardSerTar = () => {
   const codPar = userInfo.filtro.codPar;
   const codMaq = userInfo.filtro.codMaq;
   const codEnc = userInfo.filtro.codEnc;
-
+  const estado = userInfo.filtro.estado;
+  const registro = userInfo.filtro.registro;
+  const obser = userInfo.filtro.obser;
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/tar?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/tar?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&estado=${estado}&registro=${registro}&obser=${obser}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
           console.log(data)

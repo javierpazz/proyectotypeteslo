@@ -86,6 +86,8 @@ export const Filtro = () => {
   const [codPar, setCodPar] = useState('');
   const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
+  const [codMaq, setCodMaq] = useState('');
+  const [nameMaq, setNameMaq] = useState('');
 
   const [firstDat, setFirstDat] = useState(getTodayInGMT3());
   const [lastDat, setLastDat] = useState(getTodayInGMT3());
@@ -128,6 +130,7 @@ desVal;
     codSup : '',
     codPro : '',
     codEnc : '',
+    codMaq : '',
     codCom : '',
     codVal : '',
     codCon : '',
@@ -142,6 +145,7 @@ desVal;
     nameIns : 'Todos',
     desVal : 'Todos',
     nameEnc : 'Todos',
+    nameMaq : 'Todos',
     order : 'newest',
     estado : 'TOD',
     registro : 'TOD',
@@ -156,6 +160,7 @@ desVal;
     codSup : codSup,
     codPro : codPro,
     codEnc : codEnc,
+    codMaq : codMaq,
     codCom : codCom,
     codIns : codIns,
     codVal : codVal,
@@ -167,6 +172,8 @@ desVal;
     nameIns : nameIns,
     nameUse : nameUse,
     nameCon : nameCon,
+    nameEnc : nameEnc,
+    nameMaq : nameMaq,
     order : order,
     estado : estado,
     registro : registro,
@@ -181,7 +188,7 @@ desVal;
       // setDesPro('Elija un Producto');
       // setNameSup('Elija Proovedor');
       // setNameCom('Elija Documento');
-      setFirstDat(userInfo.filtro.firstDat);
+        setFirstDat(userInfo.filtro.firstDat);
       setLastDat(userInfo.filtro.lastDat);
       setCodCus(userInfo.filtro.codCus);
       setNameCus(userInfo.filtro.nameCus);
@@ -197,6 +204,8 @@ desVal;
       setNameCom(userInfo.filtro.nameCom);
       setCodEnc(userInfo.filtro.codEnc);
       setNameEnc(userInfo.filtro.nameEnc);
+      setCodMaq(userInfo.filtro.codMaq);
+      setNameMaq(userInfo.filtro.nameMaq);
       setCodUse(userInfo.filtro.codUse);
       setNameUse(userInfo.filtro.nameUse);
       setCodCon(userInfo.filtro.codCon);  
@@ -223,6 +232,7 @@ desVal;
       setNameCom('Todos');
       // setCodEnc('Todos');
       setNameEnc('Todos');
+      setNameMaq('Todos');
       // setCodUse('Todos');
       setNameUse('Todos');
       // setCodCon('Todos');

@@ -1,9 +1,8 @@
 import { FC, useContext } from 'react';
 import { NavLink } from "react-router-dom";
 
-import { Box, Button, CardActionArea, CardMedia, Grid, Typography } from '@mui/material';
+import { Box, Button,  Grid, Typography } from '@mui/material';
 
-import { ItemCounter } from '../ui';
 import { CartContext } from '../../../context';
 import { ICartProduct, IOrderItem } from '../../interfaces';
 
@@ -15,12 +14,12 @@ interface Props {
 
 export const CartEntradaList: FC<Props> = ({ editable = false, products }) => {
 
-    const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext);
+    const { cart,  removeCartProduct } = useContext(CartContext);
 
-    const onNewCartQuantityValue = (product: ICartProduct, newQuantityValue: number) => {
-        product.quantity = newQuantityValue;
-        updateCartQuantity( product );
-    }
+    // const onNewCartQuantityValue = (product: ICartProduct, newQuantityValue: number) => {
+    //     product.quantity = newQuantityValue;
+    //     updateCartQuantity( product );
+    // }
 
     const productsToShow = products ? products : cart;
 
