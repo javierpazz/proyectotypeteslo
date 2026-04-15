@@ -19,15 +19,15 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  top10PartesSTVal: { parte: string; totalSales: number; totalOrders: number }[];
-  top10PartesTerVal: { parte: string; totalSales: number; totalOrders: number }[];
+  top10PartesSTVal: { name: string; total: number; count: number }[];
+  top10PartesTerVal: { name: string; total: number; count: number }[];
   TarxPar: { producto: string; total: number; totalCan: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
   dailyOrders: { _id: string; sales: number; buys: number }[];
-  top10PartesxOrd: { parte: string; totalSales: number; totalOrders: number }[];
-  top10InstrumentosxPar: { instrumento: string; totalSales: number; totalOrders: number }[];
+  top10PartesxOrd: { name: string; total: number; count: number }[];
+  top10InstrumentosxPar: { name: string; total: number; count: number }[];
   
 
 
@@ -88,6 +88,7 @@ export const DashboardSerPar = () => {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
+        console.log(data);
         } catch (error) {
           console.log({error})
         }
@@ -197,8 +198,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Ordenes"],
                       ...(summary.top10PartesSTVal || []).map((x) => [
-                        x.parte,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
@@ -221,8 +222,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Valor"],
                       ...(summary.top10PartesSTVal || []).map((x) => [
-                        x.parte,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
@@ -247,8 +248,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Ordenes"],
                       ...(summary.top10PartesTerVal || []).map((x) => [
-                        x.parte,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
@@ -271,8 +272,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Valor"],
                       ...(summary.top10PartesTerVal || []).map((x) => [
-                        x.parte,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
@@ -348,8 +349,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Orders"],
                       ...(summary.top10PartesxOrd || []).map((x) => [
-                        x.parte,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
@@ -373,8 +374,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Valores"],
                       ...(summary.top10PartesxOrd || []).map((x) => [
-                        x.parte,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
@@ -397,8 +398,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Orders"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
-                        x.instrumento,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
@@ -422,8 +423,8 @@ export const DashboardSerPar = () => {
                     data={[
                       ["Partes", "Valores"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
-                        x.instrumento,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{

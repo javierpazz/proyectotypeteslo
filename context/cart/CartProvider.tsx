@@ -127,6 +127,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             // Actualizar la cantidad
             p.quantity = product.quantity;
             p.price = product.price;
+            p.totalItem = product.price*product.quantity;
             return p;
         });
 
@@ -148,6 +149,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             if (p._id === product._id && p.size === product.size) {
                 p.quantity = product.quantity;
                 p.price = product.price;
+                p.totalItem = product.price*product.quantity;
                 p.venDat = product.venDat;
                 p.observ = product.observ;
                 p.terminado = product.terminado;
@@ -174,6 +176,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             if (p._id === product._id && p.size === product.size) {
                 p.quantity = product.quantity;
                 p.price = product.price;
+                p.totalItem = product.price*product.quantity;
                 // p.venDat = product.venDat;
                 p.venDat = remDat;
                 p.observ = product.observ;
@@ -214,6 +217,7 @@ export const CartProvider:FC<Props> = ({ children }) => {
             // Actualizar la cantidad
             p.quantity = product.quantity;
             p.price = product.price;
+            p.totalItem = product.price*product.quantity;
             p.venDat = product.venDat;
             p.observ = product.observ;
             p.terminado = product.terminado;

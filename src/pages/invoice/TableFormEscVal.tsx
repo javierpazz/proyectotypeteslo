@@ -172,6 +172,7 @@ export const TableFormEscVal: React.FC<TableFormProps> = ({
           image: productR.images[0],
           price: price,
           porIva: porIva,
+          totalItem: price*quantity,
           medPro: productR.medPro,
           size: "M",
           slug: productR.slug,

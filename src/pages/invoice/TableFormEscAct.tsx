@@ -175,6 +175,7 @@ useEffect(() => {
     price = round2(price);
     porIva = round2(porIva);
 
+
     if (codPro ) {
       // ctxDispatch({
         //   type: 'INVOICE_ADD_ITEM',
@@ -186,6 +187,7 @@ useEffect(() => {
           image: productR.images[0],
           price: price,
           porIva: porIva,
+          totalItem: price*quantity,
           medPro: productR.medPro,
           size: "M",
           slug: productR.slug,

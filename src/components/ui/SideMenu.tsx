@@ -128,7 +128,7 @@ export const SideMenu = () => {
                     <ListItemText primary={'Graficos de Entradas'} />
                 </ListItem>
 
-                <ListItem button 
+                {/* <ListItem button 
                 onClick={ () => navigateTo('/pedidoservices/history') }
                 >
                     <ListItemIcon>
@@ -144,7 +144,7 @@ export const SideMenu = () => {
                         <ConfirmationNumberOutlined/>
                     </ListItemIcon>
                     <ListItemText primary={'Graficos de Trabajos'} />
-                </ListItem>
+                </ListItem> */}
 
 
                 </>

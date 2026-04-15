@@ -6,6 +6,7 @@ export interface IParamProduct {
     image: string;
     price: number;
     porIva: number;
+    totalItem: number;
     medPro: string;
     size?: ISize;
     slug: string;

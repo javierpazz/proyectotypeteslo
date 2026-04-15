@@ -75,6 +75,7 @@ export interface IServiceItem {
     slug     : string;
     image    : string;
     price    : number;
+    totalItem: number;
     porIva   : number;
     medPro   : string;
     gender   : string;
