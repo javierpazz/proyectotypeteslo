@@ -88,7 +88,6 @@ export const DashboardSerPar = () => {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
-        console.log(data);
         } catch (error) {
           console.log({error})
         }

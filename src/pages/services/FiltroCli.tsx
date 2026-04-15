@@ -391,7 +391,7 @@ desVal;
                     </Select>
                   </FormControl>
             </Grid>
-              {/* <Grid item md={2}>
+              <Grid item md={2}>
 
                   <FormControl fullWidth >
                     <InputLabel id="registro-label">Asientos</InputLabel>
@@ -409,8 +409,8 @@ desVal;
                       <MenuItem value="NPROT">No Protocolizadas</MenuItem>
                     </Select>
                   </FormControl>
-            </Grid> */}
-              <Grid item md={4}>
+            </Grid>
+              <Grid item md={2}>
                 <TextField
                   fullWidth
                   label="Observaciones"

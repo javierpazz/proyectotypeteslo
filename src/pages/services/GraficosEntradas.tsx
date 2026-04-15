@@ -22,8 +22,7 @@ interface Summary {
   TarxPar: { producto: string; total: number; totalCan: number }[];
   orders: { numOrders: number; totalSales: number }[];
   // top10Maquinas: { maquina: string; totalSales: number; totalOrders: number }[];
-  top10InstrumentosxPar: { instrumento: string; totalSales: number; totalOrders: number }[];
-  top10InstrumentosxMaq: { instrumento: string; totalSales: number; totalOrders: number }[];
+  top10InstrumentosxPar: { name: string; total: number; count: number }[];
   
 
 
@@ -76,13 +75,15 @@ export const GraficosEntradas = () => {
   const codPar = userInfo.filtro.codPar;
   const codMaq = userInfo.filtro.codMaq;
   const codEnc = userInfo.filtro.codEnc;
-
+  const estado = userInfo.filtro.estado;
+  const registro = userInfo.filtro.registro;
+  const obser = userInfo.filtro.obser;
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/cli?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/cli?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&estado=${estado}&registro=${registro}&obser=${obser}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
@@ -271,8 +272,8 @@ export const GraficosEntradas = () => {
                     data={[
                       ["Partes", "Orders"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
-                        x.instrumento,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
@@ -296,8 +297,8 @@ export const GraficosEntradas = () => {
                     data={[
                       ["Partes", "Valores"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
-                        x.instrumento,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
