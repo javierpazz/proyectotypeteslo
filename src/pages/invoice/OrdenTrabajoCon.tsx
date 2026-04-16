@@ -163,13 +163,13 @@ export const OrdenTrabajoCon = () => {
                 isPaid  : resp.data.isPaid,
                 paidAt : resp.data.paidAt
              });
-            setNameCus((invoice.id_client as ICustomer).nameCus);
-            setNameIns((invoice.id_instru as IInstrumento).name);
-            setNamePar((invoice.id_parte as IParte).name);
-            setNameMaq((invoice.id_maquin as IMaquina).name);
-            setNameEnc((invoice.id_encar as IEncargado).name);
-            setNameCon((invoice.id_config as IConfiguracion).name);
-            setNameUse((invoice.user as IUser).name);
+            // setNameCus((invoice.id_client as ICustomer).nameCus);
+            // setNameIns((invoice.id_instru as IInstrumento).name);
+            // setNamePar((invoice.id_parte as IParte).name);
+            // setNameMaq((invoice.id_maquin as IMaquina).name);
+            // setNameEnc((invoice.id_encar as IEncargado).name);
+            // setNameCon((invoice.id_config as IConfiguracion).name);
+            // setNameUse((invoice.user as IUser).name);
         } catch (error) {
           console.log(error)
           

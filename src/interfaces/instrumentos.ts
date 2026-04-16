@@ -11,6 +11,7 @@ export interface IParamItem {
     image    : string;
     price    : number;
     porIva   : number;
+    totalItem   : number;
     medPro   : string;
     gender   : string;
     venDat?: string;

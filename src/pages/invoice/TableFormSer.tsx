@@ -115,6 +115,7 @@ export const TableFormSer: React.FC<TableFormProps> = ({
 //   const [medPro, setMedPro] = useState('');
   const [venDat, setVenDat] = useState(getTodayInGMT3());
   const [observ, setObserv] = useState('');
+  const [termi, setTermi] = useState(false);
   const [stock, setStock] = useState(0);
   const [miStock, setMiStock] = useState(0);
 
@@ -179,9 +180,8 @@ useEffect(() => {
           quantity : quantity,
             venDat: venDat,
             observ: observ,
-            terminado: false,
+            terminado: termi,
         };
-          
           addProductToCartEsc( cartProduct as ICartProduct );
           input8Ref.current.focus()
     }
@@ -268,13 +268,15 @@ const ayudaPro = (e: React.KeyboardEvent<HTMLDivElement>) => {
         setMiStock(productRow.minStock);
 
     };
-        const linea = cart.find(p => p._id === productRow!._id);
+
+    const linea = cart.find(p => p._id === productRow!._id);
         if (linea) {
               setObserv(linea.observ!);
               setVenDat(linea.venDat!);
               setPrice(linea.price);
               setQuantity(linea.quantity);
-              }
+              setTermi(linea.terminado!);
+            }
 
   };
   };

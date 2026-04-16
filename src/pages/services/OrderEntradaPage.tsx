@@ -195,7 +195,8 @@ export const OrderEntradaPage = () => {
                             />
 
                             ):(
-                                <h1>Pagar</h1>
+                                // <h1>Pagar</h1>
+                                <h1></h1>
                             )
                         }
 

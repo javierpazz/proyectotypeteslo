@@ -5,7 +5,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
 import { useEffect, useState, useContext } from "react";
-import { IInstrumento, IMaquina, IOrder, IParte, IUser } from "../../interfaces";
+import { IInstrumento, IOrder, IParte, IUser } from "../../interfaces";
 import { stutzApi } from "../../../api";
 import { AuthContext } from "../../../context";
 
@@ -17,7 +17,6 @@ const columns: GridColDef[] = [
     { field: 'remDat', headerName: 'Fecha', width: 100 },
     // { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
     { field: 'instrumento', headerName: 'Instrumento', width: 250 },
-    { field: 'maquina', headerName: 'Maquina', width: 200 },
     { field: 'parte', headerName: 'Parte', width: 200 },
     { field: 'total',
       headerName: 'Importe',
@@ -48,13 +47,13 @@ const columns: GridColDef[] = [
 
     {
         field: 'orden',
-        headerName: 'Ver orden',
+        headerName: 'Ver Entrada',
         width: 200,
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
                <NavLink to={`/pedidoentradas/${ params.row.orderId }`} >
-                        Ver orden
+                        Ver Entrada
                </NavLink>
             )
         }
@@ -138,7 +137,6 @@ const userInfo = localStorage.getItem('userInfo')
         // fullname: `${ order.orderAddress.firstName } ${ order.orderAddress.lastName }`,
         email : (order.user as IUser).email,
         instrumento  : (order.id_instru as IInstrumento)?.name ?? "",
-        maquina  : (order.id_maquin as IMaquina)?.name ?? "",
         parte  : (order.id_parte as IParte)?.name ?? "",
 
         name  : (order.user as IUser).name,
