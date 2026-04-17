@@ -12,49 +12,50 @@ import {
 import { ShopLayout } from '../../components/layouts';
 import { ProductSlideshow } from '../../components/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
-import { ICartProduct } from '../../interfaces';
+import { ICartProduct, IProduct } from '../../interfaces';
 
 import stutzApi from '../../../api/stutzApi';
 import { FullScreenLoading } from '../../components/ui';
 import { CartContext } from '../../../context';
 
 
-const productI = 
-      {
-          _id: '',
-          description: "Introducing the Tesla Chill Collection. The Men’s Chill Crew Neck Sweatshirt has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The sweatshirt features a subtle thermoplastic polyurethane T logo on the chest and a Tesla wordmark below the back collar. Made from 60% cotton and 40% recycled polyester.",
-          images: [
-              '1740176-00-A_0_2000.jpg',
-              '1740176-00-A_1.jpg',
-          ],
-          inStock: 7,
-          price: 75,
-          sizes: ['XS','S','M','L','XL','XXL'],
-          slug: "mens_chill_crew_neck_sweatshirt",
-          tags: ['sweatshirt'],
-          title: "Men’s Chill Crew Neck Sweatshirt",
-          medPro: '',
-          type: 'shirts',
-          gender: 'men',
-          rating: 0,
-          numReviews: 0,
-          reviews: [
-              {
-              _id: '',  
-              name: '',
-              comment: '',
-              rating: 0,
-              createdAt: ','
-            }
-          ],
-          createdAt: '',
-          updatedAt: '',
+// const productI = 
+//       {
+//           _id: '',
+//           description: "Introducing the Tesla Chill Collection. The Men’s Chill Crew Neck Sweatshirt has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The sweatshirt features a subtle thermoplastic polyurethane T logo on the chest and a Tesla wordmark below the back collar. Made from 60% cotton and 40% recycled polyester.",
+//           images: [
+//               '1740176-00-A_0_2000.jpg',
+//               '1740176-00-A_1.jpg',
+//           ],
+//           inStock: 7,
+//           price: 75,
+//           sizes: ['XS','S','M','L','XL','XXL'],
+//           slug: "mens_chill_crew_neck_sweatshirt",
+//           tags: ['sweatshirt'],
+//           title: "Men’s Chill Crew Neck Sweatshirt",
+//           medPro: '',
+//           type: 'shirts',
+//           gender: 'men',
+//           rating: 0,
+//           numReviews: 0,
+//           reviews: [
+//               {
+//               _id: '',  
+//               name: '',
+//               comment: '',
+//               rating: 0,
+//               createdAt: ','
+//             }
+//           ],
+//           createdAt: '',
+//           updatedAt: '',
       
-      }
-    
+//       }
+
 
 
 export const Slug = () => {
+  const [product, setProduct] = useState<IProduct | null>(null);
 
   const navigate = useNavigate();
   const {addProductToCart} =useContext(CartContext)
@@ -70,29 +71,32 @@ export const Slug = () => {
 
 
 
-  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: '649f9b05c4416622ac833792',
-    codigoPro: '649f9b05c4416622ac833792',
-    image: '1740176-00-A_0_2000.jpg',
-    price: 1,
-    porIva: 21,
-    medPro: "unidad",
-    size: "M",
-    slug: 'mens_chill_crew_neck_sweatshirt',
-    title: 'mens_chill_crew_neck_sweatshirt',
-    gender: 'men',
-    quantity: 1,
-  })
-
+  // const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
+  //   _id: '649f9b05c4416622ac833792',
+  //   codigoPro: '649f9b05c4416622ac833792',
+  //   image: '1740176-00-A_0_2000.jpg',
+  //   price: 0,
+  //   porIva: 0,
+  //   totalItem: 0,
+  //   medPro: "unidad",
+  //   size: "M",
+  //   slug: 'mens_chill_crew_neck_sweatshirt',
+  //   title: 'mens_chill_crew_neck_sweatshirt',
+  //   gender: 'men',
+  //   quantity: 1,
+  // })
+const [tempCartProduct, setTempCartProduct] = useState<ICartProduct | null>(null);
+  
 const onAddProduct = () => {
 
+  if (!tempCartProduct ) {return;}
   if (!tempCartProduct.size ) {return;}
   // console.log(tempCartProduct);
   addProductToCart(tempCartProduct);
   navigate ("/cart");
 }
 
-  const [product, setProduct] = useState(productI);
+  // const [product, setProduct] = useState(productI);
   const params = useParams();
   const { slug } = params;
 
@@ -115,6 +119,7 @@ const onAddProduct = () => {
         image: resp.data.images[0],
         price: resp.data.price,
         porIva: resp.data.porIva,
+        totalItem: resp.data.totalItem,
         medPro: resp.data.medPro,
         size: "M",
         slug: resp.data.slug,
@@ -129,13 +134,24 @@ const onAddProduct = () => {
    }
  
 
-  const onUpdateQuantity = ( quantity: number ) => {
-    setTempCartProduct( currentProduct => ({
+  // const onUpdateQuantity = ( quantity: number ) => {
+  //   setTempCartProduct( currentProduct => ({
+  //     ...currentProduct,
+  //     quantity
+  //   }));
+  // }
+
+const onUpdateQuantity = (quantity: number) => {
+  setTempCartProduct(currentProduct => {
+    if (!currentProduct) return currentProduct;
+
+    return {
       ...currentProduct,
       quantity
-    }));
- 
-  }
+    };
+  });
+};
+
 
   // const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
@@ -169,8 +185,9 @@ const onAddProduct = () => {
 
   
 
-   if (!product)  return <FullScreenLoading/>
-  
+  //  if (!product)  return <FullScreenLoading/>
+  if (!product || !tempCartProduct) return <FullScreenLoading />
+
     return (
       <ShopLayout title={ product.title } pageDescription={ product.description }>
       
@@ -254,6 +271,10 @@ const onAddProduct = () => {
           {product.reviews.map((review) => (
             <ListItem key={review._id} alignItems="flex-start" divider>
               <ListItemText
+              ///agregue esto
+              primaryTypographyProps={{ component: 'div' }}
+              secondaryTypographyProps={{ component: 'div' }}
+              ///agregue esto
                 primary={
                   <>
                     <Typography variant="subtitle1" fontWeight="bold">
@@ -263,12 +284,12 @@ const onAddProduct = () => {
                   </>
                 }
                 secondary={
-                  <>
+                  <Box>
                     <Typography variant="body2" color="text.secondary">
                       {review.createdAt!.substring(0, 10)}
                     </Typography>
                     <Typography>{review.comment}</Typography>
-                  </>
+                  </Box>
                 }
               />
             </ListItem>
