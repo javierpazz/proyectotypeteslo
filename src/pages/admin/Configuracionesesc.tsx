@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext  } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect  } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
 
@@ -10,7 +9,6 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IConfiguracion  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { AuthContext } from '../../../context';
 
 
 export const ConfiguracionesEsc = () => {
@@ -52,18 +50,6 @@ const columns:GridColDef[] = [
 ];
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/configuraciones');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
     ////////////////////FGFGFGFG
 
     const [ configuraciones, setConfiguraciones ] = useState<IConfiguracion[]>([]);

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button,  Chip, Grid } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom';
@@ -8,8 +8,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IProduct, ISupplier  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../context';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -54,19 +53,7 @@ export const ProductsFac = () => {
         },
 
 ];
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/productosfac');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : null;

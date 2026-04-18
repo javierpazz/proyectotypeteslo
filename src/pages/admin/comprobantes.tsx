@@ -6,7 +6,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IComprobante  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
@@ -54,18 +54,8 @@ const columns:GridColDef[] = [
 
 ];
     ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
+    const { user } = useContext(AuthContext);
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/comprobantes');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
   
     const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)

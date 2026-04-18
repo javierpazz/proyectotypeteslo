@@ -45,19 +45,9 @@ const userI =
 
 
 export const UserAdminPage = () => {
-    ////////////////////FGFGFGFG
     const { user : user1, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user1 && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/users');
-        }
-        if (user1?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user1, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
 
     // const router = useRouter();

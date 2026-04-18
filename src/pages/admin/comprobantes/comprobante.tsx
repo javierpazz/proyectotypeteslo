@@ -46,7 +46,7 @@ const comprobanteInicial: FormData = {
 };
 
 export const ComprobanteAdminPage = () => {
-  const { user, isLoading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
@@ -65,15 +65,6 @@ export const ComprobanteAdminPage = () => {
   });
 
 
-  // Redirigir si no hay usuario
-  useEffect(() => {
-    if (!user && !isLoading) {
-      navigate('/auth/loginadm?redirect=/admin/comprobantes');
-    }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-  }, [user, isLoading, navigate]);
   
     const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)

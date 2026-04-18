@@ -38,19 +38,8 @@ const supplierI =
 
 
 export const ProveedorAdminPage = () => {
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/proveedores');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
 
     // const router = useRouter();

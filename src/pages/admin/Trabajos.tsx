@@ -9,7 +9,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IInstrumento  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
@@ -19,19 +19,7 @@ import { AuthContext } from '../../../context';
 export const Trabajos = () => {
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/trabajos');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
+    const { user } = useContext(AuthContext);
 
 
     const [ instrumentos, setInstrumentos ] = useState<IInstrumento[]>([]);

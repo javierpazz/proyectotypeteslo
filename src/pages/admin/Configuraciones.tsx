@@ -6,7 +6,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IConfiguracion  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
@@ -51,19 +51,7 @@ const columns:GridColDef[] = [
 ];
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/login?redirect=/admin/configuraciones');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
+    const { user } = useContext(AuthContext);
 
     const [ configuraciones, setConfiguraciones ] = useState<IConfiguracion[]>([]);
 

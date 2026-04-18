@@ -34,19 +34,9 @@ const instrumentoI =
 
 
 export const TrabajoAdminPage = () => {
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/trabajos');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
 
     // const router = useRouter();

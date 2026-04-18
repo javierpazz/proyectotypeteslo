@@ -1,5 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy } from 'react';
+import { AdminGuard } from '../../router/guards/AdminGuard';
+import { EsClientAdminGuard } from '../../router/guards/EsClientAdminGuard';
+import { EsUserAdminGuard } from '../../router/guards/EsUserAdminGuard';
+import { AuthGuard } from '../../router/guards/AuthGuard';
 
 
 const Instrumentos = lazy(() =>
@@ -435,12 +439,16 @@ const TareaListScreen = lazy(() =>
 export default function AdminRoutes() {
   return (
     <Routes>
+              <Route element={<AdminGuard />}>
+      
                             <Route path="dashboard" element={ <Dashboard /> } />
                             <Route path="dashboardesc" element={ <DashboardEsc /> } />
                             <Route path="dashboardser" element={ <DashboardSer /> } />
                             <Route path="dashboardsermaq" element={ <DashboardSerMaq /> } />
                             <Route path="dashboardserpar" element={ <DashboardSerPar /> } />
                             <Route path="dashboardsertar" element={ <DashboardSerTar /> } />
+              </Route>
+      
                             <Route path="users" element={ <Users /> } />
                             <Route path="products" element={ <Products /> } />
                             <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />
@@ -514,47 +522,54 @@ export default function AdminRoutes() {
                             <Route path="ordentrabajoAct/:id" element={ <OrdenTrabajoAct /> } />
                             <Route path="tareas" element={ <TareaListScreen /> } />
 
-                            <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
-                            <Route path="paramtrabajo" element={ <ParamTrabajo /> } />
-                            <Route path="instrumentos" element={ <Instrumentos /> } />
-                            <Route path="instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
-                            <Route path="trabajos" element={ <Trabajos /> } />
-                            <Route path="instrumentos/trabajo/:id" element={ <TrabajoAdminPage /> } />
+              <Route element={<AuthGuard />}>
+
+
+                            <Route path="comprobantes" element={ <Comprobantes /> } />
+                            <Route path="comprobantes/comprobante/:id" element={ <ComprobanteAdminPage /> } />
+                            <Route path="configuraciones" element={ <Configuraciones /> } />
+                            <Route path="configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
+                            <Route path="configuraciones/configuracionesc/:id" element={ <ConfiguracionEscAdminPage /> } />
+                            <Route path="configuracionesesc" element={ <ConfiguracionesEsc /> } />
                             <Route path="customers" element={ <Customers /> } />
                             <Route path="customers/customer/:id" element={ <CustomerAdminPage /> } />
-                            <Route path="comprobantes/comprobante/:id" element={ <ComprobanteAdminPage /> } />
-                            <Route path="proveedores" element={ <Proveedores /> } />
-                            <Route path="proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
-                            <Route path="valores" element={ <Valores /> } />
-                            <Route path="valores/valor/:id" element={ <ValorAdminPage /> } />
                             <Route path="encargados" element={ <Encargados /> } />
                             <Route path="encargados/encargado/:id" element={ <EncargadoAdminPage /> } />
                             <Route path="estadosorden" element={ <Estadosorden /> } />
                             <Route path="estadosorden/estadoorden/:id" element={ <EstadoordenAdminPage /> } />
-                            <Route path="productsesc" element={ <ProductsEsc /> } />
-                            <Route path="productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
-                            <Route path="productsser" element={ <ProductsSer /> } />
-                            <Route path="productsesc/productser/:slugadm" element={ <ProductSerAdminPage /> } />
-                            <Route path="productsfac" element={ <ProductsFac /> } />
-                            <Route path="productsfac/productfac/:slugadm" element={ <ProductFacAdminPage /> } />
-                            <Route path="maquinas" element={ <Maquinas /> } />
-                            <Route path="maquinas/maquina/:id" element={ <MaquinaAdminPage /> } />
-                            <Route path="comprobantes" element={ <Comprobantes /> } />
-                            <Route path="configuraciones" element={ <Configuraciones /> } />
-                            <Route path="configuraciones/configuracion/:id" element={ <ConfiguracionAdminPage /> } />
-                            <Route path="configuracionesesc" element={ <ConfiguracionesEsc /> } />
-                            <Route path="configuraciones/configuracionesc/:id" element={ <ConfiguracionEscAdminPage /> } />
-                            <Route path="partes" element={ <Partes /> } />
-                            <Route path="partes/parte/:id" element={ <ParteAdminPage /> } />
-                            <Route path="users/forgetPasword" element={ <ForgetPassword /> } />
-                            <Route path="users" element={ <Users /> } />
-                            <Route path="users/user/:id" element={ <UserAdminPage /> } />
-                            <Route path="profile/:id" element={ <UserPerfilPage /> } />
-                            <Route path="profileadm" element={ <UserPerfilAdmPage /> } />
                             <Route path="filtro" element={ <Filtro /> } />
                             <Route path="filtrocrm" element={ <FiltroCrm /> } />
                             <Route path="filtroser" element={ <FiltroSer /> } />
+                            <Route path="instrumentos" element={ <Instrumentos /> } />
+                            <Route path="instrumentos/instrumento/:id" element={ <InstrumentoAdminPage /> } />
+                            <Route path="instrumentos/trabajo/:id" element={ <TrabajoAdminPage /> } />
+                            <Route path="maquinas" element={ <Maquinas /> } />
+                            <Route path="maquinas/maquina/:id" element={ <MaquinaAdminPage /> } />
+                            <Route path="paraminstrumento" element={ <ParamInstrumento /> } />
+                            <Route path="paramtrabajo" element={ <ParamTrabajo /> } />
+                            <Route path="partes" element={ <Partes /> } />
+                            <Route path="partes/parte/:id" element={ <ParteAdminPage /> } />
+                            <Route path="productsesc" element={ <ProductsEsc /> } />
+                            <Route path="productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
+                            <Route path="productsesc/productser/:slugadm" element={ <ProductSerAdminPage /> } />
+                            <Route path="productsfac" element={ <ProductsFac /> } />
+                            <Route path="productsfac/productfac/:slugadm" element={ <ProductFacAdminPage /> } />
+                            <Route path="productsser" element={ <ProductsSer /> } />
+                            <Route path="proveedores" element={ <Proveedores /> } />
+                            <Route path="proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
+                            <Route path="trabajos" element={ <Trabajos /> } />
+                            <Route path="users" element={ <Users /> } />
+                            <Route path="users/user/:id" element={ <UserAdminPage /> } />
+                            <Route path="valores" element={ <Valores /> } />
+                            <Route path="valores/valor/:id" element={ <ValorAdminPage /> } />
+              </Route>
 
+                            {/* navigate('/auth/loginadm?redirect=/admin/users'); */}
+                            <Route path="profileadm" element={ <UserPerfilAdmPage /> } />
+                            {/* navigate('/auth/login'); */}
+                            <Route path="profile/:id" element={ <UserPerfilPage /> } />
+
+                            <Route path="users/forgetPasword" element={ <ForgetPassword /> } />
 
 
     </Routes>

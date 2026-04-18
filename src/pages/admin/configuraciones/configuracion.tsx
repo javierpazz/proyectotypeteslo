@@ -48,19 +48,9 @@ const configuracionI =
 
 
 export const ConfiguracionAdminPage = () => {
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/configuraciones');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
+    const navigate = useNavigate()
+    const { user } = useContext(AuthContext);
 
 
     // const router = useRouter();

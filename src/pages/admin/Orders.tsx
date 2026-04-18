@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ConfirmationNumberOutlined } from '@mui/icons-material'
 import { Chip, Grid, MenuItem, Select } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
@@ -7,8 +7,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IEstadoOrden, IOrder, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../context';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -21,20 +20,6 @@ export const Orders = () => {
 
     const [ orders, setOrders ] = useState<IOrder[]>([]);
 
-////////////////////FGFGFGFG
-const navigate = useNavigate()
-const { user, isLoading} = useContext(  AuthContext );      
-useEffect(() => {
-    // if (!user) {
-    if (!user && !isLoading) {
-
-      navigate('/auth/loginadm?redirect=/admin/orders');
-    }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-  }, [user, navigate]);
-  ////////////////////FGFGFGFG
 
           const userInfo = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)

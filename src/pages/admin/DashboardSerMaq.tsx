@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import {DashboardOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,6 @@ import Chart from 'react-google-charts';
 import {  Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
 
 import { stutzApi } from '../../../api';
-import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
 import { BiFileFind } from 'react-icons/bi';
 
@@ -40,24 +39,8 @@ export const DashboardSerMaq = () => {
 
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/');
-        }
-        if (user?.role === "client" ) {
-        if (window.confirm('Usuario Sin Autorizacion')) {}
-        navigate('/');
-        }
-        if (user?.role === "user" ) {
-        if (window.confirm('Usuario Sin Autorizacion')) {}
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
     const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)

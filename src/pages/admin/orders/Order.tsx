@@ -66,19 +66,7 @@ export const Order = () => {
 //     }
 //     }, [])
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     
-    useEffect(() => {
-        if (!user && !isLoading) {
-            // navigate('/auth/loginadm?redirect=/admin/instrumentos');
-            navigate (`/auth/loginadm?p=/orders/${ id }`);
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
  useEffect(() => {
     const loadProduct = async() => {

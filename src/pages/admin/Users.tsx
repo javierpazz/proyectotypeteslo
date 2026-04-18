@@ -10,7 +10,7 @@ import { AdminLayoutMenuList } from '../../components/layouts'
 import { IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { AuthContext } from '../../../context';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -18,20 +18,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 export const Users = () => {
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/users');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
     const [ users, setUsers ] = useState<IUser[]>([]);
 

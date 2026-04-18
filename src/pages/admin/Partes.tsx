@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext  } from 'react';
+import { useState, useEffect  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button, Chip, Grid } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom';
@@ -8,8 +8,7 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IParte  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../context';
+import { NavLink } from 'react-router-dom';
 
 
 export const Partes = () => {
@@ -50,19 +49,7 @@ const columns:GridColDef[] = [
 ];
 
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/partes');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
 
     const [ partes, setPartes ] = useState<IParte[]>([]);

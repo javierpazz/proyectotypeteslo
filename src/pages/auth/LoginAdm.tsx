@@ -75,7 +75,7 @@ export const LoginAdm = () => {
         // Todo: navegar a la pantalla que el usuario estaba
         navigate('/salepoint');
         // navigate(redirect || '/');
-
+        // navigate(redirect, { replace: true });
 
     }
 
