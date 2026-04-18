@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import {TableFormSer} from './TableFormSer';
 import { BiFileFind } from "react-icons/bi";
-import { AuthContext, CartContext } from '../../../context';
+import { CartContext } from '../../../context';
 import {
   Box,
   Button,
@@ -29,19 +29,8 @@ const getError = (error:any) => {
 
 export const OrdenTrabajoAct = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/ordentrabajoAct');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
 
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');

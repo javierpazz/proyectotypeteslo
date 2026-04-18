@@ -1,7 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 import {TableFormFac} from './TableFormFac';
-import { AuthContext, CartContext } from '../../../context';
+import { CartContext } from '../../../context';
 import {
   Box,
   Button,
@@ -25,19 +25,8 @@ import { BuscaConFac } from '../../components/buscador';
 
 export const AppRempv = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/remiterpv');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
     
 
 

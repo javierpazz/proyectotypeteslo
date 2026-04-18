@@ -1,6 +1,6 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 // import { toast } from 'react-toastify';
-import { AuthContext, CartContext, ReceiptContext } from '../../../context';
+import { CartContext, ReceiptContext } from '../../../context';
 import {
   Box,
   Button,
@@ -69,19 +69,8 @@ const OrderI:IOrder = {
 
 export const AppInvIns = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
     
 
 

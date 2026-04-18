@@ -1,4 +1,4 @@
-import {  useState, useEffect, useContext, useRef } from 'react';
+import {  useState, useEffect, useRef } from 'react';
 import {  useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
@@ -17,7 +17,6 @@ import {
 
 import { IComprobante, IConfiguracion, IOrder } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { AuthContext } from '../../../context';
 // import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from "react-to-print";
 
@@ -67,19 +66,7 @@ const OrderI:IOrder = {
 
 export const AppRempvCon = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/remitspv');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
 
 
 

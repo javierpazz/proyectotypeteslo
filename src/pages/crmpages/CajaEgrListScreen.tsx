@@ -23,19 +23,8 @@ import { BiFileFind } from 'react-icons/bi';
 export const CajaEgrListScreen = () => {
 
     
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoicesCajEgr');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-      }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : null;

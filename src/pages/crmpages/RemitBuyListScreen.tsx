@@ -23,19 +23,9 @@ import { BiFileFind } from 'react-icons/bi';
 export const RemitBuyListScreen = () => {
 
     
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/remitsBuy');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-      }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : null;

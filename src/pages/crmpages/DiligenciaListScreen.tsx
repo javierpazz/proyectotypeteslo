@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
@@ -12,7 +12,6 @@ import { saveAs } from 'file-saver';
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IConfiguracion, ICustomer, IInstrumento, IParte, IUser } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { AuthContext } from '../../../context';
 import { FullScreenLoading } from '../../components/ui';
 import { BiFileFind } from 'react-icons/bi';
 
@@ -223,18 +222,8 @@ const columns:GridColDef[] = [
 export const DiligenciaListScreen = () => {
 
     ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/diligencias');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : null;

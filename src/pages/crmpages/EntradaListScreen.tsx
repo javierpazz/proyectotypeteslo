@@ -25,19 +25,9 @@ export const EntradaListScreen = () => {
     // const [ orders, setOrders ] = useState<IOrder[]>([]);
     const [stateOrdss, setStateOrdss] = useState<IEstadoOrden[]>();
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/entradas');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-      }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
   const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo')!)
   : null;

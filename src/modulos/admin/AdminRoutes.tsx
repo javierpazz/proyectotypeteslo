@@ -485,44 +485,47 @@ export default function AdminRoutes() {
 
 
 
-                            <Route path="invoicerRemCon/:id" element={ <AppRemCon />  }/>
-                            <Route path="invoicerRemBuyCon/:id" element={ <AppRemBuyCon />  }/>
-                            <Route path="invoicerRempvCon/:id" element={ <AppRempvCon />  }/>
-                            <Route path="invoicerBuyRempvCon/:id" element={ <AppBuyRempvCon />  }/>
-                            <Route path="invoicerCon/:id" element={ <AppCon />  }/>
-                            <Route path="invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
-                            <Route path="invoicerRecCon/:id" element={ <AppRecCon />  }/>
-                            <Route path="invoicerBuyRecCon/:id" element={ <AppBuyRecCon />  }/>
-                            <Route path="invoicerCajIngCon/:id" element={ <AppCajIngCon />  }/>
-                            <Route path="invoicerCajEgrCon/:id" element={ <AppCajEgrCon />  }/>
 
                             {/* <Route path="invoicesCajIngEgr" element={ <CajaIngEgrListScreen />  }/> */}
 
-                            <Route path="invoices" element={ <InvoiceListScreen /> } />
-                            <Route path="remits" element={ <RemitListScreen /> } />
-                            <Route path="invoicesBuy" element={ <InvoiceBuyListScreen /> } />
-                            <Route path="remitsBuy" element={ <RemitBuyListScreen /> } />
-                            <Route path="remitspv" element={ <RemitpvListScreen /> } />
-                            <Route path="invoicesCajIng" element={ <CajaIngListScreen /> } />
-                            <Route path="invoicesCajEgr" element={ <CajaEgrListScreen /> } />
-                            <Route path="invoicesRec" element={ <ReceiptListScreen /> } />
-                            <Route path="invoicesBuyRec" element={ <ReceiptBuyListScreen /> } />
-                            <Route path="remitsBuypv" element={ <RemitBuypvListScreen /> } />
 
                             <Route path="mesaentrada" element={ <MesaEntrada /> } />
                             <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
                             <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
                             <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
-                            <Route path="entradas" element={ <EntradaListScreen /> } />
-                            <Route path="diligencias" element={ <DiligenciaListScreen /> } />
 
                             <Route path="ordentrabajo" element={ <OrdenTrabajo /> } />
                             <Route path="ordentrabajo/:id" element={ <OrdenTrabajoCon /> } />
-                            <Route path="ordenestrabajo" element={ <OrdenTraListScreen /> } />
                             <Route path="ordentrabajoAct/:id" element={ <OrdenTrabajoAct /> } />
-                            <Route path="tareas" element={ <TareaListScreen /> } />
 
               <Route element={<AuthGuard />}>
+
+                            <Route path="invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
+                            <Route path="invoicerBuyRecCon/:id" element={ <AppBuyRecCon />  }/>
+                            <Route path="invoicerBuyRempvCon/:id" element={ <AppBuyRempvCon />  }/>
+                            <Route path="invoicerCajEgrCon/:id" element={ <AppCajEgrCon />  }/>
+                            <Route path="invoicerCajIngCon/:id" element={ <AppCajIngCon />  }/>
+                            <Route path="invoicerCon/:id" element={ <AppCon />  }/>
+                            <Route path="invoicerRecCon/:id" element={ <AppRecCon />  }/>
+                            <Route path="invoicerRemBuyCon/:id" element={ <AppRemBuyCon />  }/>
+                            <Route path="invoicerRemCon/:id" element={ <AppRemCon />  }/>
+                            <Route path="invoicerRempvCon/:id" element={ <AppRempvCon />  }/>
+                            <Route path="invoicesCajIng" element={ <CajaIngListScreen /> } />
+                            <Route path="invoicesCajEgr" element={ <CajaEgrListScreen /> } />
+                            <Route path="entradas" element={ <EntradaListScreen /> } />
+                            <Route path="diligencias" element={ <DiligenciaListScreen /> } />
+                            <Route path="invoices" element={ <InvoiceListScreen /> } />
+                            <Route path="invoicesBuy" element={ <InvoiceBuyListScreen /> } />
+                            <Route path="ordenestrabajo" element={ <OrdenTraListScreen /> } />
+                            <Route path="invoicesBuyRec" element={ <ReceiptBuyListScreen /> } />
+                            <Route path="invoicesRec" element={ <ReceiptListScreen /> } />
+                            <Route path="remitsBuy" element={ <RemitBuyListScreen /> } />
+                            <Route path="remitsBuypv" element={ <RemitBuypvListScreen /> } />
+                            <Route path="remits" element={ <RemitListScreen /> } />
+                            <Route path="remitspv" element={ <RemitpvListScreen /> } />
+                            <Route path="tareas" element={ <TareaListScreen /> } />
+
+
 
 
                             <Route path="comprobantes" element={ <Comprobantes /> } />

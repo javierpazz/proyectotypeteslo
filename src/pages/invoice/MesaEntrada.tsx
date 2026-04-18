@@ -3,7 +3,7 @@ import {Header} from './Header';
 // import { toast } from 'react-toastify';
 import {TableFormEsc} from './TableFormEsc';
 import { BiFileFind } from "react-icons/bi";
-import { AuthContext, CartContext } from '../../../context';
+import {  CartContext } from '../../../context';
 import ReactToPrint from 'react-to-print';
 import {
   Box,
@@ -19,7 +19,6 @@ import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { CustomerSelector } from '../crmpages/CustomerSelector';
 import { InstrumentoSelector } from '../crmpages/InstrumentoSelector';
-import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
 import { BuscaPar } from '../../components/buscador';
 
@@ -31,20 +30,6 @@ import { BuscaPar } from '../../components/buscador';
 
 export const MesaEntrada = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/mesaentrada');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
-    
 
 
         const userInfo = localStorage.getItem('userInfo')

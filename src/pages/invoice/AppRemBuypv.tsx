@@ -1,7 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 import {TableFormFacBuy} from './TableFormFacBuy';
-import { AuthContext, CartContext, ReceiptContext } from '../../../context';
+import { CartContext, ReceiptContext } from '../../../context';
 import {
   Box,
   Button,
@@ -25,20 +25,8 @@ import { BuscaConFac } from '../../components/buscador';
 
 export const AppRemBuypv = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/remiterBuypv');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
-    
 
 
         const userInfo = localStorage.getItem('userInfo')

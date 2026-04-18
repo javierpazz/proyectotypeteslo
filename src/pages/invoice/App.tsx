@@ -1,7 +1,7 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 import {TableFormFac} from './TableFormFac';
-import { AuthContext, CartContext, ReceiptContext } from '../../../context';
+import { CartContext, ReceiptContext } from '../../../context';
 import {
   Box,
   Button,
@@ -27,19 +27,7 @@ import { BuscaCom, BuscaCli, BuscaValInv } from '../../components/buscador';
 
 export const App = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/invoicer');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-
-      }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
     
 
 

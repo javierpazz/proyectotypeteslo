@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import {TableFormSerPar} from './TableFormSerPar';
 import { BiFileFind } from "react-icons/bi";
-import { AuthContext, CartContext } from '../../../context';
+import {  CartContext } from '../../../context';
 import {
   Box,
   Button,
@@ -24,7 +24,6 @@ import { IParamProduct, IInstrumento } from '../../interfaces';
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { TrabajoSelector } from '../crmpages/TrabajoSelector';
-import { useNavigate } from 'react-router-dom';
 import { FullScreenLoading } from '../../components/ui';
 
 const getError = (error:any) => {
@@ -34,19 +33,6 @@ const getError = (error:any) => {
 };
 
 export const ParamTrabajo = () => {
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/paramtrabajo');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-    }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG    
 
 
     const userInfo = localStorage.getItem('userInfo')

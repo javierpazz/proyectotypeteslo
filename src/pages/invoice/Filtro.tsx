@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -15,26 +15,13 @@ import {
 import { AdminLayoutMenu } from '../../components/layouts';
 import { CategoryOutlined } from '@mui/icons-material';
 import { BuscaPar, BuscaCli, BuscaProEsc, BuscaIns, BuscaCon, BuscaUse } from '../../components/buscador';
-import { AuthContext } from '../../../context';
 
 
 
 export const Filtro = () => {
 
-    ////////////////////FGFGFGFG
-    const { user, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!user && !isLoading) {
-        navigate('/auth/loginadm?redirect=/admin/filtro');
-        }
-        if (user?.role === "client" ) {
-        navigate('/');
-        }
-
-      }, [user, isLoading, navigate]);
-    ////////////////////FGFGFGFG
 
 
 
