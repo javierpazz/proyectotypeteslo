@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, CardMedia, Grid, Chip, Link, Select, MenuItem } from '@mui/material'
+import { Box, Button, CardMedia, Grid, Chip, Select, MenuItem } from '@mui/material'
 import { Link as MuiLink } from '@mui/material';
 
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
@@ -101,16 +101,15 @@ export const Products = () => {
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
                 // <a href={ `/admin/products/product/${ row.slug }` } target="_blank" rel="noreferrer">
-                <NavLink to={`/admin/products/product/${row.slug}`}>
-                    <Link underline='always'>
+                <MuiLink component={RouterLink} to={`/admin/products/product/${row.slug}`}
+                    underline='always'>
                     <CardMedia 
                         component='img'
                         alt={ row.title }
                         className='fadeIn'
                         image={ row.img }
                     />
-                    </Link>
-                </NavLink>
+                </MuiLink>
                 // </a>
             )
         }

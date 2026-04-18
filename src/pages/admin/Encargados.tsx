@@ -1,12 +1,14 @@
 import { useState, useEffect  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, Chip, Grid, Link } from '@mui/material'
+import { Box, Button, Chip, Grid } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IEncargado  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink } from 'react-router-dom';
 
 
 export const Encargados = () => {
@@ -19,11 +21,10 @@ const columns:GridColDef[] = [
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/encargados/encargado/${row.id}`}>
-                    <Link underline='always'>
+                <MuiLink component={RouterLink} to={`/admin/encargados/encargado/${row.id}`}
+                    underline='always'>
                         { row.name}
-                    </Link>
-                </NavLink>
+                </MuiLink>
             )
         }
     },

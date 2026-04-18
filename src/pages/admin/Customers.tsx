@@ -3,13 +3,13 @@ import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button, Chip, Grid } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { ICustomer  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink } from 'react-router-dom';
 
 
 export const Customers = () => {
@@ -117,14 +117,16 @@ const columns:GridColDef[] = [
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/customers/customer/new' >
             <Button
-                startIcon={ <AddOutlined /> }
+                component={NavLink}
+                to='/admin/customers/customer/new'
+                startIcon={<AddOutlined />}
                 color="secondary"
             >
                 Crear Cliente
             </Button>
-            </NavLink>            
+
+
         </Box>
 
          <Grid container className='fadeIn'>

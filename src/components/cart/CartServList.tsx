@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
-import { NavLink } from "react-router-dom";
-
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import { ItemCounter } from '../ui';
@@ -31,7 +31,7 @@ export const CartServList: FC<Props> = ({ editable = false, products }) => {
                 <Grid container spacing={2} key={ product.slug + product.size} sx={{ mb:1 }}>
                     <Grid item xs={3}>
                         {/* TODO: llevar a la página del producto */}
-                        <NavLink to={`/product/${ product.slug }`}>
+                        <MuiLink component={RouterLink} to={`/product/${ product.slug }`}>
                                 {/* <CardActionArea>
                                     <CardMedia 
                                         image={ product.image }
@@ -39,7 +39,7 @@ export const CartServList: FC<Props> = ({ editable = false, products }) => {
                                         sx={{ borderRadius: '5px' }}
                                     />
                                 </CardActionArea> */}
-                        </NavLink>
+                        </MuiLink>
                     </Grid>
                     <Grid item xs={7}>
                         <Box display='flex' flexDirection='column'>

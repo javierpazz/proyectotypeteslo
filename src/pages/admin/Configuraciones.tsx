@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext  } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, Chip, Grid, Link } from '@mui/material'
+import { Box, Button, Chip, Grid } from '@mui/material'
+import { Link as MuiLink } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
+import { Link as RouterLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IConfiguracion  } from '../../interfaces';
 import { stutzApi } from '../../../api';
-import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 
 
@@ -20,11 +22,18 @@ const columns:GridColDef[] = [
         width: 250,
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
             return (
-                <NavLink to={`/admin/configuraciones/configuracion/${row.id}`}>
-                    <Link underline='always'>
+                // <NavLink to={`/admin/configuraciones/configuracion/${row.id}`}>
+                //     <Link underline='always'>
+                //         { row.name}
+                //     </Link>
+                // </NavLink>
+
+                <MuiLink component={RouterLink} to={`/admin/configuraciones/configuracion/${row.id}`}
+                    underline='always'>
                         { row.name}
-                    </Link>
-                </NavLink>
+                </MuiLink>
+
+
             )
         }
     },
@@ -118,14 +127,16 @@ const columns:GridColDef[] = [
         icon={ <CategoryOutlined /> }
     >
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/configuraciones/configuracion/new' >
+        {/* <MuiLink to='/admin/configuraciones/configuracion/new' > */}
+        <MuiLink component={RouterLink} to='/admin/configuraciones/configuracion/new' >
+
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
                 Crear Punto de Venta
             </Button>
-            </NavLink>            
+            </MuiLink>            
         </Box>
 
          <Grid container className='fadeIn'>
