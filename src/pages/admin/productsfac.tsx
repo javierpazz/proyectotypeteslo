@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button,  Chip, Grid } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom';
@@ -9,11 +9,13 @@ import { AdminLayoutMenuList } from '../../components/layouts'
 import { IProduct, ISupplier  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../../context';
 
 
 
 
 export const ProductsFac = () => {
+    const { user } = useContext(AuthContext);
 
     const columns:GridColDef[] = [
     { field: 'codigoPro', headerName: 'Codigo'},
@@ -43,6 +45,7 @@ export const ProductsFac = () => {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (user?.role !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}

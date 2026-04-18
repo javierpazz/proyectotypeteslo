@@ -16,6 +16,9 @@ import { AuthContext } from '../../../context';
 
 export const Comprobantes = () => {
 
+    const { user } = useContext(AuthContext);
+
+
 const columns:GridColDef[] = [
     { field: 'codCom', headerName: 'Codigo' },
     { 
@@ -43,7 +46,7 @@ const columns:GridColDef[] = [
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if ((user?.role !== 'admin') && (user?._id !== row.userInv)) return null;
+                if (user?.role !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}
@@ -54,8 +57,6 @@ const columns:GridColDef[] = [
         },
 
 ];
-    ////////////////////FGFGFGFG
-    const { user } = useContext(AuthContext);
 
   
     const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')

@@ -188,6 +188,9 @@ const { user} = useContext(  AuthContext );
           <MenuItem component={Link} to="/admin/encargados" onClick={handleClose(setAnchorElConfiSer)}>
             Encargados
           </MenuItem>
+          <MenuItem component={Link} to="/admin/estadosorden" onClick={handleClose(setAnchorElConfiSer)}>
+            Estados de Ordenes
+          </MenuItem>
           <MenuItem component={Link} to="/admin/users" onClick={handleClose(setAnchorElConfiSer)}>
             Usuarios
           </MenuItem>

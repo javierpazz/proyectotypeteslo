@@ -47,7 +47,7 @@ const columns:GridColDef[] = [
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
-                if ((user?.role !== 'admin') && (user?._id !== row.userInv)) return null;
+                if (user?.role !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}

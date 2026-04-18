@@ -1,4 +1,4 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect, useContext  } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
 
@@ -9,9 +9,12 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } fro
 import { AdminLayoutMenuList } from '../../components/layouts'
 import { IConfiguracion  } from '../../interfaces';
 import { stutzApi } from '../../../api';
+import { AuthContext } from '../../../context';
 
 
 export const ConfiguracionesEsc = () => {
+
+const { user } = useContext(AuthContext);
 
 const columns:GridColDef[] = [
     { field: 'codCon', headerName: 'Codigo' },
@@ -38,6 +41,7 @@ const columns:GridColDef[] = [
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (user?.role !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}

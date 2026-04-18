@@ -133,6 +133,7 @@ export const Instrumentos = () => {
             field: 'check',
             headerName: 'Acción',
             renderCell: ({ row }: GridValueGetterParams | GridRenderCellParams ) => {
+                if (user?.role !== 'admin') return null;
                 return (
                         <Chip variant='outlined' label="Eliminar" color="error"
                         onClick={() => deleteHandler(row.id)}
