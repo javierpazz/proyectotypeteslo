@@ -21,28 +21,22 @@ interface Summary {
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
-  dailyOrders: { _id: string; sales: number; buys: number }[];
-  dailyMoney: { _id: string; inputs: number; outputs: number }[];
-  ctacte: { _id: string; salesS: number; inputsS: number; salesB: number; inputsB: number }[];
-  producIO: { _id: string; entro: number; salio: number }[];
-  productCategories: { _id: string; count: number }[];
 
-  top10UsersSTVal: { user: string; totalSales: number; totalOrders: number }[];
-  top10Clients: { customer: string; totalSales: number; totalOrders: number }[];
-  top10Partes: { parte: string; totalSales: number; totalOrders: number }[];
-  PubPriVal: { type: string; total: number; totalcont: number }[];
-  dilVal: { _id: string; total: number; totalCan: number  }[];
+  top10PartesxOrd: { name: string; total: number; count: number }[];
+  top10MaquinasxOrd: { name: string; total: number; count: number }[];
   insterVal: { _id: string; total: number; count: number }[];
+
+
+
 }
 
 
 
-export const DashboardSer = () => {
+export const DashboardSerTra = () => {
 
 
 
-  const navigate = useNavigate()
-
+    const navigate = useNavigate()
 
     const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo')!)
@@ -69,7 +63,7 @@ export const DashboardSer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/esc?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&estado=${estado}&registro=${registro}&obser=${obser}`, {
+        const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/tra?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&estado=${estado}&registro=${registro}&obser=${obser}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
@@ -83,7 +77,7 @@ export const DashboardSer = () => {
 
 
   const parametros = async () => {
-    navigate('/admin/filtroser?redirect=/admin/dashboardser');
+    navigate('/admin/filtroser?redirect=/admin/dashboardsertra');
   };
 
 
@@ -100,7 +94,7 @@ export const DashboardSer = () => {
     >
 
       <Typography variant="h4" gutterBottom>
-        Dashboard Servicios Top Ten
+        Dashboard Servicios Trabajos Top Ten
       </Typography>
 
         <>
@@ -180,20 +174,22 @@ export const DashboardSer = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Usuarios", "Ventas"],
-                      ...(summary.top10UsersSTVal || []).map((x) => [
-                        x.user,
-                        x.totalOrders,
+                      ["Maquinas", "Orders"],
+                      ...(summary.top10MaquinasxOrd || []).map((x) => [
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
-                      title: "Ordenes Trabajo sin Terminar x Usuarios Cantidad",
+                      // title: "Top 10 Maquinas x Ordenes de Trabajo",
+                      title: "Top 10 Maquinas x Ordenes de Trabajo",
                       is3D: true,
                     }}
                   />
                 </CardContent>
               </Card>
             </Grid>
+
 
             <Grid item xs={6} md={3}>
               <Card>
@@ -204,64 +200,69 @@ export const DashboardSer = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Usuarios", "Ventas"],
-                      ...(summary.top10UsersSTVal || []).map((x) => [
-                        x.user,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Ordenes Trabajo sin Terminar x Usuarios Valorizado",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "cantidad"],
-                      ...(summary.PubPriVal || []).map((x) => [
-                        x.type,
-                        x.totalcont,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Ordenes Privadas / Publicas",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "importe"],
-                      ...(summary.PubPriVal || []).map((x) => [
-                        x.type,
+                      ["Maquinas", "Valores"],
+                      ...(summary.top10MaquinasxOrd || []).map((x) => [
+                        x.name,
                         x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Valores Ordenes Privadas / Publicas",
+                      // title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
+                      title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+
+
+
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Partes", "Orders"],
+                      ...(summary.top10PartesxOrd || []).map((x) => [
+                        x.name,
+                        x.count,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Parte x Ordenes de Trabajo",
+                      is3D: true,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={6} md={3}>
+              <Card>
+                <CardContent>
+                  <Chart
+                    width="100%"
+                    height="250px"
+                    chartType="PieChart"
+                    loader={<div>Cargando...</div>}
+                    data={[
+                      ["Partes", "Valores"],
+                      ...(summary.top10PartesxOrd || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Partes x Ordenes de Trabajo Valorizado",
                       is3D: true,
                     }}
                   />
@@ -315,151 +316,6 @@ export const DashboardSer = () => {
                 </CardContent>
               </Card>
             </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.dilVal || []).map((x) => [
-                        x._id,
-                        x.totalCan,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Cantidad Tareas Terminadas y Pendientes",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Instrumentos", "estado"],
-                      ...(summary.dilVal || []).map((x) => [
-                        x._id,
-                        x.total,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Valores Tareas Terminadas y Pendientes",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Partes", "Orders"],
-                      ...(summary.top10Partes || []).map((x) => [
-                        x.parte,
-                        x.totalOrders,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Partes",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Partes", "Ventas"],
-                      ...(summary.top10Partes || []).map((x) => [
-                        x.parte,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Partes Valorizado",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Clientes", "Orders"],
-                      ...(summary.top10Clients || []).map((x) => [
-                        x.customer,
-                        x.totalOrders,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Clientes",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Chart
-                    width="100%"
-                    height="250px"
-                    chartType="PieChart"
-                    loader={<div>Cargando...</div>}
-                    data={[
-                      ["Clientes", "Ventas"],
-                      ...(summary.top10Clients || []).map((x) => [
-                        x.customer,
-                        x.totalSales,
-                      ]),
-                    ]}
-                    options={{
-                      title: "Top 10 Clientes Valorizado",
-                      is3D: true,
-                    }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
-
 
 
           </Grid>

@@ -335,7 +335,7 @@ export const DashboardSerPar = () => {
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Parte x Ordenes de Trabajo",
+                      title: "Top 10 Partes x Ordenes de Trabajo",
                       is3D: true,
                     }}
                   />

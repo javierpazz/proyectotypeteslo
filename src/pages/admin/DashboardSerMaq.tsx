@@ -18,15 +18,15 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  top10MaquinasSTVal: { maquina: string; totalSales: number; totalOrders: number }[];
-  top10MaquinasTerVal: { maquina: string; totalSales: number; totalOrders: number }[];
+  top10MaquinasSTVal: { name: string; total: number; count: number }[];
+  top10MaquinasTerVal: { name: string; total: number; count: number }[];
   TarxMaq: { producto: string; total: number; totalCan: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
   dailyOrders: { _id: string; sales: number; buys: number }[];
-  top10MaquinasxOrd: { maquina: string; totalSales: number; totalOrders: number }[];
-  top10InstrumentosxMaq: { instrumento: string; totalSales: number; totalOrders: number }[];
+  top10MaquinasxOrd: { name: string; total: number; count: number }[];
+  top10InstrumentosxMaq: { name: string; total: number; count: number }[];
   
 
 
@@ -71,6 +71,7 @@ export const DashboardSerMaq = () => {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
+        console.log(data);
         } catch (error) {
           console.log({error})
         }
@@ -180,13 +181,14 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Ordenes"],
                       ...(summary.top10MaquinasSTVal || []).map((x) => [
-                        x.maquina,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
                       // title: "Cantidad Ordenes Trabajo sin Terminar x Maquina",
-                      title: "Maquinas con Ordenes de Trabajo sin Terminar ",
+                      // title: "Maquinas con Ordenes de Trabajo sin Terminar ",
+                      title: "Cantidad Ordenes Trabajo sin Terminar x Maquina",
                       is3D: true,
                     }}
                   />
@@ -205,13 +207,14 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Valor"],
                       ...(summary.top10MaquinasSTVal || []).map((x) => [
-                        x.maquina,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
                       // title: "Valores Ordenes Trabajo sin Terminar x Maquina ",
-                      title: "Maquinas con Ordenes de Trabajo sin Terminar Valorizado",
+                      // title: "Maquinas con Ordenes de Trabajo sin Terminar Valorizado",
+                      title: "Valores Ordenes Trabajo sin Terminar x Maquina",
                       is3D: true,
                     }}
                   />
@@ -232,13 +235,14 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Ordenes"],
                       ...(summary.top10MaquinasTerVal || []).map((x) => [
-                        x.maquina,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
                       // title: "Cantidad Ordenes Trabajo Terminados x Maquina",
-                      title: "Maquinas con Ordenes de Trabajo Terminadas Valorizado",
+                      // title: "Maquinas con Ordenes de Trabajo Terminadas Valorizado",
+                      title: "Cantidad Ordenes Trabajo Terminados x Maquina",
                       is3D: true,
                     }}
                   />
@@ -257,13 +261,14 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Valor"],
                       ...(summary.top10MaquinasTerVal || []).map((x) => [
-                        x.maquina,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
                       // title: "Valores Ordenes Trabajo Terminados x Maquina ",
-                      title: "Maquinas con Ordenes de Trabajo Terminadas Valorizado",
+                      // title: "Maquinas con Ordenes de Trabajo Terminadas Valorizado",
+                      title: "Valores Ordenes Trabajo Terminados x Maquina",
                       is3D: true,
                     }}
                   />
@@ -335,11 +340,12 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Orders"],
                       ...(summary.top10MaquinasxOrd || []).map((x) => [
-                        x.maquina,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
+                      // title: "Top 10 Maquinas x Ordenes de Trabajo",
                       title: "Top 10 Maquinas x Ordenes de Trabajo",
                       is3D: true,
                     }}
@@ -360,11 +366,12 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Valores"],
                       ...(summary.top10MaquinasxOrd || []).map((x) => [
-                        x.maquina,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
+                      // title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
                       title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
                       is3D: true,
                     }}
@@ -385,12 +392,12 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Orders"],
                       ...(summary.top10InstrumentosxMaq || []).map((x) => [
-                        x.instrumento,
-                        x.totalOrders,
+                        x.name,
+                        x.count,
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Ordenes de Trabajo x Maquinas",
+                      title: "Top 10 Ordenes de Trabajo x Maquina",
                       is3D: true,
                     }}
                   />
@@ -410,12 +417,12 @@ export const DashboardSerMaq = () => {
                     data={[
                       ["Maquinas", "Valores"],
                       ...(summary.top10InstrumentosxMaq || []).map((x) => [
-                        x.instrumento,
-                        x.totalSales,
+                        x.name,
+                        x.total,
                       ]),
                     ]}
                     options={{
-                      title: "Top 10 Ordenes de Trabajo x Maquinas Valorizado",
+                      title: "Top 10 Ordenes de Trabajo x Maquina Valorizado",
                       is3D: true,
                     }}
                   />

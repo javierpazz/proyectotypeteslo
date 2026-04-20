@@ -507,6 +507,7 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           );
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
+          invoice.id_parte = codPar;
           if (codPar !== "") {invoice.id_parte = codPar;} else  {invoice.id_parte = null;}
               invoice.id_instru = codIns;
               invoice.libNum= +libNum;

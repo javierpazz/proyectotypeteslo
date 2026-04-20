@@ -539,6 +539,9 @@ const ayudaIns = (e: React.KeyboardEvent<HTMLDivElement>) => {
           );
           invoice.totalBuy = 0;
           invoice.id_client = codCus;
+          invoice.id_parte = codPar;
+          invoice.id_maquin = codMaq;
+          invoice.id_encar = codEnc;
           if (codPar !== "") {invoice.id_parte = codPar;} else  {invoice.id_parte = null;}
           if (codMaq !== "") {invoice.id_maquin = codMaq;} else  {invoice.id_maquin = null;}
           if (codEnc !== "") {invoice.id_encar = codEnc;} else  {invoice.id_encar = null;}
