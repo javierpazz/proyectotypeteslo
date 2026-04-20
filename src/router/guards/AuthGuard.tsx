@@ -11,7 +11,7 @@ export const AuthGuard = () => {
   if (!user) {
     return (
       <Navigate
-        to={`/auth/login?redirect=${location.pathname}${location.search}`}
+        to={`/auth/loginadm?redirect=${location.pathname}${location.search}`}
         replace
       />
     );

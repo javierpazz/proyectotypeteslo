@@ -453,11 +453,37 @@ export default function AdminRoutes() {
                             <Route path="dashboardsertar" element={ <DashboardSerTar /> } />
               </Route>
       
-                            <Route path="users" element={ <Users /> } />
-                            <Route path="products" element={ <Products /> } />
-                            <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />
-                            <Route path="orders/order/:id" element={ <Order /> } />
-                            <Route path="orders" element={ <Orders /> } />
+      
+
+
+
+              {/* <Route element={<AuthGuard />}> */}
+              <Route element={<EsClientAdminGuard />}>
+
+              {/* estaban sin logueo */}
+
+                            <Route path="productsList" element={<ProductListPrint /> }/>
+                            <Route path="invoicesCajIngEgr" element={ <CajaIngEgrListScreen /> } />
+                            <Route path="informe/IngEgr" element={ <IngEgrListScreen /> } />
+                            <Route path="informe/ctacus" element={ <CtaCusListScreen /> } />
+                            <Route path="informe/ctasup" element={ <CtaSupListScreen /> } />
+                            <Route path="informe/cuspro" element={ <CusProListScreen /> } />
+                            <Route path="informe/suppro" element={ <SupProListScreen /> } />
+                            <Route path="informe/procus" element={ <ProCusListScreen /> } />
+                            <Route path="informe/prosup" element={ <ProSupListScreen /> } />
+                            <Route path="informe/proiye" element={ <ProiyeListScreen /> } />
+
+              {/* estaban sin logueo */}
+
+
+                            <Route path="mesaentrada" element={ <MesaEntrada /> } />
+                            <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
+                            <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
+                            <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
+
+                            <Route path="ordentrabajo" element={ <OrdenTrabajo /> } />
+                            <Route path="ordentrabajo/:id" element={ <OrdenTrabajoCon /> } />
+                            <Route path="ordentrabajoAct/:id" element={ <OrdenTrabajoAct /> } />
 
 
                             <Route path="invoicerord/:id" element={ <AppInvOrd />  }/>
@@ -475,34 +501,6 @@ export default function AdminRoutes() {
                             <Route path="invoicerCajIng" element={ <AppCajIng />  }/>
                             <Route path="invoicerCajEgr" element={ <AppCajEgr />  }/>
 
-                            <Route path="productsList" element={<ProductListPrint /> }/>
-                            <Route path="precios" element={<Precios /> }/>
-                            <Route path="invoicesCajIngEgr" element={ <CajaIngEgrListScreen /> } />
-                            <Route path="informe/IngEgr" element={ <IngEgrListScreen /> } />
-                            <Route path="informe/ctacus" element={ <CtaCusListScreen /> } />
-                            <Route path="informe/ctasup" element={ <CtaSupListScreen /> } />
-                            <Route path="informe/cuspro" element={ <CusProListScreen /> } />
-                            <Route path="informe/suppro" element={ <SupProListScreen /> } />
-                            <Route path="informe/procus" element={ <ProCusListScreen /> } />
-                            <Route path="informe/prosup" element={ <ProSupListScreen /> } />
-                            <Route path="informe/proiye" element={ <ProiyeListScreen /> } />
-
-
-
-
-                            {/* <Route path="invoicesCajIngEgr" element={ <CajaIngEgrListScreen />  }/> */}
-
-
-                            <Route path="mesaentrada" element={ <MesaEntrada /> } />
-                            <Route path="entrada/:id" element={ <MesaEntradaCon /> } />
-                            <Route path="mesaentradaAct/:id" element={ <MesaEntradaAct /> } />
-                            <Route path="mesaentradaVal/:id" element={ <MesaEntradaVal /> } />
-
-                            <Route path="ordentrabajo" element={ <OrdenTrabajo /> } />
-                            <Route path="ordentrabajo/:id" element={ <OrdenTrabajoCon /> } />
-                            <Route path="ordentrabajoAct/:id" element={ <OrdenTrabajoAct /> } />
-
-              <Route element={<AuthGuard />}>
 
                             <Route path="invoicerBuyCon/:id" element={ <AppBuyCon />  }/>
                             <Route path="invoicerBuyRecCon/:id" element={ <AppBuyRecCon />  }/>
@@ -556,6 +554,8 @@ export default function AdminRoutes() {
                             <Route path="paramtrabajo" element={ <ParamTrabajo /> } />
                             <Route path="partes" element={ <Partes /> } />
                             <Route path="partes/parte/:id" element={ <ParteAdminPage /> } />
+                            <Route path="products" element={ <Products /> } />
+                            <Route path="products/product/:slugadm" element={ <ProductAdminPage /> } />
                             <Route path="productsesc" element={ <ProductsEsc /> } />
                             <Route path="productsesc/productesc/:slugadm" element={ <ProductEscAdminPage /> } />
                             <Route path="productsesc/productser/:slugadm" element={ <ProductSerAdminPage /> } />
@@ -564,19 +564,34 @@ export default function AdminRoutes() {
                             <Route path="productsser" element={ <ProductsSer /> } />
                             <Route path="proveedores" element={ <Proveedores /> } />
                             <Route path="proveedores/proveedor/:id" element={ <ProveedorAdminPage /> } />
+                            <Route path="orders/order/:id" element={ <Order /> } />
+                            <Route path="orders" element={ <Orders /> } />
                             <Route path="trabajos" element={ <Trabajos /> } />
                             <Route path="users" element={ <Users /> } />
                             <Route path="users/user/:id" element={ <UserAdminPage /> } />
                             <Route path="valores" element={ <Valores /> } />
                             <Route path="valores/valor/:id" element={ <ValorAdminPage /> } />
-              </Route>
+
 
                             {/* navigate('/auth/loginadm?redirect=/admin/users'); */}
                             <Route path="profileadm" element={ <UserPerfilAdmPage /> } />
+
+              </Route>
+
+              <Route element={<EsUserAdminGuard />}>
+              <Route element={<EsClientAdminGuard />}>
+
+                            <Route path="precios" element={<Precios /> }/>
+              </Route>
+              </Route>
+
+              {/* estan sin guard con control propi en file */}
                             {/* navigate('/auth/login'); */}
                             <Route path="profile/:id" element={ <UserPerfilPage /> } />
 
                             <Route path="users/forgetPasword" element={ <ForgetPassword /> } />
+              {/* estan sin guard con control propi en file */}
+
 
 
     </Routes>

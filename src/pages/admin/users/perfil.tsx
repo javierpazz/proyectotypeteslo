@@ -49,16 +49,26 @@ export const UserPerfilPage = () => {
     const { user : user1, isLoading } = useContext(AuthContext);
     const navigate = useNavigate()
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     if (!user1 && !isLoading) {
+    //     // navigate('/auth/loginadm?redirect=/admin/users');
+    //     navigate('/auth/login');
+    //     }
+    //     // if (user1?.role !== "client" ) {
+    //     // navigate('/');
+    //     // }
+    // }, [user1, isLoading, navigate]);
+    
         if (!user1 && !isLoading) {
         // navigate('/auth/loginadm?redirect=/admin/users');
-        navigate('/auth/login');
+        // navigate('/auth/login');
+        navigate('/auth/login?redirect=/');
+
         }
-        // if (user1?.role !== "client" ) {
-        // navigate('/');
-        // }
-    }, [user1, isLoading, navigate]);
+    
     ////////////////////FGFGFGFG
+
+
 
 
     // const router = useRouter();
