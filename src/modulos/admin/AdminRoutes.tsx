@@ -3,7 +3,6 @@ import { lazy } from 'react';
 import { AdminGuard } from '../../router/guards/AdminGuard';
 import { EsClientAdminGuard } from '../../router/guards/EsClientAdminGuard';
 import { EsUserAdminGuard } from '../../router/guards/EsUserAdminGuard';
-import { AuthGuard } from '../../router/guards/AuthGuard';
 
 
 const Instrumentos = lazy(() =>

@@ -1,8 +1,7 @@
 import { RemoveShoppingCartOutlined } from "@mui/icons-material"
-import { Box, Link, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MuiLink } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 import { ShopLayout } from "../../components/layouts"
 
 
