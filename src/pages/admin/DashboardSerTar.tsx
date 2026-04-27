@@ -66,7 +66,6 @@ export const DashboardSerTar = () => {
         const { data } = await stutzApi.get<Summary>(`/api/entradas/summary/tar?fech1=${fech1}&fech2=${fech2}&configuracion=${codCon}&usuario=${codUse}&customer=${codCus}&producto=${codPro}&instru=${codIns}&parte=${codPar}&maquina=${codMaq}&encargado=${codEnc}&estado=${estado}&registro=${registro}&obser=${obser}`, {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
-          console.log(data)
         setSummary(data);
         } catch (error) {
           console.log({error})
@@ -169,6 +168,49 @@ export const DashboardSerTar = () => {
 
             
 
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Maquinas", "Valores"],
+                      ...(summary.MaqxTar || []).map((x) => [
+                        x.maquina,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      // title: "Top 10 Tareas x Maquinas  Valorizado",
+                      title: "Top 10 Maquinas x Tarea Valorizado",
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                                    data={[
+                      ["Parte", "Valores"],
+                      ...(summary.TarxPar || []).map((x) => [
+                        x.parte,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Partes x Tareas Valorizado",
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
 
 
 

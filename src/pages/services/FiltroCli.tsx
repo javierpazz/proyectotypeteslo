@@ -13,7 +13,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
-import { BuscaMaq, BuscaEnc, BuscaPar, BuscaProSer, BuscaTra, BuscaConFac } from '../../components/buscador';
+import { BuscaMaq, BuscaProSer, BuscaTra } from '../../components/buscador';
 import { AuthContext } from '../../../context';
 
 
@@ -51,13 +51,13 @@ export const FiltroCli = () => {
   const input5Ref = useRef<HTMLInputElement>(null);
   const input7Ref = useRef<HTMLInputElement>(null);
   const input9Ref = useRef<HTMLInputElement>(null);
-  const inputConRef = useRef<HTMLInputElement>(null);
-  const inputUseRef = useRef<HTMLInputElement>(null);
+  // const inputConRef = useRef<HTMLInputElement>(null);
+  // const inputUseRef = useRef<HTMLInputElement>(null);
   const inputInsRef = useRef<HTMLInputElement>(null);
   const inputProRef = useRef<HTMLInputElement>(null);
   const inputCusRef = useRef<HTMLInputElement>(null);
-  const inputParRef = useRef<HTMLInputElement>(null);
-  const inputEncRef = useRef<HTMLInputElement>(null);
+  // const inputParRef = useRef<HTMLInputElement>(null);
+  // const inputEncRef = useRef<HTMLInputElement>(null);
   const inputMaqRef = useRef<HTMLInputElement>(null);
 
 
@@ -74,7 +74,7 @@ export const FiltroCli = () => {
   const [codInst, setCodInst] = useState('');
   const [nameIns, setNameIns] = useState('');
   const [codCon, setCodCon] = useState('');
-  const [codCont, setCodCont] = useState('');
+  // const [codCont, setCodCont] = useState('');
   const [nameCon, setNameCon] = useState('');
   const [codUse, setCodUse] = useState('');
   const [nameUse, setNameUse] = useState('');
@@ -84,10 +84,10 @@ export const FiltroCli = () => {
   const [codCus, setCodCus] = useState('');
   const [nameCus, setNameCus] = useState('');
   const [codPar, setCodPar] = useState('');
-  const [codPart, setCodPart] = useState('');
+  // const [codPart, setCodPart] = useState('');
   const [namePar, setNamePar] = useState('');
   const [codEnc, setCodEnc] = useState('');
-  const [codEnct, setCodEnct] = useState('');
+  // const [codEnct, setCodEnct] = useState('');
   const [nameEnc, setNameEnc] = useState('');
   const [codMaq, setCodMaq] = useState('');
   const [codMaqt, setCodMaqt] = useState('');
@@ -470,7 +470,7 @@ desVal;
             /> */}
 
 
-            <BuscaPar
+            {/* <BuscaPar
             codPar={codPar}
             setCodPar={setCodPar}
             codPart={codPart}
@@ -479,7 +479,7 @@ desVal;
             setNamePar={setNamePar}
             nextRef={inputConRef}
             inputRef={inputParRef} 
-            />
+            /> */}
 
             <BuscaMaq
             codMaq={codMaq}
@@ -521,9 +521,9 @@ desVal;
 
         </Grid>
 
-        <Grid container spacing={2} mt={2}>
+        {/* <Grid container spacing={2} mt={2}> */}
 
-            <BuscaConFac
+            {/* <BuscaConFac
             codCon={codCon}
             setCodCon={setCodCon}
             codCont={codCont}
@@ -543,7 +543,7 @@ desVal;
             setNameEnc={setNameEnc}
             nextRef={inputMaqRef}
             inputRef={inputEncRef} 
-            />
+            /> */}
 
 
 
@@ -556,7 +556,7 @@ desVal;
             inputRef={inputUseRef} 
             /> */}
 
-        </Grid>
+        {/* </Grid> */}
 
 
 

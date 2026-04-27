@@ -9,6 +9,7 @@ import { AdminLayoutMenu } from '../../components/layouts'
 // import { stutzApi } from '../../../api';
 
 import Chart from 'react-google-charts';
+// import { PieChart } from '@mui/x-charts/PieChart';
 
 import {  Grid, Card, CardContent, Typography, Box, Button } from "@mui/material";
 
@@ -84,6 +85,13 @@ export const DashboardSerTra = () => {
 
 
     if ( !summary ) return <FullScreenLoading/>
+
+    // Transformar datos para PieChart
+  // const pieData = (summary.insterVal || []).map((x, idx) => ({
+  //   id: idx,
+  //   value: x.total,
+  //   label: x._id,
+  // }));
 
 
   return (
@@ -164,6 +172,79 @@ export const DashboardSerTra = () => {
 
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
+        {/* <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <PieChart
+                series={[
+                  {
+                    data: pieData,
+                    innerRadius: 30,
+                    outerRadius: 100,
+                    paddingAngle: 5,
+                    cornerRadius: 5,
+                    startAngle: -45,
+                    endAngle: 225,
+                    cx: 150,
+                    cy: 150,
+                  },
+                ]}
+                width={400}
+                height={300}
+              />
+              <Typography variant="subtitle1" align="center" sx={{ mt: 2 }}>
+                Valores Ordenes Terminadas y Pendientes Valorizado
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+ */}
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Maquinas", "Valores"],
+                      ...(summary.top10MaquinasxOrd || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      // title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
+                      title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Partes", "Valores"],
+                      ...(summary.top10PartesxOrd || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Partes x Ordenes de Trabajo Valorizado",
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
 
             <Grid item xs={6} md={3}>
               <Card>

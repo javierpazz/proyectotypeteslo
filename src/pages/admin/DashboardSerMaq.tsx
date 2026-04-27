@@ -20,7 +20,7 @@ import { BiFileFind } from 'react-icons/bi';
 interface Summary {
   top10MaquinasSTVal: { name: string; total: number; count: number }[];
   top10MaquinasTerVal: { name: string; total: number; count: number }[];
-  TarxMaq: { producto: string; total: number; totalCan: number }[];
+  TarxMaq: { producto: string; total: number; totalCan: number; totalQuantity: number }[];
   customers: { numCustomers: number }[];
   users: { numUsers: number }[];
   orders: { numOrders: number; totalSales: number }[];
@@ -71,7 +71,6 @@ export const DashboardSerMaq = () => {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           });
         setSummary(data);
-        console.log(data);
         } catch (error) {
           console.log({error})
         }
@@ -169,6 +168,88 @@ export const DashboardSerMaq = () => {
 
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
+
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                options={{
+                                title: "Top 10 Maquinas x Ordenes de Trabajo Valorizado",
+                                }}
+                    data={[
+                      ["Maquinas", "Valores"],
+                      ...(summary.top10MaquinasxOrd || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                options={{
+                      title: "Top 10 Ordenes de Trabajos x Maquina",
+                                }}
+                    data={[
+                      ["Maquinas", "Valores"],
+                      ...(summary.top10InstrumentosxMaq || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                options={{
+                      title: "Top 10 Tareas de Trabajo x Maquina",
+                    series: {
+                      0: { targetAxisIndex: 0 }, // 💰 millones
+                      1: { targetAxisIndex: 1 }, // 📦 quantity
+                      2: { targetAxisIndex: 1 }, // 🔢 servicios
+                    },
+                    vAxes: {
+                      0: { title: "Valores ($)" },
+                      1: { title: "Unidades / Servicios" },
+                    },
+                    }}
+                    data={[
+                      ["Tareas", "Valores","Unidades","Servicios" ],
+                      ...(summary.TarxMaq || []).map((x) => [
+                        x.producto,
+                        x.total,
+                        x.totalQuantity,
+                        x.totalCan,
+                      ]),
+                    ]}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+
+
+
+
 
             <Grid item xs={6} md={3}>
               <Card>

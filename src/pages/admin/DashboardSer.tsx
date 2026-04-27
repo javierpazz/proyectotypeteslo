@@ -171,6 +171,50 @@ export const DashboardSer = () => {
           {/* Ejemplo de gráfico */}
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                options={{
+                                  title: "Top 10 Partes Valorizado",
+                                }}
+                    data={[
+                      ["Partes", "Valor"],
+                      ...(summary.top10Partes || []).map((x) => [
+                        x.parte,
+                        x.totalSales,
+                      ]),
+                    ]}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                options={{
+                                  title: "Top 10 Clientes Valorizado",
+                                }}
+                          data={
+                                      [
+                                  ["Clientes", "Valor"],
+                                  ...(summary.top10Clients || []).map((x) => [
+                                    x.customer,
+                                    x.totalSales,
+                                  ]),
+                                ]
+
+                  } />
+                </CardContent>
+              </Card>
+            </Grid>
+
             <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
@@ -397,7 +441,7 @@ export const DashboardSer = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Ventas"],
+                      ["Partes", "Valor"],
                       ...(summary.top10Partes || []).map((x) => [
                         x.parte,
                         x.totalSales,
@@ -459,6 +503,7 @@ export const DashboardSer = () => {
                 </CardContent>
               </Card>
             </Grid>
+
 
 
 

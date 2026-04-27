@@ -6,7 +6,7 @@ import { Link as MuiLink } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { AdminLayoutMenuList } from '../../components/layouts'
-import { IProduct, ISupplier  } from '../../interfaces';
+import { IMaquina, ICustomer  } from '../../interfaces';
 import { stutzApi } from '../../../api';
 import { NavLink } from 'react-router-dom';
 
@@ -16,11 +16,10 @@ import { NavLink } from 'react-router-dom';
 export const Maquinas = () => {
 
     const columns:GridColDef[] = [
-    { field: 'codigoPro', headerName: 'Codigo'},
-    { field: 'codPro', headerName: 'Codigo Barra', width: 200 },
+    { field: 'codMaq', headerName: 'Codigo'},
     { 
-        field: 'title', 
-        headerName: 'Title', 
+        field: 'name', 
+        headerName: 'Maquina', 
         width: 250,
         headerAlign: 'center',
         renderCell: ({row}: GridValueGetterParams | GridRenderCellParams) => {
@@ -28,17 +27,13 @@ export const Maquinas = () => {
                 // <MuiLink component={RouterLink} to={`/admin/productsfac/productfac/${row.slug}`}
                 <MuiLink component={RouterLink} to={`/admin/maquinas/maquina/${row.id}`}
                 underline='always'>
-                        { row.title}
+                        { row.name}
                 </MuiLink>
             )
         }
     },
-    { field: 'price', headerName: 'Precio', align: 'right', headerAlign: 'center' },
-    { field: 'priceBuy', headerName: 'Costo', align: 'right', headerAlign: 'center' },
-    { field: 'inStock', headerName: 'Stock', align: 'right', headerAlign: 'center' },
-    { field: 'minStock', headerName: 'Stock Minimo', align: 'right', headerAlign: 'center' },
-    { field: 'porIva', headerName: '%IVA', align: 'right', headerAlign: 'center' },
-    { field: 'nameSup', headerName: 'Proveedor', width: 200 },
+    { field: 'serNum', headerName: 'Nro Serie', width: 200 },
+    { field: 'nameCus', headerName: 'Cliente', width: 200 },
         {
             field: 'check',
             headerName: 'Acción',
@@ -55,17 +50,14 @@ export const Maquinas = () => {
 ];
     ////////////////////FGFGFGFG
 
-  const userInfo = typeof window !== 'undefined' && localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo')!)
-  : null;
-
-    const [ products, setProducts ] = useState<IProduct[]>([]);
+    const [ maquinas, setMaquinas ] = useState<IMaquina[]>([]);
 
 
     const loadData = async() => {
         try {
-          const resp = await stutzApi.get<IProduct[]>(`/api/products/admin/tes?id_config=${userInfo.codCon}`);
-          setProducts(resp.data);
+        //   const resp = await stutzApi.get<IMaquina[]>(`/api/maquinas/admin/tes?id_client=${CodigoCus}`);
+          const resp = await stutzApi.get<IMaquina[]>(`/api/tes/admin/maquinas`);
+          setMaquinas(resp.data);
         } catch (error) {
           console.log({error})
         }
@@ -76,26 +68,18 @@ export const Maquinas = () => {
         loadData();
     }, [])
 
-    // const { data, error } = useSWR<IProduct[]>('/api/admin/products');
+    // const { data, error } = useSWR<IMaquina[]>('/api/admin/maquinas');
     // if ( !data && !error ) return (<></>);
     
     
-    // const rows = products.map( product => ({
-    const rows = products.map( product => ({
-        id: product._id,
-        codPro: product.codPro,
-        codigoPro: product.codigoPro,
-        title: product.title,
-        slug: product.slug,
-        medPro: product.medPro,
-        gender: product.gender,
-        category: product.category,
-        price: product.price.toFixed(2),
-        priceBuy: product.priceBuy.toFixed(2),
-        inStock: product.inStock.toFixed(2),
-        minStock: product.minStock.toFixed(2),
-        porIva: product.porIva.toFixed(2),
-        nameSup  : (product.supplier as ISupplier)?.name ?? '',
+    // const rows = maquinas.map( maquina => ({
+    const rows = maquinas.map( maquina => ({
+        id: maquina._id,
+        codMaq: maquina.codMaq,
+        name: maquina.name,
+        serNum: maquina.serNum,
+        nameCus  : (maquina.codCus as ICustomer)?.nameCus ?? '',
+
 
     }));
 
@@ -104,7 +88,7 @@ export const Maquinas = () => {
     const deleteHandler = async (id : string) => {
     if (window.confirm('Esta Seguro de Eliminar?')) {
         try {
-        await stutzApi.delete(`/api/tes/admin/productsesc/${id}`);
+        await stutzApi.delete(`/api/tes/admin/maquinas/${id}`);
         window.location.reload();
     } catch (error: any) {
 ///////
@@ -125,38 +109,24 @@ export const Maquinas = () => {
   };
 
 
-    if ( !products ) return (<></>);
+    if ( !maquinas ) return (<></>);
 
   return (
     <AdminLayoutMenuList 
-        title={`Productos (${ products?.length })`} 
-        subTitle={'Mantenimiento de Productos'}
+        title={`Maquinas (${ maquinas?.length })`} 
+        subTitle={'Mantenimiento de Maquinas'}
         icon={ <CategoryOutlined /> }
     >
 
 
 
         <Box display='flex' justifyContent='end' sx={{ mb: 2 }}>
-        <NavLink to='/admin/precios?redirect=/admin/productsfac' >
-            <Button
-                color="secondary"
-            >
-                Modifica  Precios
-            </Button>
-            </NavLink>            
-        <NavLink to='/admin/productsList?redirect=/admin/productsfac' >
-            <Button
-                color="secondary"
-            >
-                Lista
-            </Button>
-            </NavLink>            
-        <NavLink to='/admin/productsfac/productfac/new' >
+        <NavLink to='/admin/maquinas/maquina/new' >
             <Button
                 startIcon={ <AddOutlined /> }
                 color="secondary"
             >
-                Crear Producto
+                Crear Maquina
             </Button>
             </NavLink>            
         </Box>

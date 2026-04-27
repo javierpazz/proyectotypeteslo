@@ -18,8 +18,8 @@ import { BiFileFind } from 'react-icons/bi';
 
 
 interface Summary {
-  TarxMaq: { producto: string; total: number; totalCan: number }[];
-  TarxPar: { producto: string; total: number; totalCan: number }[];
+  TarxMaq: { producto: string; total: number; totalCan: number; totalQuantity: number }[];
+  TarxPar: { producto: string; total: number; totalCan: number; totalQuantity: number }[];
   orders: { numOrders: number; totalSales: number }[];
   // top10Maquinas: { maquina: string; totalSales: number; totalOrders: number }[];
   top10InstrumentosxPar: { name: string; total: number; count: number }[];
@@ -163,6 +163,140 @@ export const GraficosServices = () => {
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
 
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Trabajo", "Valores"],
+                      ...(summary.top10InstrumentosxMaq || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ordenes de Trabajo x Maquinas Valorizado",
+                      is3D: true,
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+            {/* <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Tareas", "Valores"],
+                      ...(summary.TarxMaq || []).map((x) => [
+                        x.producto,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Tareas x Maquinas  Valorizado",
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid> */}
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                                options={{
+                      title: "Top 10 Tareas de Trabajo x Maquina",
+                    series: {
+                      0: { targetAxisIndex: 0 }, // 💰 millones
+                      1: { targetAxisIndex: 1 }, // 📦 quantity
+                      2: { targetAxisIndex: 1 }, // 🔢 servicios
+                    },
+                    vAxes: {
+                      0: { title: "Valores ($)" },
+                      1: { title: "Unidades / Servicios" },
+                    },
+                    }}
+                    data={[
+                      ["Tareas", "Valores","Unidades","Servicios" ],
+                      ...(summary.TarxMaq || []).map((x) => [
+                        x.producto,
+                        x.total,
+                        x.totalQuantity,
+                        x.totalCan,
+                      ]),
+                    ]}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Trabajo", "Valores"],
+                      ...(summary.top10InstrumentosxPar || []).map((x) => [
+                        x.name,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Ordenes de Trabajo x Parte Valorizado",
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    options={{
+                      title: "Top 10 Tareas x Parte  Valorizado",
+                    series: {
+                      0: { targetAxisIndex: 0 }, // 💰 millones
+                      1: { targetAxisIndex: 1 }, // 📦 quantity
+                      2: { targetAxisIndex: 1 }, // 🔢 servicios
+                    },
+                    vAxes: {
+                      0: { title: "Valores ($)" },
+                      1: { title: "Unidades / Servicios" },
+                    },
+                    }}
+                    data={[
+                      // ["Tareas", "Valores"],
+                      ["Tareas", "Valores","Unidades","Servicios" ],
+                      ...(summary.TarxPar || []).map((x) => [
+                        x.producto,
+                        x.total,
+                        x.totalQuantity,
+                        x.totalCan,
+                      ]),
+                    ]}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+
+
             <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
@@ -172,7 +306,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Orders"],
+                      ["Trabajo", "Orders"],
                       ...(summary.top10InstrumentosxMaq || []).map((x) => [
                         x.name,
                         x.count,
@@ -197,7 +331,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Maquinas", "Valores"],
+                      ["Trabajo", "Valores"],
                       ...(summary.top10InstrumentosxMaq || []).map((x) => [
                         x.name,
                         x.total,
@@ -221,7 +355,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Productos", "Valores"],
+                      ["Tareas", "Valores"],
                       ...(summary.TarxMaq || []).map((x) => [
                         x.producto,
                         x.totalCan,
@@ -245,7 +379,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Productos", "Valores"],
+                      ["Tareas", "Valores"],
                       ...(summary.TarxMaq || []).map((x) => [
                         x.producto,
                         x.total,
@@ -272,7 +406,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Orders"],
+                      ["Trabajo", "Orders"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
                         x.name,
                         x.count,
@@ -297,7 +431,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Valores"],
+                      ["Trabajo", "Valores"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
                         x.name,
                         x.total,
@@ -322,7 +456,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Productos", "Valores"],
+                      ["Tareas", "Valores"],
                       ...(summary.TarxPar || []).map((x) => [
                         x.producto,
                         x.totalCan,
@@ -346,7 +480,7 @@ export const GraficosServices = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Productos", "Valores"],
+                      ["Tareas", "Valores"],
                       ...(summary.TarxPar || []).map((x) => [
                         x.producto,
                         x.total,

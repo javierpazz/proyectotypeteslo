@@ -12,6 +12,7 @@ export const SideMenu = () => {
     const { user, isLoggedIn, logout } = useContext(  AuthContext );
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [version] = useState('serv'); // escr | serv | fact
 
 
     const navigateTo = ( url: string ) => {
@@ -27,7 +28,7 @@ export const SideMenu = () => {
     }
 
         const LogOutStaff = () => {
-            navigateTo(`/blanco`);
+            navigateTo(`/`);
             logout();
         }
         const LogOutCli = () => {
@@ -108,6 +109,10 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Turno Trabajos'} />
                 </ListItem> */}
+
+
+            {(version === "escr") && (
+                <>
                 <ListItem button 
                 onClick={ () => navigateTo('/pedidoentradas/history') }
                 // onClick={ () => navigateTo('/') }
@@ -127,6 +132,11 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Graficos de Entradas'} />
                 </ListItem>
+                </>
+            )}
+
+            {(version === "serv") && (
+                <>
 
                 <ListItem button 
                 onClick={ () => navigateTo('/pedidoservices/history') }
@@ -145,6 +155,8 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Graficos de Trabajos'} />
                 </ListItem>
+                </>
+            )}
 
 
                 </>
@@ -274,6 +286,9 @@ export const SideMenu = () => {
                 </ListItem>
 
 
+            {(version === "escr") && (
+                <>
+
                 <ListItem button
                 onClick={ () => navigateTo('/escribania') }>
                     <ListItemIcon>
@@ -282,6 +297,12 @@ export const SideMenu = () => {
                     <ListItemText primary={'Escribania'} />
                 </ListItem>
 
+            </>
+            )}
+
+            {(version === "serv") && (
+                <>
+
                 <ListItem button
                 onClick={ () => navigateTo('/servicio') }>
                     <ListItemIcon>
@@ -289,6 +310,10 @@ export const SideMenu = () => {
                     </ListItemIcon>
                     <ListItemText primary={'Servicios'} />
                 </ListItem>
+
+            </>
+            )}
+
 
                 {/* <ListItem 
                                 button

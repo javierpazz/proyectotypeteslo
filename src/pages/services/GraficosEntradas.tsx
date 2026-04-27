@@ -261,6 +261,52 @@ export const GraficosEntradas = () => {
 
  */}
 
+
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Instrumentos", "Orders"],
+                      ...(summary.top10InstrumentosxPar || []).map((x) => [
+                        x.name,
+                        x.count,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Instrumentos x Parte",
+                    }}
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                <Chart chartType="ColumnChart"
+                                width="100%"
+                                height="450px"
+                    data={[
+                      ["Diligencias", "Valores"],
+                      ...(summary.TarxPar || []).map((x) => [
+                        x.producto,
+                        x.total,
+                      ]),
+                    ]}
+                    options={{
+                      title: "Top 10 Diligencias x Parte  Valorizado",
+                      is3D: true,
+                    }}
+
+                   />
+                </CardContent>
+              </Card>
+            </Grid>
+
+
+
             <Grid item xs={6} md={3}>
               <Card>
                 <CardContent>
@@ -270,7 +316,7 @@ export const GraficosEntradas = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Orders"],
+                      ["Instrumentos", "Orders"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
                         x.name,
                         x.count,
@@ -295,7 +341,7 @@ export const GraficosEntradas = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Partes", "Valores"],
+                      ["Instrumentos", "Valores"],
                       ...(summary.top10InstrumentosxPar || []).map((x) => [
                         x.name,
                         x.total,
@@ -320,7 +366,7 @@ export const GraficosEntradas = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Productos", "Valores"],
+                      ["Diligencias", "Valores"],
                       ...(summary.TarxPar || []).map((x) => [
                         x.producto,
                         x.totalCan,
@@ -344,7 +390,7 @@ export const GraficosEntradas = () => {
                     chartType="PieChart"
                     loader={<div>Cargando...</div>}
                     data={[
-                      ["Productos", "Valores"],
+                      ["Diligencias", "Valores"],
                       ...(summary.TarxPar || []).map((x) => [
                         x.producto,
                         x.total,
